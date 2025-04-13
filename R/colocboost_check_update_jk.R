@@ -1,8 +1,5 @@
-
-
-
-
-#' Model selection scheme in ColocBoost
+#' @noRd
+#' @title Model selection scheme in ColocBoost
 #'
 #' @details
 #' Model selection scheme in proximity smoothed gradient boosting algorithm to select update traits and update variants at each iteration.

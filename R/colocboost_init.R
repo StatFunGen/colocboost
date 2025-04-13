@@ -1,4 +1,5 @@
 
+#' @noRd
 #' @title Set of Internal functions for initial colocboost objects
 #'
 #' @description
