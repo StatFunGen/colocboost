@@ -42,4 +42,6 @@ Step 1: \code{colocboost_check_update_jk} selection scheme to choose outcomes ne
 Step 2: \code{colocboost_update} core function of the proximity smoothed gradient boosting update.
 
 Step 3: check the stop criteria for each outcome.
+
+There is a version for LD free version with one causal assumption, implemented in \code{colocboost_one_causal}.
 }

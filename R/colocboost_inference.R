@@ -12,7 +12,7 @@
 #'
 #' @rdname colocboost_post_inference
 #' @keywords cb_post_inference
-#' @export
+#' @noRd
 colocboost_post_inference <- function() {
   message("This function post inferences of colocboost output. See details for more information.")
 }

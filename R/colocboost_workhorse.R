@@ -9,6 +9,8 @@
 #' Step 2: `colocboost_update` core function of the proximity smoothed gradient boosting update.
 #'
 #' Step 3: check the stop criteria for each outcome.
+#' 
+#' There is a version for LD free version with one causal assumption, implemented in `colocboost_one_causal`.
 #'
 #' @export
 colocboost_workhorse <- function(cb_data,
