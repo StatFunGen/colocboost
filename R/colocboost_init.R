@@ -1,5 +1,3 @@
-
-#' @noRd
 #' @title Set of Internal functions for initial colocboost objects
 #'
 #' @description
@@ -21,6 +19,7 @@
 #'
 #' @keywords cb_objects
 #' @rdname colocboost_objects
+#' @noRd
 colocboost_inits <- function() {
     message("This function initializes colocboost objects. See details for more information.")
 }
