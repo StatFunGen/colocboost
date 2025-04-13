@@ -12,7 +12,6 @@
 #' 
 #' There is a version for LD free version with one causal assumption, implemented in `colocboost_one_causal`.
 #'
-#' @export
 colocboost_workhorse <- function(cb_data,
                                  M=NULL,
                                  tau = 0.01,

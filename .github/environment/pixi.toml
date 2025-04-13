@@ -15,6 +15,7 @@ rcmdcheck = "R -e 'pkg <- list.files(\"..\", pattern = \".tar.gz\", full.names =
 use_major_version = "R -e 'usethis::Use_version(which = \"major\", push = FALSE)'"
 use_minor_version = "R -e 'usethis::use_version(which = \"minor\", push = FALSE)'"
 use_patch_version = "R -e 'usethis::use_version(which = \"patch\", push = FALSE)'"
+pkgdown_build = "R -e 'pkgdown::build_site_github_pages(new_process = FALSE, install = TRUE)'"
 
 [feature.r43]
 dependencies = {"r-base" = "4.3.*"}

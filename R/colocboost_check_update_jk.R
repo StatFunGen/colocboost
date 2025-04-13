@@ -8,7 +8,6 @@
 #' Model selection scheme in proximity smoothed gradient boosting algorithm to select update traits and update variants at each iteration.
 #'
 #' @return update_status and real_update_jk for each trait
-#' @export
 colocboost_check_update_jk <- function(cb_model, cb_model_para, cb_data,
                                        prioritize_jkstar = TRUE,
                                        jk_equiv_corr = 0.8, ##### more than 2 traits
