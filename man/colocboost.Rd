@@ -113,6 +113,8 @@ The innovation: do not provide the same matrix in \code{LD} to reduce the comput
 \item{learning_rate_decay}{The decayrate for learning rate. If the objective function is large at the early iterations,
 we need to have the higher learning rate to improve the computational efficiency.}
 
+\item{dynamic_learning_rate}{If \code{dynamic_learning_rate = TRUE}, the dynamic learning rate based on \code{learning_rate_init} and \code{learning_rate_decay} will be used in SEC.}
+
 \item{prioritize_jkstar}{When \code{prioritize_jkstar = TRUE}, the selected outcomes will prioritize best update j_k^star in SEC.}
 
 \item{func_compare}{The criterion when we update jk-star in SEC (default is "min_max").}
