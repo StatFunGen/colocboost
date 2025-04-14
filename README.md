@@ -1,5 +1,5 @@
 # ColocBoost for multi-trait colocalization in molecular QTL and GWAS studies
-[![Codecov test coverage](https://codecov.io/gh/StatFunGen/colocboost/branch/master/graph/badge.svg)](https://codecov.io/gh/StatFunGen/colocboost?branch=master)
+[![Codecov test coverage](https://codecov.io/gh/StatFunGen/colocboost/branch/main/graph/badge.svg)](https://codecov.io/gh/StatFunGen/colocboost?branch=main)
 [![CRAN Version](https://www.r-pkg.org/badges/version/colocboost)](https://cran.r-project.org/package=colocboost)
 
 This R package implements ColocBoost --- motivated and designed for colocalization analysis ([first formulated here](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004383)) of multiple genetic association studies --- as a multi-task learning approach to variable selection regression with highly correlated predictors and sparse effects, based on frequentist statistical inference. It provides statistical evidence to identify which subsets of predictors have non-zero effects on which subsets of response variables.
