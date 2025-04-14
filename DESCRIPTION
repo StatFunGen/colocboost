@@ -15,6 +15,7 @@ Authors@R: c(
 Maintainer: Xuewei Cao <xc2270@cumc.columbia.edu>
 Description: This R package implements ColocBoost --- motivated and designed for colocalization analysis of multiple genetic association studies --- as a multi-task learning approach to variable selection regression with highly correlated predictors and sparse effects, based on frequentist statistical inference. It provides statistical evidence to identify which subsets of predictors have non-zero effects on which subsets of response variables.
 Encoding: UTF-8
+LazyDataCompression: xz
 LazyData: true
 RoxygenNote: 7.3.2
 URL: https://github.com/StatFunGen/colocboost

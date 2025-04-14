@@ -1,9 +1,11 @@
 ---
 title: "News"
-output:
-  html_document:
-    theme: united
-    df_print: kable
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{News}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+
 ---
 
 ## **Initial release in ColocBoost**
