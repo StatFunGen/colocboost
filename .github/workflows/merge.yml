@@ -1,6 +1,5 @@
 name: Post-merge actions
 
-
 on:
   pull_request_target:
     types: [closed]
