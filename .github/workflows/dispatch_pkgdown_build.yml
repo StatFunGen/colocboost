@@ -1,0 +1,33 @@
+name: Dispatch rebuild website
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update_website:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Create TOML from recipe
+        run: .github/workflows/create_toml_from_yaml.sh ${GITHUB_WORKSPACE}
+
+      - name: Setup pixi
+        uses: prefix-dev/setup-pixi@v0.8.4
+
+      - name: Update pkgdown site
+        run: pixi run pkgdown_build
+
+      - name: Deploy to GitHub pages 🚀
+        if: github.event_name != 'pull_request'
+        uses: JamesIves/github-pages-deploy-action@v4.5.0
+        with:
+          clean: false
+          branch: gh-pages
+          folder: docs

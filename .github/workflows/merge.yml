@@ -51,7 +51,7 @@ jobs:
       - name: Setup pixi
         uses: prefix-dev/setup-pixi@v0.8.4
 
-      - name: Check unit test code coverage
+      - name: Update pkgdown site
         run: pixi run pkgdown_build
 
       - name: Deploy to GitHub pages 🚀
