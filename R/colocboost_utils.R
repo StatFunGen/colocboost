@@ -406,40 +406,71 @@ get_merge_ordered_with_indices <- function(vector_list) {
   if (!is.list(vector_list) || length(vector_list) == 0) {
     stop("Input must be a non-empty list of vectors")
   }
-  
+
   # Convert all vectors to character
   vector_list <- lapply(vector_list, as.character)
   n_vectors <- length(vector_list)
-  
-  # Estimate total and unique elements
-  total_elements <- sum(sapply(vector_list, length))
-  
-  # Phase 1: Build merged vector
-  seen <- new.env(hash = TRUE, parent = emptyenv(), size = total_elements)
-  merged <- character(total_elements)  # Pre-allocate maximum size
-  merge_idx <- 1
-  
-  # Process each vector to create the merged vector
-  for (i in seq_len(n_vectors)) {
-    vec <- vector_list[[i]]
-    for (j in seq_along(vec)) {
-      elem <- vec[j]
-      if (!exists(elem, envir = seen, inherits = FALSE)) {
-        seen[[elem]] <- merge_idx  # Store position directly (optimization)
-        merged[merge_idx] <- elem
-        merge_idx <- merge_idx + 1
+
+  # Step 1: Get all unique elements
+  all_elements <- unique(unlist(vector_list))
+  n_elements <- length(all_elements)
+
+  # Step 2: Build a graph of ordering constraints
+  # Use an adjacency list: for each element, store elements that must come after it
+  graph <- new.env(hash = TRUE, parent = emptyenv(), size = n_elements)
+  for (elem in all_elements) {
+    graph[[elem]] <- character()
+  }
+
+  # Add edges based on consecutive pairs in each vector
+  for (vec in vector_list) {
+    for (i in seq_len(length(vec) - 1)) {
+      from_elem <- vec[i]
+      to_elem <- vec[i + 1]
+      if (from_elem != to_elem) {  # Avoid self-loops
+        # Add to_elem to the list of elements that must come after from_elem
+        graph[[from_elem]] <- unique(c(graph[[from_elem]], to_elem))
       }
     }
   }
-  
-  # Trim merged result to actual size
-  merged_length <- merge_idx - 1
-  if (merged_length < length(merged)) {
-    merged <- merged[1:merged_length]
+
+  # Step 3: Compute in-degrees (number of incoming edges for each node)
+  in_degree <- new.env(hash = TRUE, parent = emptyenv(), size = n_elements)
+  for (elem in all_elements) {
+    in_degree[[elem]] <- 0
   }
-  
-  merged
+  for (from_elem in all_elements) {
+    for (to_elem in graph[[from_elem]]) {
+      in_degree[[to_elem]] <- in_degree[[to_elem]] + 1
+    }
+  }
+
+  # Step 4: Topological sort using Kahn's algorithm
+  # Start with nodes that have no incoming edges
+  queue <- all_elements[sapply(all_elements, function(elem) in_degree[[elem]] == 0)]
+  result <- character()
+  while (length(queue) > 0) {
+    # Take the first element from the queue
+    current <- queue[1]
+    queue <- queue[-1]
+    result <- c(result, current)
+
+    # Process all neighbors (elements that must come after current)
+    neighbors <- graph[[current]]
+    for (next_elem in neighbors) {
+      in_degree[[next_elem]] <- in_degree[[next_elem]] - 1
+      if (in_degree[[next_elem]] == 0) {
+        queue <- c(queue, next_elem)
+      }
+    }
+  }
+
+  # Step 5: Check for cycles (if result doesn't include all elements, there’s a cycle)
+  if (length(result) != n_elements) {
+    stop("Cycle detected in ordering constraints; cannot produce a valid merged order")
+  }
+
+  result
 }
 
-
-
+                               
