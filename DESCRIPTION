@@ -8,7 +8,7 @@ Authors@R: c(
   person(given = "Haochen", family = "Sun", email = "hs3393@cumc.columbia.edu", role = "aut"),
   person(given = "Ru", family = "Feng", email = "rf2872@cumc.columbia.edu", role = "aut"),
   person(given = "Rahul", family = "Mazumder", email = "rahulmaz@mit.edu", role = "aut"),
-  person(given = "The Alzheimer’s Disease Functional Genomics Consortium", role = "aut"),
+  person(given = "Daniel", family = "Nachun", role = "aut"),
   person(given = "Kushal", family = "Dey", email = "deyk@mskcc.org", role = c("aut")),
   person(given = "Gao", family = "Wang", email = "gw2411@cumc.columbia.edu", role = c("aut"))
   )
