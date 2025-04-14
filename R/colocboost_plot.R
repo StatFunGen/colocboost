@@ -4,7 +4,7 @@
 #'
 #' @description `colocboost_plot` generates visualization plots for colocalization events from a ColocBoost analysis.
 #'
-#' @param Output object from `colocboost` analysis 
+#' @param cb_output Output object from `colocboost` analysis 
 #' @param y Specifies the y-axis values, default is "log10p" for -log10 transformed marginal association p-values. 
 #' @param pos Optional plotting range of x-axis to zoom in to a specific region.
 #' @param plot_target_only Logical, if TRUE only plots colocalization with target outcome, default is FALSE.

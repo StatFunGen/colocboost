@@ -1,5 +1,3 @@
-
-
 #' Joint boosting algorithm in ColocBoost
 #'
 #' @details
@@ -7,7 +5,7 @@
 #'
 #' @importFrom utils head tail
 #' @return colocboost object after gradient boosting update
-#' @export
+#' @noRd
 colocboost_update <- function(cb_model, cb_model_para, cb_data,
                               tau = 0.01,
                               learning_rate_decay = 1,

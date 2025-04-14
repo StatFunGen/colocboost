@@ -35,6 +35,8 @@ colocboost_plot(
 )
 }
 \arguments{
+\item{cb_output}{Output object from \code{colocboost} analysis}
+
 \item{y}{Specifies the y-axis values, default is "log10p" for -log10 transformed marginal association p-values.}
 
 \item{pos}{Optional plotting range of x-axis to zoom in to a specific region.}
@@ -86,8 +88,6 @@ colocboost_plot(
 \item{title_style}{Vector of two numbers for title style (size, boldness), default is c(2.5, 2)}
 
 \item{...}{Additional parameters passed to \code{plot} functions}
-
-\item{Output}{object from \code{colocboost} analysis}
 }
 \value{
 Visualization plot for each colcoalization event.
