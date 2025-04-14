@@ -46,7 +46,7 @@ ColocBoost can be generally used in multi-task variable selection regression pro
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>ColocBoost: A gradient boosting informed multi-omics xQTL colocalization method</h1>
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/dependabot/github_actions/prefix-dev/setup-pixi-0.8.5/R/colocboost.R" class="external-link"><code>R/colocboost.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/R/colocboost.R" class="external-link"><code>R/colocboost.R</code></a></small>
       <div class="d-none name"><code>colocboost.Rd</code></div>
     </div>
 
@@ -211,6 +211,10 @@ The innovation: do not provide the same matrix in <code>LD</code> to reduce the 
 <dt id="arg-learning-rate-decay">learning_rate_decay<a class="anchor" aria-label="anchor" href="#arg-learning-rate-decay"></a></dt>
 <dd><p>The decayrate for learning rate. If the objective function is large at the early iterations,
 we need to have the higher learning rate to improve the computational efficiency.</p></dd>
+
+
+<dt id="arg-dynamic-learning-rate">dynamic_learning_rate<a class="anchor" aria-label="anchor" href="#arg-dynamic-learning-rate"></a></dt>
+<dd><p>If <code>dynamic_learning_rate = TRUE</code>, the dynamic learning rate based on <code>learning_rate_init</code> and <code>learning_rate_decay</code> will be used in SEC.</p></dd>
 
 
 <dt id="arg-prioritize-jkstar">prioritize_jkstar<a class="anchor" aria-label="anchor" href="#arg-prioritize-jkstar"></a></dt>
