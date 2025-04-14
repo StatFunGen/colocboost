@@ -17,3 +17,5 @@
 ^cran-comments\.md$
 ^LICENSE\.md$
 ^README\.md$
+^docs$
+^_pkgdown\.yml$

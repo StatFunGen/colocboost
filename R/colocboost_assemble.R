@@ -18,7 +18,7 @@
 #'
 #' Summary of the colocboost results and get the output of colocboost (TO-DO-LIST)
 #'
-#' @export
+#' @noRd
 colocboost_assemble <- function(cb_obj,
                                 coverage = 0.95,
                                 weight_fudge_factor = 1.5,
