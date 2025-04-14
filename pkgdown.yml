@@ -1,0 +1,15 @@
+pandoc: 3.6.4
+pkgdown: 2.1.1
+pkgdown_sha: ~
+articles:
+  announcements: announcements.html
+  ColocBoost_tutorial_advance: ColocBoost_tutorial_advance.html
+  ColocBoost_tutorial_basic: ColocBoost_tutorial_basic.html
+  ColocBoost_tutorial_cbsummary: ColocBoost_tutorial_cbsummary.html
+  ColocBoost_tutorial_diagnostic: ColocBoost_tutorial_diagnostic.html
+  ColocBoost_tutorial_GTEx: ColocBoost_tutorial_GTEx.html
+  Install: Install.html
+last_built: 2025-04-14T06:56Z
+urls:
+  reference: https://statfungen.github.io/colocboost/reference
+  article: https://statfungen.github.io/colocboost/articles
