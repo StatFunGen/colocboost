@@ -45,6 +45,7 @@
 #' @param learning_rate_init The minimum learning rate for updating in each iteration.
 #' @param learning_rate_decay The decayrate for learning rate. If the objective function is large at the early iterations,
 #'                  we need to have the higher learning rate to improve the computational efficiency.
+#' @param dynamic_learning_rate If \code{dynamic_learning_rate = TRUE}, the dynamic learning rate based on \code{learning_rate_init} and \code{learning_rate_decay} will be used in SEC.
 #' @param prioritize_jkstar When \code{prioritize_jkstar = TRUE}, the selected outcomes will prioritize best update j_k^star in SEC.
 #' @param func_compare The criterion when we update jk-star in SEC (default is "min_max").
 #' @param jk_equiv_corr The LD cutoff between overall best update jk-star and marginal best update jk-l for lth outcome
