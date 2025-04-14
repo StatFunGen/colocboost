@@ -36,3 +36,4 @@ r44 = {features = ["r44"]}
 "r-mass" = "*"
 "r-rcmdcheck" = "*"
 "r-tidyverse" = "*"
+"qpdf" = "*"
