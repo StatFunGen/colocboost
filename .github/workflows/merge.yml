@@ -34,6 +34,7 @@ jobs:
 
   update_website:
     if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
 
