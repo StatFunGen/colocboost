@@ -396,8 +396,7 @@ get_cos_different_coverage <- function(cb_output, coverage = 0.95){
   
   cos_vcp <- cb_output$cos_details$cos_vcp
   cos_diff_coverage <- lapply(cos_vcp, function(w){
-      temp <- order(w, decreasing=T)
-      temp[1:min(which(cumsum(w[temp]) > coverage))] # 95%
+      unlist(get_in_cos(w, coverage = coverage))
   })
   return(cos_diff_coverage)
 }
@@ -669,16 +668,8 @@ get_full_output <- function(cb_obj, past_out = NULL, variables = NULL, cb_output
   cb_model_para <- cb_obj$cb_model_para
   
   ## - obtain the order of variables based on the variables names if it has position information
-  if (is.null(variables)){
-    variables <- cb_obj$cb_model_para$variables
-    if (all(grepl("chr", variables))){
-      # - if variables_name has position informtaion, re-order all_info based on positions
-      position <- as.numeric(gsub(".*:(\\d+).*", "\\1", variables))
-      # position <- as.numeric(sapply(variables_name, function(tmp) strsplit(tmp, ":")[[1]][2]))
-      ordered <- order(position, decreasing = FALSE)
-    } else {
-      ordered <- 1:length(variables)
-    }
+  if (!is.null(variables)){
+    ordered <- 1:length(cb_obj$cb_model_para$variables)
   } else {
     ordered <- match(variables, cb_obj$cb_model_para$variables)
   }

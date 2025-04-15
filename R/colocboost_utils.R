@@ -1,3 +1,18 @@
+#' @title Set of internal functions to refrine colocalization confidence sets
+#'
+#' @description
+#' The `colocboost_refine_cos` functions serves as a summary for the following two refine functions.
+#'
+#' @details
+#' The following functions are included in this set:
+#' `merge_cos_ucos` merge a trait-specific confidence set CS into a colocalization set CoS.
+#' `merge_ucos` merge two trait-specific confidence sets.
+#'
+#' These functions are not exported individually and are accessed via `colocboost_refine_cos`.
+#'
+#' @rdname colocboost_refine_cos
+#' @keywords cb_refine_cos
+#' @noRd
 merge_cos_ucos <- function(cb_obj, out_cos, out_ucos, coverage = 0.95,
                                min_abs_corr = 0.5, tol = 1e-9,
                                median_cos_abs_corr = 0.8){
@@ -378,10 +393,9 @@ get_max_profile <- function(cb_obj, check_null_max=0.02, check_null_method = "pr
 
 ### Function for check cs for each weight
 w_cs <- function(w, coverage = 0.95){
-  n <- sum(cumsum(sort(w,decreasing = TRUE)) < coverage) + 1
-  o <- order(w,decreasing = TRUE)
+  indices <- unlist(get_in_cos(w, coverage = coverage))
   result = rep(0,length(w))
-  result[o[1:n]] = 1
+  result[indices] = 1
   return(result)
 }
 
@@ -391,11 +405,18 @@ get_integrated_weight <- function(avWeight, weight_fudge_factor = 1.5){
 }
 
 get_in_cos <- function(weights, coverage = 0.95){
-  
-  temp <- order(weights, decreasing=T)
-  csets <- temp[1:min(which(cumsum(weights[temp]) >= coverage))] # 95%
+  # Get indices in decreasing weight order
+  temp <- order(weights, decreasing=TRUE)
+  weights_ordered <- weights[temp]
+  # Find position where cumsum exceeds coverage
+  pos <- min(which(cumsum(weights_ordered) >= coverage))
+  # Get the actual threshold weight value
+  weight_thresh <- weights_ordered[pos]
+  # Find all indices with weights >= threshold
+  indices <- which(weights >= weight_thresh)
+  # Order these indices by their weights in decreasing order
+  csets <- indices[order(weights[indices], decreasing=TRUE)]
   return(list(csets))
-  
 }
 
 
