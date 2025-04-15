@@ -8,8 +8,7 @@ articles:
   ColocBoost_tutorial_cbsummary: ColocBoost_tutorial_cbsummary.html
   ColocBoost_tutorial_diagnostic: ColocBoost_tutorial_diagnostic.html
   ColocBoost_tutorial_GTEx: ColocBoost_tutorial_GTEx.html
-  Install: Install.html
-last_built: 2025-04-14T17:50Z
+last_built: 2025-04-15T04:25Z
 urls:
   reference: https://statfungen.github.io/colocboost/reference
   article: https://statfungen.github.io/colocboost/articles
