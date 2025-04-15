@@ -7,7 +7,7 @@ This R package implements ColocBoost --- motivated and designed for colocalizati
 ## Installation
 
 ### CRAN
-Install released versions from CRAN - precompiled packages are available on macOS and Windows
+Install released versions from CRAN - pre-built packages are available on macOS and Windows
 
 ```r
 install.packages("colocboost")
@@ -21,7 +21,7 @@ devtools::install_github("StatFunGen/colocboost")
 ```
 
 ### Conda
-Install major releases using a conda-compatible package manager (recommended)
+Install major releases using pre-built conda package with a conda-compatible package manager (recommended)
 
 Global pixi installation is the easiest way to use the conda package
 ```bash
