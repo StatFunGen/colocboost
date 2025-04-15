@@ -298,24 +298,25 @@ colocboost_init_model <- function(cb_data,
         tmp$beta_hat_univariate <- get_beta(z=tmp$z, n=data_each$N)
         # - add-hoc stop method
         if (P <= 1){
-          multiple_correction <- 1
+          multiple_testing_correction <- 1
         } else {
-          multiple_correction <- get_multiple_correction(z=tmp$z, miss_idx = data_each$variable_miss, 
+          multiple_testing_correction <- get_multiple_testing_correction(z=tmp$z, miss_idx = data_each$variable_miss, 
                                                          func_multi_test = func_multi_test, 
                                                          ash_prior = ash_prior,
                                                          p.adjust.methods = p.adjust.methods)
         }
-        tmp$multi_correction <- multiple_correction
-        tmp$multi_correction_univariate <- multiple_correction
-        if (all(multiple_correction==1)){
+        tmp$multi_correction <- multiple_testing_correction
+        tmp$multi_correction_univariate <- multiple_testing_correction
+        if(length(multiple_testing_correction)==1) print(class(multiple_testing_correction))
+        if (all(multiple_testing_correction==1)){
             tmp$stop_null <- 1
-        } else if (min(multiple_correction) > multi_test_max){
-            tmp$stop_null <- min(multiple_correction)
+        } else if (min(multiple_testing_correction) > multi_test_max){
+            tmp$stop_null <- min(multiple_testing_correction)
         } else {
-            if (min(multiple_correction) < multi_test_max){
+            if (min(multiple_testing_correction) < multi_test_max){
                 tmp$stop_null <- multi_test_max
             } else {
-                tmp$stop_null <- min(min(multiple_correction)+0.1, multi_test_max)
+                tmp$stop_null <- min(min(multiple_testing_correction)+0.1, multi_test_max)
             }
         }
         
@@ -530,7 +531,8 @@ get_lfdr <- function(z, miss_idx = NULL){
                 lambda_max <- lambda_max - 0.05 # Decrement lambda_max if error occurs
             } else {try_run = 0}
         }
-        if (try_run==1){ lfdr_nomissing <- qvalue(pchisq(drop(z^2), 1, lower.tail = FALSE), lambda = 0)$lfdr }
+        if (try_run==1){ lfdr <- qvalue(pchisq(drop(z^2), 1, lower.tail = FALSE), lambda = 0)$lfdr}
+
     }
     return(lfdr)
 }
@@ -553,11 +555,11 @@ get_padj <- function(z, miss_idx = NULL, p.adjust.methods = "fdr"){ # test also 
 
                                                                                                                    
                                                                                                                    
-get_multiple_correction <- function(z, miss_idx = NULL, func_multi_test = "lfdr", 
+get_multiple_testing_correction <- function(z, miss_idx = NULL, func_multi_test = "lfdr", 
                                     ash_prior = "normal", 
                                     p.adjust.methods = "fdr"){
     
-   if (func_multi_test == "lfsr"){
+   if (func_multi_test == "lfsr") {
         lfsr = get_lfsr(z=z, miss_idx = miss_idx, ash_prior = ash_prior)
         return(lfsr)
     } else if (func_multi_test == "lfdr"){
@@ -566,6 +568,8 @@ get_multiple_correction <- function(z, miss_idx = NULL, func_multi_test = "lfdr"
     } else if (func_multi_test == "padj"){
         fdr = get_padj(z = z, miss_idx = miss_idx, p.adjust.methods = p.adjust.methods)
         return(fdr)
+    } else {
+        stop("Invalid option for func_multi_test")
     }
 
 }

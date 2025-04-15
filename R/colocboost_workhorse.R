@@ -70,17 +70,17 @@ colocboost_workhorse <- function(cb_data,
     if (!is.null(cb_model_para$true_stop)){
         if (sum(cb_model_para$update_y == 1) == 0){
           # - if all outcomes do not have signals, STOP
-          message(paste("Using multiple correction method :", func_multi_test,
-                        ". Stop ColocBoost since the no outcomes", target_outcome_idx, "have signals!"))
+          message(paste0("Using multiple testing correction method: ", func_multi_test,
+                        ". Stop ColocBoost since no outcomes ", target_outcome_idx, " have association signals."))
         } else {
-          message(paste("Using multiple correction method :", func_multi_test,
-                        ". Outcome", paste(cb_model_para$true_stop, collapse = ", "), 
-                        "for all variants are greater than",
+          message(paste0("Using multiple testing correction method: ", func_multi_test,
+                        ". Outcome ", paste(cb_model_para$true_stop, collapse = ", "), 
+                        " for all variants are greater than ",
                         multi_test_thresh, ". Will not update it!"))
         }
         if (!is.null(target_outcome_idx) & (M!= 1)){
             if (sum(cb_model_para$true_stop==target_outcome_idx)!=0){
-              message(paste("Stop ColocBoost since the target outcome", target_outcome_idx, "do not have signals!"))
+              message(paste("Stop ColocBoost since the target outcome", target_outcome_idx, "do not have association signals."))
               cb_model_para$update_y <- 0
             }
         }
@@ -159,12 +159,12 @@ colocboost_workhorse <- function(cb_data,
                 stop1 = abs(cb_model[[i]]$profile_loglike_each[M_i] - cb_model[[i]]$profile_loglike_each[M_i-1]) /
                   cb_model[[i]]$profile_loglike_each[M_i-1]  < cb_model[[i]]$stop_thresh
                 # stop2 = tail(abs(diff(cb_model[[i]]$obj_path)), n=1) < cb_model[[i]]$stop_thresh
-                multiple_correction <- get_multiple_correction(z=cb_model[[i]]$z, miss_idx = cb_data$data[[i]]$variable_miss, 
+                multiple_testing_correction <- get_multiple_testing_correction(z=cb_model[[i]]$z, miss_idx = cb_data$data[[i]]$variable_miss, 
                                                                func_multi_test = func_multi_test, 
                                                                ash_prior = ash_prior,
                                                                p.adjust.methods = p.adjust.methods)
-                cb_model[[i]]$multi_correction <- multiple_correction
-                stop2 = all(multiple_correction >= cb_model[[i]]$stop_null)
+                cb_model[[i]]$multi_correction <- multiple_testing_correction
+                stop2 = all(multiple_testing_correction >= cb_model[[i]]$stop_null)
                 # -- to ensure if some outcomes do not update previously
                 if (length(cb_model[[i]]$profile_loglike_each) >= 2){
                   stop[i] <- (stop1 | stop2) # (stop2 | stop3) # (stop1 | stop2 | stop3)

@@ -886,5 +886,3 @@ get_full_output <- function(cb_obj, past_out = NULL, variables = NULL, cb_output
   return(ll)
   
 }
-
-

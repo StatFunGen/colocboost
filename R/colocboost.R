@@ -501,9 +501,9 @@ colocboost <- function(X = NULL, Y = NULL, # individual data
     min_variables <- min(sapply(keep_variables, length))
     if (min_variables < 100){
       warning("Warning message about the number of variables.\n",
-              "The smallest number of variables across outcomes is ", min_variables, " <100. ",
-              "If this is what you expected, this is not a problem.",
-              "If this is not you expected, please check input data.")
+              "The smallest number of variables across outcomes is ", min_variables, "<100.",
+              " If this is what you expected, this is not a problem.",
+              " If this is not what you expected, please check input data.")
     }
     if (length(overlapped_variables)<=1){
       warning("Error: No or only 1 overlapping variables were found across all outcomes, colocalization cannot be performed. ",

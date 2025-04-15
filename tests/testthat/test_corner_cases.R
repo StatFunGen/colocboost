@@ -223,7 +223,7 @@ test_that("colocboost handles very small datasets", {
   colnames(X_small) <- paste0("SNP", 1:5)
   Y_small <- matrix(rnorm(10*2), 10, 2)
   Y_list_small <- list(Y_small[,1], Y_small[,2])
-  X_list_small <- list(test_data$X_small, test_data$X_small)
+  X_list_small <- list(X_small, X_small)
   
   # Run colocboost
   suppressWarnings({
