@@ -472,5 +472,3 @@ get_merge_ordered_with_indices <- function(vector_list) {
 
   result
 }
-
-                               

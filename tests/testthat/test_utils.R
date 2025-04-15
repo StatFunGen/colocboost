@@ -39,7 +39,7 @@ test_that("w_cs correctly identifies confidence set for weight vector", {
 # Test for get_in_cos function
 test_that("get_in_cos correctly identifies indices in confidence set", {
   # Create test weight vector
-  w <- c(0.1, 0.5, 0.2, 0.1, 0.1)
+  w <- c(0.12, 0.5, 0.2, 0.08, 0.06, 0.04)
   
   # Call function
   result <- get_in_cos(w, coverage = 0.7)
