@@ -23,10 +23,6 @@
 #' \item{colocalized_variables}{List of colocalized variables}
 #' \item{colocalized_variables_vcp}{Variant colocalization probabilities for all colocalized variables}
 #'
-#' @examples
-#' get_cos_summary(cb_output)
-#' get_cos_summary(cb_output, interest_outcome = c("Y1", "Y2"))
-#'
 #' @keywords cb_get_functions
 #' @export
 get_cos_summary <- function(cb_output, 
@@ -123,9 +119,6 @@ get_cos_summary <- function(cb_output,
 #' \item{cos_details}{A object with all information for colocalization results.}
 #' \item{data_info}{A object with detailed information from input data}
 #' \item{model_info}{A object with detailed information for colocboost model}
-#'
-#' @examples
-#' get_strong_colocalization(cb_output, cos_npc_cutoff = 0.5, npc_outcome_cutoff = 0.25)
 #'
 #' @keywords cb_get_functions
 #' @export
@@ -358,9 +351,6 @@ get_strong_colocalization <- function(cb_output,
 #' \item{ucos_index}{Indices of fine-mapped variables}
 #' \item{ucos_variables}{List of fine-mapped variables}
 #' \item{ucos_variables_pip}{Posterior inclusion probability (PIP) for all fine-mapped variables}
-#'
-#' @examples
-#' get_ucos_summary(cb_output)
 #'
 #' @keywords cb_get_functions
 #' @noRd

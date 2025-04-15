@@ -125,7 +125,7 @@ we need to have the higher learning rate to improve the computational efficiency
 
 \item{coloc_thresh}{The cutoff of checking if the best update jk-star is the potential causal variable for outcome l if jk-l is not similar to jk-star (used in Delayed SEC).}
 
-\item{lambda}{The ratio \link{0,1} for z^2 and z in fun_prior simplex, defult is 0.5}
+\item{lambda}{The ratio [0,1] for z^2 and z in fun_prior simplex, defult is 0.5}
 
 \item{lambda_target_outcome}{The ratio for z^2 and z in fun_prior simplex for the target outcome, default is 1}
 
@@ -209,8 +209,4 @@ The function \code{colocboost} implements the proximity smoothed gradient boosti
 There is an additional step to help merge the confidence sets with small \code{between_putiry}
 (default is 0.8) but within the same locus. This step addresses potential instabilities in linkage disequilibrium (LD) estimation
 that may arise from small sample sizes or discrepancies in minor allele frequencies (MAF) across different confidence sets.
-}
-\examples{
-colocboost(X=X, Y=Y)
-
 }

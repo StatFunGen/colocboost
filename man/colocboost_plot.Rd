@@ -95,8 +95,4 @@ Visualization plot for each colcoalization event.
 \description{
 \code{colocboost_plot} generates visualization plots for colocalization events from a ColocBoost analysis.
 }
-\examples{
-colocboost_plot(cb_output)
-
-}
 \keyword{cb_plot}

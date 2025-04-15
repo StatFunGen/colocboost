@@ -38,9 +38,4 @@ A summary table for colocalization events with the following columns:
 \description{
 \code{get_cos_summary} get the colocalization summary table with or without the outcomes of interest.
 }
-\examples{
-get_cos_summary(cb_output)
-get_cos_summary(cb_output, interest_outcome = c("Y1", "Y2"))
-
-}
 \keyword{cb_get_functions}
