@@ -45,7 +45,7 @@ ColocBoost can be generally used in multi-task variable selection regression pro
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>ColocBoost: A gradient boosting informed multi-omics xQTL colocalization method</h1>
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/readme_update/R/colocboost.R" class="external-link"><code>R/colocboost.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/doc_fix/R/colocboost.R" class="external-link"><code>R/colocboost.R</code></a></small>
       <div class="d-none name"><code>colocboost.Rd</code></div>
     </div>
 
@@ -237,7 +237,7 @@ we need to have the higher learning rate to improve the computational efficiency
 
 
 <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
-<dd><p>The ratio 0,1 for z^2 and z in fun_prior simplex, defult is 0.5</p></dd>
+<dd><p>The ratio [0,1] for z^2 and z in fun_prior simplex, defult is 0.5</p></dd>
 
 
 <dt id="arg-lambda-target-outcome">lambda_target_outcome<a class="anchor" aria-label="anchor" href="#arg-lambda-target-outcome"></a></dt>
@@ -382,14 +382,6 @@ There is an additional step to help merge the confidence sets with small <code>b
 that may arise from small sample sizes or discrepancies in minor allele frequencies (MAF) across different confidence sets.</p>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">colocboost</span><span class="op">(</span>X<span class="op">=</span><span class="va">X</span>, Y<span class="op">=</span><span class="va">Y</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Starting checking the input data.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'X' not found</span>
-<span class="r-in"><span></span></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
