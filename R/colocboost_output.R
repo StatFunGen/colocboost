@@ -142,19 +142,19 @@ get_strong_colocalization <- function(cb_output,
     return(cb_output)
   } else {
     if (is.null(pvalue_cutoff)){
-        message(paste("Extracting colocalization results with cos_npc_cutoff =", cos_npc_cutoff, "and npc_outcome_cutoff =", npc_outcome_cutoff, ".\n",
-                      "For each CoS, keep the outcomes configurations that the npc_outcome >", npc_outcome_cutoff, "."))
+        message(paste0("Extracting colocalization results with cos_npc_cutoff = ", cos_npc_cutoff, " and npc_outcome_cutoff = ", npc_outcome_cutoff, ".\n",
+                       "For each CoS, keep the outcomes configurations that the npc_outcome > ", npc_outcome_cutoff, "."))
     } else {
         if (pvalue_cutoff>1 | pvalue_cutoff<0){
             warnings("Please check the pvalue cutoff in [0,1].")
             return(cb_output)
         }
         if (npc_outcome_cutoff == 0 && cos_npc_cutoff == 0){
-           message(paste("Extracting colocalization results with pvalue_cutoff =", pvalue_cutoff, ".\n",
-                          "For each CoS, keep the outcomes configurations that pvalue of variants for the outcome <", pvalue_cutoff, "."))
+           message(paste0("Extracting colocalization results with pvalue_cutoff = ", pvalue_cutoff, ".\n",
+                          "For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < ", pvalue_cutoff, "."))
         } else {
-            message(paste("Extracting colocalization results with pvalue_cutoff =", pvalue_cutoff, ", cos_npc_cutoff =", cos_npc_cutoff, ", and npc_outcome_cutoff =", npc_outcome_cutoff, ".\n",
-                          "For each CoS, keep the outcomes configurations that pvalue of variants for the outcome <", pvalue_cutoff, " and npc_outcome >", npc_outcome_cutoff, "."))
+            message(paste0("Extracting colocalization results with pvalue_cutoff = ", pvalue_cutoff, ", cos_npc_cutoff = ", cos_npc_cutoff, ", and npc_outcome_cutoff = ", npc_outcome_cutoff, ".\n",
+                           "For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < ", pvalue_cutoff, " and npc_outcome >", npc_outcome_cutoff, "."))
         }
     }
   }

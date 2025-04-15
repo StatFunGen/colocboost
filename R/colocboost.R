@@ -501,7 +501,7 @@ colocboost <- function(X = NULL, Y = NULL, # individual data
     min_variables <- min(sapply(keep_variables, length))
     if (min_variables < 100){
       warning("Warning message about the number of variables.\n",
-              "The smallest number of variables across outcomes is ", min_variables, "<100.",
+              "The smallest number of variables across outcomes is ", min_variables, "< 100.",
               " If this is what you expected, this is not a problem.",
               " If this is not what you expected, please check input data.")
     }
@@ -513,8 +513,8 @@ colocboost <- function(X = NULL, Y = NULL, # individual data
       warning("Warning message about the overlapped variables.\n",
               "The average number of variables across outcomes is ", mean_variables, 
               ". But only ", length(overlapped_variables), " number of variables overlapped (<10%).\n",
-              "If this is what you expected, this is not a problem.\n",
-              "If this is not you expected, please check if the variable name matched across outcomes.")
+              " If this is what you expected, this is not a problem.",
+              " If this is not what you expected, please check if the variable name matched across outcomes.")
     }
     cb_data <- colocboost_init_data(X = X, Y = Y, dict_YX = yx_dict,
                                     Z = Z, LD = LD, N_sumstat = N_sumstat, dict_sumstatLD = sumstatLD_dict,
