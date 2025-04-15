@@ -6,15 +6,8 @@ This R package implements ColocBoost --- motivated and designed for colocalizati
 
 ## Installation
 
-### Conda
-Install major releases from conda (recommended)
-
-```bash
-conda install -c dnachun r-colocboost
-```
-
 ### CRAN
-Install released versions from cran
+Install released versions from CRAN - precompiled packages are available on macOS and Windows
 
 ```r
 install.packages("colocboost")
@@ -27,6 +20,25 @@ Install the development version from GitHub
 devtools::install_github("StatFunGen/colocboost")
 ```
 
+### Conda
+Install major releases using a conda-compatible package manager (recommended)
+
+Global pixi installation is the easiest way to use the conda package
+```bash
+pixi global install r-base # Install r-base as a global package if not already installed
+pixi global install --environment r-base r-colocboost # Inject r-colocboost into r-base global environment
+```
+The package can also be added to a local pixi environment
+```bash
+pixi workspace channel add dnachun # Add the dnachun channel to the workspace
+pixi add r-colocboost # Add r-colocboost as a dependency to the environment
+```
+Micromamba is recommended instead of conda or mamba for traditional conda environments
+```bash
+micromamba install -c dnachun r-colocboost
+mamba install -c dnachun r-colocboost
+conda install -c dnachun r-colocboost
+```
 ## Usage
 
 ### Single-trait Fine-mapping (FineBoost)
