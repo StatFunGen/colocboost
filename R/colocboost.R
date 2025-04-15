@@ -51,7 +51,7 @@
 #' @param jk_equiv_corr The LD cutoff between overall best update jk-star and marginal best update jk-l for lth outcome
 #' @param jk_equiv_loglik The change of loglikelihood cutoff between overall best update jk-star and marginal best update jk-l for lth outcome
 #' @param coloc_thresh The cutoff of checking if the best update jk-star is the potential causal variable for outcome l if jk-l is not similar to jk-star (used in Delayed SEC).
-#' @param lambda The ratio [0,1] for z^2 and z in fun_prior simplex, defult is 0.5
+#' @param lambda The ratio \[0,1\] for z^2 and z in fun_prior simplex, defult is 0.5
 #' @param lambda_target_outcome The ratio for z^2 and z in fun_prior simplex for the target outcome, default is 1
 #' @param func_simplex The data-driven local association simplex \eqn{\delta} for smoothing the weights. Default is "LD_z2z" is the elastic net for z-score and also weighted by LD.
 #' @param func_multi_test The alternative method to check the stop criteria. When \code{func_multi_test = "lfdr"}, boosting iterations will be stopped
@@ -98,10 +98,7 @@
 #'
 #' @importFrom stats na.omit
 #' @export
-#'
-#' @examples
-#' colocboost(X=X, Y=Y)
-#'
+
 colocboost <- function(X = NULL, Y = NULL, # individual data
                        sumstat = NULL, LD = NULL, # summary statistics: either Z, bhat, sebhat, N, var_Y,
                        ###### - index dict for X match multiple Y / LD match multiple sumstat

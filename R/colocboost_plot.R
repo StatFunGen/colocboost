@@ -38,9 +38,6 @@
 #' @importFrom graphics abline axis legend mtext par points text
 #' @importFrom grDevices adjustcolor
 #' 
-#' @examples
-#' colocboost_plot(cb_output)
-#'
 #' @keywords cb_plot
 #' @export
 colocboost_plot <- function(cb_output, y = "log10p", 

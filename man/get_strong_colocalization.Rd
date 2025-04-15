@@ -38,8 +38,4 @@ A \code{"colocboost"} object with some or all of the following elements:
 \description{
 \code{get_strong_colocalization} get the colocalization by discarding the weaker colocalization events or colocalized outcomes
 }
-\examples{
-get_strong_colocalization(cb_output, cos_npc_cutoff = 0.5, npc_outcome_cutoff = 0.25)
-
-}
 \keyword{cb_get_functions}
