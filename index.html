@@ -41,7 +41,6 @@
     <li><a class="dropdown-item" href="articles/ColocBoost_tutorial_cbsummary.html">ColocBoost Tutortial (Summary of ColocBoost results)</a></li>
     <li><a class="dropdown-item" href="articles/ColocBoost_tutorial_diagnostic.html">ColocBoost Tutortial (Diagnostic)</a></li>
     <li><a class="dropdown-item" href="articles/ColocBoost_tutorial_GTEx.html">ColocBoost Tutortial (GTEx tissues)</a></li>
-    <li><a class="dropdown-item" href="articles/Install.html">Installation Instructions for ColocBoost</a></li>
   </ul>
 </li>
       </ul>
@@ -66,24 +65,33 @@
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <div class="section level3">
-<h3 id="conda">Conda<a class="anchor" aria-label="anchor" href="#conda"></a>
-</h3>
-<p>Install major releases from conda (recommended)</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">conda</span> install <span class="at">-c</span> dnachun r-colocboost</span></code></pre></div>
-</div>
-<div class="section level3">
 <h3 id="cran">CRAN<a class="anchor" aria-label="anchor" href="#cran"></a>
 </h3>
-<p>Install released versions from cran</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<p>Install released versions from CRAN - pre-built packages are available on macOS and Windows</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"colocboost"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="github">GitHub<a class="anchor" aria-label="anchor" href="#github"></a>
 </h3>
 <p>Install the development version from GitHub</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"StatFunGen/colocboost"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="conda">Conda<a class="anchor" aria-label="anchor" href="#conda"></a>
+</h3>
+<p>Install major releases using pre-built conda package with a conda-compatible package manager (recommended)</p>
+<p>Global pixi installation is the easiest way to use the conda package</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">pixi</span> global install r-base <span class="co"># Install r-base as a global package if not already installed</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="ex">pixi</span> global install <span class="at">--environment</span> r-base r-colocboost <span class="co"># Inject r-colocboost into r-base global environment</span></span></code></pre></div>
+<p>The package can also be added to a local pixi environment</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">pixi</span> workspace channel add dnachun <span class="co"># Add the dnachun channel to the workspace</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="ex">pixi</span> add r-colocboost <span class="co"># Add r-colocboost as a dependency to the environment</span></span></code></pre></div>
+<p>Micromamba is recommended instead of conda or mamba for traditional conda environments</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">micromamba</span> install <span class="at">-c</span> dnachun r-colocboost</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="ex">mamba</span> install <span class="at">-c</span> dnachun r-colocboost</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="ex">conda</span> install <span class="at">-c</span> dnachun r-colocboost</span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -93,13 +101,13 @@
 <h3 id="single-trait-fine-mapping-fineboost">Single-trait Fine-mapping (FineBoost)<a class="anchor" aria-label="anchor" href="#single-trait-fine-mapping-fineboost"></a>
 </h3>
 <p>Run FineBoost for single-trait fine-mapping (similar interface to SuSiE)</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/colocboost.html">colocboost</a></span><span class="op">(</span>X<span class="op">=</span><span class="va">X</span>, Y<span class="op">=</span><span class="va">y</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="multi-trait-colocalization">Multi-trait Colocalization<a class="anchor" aria-label="anchor" href="#multi-trait-colocalization"></a>
 </h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Basic multi-trait analysis</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/colocboost.html">colocboost</a></span><span class="op">(</span>X<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, Y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">y1</span>, <span class="va">y2</span>, <span class="va">y3</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -127,7 +135,7 @@
 <h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
 </h2>
 <p>For detailed documentation, use the R help system:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">?</span><span class="va">colocboost</span></span>
 <span><span class="op">?</span><span class="va">colocboost_plot</span></span>
 <span><span class="op">?</span><span class="va">get_cos_summary</span></span>
@@ -171,7 +179,7 @@
 <li>Haochen Sun <br><small class="roles"> Author </small>  </li>
 <li>Ru Feng <br><small class="roles"> Author </small>  </li>
 <li>Rahul Mazumder <br><small class="roles"> Author </small>  </li>
-<li>The Alzheimer’s Disease Functional Genomics Consortium <br><small class="roles"> Author </small>  </li>
+<li>Daniel Nachun <br><small class="roles"> Author </small>  </li>
 <li>Kushal Dey <br><small class="roles"> Author </small>  </li>
 <li>Gao Wang <br><small class="roles"> Author </small>  </li>
 </ul>
@@ -184,7 +192,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Xuewei Cao, Haochen Sun, Ru Feng, Rahul Mazumder, The Alzheimer’s Disease Functional Genomics Consortium, Kushal Dey, Gao Wang.</p>
+  <p>Developed by Xuewei Cao, Haochen Sun, Ru Feng, Rahul Mazumder, Daniel Nachun, Kushal Dey, Gao Wang.</p>
 </div>
 
 <div class="pkgdown-footer-right">
