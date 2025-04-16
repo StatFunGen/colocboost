@@ -528,11 +528,6 @@ get_multiple_testing_correction <- function(z, miss_idx = NULL, func_multi_test 
 #'
 #' @return List containing processed data with optimized LD submatrix storage
 #' @noRd
-#' ld_matrices = LD
-#' variant_lists = variant_lists
-#' dict = dict_sumstatLD
-#' target_variants = keep_variable_names
-#' N = N_sumstat
 process_sumstat <- function(Z, N, Var_y, SeBhat, ld_matrices, variant_lists, dict, target_variants) {
   
   # Step 1: Identify unique combinations of (variant list, LD matrix)
