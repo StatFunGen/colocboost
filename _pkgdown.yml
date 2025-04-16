@@ -2,3 +2,29 @@ url: https://statfungen.github.io/colocboost
 
 template:
   bootstrap: 5
+
+reference:
+  - title: "Example Data"
+    desc: "Example datasets for demonstration and testing"
+    contents:
+    - has_concept("colocboost_data")
+
+  - title: "ColocBoost Main Function"
+    desc: "Core functions for colocalization analysis"
+    contents:
+    - has_concept("colocboost")
+
+  - title: "Post Inference"
+    desc: "Functions for post-analysis inference of ColocBoost results"
+    contents:
+    - has_concept("colocboost_inference")
+
+  - title: "Visualization"
+    desc: "Functions for visualizing ColocBoost results"
+    contents:
+    - has_concept("colocboost_plot")
+
+  - title: "Utilities"
+    desc: "Helper functions and utilities"
+    contents:
+    - has_concept("colocboost_utilities")

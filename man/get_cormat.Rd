@@ -17,4 +17,8 @@ A correlation matrix (LD matrix).
 \description{
 This function calculates the correlation matrix (LD matrix) from individual level data.
 }
-\keyword{cb_post_inference}
+\seealso{
+Other colocboost_utilities: 
+\code{\link{get_cos}()}
+}
+\concept{colocboost_utilities}

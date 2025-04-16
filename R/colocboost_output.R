@@ -7,7 +7,7 @@
 #' @param cb_output Output object from `colocboost` analysis
 #' @param outcome_names Optional vector of names of outcomes, which has the same order as Y in the original analysis.
 #' @param interest_outcome Optional vector specifying a subset of outcomes from \code{outcome_names} to focus on. When provided, only colocalization events that include at least one of these outcomes will be returned.
-#' @param gene_name Optional character string. When provided, adds a column with this gene name to the output table for easier filtering in downstream analyses.
+#' @param region_name Optional character string. When provided, adds a column with this gene name to the output table for easier filtering in downstream analyses.
 #'
 #' @return A summary table for colocalization events with the following columns:
 #' \item{focal_outcome}{The focal outcome being analyzed if exists. Otherwise, it is \code{FALSE}.}
@@ -23,12 +23,12 @@
 #' \item{colocalized_variables}{List of colocalized variables}
 #' \item{colocalized_variables_vcp}{Variant colocalization probabilities for all colocalized variables}
 #'
-#' @keywords cb_get_functions
+#' @family colocboost_inference
 #' @export
 get_cos_summary <- function(cb_output,
                             outcome_names = NULL,
                             interest_outcome = NULL,
-                            gene_name = NULL) {
+                            region_name = NULL) {
   if (!inherits(cb_output, "colocboost")) {
     stop("Input must from colocboost output!")
   }
@@ -65,8 +65,8 @@ get_cos_summary <- function(cb_output,
     summary_table[, 10] <- unlist(sapply(coloc_sets, function(tmp) paste0(tmp, collapse = "; ")))
     summary_table[, 11] <- unlist(sapply(cb_output$cos_details$cos$cos_variables, function(tmp) paste0(tmp, collapse = "; ")))
     summary_table[, 12] <- unlist(sapply(coloc_sets, function(tmp) paste0(vcp[tmp], collapse = "; ")))
-    if (!is.null(gene_name)) {
-      summary_table$gene_name <- gene_name
+    if (!is.null(region_name)) {
+      summary_table$region_name <- region_name
     }
     # - if focal colocalization
     focal_outcome_idx <- which(cb_output$data_info$outcome_info$is_focal)
@@ -128,7 +128,7 @@ get_cos_summary <- function(cb_output,
 #' \item{data_info}{A object with detailed information from input data}
 #' \item{model_info}{A object with detailed information for colocboost model}
 #'
-#' @keywords cb_get_functions
+#' @family colocboost_inference
 #' @export
 get_strong_colocalization <- function(cb_output,
                                       cos_npc_cutoff = 0.5,
@@ -359,22 +359,22 @@ get_strong_colocalization <- function(cb_output,
 #'
 #' @param cb_output Output object from `colocboost` analysis
 #' @param outcome_names Optional vector of names of outcomes, which has the same order as Y in the original analysis.
-#' @param gene_name Optional character string. When provided, adds a column with this gene name to the output table for easier filtering in downstream analyses.
+#' @param region_name Optional character string. When provided, adds a column with this gene name to the output table for easier filtering in downstream analyses.
 #'
 #' @return A summary table for fine-mapped events with the following columns:
 #' \item{outcomes}{Outcomes analyzed }
 #' \item{ucos_id}{Unique identifier for fine-mapped confidence sets }
 #' \item{purity}{Minimum absolute correlation of variables with in fine-mapped confidence sets }
-#' \item{top_variable}{The variable with highest posterior inclusion probability (PIP) }
-#' \item{top_variable_pip}{Posterior inclusion probability (PIP) for the top variable}
+#' \item{top_variable}{The variable with highest variant-level probability of association (VPA) }
+#' \item{top_variable_vpa}{Variant-level probability of association (VPA) for the top variable}
 #' \item{n_variables}{Number of variables in colocalization confidence set (CoS)}
 #' \item{ucos_index}{Indices of fine-mapped variables}
 #' \item{ucos_variables}{List of fine-mapped variables}
-#' \item{ucos_variables_pip}{Posterior inclusion probability (PIP) for all fine-mapped variables}
+#' \item{ucos_variables_vpa}{Variant-level probability of association (VPA) for all fine-mapped variables}
 #'
-#' @keywords cb_get_functions
+#' @family colocboost_inference
 #' @noRd
-get_ucos_summary <- function(cb_output, outcome_names = NULL, gene_name = NULL) {
+get_ucos_summary <- function(cb_output, outcome_names = NULL, region_name = NULL) {
   if (!inherits(cb_output, "colocboost")) {
     stop("Input must from colocboost object!")
   }
@@ -385,26 +385,26 @@ get_ucos_summary <- function(cb_output, outcome_names = NULL, gene_name = NULL) 
     if (!is.null(outcome_names)) {
       cs_outcome <- outcome_names
     }
-    pip <- as.numeric(cb_output$pip)
+    vpa <- as.numeric(cb_output$vpa)
 
     summary_table <- matrix(NA, nrow = length(specific_cs$ucos$ucos_index), ncol = 9)
     colnames(summary_table) <- c(
       "outcomes", "ucos_id", "purity",
-      "top_variable", "top_variable_pip", "n_variables", "ucos_index",
-      "ucos_variables", "ucos_variables_pip"
+      "top_variable", "top_variable_vpa", "n_variables", "ucos_index",
+      "ucos_variables", "ucos_variables_vpa"
     )
     summary_table <- as.data.frame(summary_table)
     summary_table[, 1] <- cs_outcome[unlist(specific_cs$ucos_outcomes$outcome_index)]
     summary_table[, 2] <- names(specific_cs$ucos$ucos_index)
     summary_table[, 3] <- as.numeric(diag(as.matrix(specific_cs$ucos_purity$min_abs_cor)))
     summary_table[, 4] <- unlist(sapply(specific_cs$ucos$ucos_variables, function(tmp) tmp[1]))
-    summary_table[, 5] <- sapply(specific_cs$ucos$ucos_index, function(tmp) max(pip[tmp]))
+    summary_table[, 5] <- sapply(specific_cs$ucos$ucos_index, function(tmp) max(vpa[tmp]))
     summary_table[, 6] <- as.numeric(sapply(specific_cs$ucos$ucos_index, length))
     summary_table[, 7] <- unlist(sapply(specific_cs$ucos$ucos_index, function(tmp) paste0(tmp, collapse = "; ")))
     summary_table[, 8] <- unlist(sapply(specific_cs$ucos$ucos_variables, function(tmp) paste0(tmp, collapse = "; ")))
-    summary_table[, 9] <- unlist(sapply(specific_cs$ucos$ucos_index, function(tmp) paste0(pip[tmp], collapse = "; ")))
-    if (!is.null(gene_name)) {
-      summary_table$gene_name <- gene_name
+    summary_table[, 9] <- unlist(sapply(specific_cs$ucos$ucos_index, function(tmp) paste0(vpa[tmp], collapse = "; ")))
+    if (!is.null(region_name)) {
+      summary_table$region_name <- region_name
     }
   } else {
     summary_table <- NULL
@@ -413,9 +413,17 @@ get_ucos_summary <- function(cb_output, outcome_names = NULL, gene_name = NULL) 
 }
 
 #' Extract CoS simply change the coverage without checking purity
-#' @keywords cb_get_functions
-#' @noRd
-get_cos_different_coverage <- function(cb_output, coverage = 0.95) {
+#' 
+#' @description `get_cos` get the colocalization confidence sets (CoS) with different coverage.
+#' 
+#' @param cb_output Output object from `colocboost` analysis
+#' @param coverage A number between 0 and 1 specifying the \dQuote{coverage} of the estimated colocalization confidence sets (CoS) (default is 0.95).
+#' 
+#' @return A list of indices of variables in each CoS.
+#' 
+#' @family colocboost_utilities
+#' @export
+get_cos <- function(cb_output, coverage = 0.95) {
   cos_vcp <- cb_output$cos_details$cos_vcp
   cos_diff_coverage <- lapply(cos_vcp, function(w) {
     unlist(get_in_cos(w, coverage = coverage))

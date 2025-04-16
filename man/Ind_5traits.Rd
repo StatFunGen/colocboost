@@ -24,4 +24,12 @@ Ind_5traits
 \description{
 An example dataset with simulated genotypes and outcomes for 5 traits
 }
+\seealso{
+Other colocboost_data: 
+\code{\link{Heterogeneous_Effect}},
+\code{\link{Non_Causal_Strongest_Marginal}},
+\code{\link{Sumstat_5traits}},
+\code{\link{Weaker_GWAS_Effect}}
+}
+\concept{colocboost_data}
 \keyword{datasets}

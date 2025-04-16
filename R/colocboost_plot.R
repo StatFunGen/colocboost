@@ -6,7 +6,7 @@
 #'
 #' @param cb_output Output object from `colocboost` analysis
 #' @param y Specifies the y-axis values, default is "log10p" for -log10 transformed marginal association p-values.
-#' @param pos Optional plotting range of x-axis to zoom in to a specific region.
+#' @param grange Optional plotting range of x-axis to zoom in to a specific region.
 #' @param plot_focal_only Logical, if TRUE only plots colocalization with focal outcome, default is FALSE.
 #' @param plot_cos_idx Optional indices of CoS to plot
 #' @param outcome_idx Optional indices of outcomes to include in the plot. \code{outcome_idx=NULL} to plot only the outcomes having colocalization.
@@ -17,7 +17,7 @@
 #' @param outcome_names Optional vector of outcomes names for the subtitle of each figure. \code{outcome_names=NULL} for the outcome name shown in \code{data_info}.
 #' @param plot_cols Number of columns in the plot grid, default is 2. If you have many colocalization. please consider increasing this.
 #' @param variant_coord Logical, if TRUE uses variant coordinates on x-axis, default is FALSE. This is required the variable names including position information.
-#' @param show_hits Logical, if TRUE shows top variables for each CoS, default is FALSE
+#' @param show_top_variables Logical, if TRUE shows top variables for each CoS, default is FALSE
 #' @param show_cos_to_uncoloc Logical, if TRUE shows colocalization to uncolocalized outcomes to diagnose, default is FALSE
 #' @param show_cos_to_uncoloc_idx Optional indices for showing CoS to all uncolocalized outcomes
 #' @param show_cos_to_uncoloc_outcome Optional outcomes for showing CoS to uncolocalized outcomes
@@ -37,11 +37,11 @@
 #' @importFrom utils head tail
 #' @importFrom graphics abline axis legend mtext par points text
 #' @importFrom grDevices adjustcolor
-#'
-#' @keywords cb_plot
+#' 
+#' @family colocboost_plot
 #' @export
 colocboost_plot <- function(cb_output, y = "log10p",
-                            pos = NULL,
+                            grange = NULL,
                             plot_focal_only = FALSE,
                             plot_cos_idx = NULL,
                             outcome_idx = NULL,
@@ -52,7 +52,7 @@ colocboost_plot <- function(cb_output, y = "log10p",
                             outcome_names = NULL,
                             plot_cols = 2,
                             variant_coord = FALSE,
-                            show_hits = FALSE,
+                            show_top_variables = FALSE,
                             show_cos_to_uncoloc = FALSE,
                             show_cos_to_uncoloc_idx = NULL,
                             show_cos_to_uncoloc_outcome = NULL,
@@ -91,20 +91,20 @@ colocboost_plot <- function(cb_output, y = "log10p",
   )
 
   colocboost_plot_basic <- function(cb_plot_input, cb_plot_init,
-                                    outcome_idx = NULL, pos = NULL,
+                                    outcome_idx = NULL, grange = NULL,
                                     plot_cols = 2,
                                     add_vertical = FALSE, add_vertical_idx = NULL,
-                                    show_hits = TRUE,
+                                    show_top_variables = TRUE,
                                     ...) {
     args <- list(...)
     args <- c(args, cb_plot_init[c("xlab", "ylab")])
     args$col <- cb_plot_init$bg
-    if (is.null(pos)) {
+    if (is.null(grange)) {
       args$x <- cb_plot_init$x
       y <- cb_plot_init$y
     } else {
-      args$x <- cb_plot_init$x[pos]
-      y <- lapply(cb_plot_init$y, function(yy) yy[pos])
+      args$x <- cb_plot_init$x[grange]
+      y <- lapply(cb_plot_init$y, function(yy) yy[grange])
     }
     args$pch <- cb_plot_init$pch
     args$cex.axis <- cb_plot_init$axis_size
@@ -199,7 +199,7 @@ colocboost_plot <- function(cb_output, y = "log10p",
           x0 <- intersect(args$x, cs)
           y1 <- args$y[match(x0, args$x)]
           points(x0, y1, pch = 21, bg = legend_text$col[i.cs], col = NA, cex = 2.5, lwd = 2.5)
-          if (show_hits) {
+          if (show_top_variables) {
             # add the hits points with "red"
             cs_hits <- as.numeric(cb_plot_input$cos_hits[[i.cs]])
             x_hits <- intersect(args$x, cs_hits)
@@ -250,10 +250,10 @@ colocboost_plot <- function(cb_output, y = "log10p",
   }
 
   colocboost_plot_basic(cb_plot_input, cb_plot_init,
-    pos = pos,
+    grange = grange,
     outcome_idx = outcome_idx, plot_cols = plot_cols,
     add_vertical = add_vertical, add_vertical_idx = add_vertical_idx,
-    show_hits = show_hits,
+    show_top_variables = show_top_variables,
     ...
   )
 }
@@ -378,7 +378,8 @@ get_input_plot <- function(cb_output, plot_cos_idx = NULL,
     "coef" = coef,
     "cos" = coloc_cos,
     "cos_hits" = coloc_hits,
-    "coloc_index" = coloc_index
+    "coloc_index" = coloc_index,
+    "select_cos" = select_cs
   )
 
   # check if plot cos to uncolocalized outcome
@@ -493,7 +494,7 @@ plot_initial <- function(cb_plot_input, y = "log10p",
 
     # cos_color <- c("#1F70A9", "#33A02C", "#CAB2D6", "#EA7827")
   }
-  args$col <- cos_color
+  args$col <- cos_color[cb_plot_input$select_cos]
 
   # - set data and x-lab and y-lab
   if (y == "log10p") {

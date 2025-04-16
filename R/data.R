@@ -10,6 +10,7 @@
 #'   \item{TrueCausalVariants}{List of causal variants}
 #' }
 #' @source See Cao et. al. 2025 for details. TO-DO-LIST
+#' @family colocboost_data
 "Ind_5traits"
 
 #' Summary level data for 5 traits
@@ -23,6 +24,7 @@
 #'   \item{TrueCausalVariants}{List of causal variants}
 #' }
 #' @source See Cao et. al. 2025 for details. TO-DO-LIST
+#' @family colocboost_data
 "Sumstat_5traits"
 
 
@@ -38,6 +40,7 @@
 #'   \item{TrueCausalVariants}{List of causal variants}
 #' }
 #' @source See Cao et. al. 2025 for details. TO-DO-LIST
+#' @family colocboost_data
 "Heterogeneous_Effect"
 
 
@@ -53,6 +56,7 @@
 #'   \item{TrueCausalVariants}{List of causal variants}
 #' }
 #' @source See Cao et. al. 2025 for details. TO-DO-LIST
+#' @family colocboost_data
 "Weaker_GWAS_Effect"
 
 
@@ -68,4 +72,5 @@
 #'   \item{TrueCausalVariants}{List of causal variants}
 #' }
 #' @source See Cao et. al. 2025 for details. TO-DO-LIST
+#' @family colocboost_data
 "Non_Causal_Strongest_Marginal"

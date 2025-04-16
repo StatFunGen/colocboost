@@ -12,8 +12,8 @@ colocboost(
   dict_YX = NULL,
   dict_sumstatLD = NULL,
   outcome_names = NULL,
-  target_outcome_idx = NULL,
-  target_outcome_variables = TRUE,
+  focal_outcome_idx = NULL,
+  focal_outcome_variables = TRUE,
   overlap_variables = FALSE,
   intercept = TRUE,
   standardize = TRUE,
@@ -32,7 +32,7 @@ colocboost(
   jk_equiv_loglik = 1,
   coloc_thresh = 0.1,
   lambda = 0.5,
-  lambda_target_outcome = 1,
+  lambda_focal_outcome = 1,
   func_simplex = "LD_z2z",
   func_multi_test = "lfdr",
   stop_null = 1,
@@ -86,9 +86,9 @@ The innovation: do not provide the same matrix in \code{LD} to reduce the comput
 
 \item{outcome_names}{The names of outcomes, which has the same order for Y.}
 
-\item{target_outcome_idx}{The index of the target outcome if perform GWAS-xQTL ColocBoost}
+\item{focal_outcome_idx}{The index of the focal outcome if perform GWAS-xQTL ColocBoost}
 
-\item{target_outcome_variables}{If \code{target_outcome_variables = TRUE}, only consider the variables exist in the target outcome.}
+\item{focal_outcome_variables}{If \code{focal_outcome_variables = TRUE}, only consider the variables exist in the focal outcome.}
 
 \item{overlap_variables}{If \code{overlap_variables = TRUE}, only perform colocalization in the overlapped region.}
 
@@ -127,7 +127,7 @@ we need to have the higher learning rate to improve the computational efficiency
 
 \item{lambda}{The ratio [0,1] for z^2 and z in fun_prior simplex, defult is 0.5}
 
-\item{lambda_target_outcome}{The ratio for z^2 and z in fun_prior simplex for the target outcome, default is 1}
+\item{lambda_focal_outcome}{The ratio for z^2 and z in fun_prior simplex for the focal outcome, default is 1}
 
 \item{func_simplex}{The data-driven local association simplex \eqn{\delta} for smoothing the weights. Default is "LD_z2z" is the elastic net for z-score and also weighted by LD.}
 
@@ -210,3 +210,24 @@ There is an additional step to help merge the confidence sets with small \code{b
 (default is 0.8) but within the same locus. This step addresses potential instabilities in linkage disequilibrium (LD) estimation
 that may arise from small sample sizes or discrepancies in minor allele frequencies (MAF) across different confidence sets.
 }
+\examples{
+# colocboost example
+set.seed(1)
+N = 1000
+P = 100
+# Generate X with LD structure
+sigma <- 0.9^abs(outer(1:P, 1:P, "-"))
+X <- MASS::mvrnorm(N, rep(0, P), sigma)
+colnames(X) <- paste0("SNP", 1:P)
+L = 3
+true_beta <- matrix(0, P, L)
+true_beta[5, 1] <- 0.5  # SNP5 affects trait 1
+true_beta[5, 2] <- 0.4  # SNP5 also affects trait 2 (colocalized)
+true_beta[10, 2] <- 0.3 # SNP10 only affects trait 2
+true_beta[20, 3] <- 0.6 # SNP20 only affects trait 3
+Y <- matrix(0, N, L)
+for (l in 1:L){  Y[, l] <- X \%*\% true_beta[, l] + rnorm(N, 0, 1) }
+res <- colocboost(X = X, Y = Y)
+
+}
+\concept{colocboost}

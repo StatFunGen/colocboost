@@ -24,4 +24,12 @@ Heterogeneous_Effect
 \description{
 An example dataset with simulated statistics and LD for 5 traits
 }
+\seealso{
+Other colocboost_data: 
+\code{\link{Ind_5traits}},
+\code{\link{Non_Causal_Strongest_Marginal}},
+\code{\link{Sumstat_5traits}},
+\code{\link{Weaker_GWAS_Effect}}
+}
+\concept{colocboost_data}
 \keyword{datasets}
