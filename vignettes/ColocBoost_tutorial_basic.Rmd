@@ -39,9 +39,9 @@ This command initiates the colocalization analysis, applying the ColocBoost meth
 After running the analysis, you can explore the results to identify colocalized variants and review the summary statistics. This output will provide insights into which variants are colocalized across the different phenotypes and offer a comprehensive overview of the statistical results from the colocalization analysis.
 
 ```{r indResults}
-res$coloc_results$coloc_csets$csets_index
+res$cos_details$cos$cos_index
 
-res$summary_table
+res$cos_summary
 
 ```
 
@@ -54,7 +54,8 @@ This tutorial demonstrates how to analyze summary statistics data using `colocbo
 To get started, load the `Sumstat_5traits` dataset into your R session. Note: The `Sumstat_5traits` dataset includes only one LD matrix that applies to all traits. To demonstrate handling multiple traits, we replicate this single LD matrix for each trait as follows. To analyze the data using summary statistics, apply the colocboost function specifying the summary statistics and LD matrices.
 ```{r sumstat}
 data("Sumstat_5traits")
-LD <- lapply(1:5, function(i) Sumstat_5traits$LD)
+data("Ind_5traits")
+LD <- get_cormat(Ind_5traits$X[[1]])
 res <- colocboost(sumstat = Sumstat_5traits$sumstat, LD = LD)
 ```
 *Note*: This step duplicates the single LD matrix into a list of five matrices, one for each trait. This is to mimic scenarios where different traits might have different LD structures. ColocBoost allows for the input of a single LD matrix if the LD across traits is consistent. For more advanced usage involving different LD matrices or more complex setups, please refer to the advanced tutorial (URL).
@@ -64,9 +65,9 @@ res <- colocboost(sumstat = Sumstat_5traits$sumstat, LD = LD)
 After running the analysis, you can explore the results to identify colocalized variants and review the summary statistics. This output will provide insights into which variants are colocalized across the different phenotypes and offer a comprehensive overview of the statistical results from the colocalization analysis.
 
 ```{r sumstatResults}
-res$coloc_results$coloc_csets$csets_index
+res$cos_details$cos$cos_index
 
-res$summary_table
+res$cos_summary
 ```
 This section of the analysis provides insights into which variants are colocalized across the different phenotypes and offers a comprehensive overview of the statistical results from the colocalization analysis.
 
@@ -85,7 +86,7 @@ data("Sumstat_5traits")
 X <- Ind_5traits$X[1:3]
 Y <- Ind_5traits$Y[1:3]
 sumstat <- Sumstat_5traits$sumstat[4:5]
-LD <- lapply(1:2, function(i) Sumstat_5traits$LD)
+LD <- get_cormat(Ind_5traits$X[[1]])
 ```
 *Note*: This step duplicates the single LD matrix into a list of two matrices, one for each trait. This is to mimic scenarios where different traits might have different LD structures. ColocBoost allows for the input of a single LD matrix if the LD across traits is consistent. For more advanced usage involving different LD matrices or more complex setups, please refer to the advanced tutorial (URL).
 
@@ -98,9 +99,9 @@ res <- colocboost(X = X, Y = Y, sumstat = sumstat, LD = LD)
 
 After running the analysis, you can explore the results to identify colocalized variants and review the summary statistics. This output will provide insights into which variants are colocalized across the different phenotypes and offer a comprehensive overview of the statistical results from the colocalization analysis.
 ```{r mixResults}
-res$coloc_results$coloc_csets$csets_index
+res$cos_details$cos$cos_index
 
-res$summary_table
+res$cos_summary
 ```
 This section of the analysis provides insights into which variants are colocalized across the different phenotypes and offers a comprehensive overview of the statistical results from the colocalization analysis.
 

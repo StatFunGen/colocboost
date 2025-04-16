@@ -34,7 +34,7 @@ data("Ind_5traits")
 X <- Ind_5traits$X[[1]]
 Y <- do.call(cbind, Ind_5traits$Y)
 res <- colocboost(X = X, Y = Y)
-res$summary_table
+res$cos_summary
 ```
 
 **Example of using summary statistics**
@@ -44,9 +44,9 @@ For summary statistics, similar optimization is applied using `Sumstat_5traits` 
 ```{r oneLD}
 data("Sumstat_5traits")
 sumstat <- Sumstat_5traits$sumstat
-LD <- Sumstat_5traits$LD
+LD <- get_cormat(Ind_5traits$X[[1]])
 res <- colocboost(sumstat = sumstat, LD = LD)
-res$summary_table
+res$cos_summary
 ```
 
 **Example of combining individual-level data and summary statistics**
@@ -60,9 +60,9 @@ X <- Ind_5traits$X[[1]]
 Y <- do.call(cbind, Ind_5traits$Y[1:3])
 data("Sumstat_5traits")
 sumstat <- Sumstat_5traits$sumstat[4:5]
-LD <- Sumstat_5traits$LD
+LD <- get_cormat(Ind_5traits$X[[1]])
 res <- colocboost(X = X, Y = Y, sumstat = sumstat, LD = LD)
-res$summary_table
+res$cos_summary
 ```
 
 
