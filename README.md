@@ -41,12 +41,6 @@ conda install -c dnachun r-colocboost
 ```
 ## Usage
 
-### Single-trait Fine-mapping (FineBoost)
-Run FineBoost for single-trait fine-mapping (similar interface to SuSiE)
-```r
-result <- colocboost(X=X, Y=y)
-```
-
 ### Multi-trait Colocalization
 ```r
 # Basic multi-trait analysis
@@ -66,6 +60,12 @@ filtered <- get_strong_colocalization(result, cos_npc_cutoff = 0.5)
 ```
 
 For more complex analyses involving multiple datasets mixing individual level and summary statistics data, we recommend using [this pipeline wrapper](https://github.com/StatFunGen/pecotmr/blob/main/R/colocboost_pipeline.R) from the `pecotmr` package. The `pecotmr` package can be installed either from source or from our conda package at https://anaconda.org/dnachun/r-pecotmr.
+
+### Single-trait Fine-mapping (FineBoost) - Special Case
+Run FineBoost for single-trait fine-mapping (similar interface to SuSiE)
+```r
+result <- colocboost(X=X, Y=y)
+```
 
 ## Citation
 

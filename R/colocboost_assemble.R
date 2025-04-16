@@ -63,7 +63,7 @@ colocboost_assemble <- function(cb_obj,
                 cb_output <- cb_output[c("cos_summary", "vcp", "cos_details", "data_info", "model_info", "ucos_details", "diagnostic_details")]
             }
             if (data_info$n_outcome == 1){
-              cb_output <- list("ucos_summary", "pip" = NULL, "ucos_details" = NULL, "data_info" = data_info)
+              cb_output <- list("ucos_summary", "vpa" = NULL, "ucos_details" = NULL, "data_info" = data_info)
             }
         }
 
@@ -223,14 +223,14 @@ colocboost_assemble <- function(cb_obj,
             cb_output <- cb_output[-match(c("cos_summary","vcp","cos_details"), names(cb_output))]
             remain_obj <- names(cb_output)
             if (!is.null(cb_output$ucos_details$ucos)){
-              cb_output$pip <- apply(do.call(cbind,cb_output$ucos_details$ucos_weight), 1, function(w0) 1-prod(1-w0))
-              names(cb_output$pip) <- data_info$variables
+              cb_output$vpa <- apply(do.call(cbind,cb_output$ucos_details$ucos_weight), 1, function(w0) 1-prod(1-w0))
+              names(cb_output$vpa) <- data_info$variables
               cb_output$ucos_summary <- get_ucos_summary(cb_output)
             } else {
-              tmp <- list("pip" = NULL, "ucos_summary" = NULL)
+              tmp <- list("vpa" = NULL, "ucos_summary" = NULL)
               cb_output <- c(cb_output, tmp)
             }
-            cb_output <- cb_output[c("ucos_summary", "pip", remain_obj)]
+            cb_output <- cb_output[c("ucos_summary", "vpa", remain_obj)]
           }
         }
     }
