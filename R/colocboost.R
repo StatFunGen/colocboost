@@ -30,8 +30,8 @@
 #'                  The first column should be 1:L for L sumstat The second column should be the index of \code{LD} corresponding to the sumstat.
 #'                  The innovation: do not provide the same matrix in \code{LD} to reduce the computational burden.
 #' @param outcome_names The names of outcomes, which has the same order for Y.
-#' @param target_outcome_idx The index of the target outcome if perform GWAS-xQTL ColocBoost
-#' @param target_outcome_variables If \code{target_outcome_variables = TRUE}, only consider the variables exist in the target outcome.
+#' @param focal_outcome_idx The index of the focal outcome if perform GWAS-xQTL ColocBoost
+#' @param focal_outcome_variables If \code{focal_outcome_variables = TRUE}, only consider the variables exist in the focal outcome.
 #' @param overlap_variables If \code{overlap_variables = TRUE}, only perform colocalization in the overlapped region.
 #' @param intercept If \code{intercept = TRUE}, the intercept is fitted. Setting \code{intercept = FALSE} is generally not recommended.
 #' @param standardize If \code{standardize = TRUE}, standardize the columns of genotype and outcomes to unit variance.
@@ -52,7 +52,7 @@
 #' @param jk_equiv_loglik The change of loglikelihood cutoff between overall best update jk-star and marginal best update jk-l for lth outcome
 #' @param coloc_thresh The cutoff of checking if the best update jk-star is the potential causal variable for outcome l if jk-l is not similar to jk-star (used in Delayed SEC).
 #' @param lambda The ratio \[0,1\] for z^2 and z in fun_prior simplex, defult is 0.5
-#' @param lambda_target_outcome The ratio for z^2 and z in fun_prior simplex for the target outcome, default is 1
+#' @param lambda_focal_outcome The ratio for z^2 and z in fun_prior simplex for the focal outcome, default is 1
 #' @param func_simplex The data-driven local association simplex \eqn{\delta} for smoothing the weights. Default is "LD_z2z" is the elastic net for z-score and also weighted by LD.
 #' @param func_multi_test The alternative method to check the stop criteria. When \code{func_multi_test = "lfdr"}, boosting iterations will be stopped
 #'                      if the local FDR for all variables are greater than \code{lfsr_max}.
@@ -106,8 +106,8 @@ colocboost <- function(X = NULL, Y = NULL, # individual data
                        dict_sumstatLD = NULL, # sumstat index for 1st column, LD index for 2nd column
                        outcome_names = NULL, # the names of outcomes
                        ###### - GWAS-xQTL verison
-                       target_outcome_idx = NULL,
-                       target_outcome_variables = TRUE,
+                       focal_outcome_idx = NULL,
+                       focal_outcome_variables = TRUE,
                        overlap_variables = FALSE,
                        intercept = TRUE, # centered genotype and phenotype
                        standardize = TRUE, # standardized genotype and phenotype
@@ -128,7 +128,7 @@ colocboost <- function(X = NULL, Y = NULL, # individual data
                        jk_equiv_loglik = 1, # check if jk_star ~ jk_r.
                        coloc_thresh = 0.1,
                        lambda = 0.5, # the ratio for z^2 and z in weight penalty
-                       lambda_target_outcome = 1, # the ratio for z^2 and z in weight penalty for target outcome
+                       lambda_focal_outcome = 1, # the ratio for z^2 and z in weight penalty for focal outcome
                        func_simplex = "LD_z2z", # data-driven association simplex
                        func_multi_test = "lfdr",
                        stop_null = 1,
@@ -557,8 +557,8 @@ colocboost <- function(X = NULL, Y = NULL, # individual data
     Z = Z, LD = LD, N_sumstat = N_sumstat, dict_sumstatLD = sumstatLD_dict,
     Var_y = Var_y, SeBhat = SeBhat,
     keep_variables = keep_variables,
-    target_outcome_idx = target_outcome_idx,
-    target_outcome_variables = target_outcome_variables,
+    focal_outcome_idx = focal_outcome_idx,
+    focal_outcome_variables = focal_outcome_variables,
     overlap_variables = overlap_variables,
     intercept = intercept,
     standardize = standardize,
@@ -575,7 +575,7 @@ colocboost <- function(X = NULL, Y = NULL, # individual data
     learning_rate_decay = learning_rate_decay,
     func_simplex = func_simplex,
     lambda = lambda,
-    lambda_target_outcome = lambda_target_outcome,
+    lambda_focal_outcome = lambda_focal_outcome,
     stop_thresh = stop_thresh,
     func_multi_test = func_multi_test,
     stop_null = stop_null,
@@ -589,7 +589,7 @@ colocboost <- function(X = NULL, Y = NULL, # individual data
     coloc_thresh = coloc_thresh,
     LD_free = LD_free,
     dynamic_learning_rate = dynamic_learning_rate,
-    target_outcome_idx = target_outcome_idx,
+    focal_outcome_idx = focal_outcome_idx,
     outcome_names = outcome_names
   )
 

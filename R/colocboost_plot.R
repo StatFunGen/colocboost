@@ -7,7 +7,7 @@
 #' @param cb_output Output object from `colocboost` analysis
 #' @param y Specifies the y-axis values, default is "log10p" for -log10 transformed marginal association p-values.
 #' @param pos Optional plotting range of x-axis to zoom in to a specific region.
-#' @param plot_target_only Logical, if TRUE only plots colocalization with target outcome, default is FALSE.
+#' @param plot_focal_only Logical, if TRUE only plots colocalization with focal outcome, default is FALSE.
 #' @param plot_cos_idx Optional indices of CoS to plot
 #' @param outcome_idx Optional indices of outcomes to include in the plot. \code{outcome_idx=NULL} to plot only the outcomes having colocalization.
 #' @param points_color Background color for non-colocalized variables, default is "grey80".
@@ -42,7 +42,7 @@
 #' @export
 colocboost_plot <- function(cb_output, y = "log10p",
                             pos = NULL,
-                            plot_target_only = FALSE,
+                            plot_focal_only = FALSE,
                             plot_cos_idx = NULL,
                             outcome_idx = NULL,
                             points_color = "grey80",
@@ -73,7 +73,7 @@ colocboost_plot <- function(cb_output, y = "log10p",
   # get cb_plot_input data from colocboost results
   cb_plot_input <- get_input_plot(cb_output,
     plot_cos_idx = plot_cos_idx,
-    plot_target_only = plot_target_only,
+    plot_focal_only = plot_focal_only,
     variant_coord = variant_coord,
     outcome_names = outcome_names,
     show_cos_to_uncoloc = show_cos_to_uncoloc,
@@ -135,15 +135,15 @@ colocboost_plot <- function(cb_output, y = "log10p",
         coloc_index <- cb_plot_input$coloc_index
         outcome_idx <- Reduce(union, coloc_index)
       }
-      if (!is.null(cb_plot_input$target_outcome)) {
-        p_target <- grep(cb_plot_input$target_outcome, outcomes)
-        include_target <- sapply(cb_plot_input$coloc_index, function(ci) {
-          p_target %in% ci
+      if (!is.null(cb_plot_input$focal_outcome)) {
+        p_focal <- grep(cb_plot_input$focal_outcome, outcomes)
+        include_focal <- sapply(cb_plot_input$coloc_index, function(ci) {
+          p_focal %in% ci
         })
-        if (any(include_target)) {
-          coloc_index <- cb_plot_input$coloc_index[order(include_target == "FALSE")]
+        if (any(include_focal)) {
+          coloc_index <- cb_plot_input$coloc_index[order(include_focal == "FALSE")]
           coloc_index <- Reduce(union, coloc_index)
-          outcome_idx <- c(p_target, setdiff(coloc_index, p_target))
+          outcome_idx <- c(p_focal, setdiff(coloc_index, p_focal))
         }
       }
     }
@@ -262,7 +262,7 @@ colocboost_plot <- function(cb_output, y = "log10p",
 
 # get input data for cb_plot
 get_input_plot <- function(cb_output, plot_cos_idx = NULL,
-                           plot_target_only = FALSE,
+                           plot_focal_only = FALSE,
                            variant_coord = FALSE,
                            outcome_names = NULL,
                            show_cos_to_uncoloc = FALSE,
@@ -276,15 +276,15 @@ get_input_plot <- function(cb_output, plot_cos_idx = NULL,
 
   # extract results from colocboost
   analysis_outcome <- cb_output$data_info$outcome_info$outcome_names
-  target_outcome_idx <- which(cb_output$data_info$outcome_info$is_target)
-  if (length(target_outcome_idx) != 0) {
-    target_outcome <- analysis_outcome[target_outcome_idx]
+  focal_outcome_idx <- which(cb_output$data_info$outcome_info$is_focal)
+  if (length(focal_outcome_idx) != 0) {
+    focal_outcome <- analysis_outcome[focal_outcome_idx]
   } else {
-    target_outcome <- NULL
+    focal_outcome <- NULL
   }
-  # check if target cos
-  target_cos <- cb_output$cos_summary$cos_id[cb_output$cos_summary$target_outcome != FALSE]
-  if_target <- !is.na(match(names(cb_output$cos_details$cos$cos_variables), target_cos))
+  # check if focal cos
+  focal_cos <- cb_output$cos_summary$cos_id[cb_output$cos_summary$focal_outcome != FALSE]
+  if_focal <- !is.na(match(names(cb_output$cos_details$cos$cos_variables), focal_cos))
   # extract z-scores
   variables <- cb_output$data_info$variables
   Z <- cb_output$data_info$z
@@ -299,7 +299,7 @@ get_input_plot <- function(cb_output, plot_cos_idx = NULL,
     if (!is.null(cb_output$cos_details$cos$cos_variables)) {
       cb_output$cos_details$cos_vcp <- cb_output$ucos_details$ucos_weight
     }
-    if_target <- rep(TRUE, length(cb_output$cos_details$cos$cos_variables))
+    if_focal <- rep(TRUE, length(cb_output$cos_details$cos$cos_variables))
   }
   # extract coloc_cos
   coloc_variables <- cb_output$cos_details$cos$cos_variables
@@ -325,11 +325,11 @@ get_input_plot <- function(cb_output, plot_cos_idx = NULL,
     ncos <- length(cb_output$cos_details$cos$cos_index)
 
     select_cs <- 1:ncos
-    if (plot_target_only) {
-      if (sum(if_target) == 0) {
-        message("No target CoS, draw all CoS.")
+    if (plot_focal_only) {
+      if (sum(if_focal) == 0) {
+        message("No focal CoS, draw all CoS.")
       } else {
-        select_cs <- which(if_target)
+        select_cs <- which(if_focal)
       }
     } else {
       if (!is.null(plot_cos_idx)) {
@@ -370,7 +370,7 @@ get_input_plot <- function(cb_output, plot_cos_idx = NULL,
   }
   plot_input <- list(
     "outcomes" = analysis_outcome,
-    "target_outcome" = target_outcome,
+    "focal_outcome" = focal_outcome,
     "variables" = variables,
     "x" = x,
     "Zscores" = Z,

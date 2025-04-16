@@ -12,9 +12,9 @@ colocboost_check_update_jk <- function(cb_model, cb_model_para, cb_data,
                                        func_compare = "min_max", ##### more than 3 traits
                                        coloc_thresh = 0.1) {
   pos.update <- which(cb_model_para$update_y == 1)
-  target_outcome_idx <- cb_model_para$target_outcome_idx
-  if (is.null(target_outcome_idx)) {
-    cb_model_para <- boost_check_update_jk_notarget(cb_model, cb_model_para, cb_data,
+  focal_outcome_idx <- cb_model_para$focal_outcome_idx
+  if (is.null(focal_outcome_idx)) {
+    cb_model_para <- boost_check_update_jk_nofocal(cb_model, cb_model_para, cb_data,
       prioritize_jkstar = prioritize_jkstar,
       jk_equiv_corr = jk_equiv_corr,
       jk_equiv_loglik = jk_equiv_loglik,
@@ -22,17 +22,17 @@ colocboost_check_update_jk <- function(cb_model, cb_model_para, cb_data,
       coloc_thresh = coloc_thresh
     )
   } else {
-    if (target_outcome_idx %in% pos.update) {
-      cb_model_para <- boost_check_update_jk_target(cb_model, cb_model_para, cb_data,
+    if (focal_outcome_idx %in% pos.update) {
+      cb_model_para <- boost_check_update_jk_focal(cb_model, cb_model_para, cb_data,
         prioritize_jkstar = prioritize_jkstar,
         jk_equiv_corr = jk_equiv_corr,
         jk_equiv_loglik = jk_equiv_loglik,
         func_compare = func_compare,
         coloc_thresh = coloc_thresh,
-        target_outcome_idx = target_outcome_idx
+        focal_outcome_idx = focal_outcome_idx
       )
     } else {
-      cb_model_para <- boost_check_update_jk_notarget(cb_model, cb_model_para, cb_data,
+      cb_model_para <- boost_check_update_jk_nofocal(cb_model, cb_model_para, cb_data,
         prioritize_jkstar = prioritize_jkstar,
         jk_equiv_corr = jk_equiv_corr,
         jk_equiv_loglik = jk_equiv_loglik,
@@ -47,7 +47,7 @@ colocboost_check_update_jk <- function(cb_model, cb_model_para, cb_data,
 
 
 #' @importFrom stats median
-boost_check_update_jk_notarget <- function(cb_model, cb_model_para, cb_data,
+boost_check_update_jk_nofocal <- function(cb_model, cb_model_para, cb_data,
                                            prioritize_jkstar = TRUE,
                                            jk_equiv_corr = 0.8, ##### more than 2 traits
                                            jk_equiv_loglik = 1, ## more than 2 traits
@@ -327,13 +327,13 @@ boost_check_update_jk_notarget <- function(cb_model, cb_model_para, cb_data,
 }
 
 
-boost_check_update_jk_target <- function(cb_model, cb_model_para, cb_data,
+boost_check_update_jk_focal <- function(cb_model, cb_model_para, cb_data,
                                          prioritize_jkstar = TRUE,
                                          jk_equiv_corr = 0.8, ##### more than 2 traits
                                          jk_equiv_loglik = 1, ## more than 2 traits
                                          func_compare = "min_max", ##### more than 3 traits
                                          coloc_thresh = 0.1,
-                                         target_outcome_idx = 1) {
+                                         focal_outcome_idx = 1) {
   ############# Output #################
   # we will obtain and update the cb_model_para$update_status and cb_model_para$real_update_jk
   ######################################
@@ -372,42 +372,42 @@ boost_check_update_jk_target <- function(cb_model, cb_model_para, cb_data,
       jk_temp <- which(temp == max(temp))
       return(ifelse(length(jk_temp) == 1, jk_temp, sample(jk_temp, 1)))
     })
-    pp_target <- which(pos.update == target_outcome_idx)
-    jk_target <- jk_each[pp_target]
+    pp_focal <- which(pos.update == focal_outcome_idx)
+    jk_focal <- jk_each[pp_focal]
 
-    # - if jk_target missing in all other traits
+    # - if jk_focal missing in all other traits
     data_update <- cb_data$data[pos.update]
-    variable_missing <- Reduce("intersect", lapply(data_update[-pp_target], function(d) d$variable_miss))
-    if (jk_target %in% variable_missing) {
-      # ---- first, check LD between jk_target and jk_each based on target LD
-      ld <- sapply(jk_each[-pp_target], function(jki) {
-        get_LD_jk1_jk2(jk_target, jki,
-          X = cb_data$data[[X_dict[pp_target]]]$X,
-          XtX = cb_data$data[[X_dict[pp_target]]]$XtX,
-          N = cb_data$data[[X_dict[pp_target]]]$N,
+    variable_missing <- Reduce("intersect", lapply(data_update[-pp_focal], function(d) d$variable_miss))
+    if (jk_focal %in% variable_missing) {
+      # ---- first, check LD between jk_focal and jk_each based on focal LD
+      ld <- sapply(jk_each[-pp_focal], function(jki) {
+        get_LD_jk1_jk2(jk_focal, jki,
+          X = cb_data$data[[X_dict[pp_focal]]]$X,
+          XtX = cb_data$data[[X_dict[pp_focal]]]$XtX,
+          N = cb_data$data[[X_dict[pp_focal]]]$N,
           remain_jk = 1:cb_model_para$P
         )
       })
       # ----- second, if within the same LD buddies, select the following variants
       if (max(ld) > jk_equiv_corr) {
-        cor_target <- abs_cor_vals_each[, pp_target]
-        order_cor <- order(cor_target, decreasing = TRUE)
-        jk_target_tmp <- setdiff(order_cor, variable_missing)[1]
+        cor_focal <- abs_cor_vals_each[, pp_focal]
+        order_cor <- order(cor_focal, decreasing = TRUE)
+        jk_focal_tmp <- setdiff(order_cor, variable_missing)[1]
         # ----- third, if picked variant within the same LD buddies
-        ld_tmp <- get_LD_jk1_jk2(jk_target, jk_target_tmp,
-          XtX = cb_data$data[[X_dict[pp_target]]]$XtX,
+        ld_tmp <- get_LD_jk1_jk2(jk_focal, jk_focal_tmp,
+          XtX = cb_data$data[[X_dict[pp_focal]]]$XtX,
           remain_jk = 1:cb_model_para$P
         )
         if (ld_tmp > jk_equiv_corr) {
-          jk_target <- jk_target_tmp
-          jk_each[pp_target] <- jk_target
+          jk_focal <- jk_focal_tmp
+          jk_each[pp_focal] <- jk_focal
         }
       }
     }
 
 
-    # -- check jk_target and jk_each
-    judge_each <- check_jk_jkeach(jk_target, jk_each,
+    # -- check jk_focal and jk_each
+    judge_each <- check_jk_jkeach(jk_focal, jk_each,
       pos.update,
       model_update = model_update,
       cb_data = cb_data,
@@ -416,11 +416,11 @@ boost_check_update_jk_target <- function(cb_model, cb_model_para, cb_data,
       jk_equiv_loglik = jk_equiv_loglik
     )
 
-    judge_notarget <- judge_each[-pp_target]
-    update_jk[c(1, pos.update + 1)] <- c(jk_target, jk_each)
+    judge_nofocal <- judge_each[-pp_focal]
+    update_jk[c(1, pos.update + 1)] <- c(jk_focal, jk_each)
 
-    if (all(judge_notarget)) {
-      # -- all strongest signals for non-target are the same as strongest signal for target trait
+    if (all(judge_nofocal)) {
+      # -- all strongest signals for non-focal are the same as strongest signal for focal trait
       # -- update all Y at jk
       update_status[pos.update] <- 1
       abs_cor_vals <- rowSums(abs_cor_vals_each)
@@ -432,55 +432,55 @@ boost_check_update_jk_target <- function(cb_model, cb_model_para, cb_data,
       } else {
         real_update_jk[pos.update] <- jk_each
       }
-    } else if (all(!judge_notarget)) {
-      # -- all strongest signals for non-target are different from the strongest signal for target trait
+    } else if (all(!judge_nofocal)) {
+      # -- all strongest signals for non-focal are different from the strongest signal for focal trait
       check_coloc <- sapply(pos.update, function(i) {
-        check_temp <- cb_model[[i]]$change_loglike[jk_target] > cb_model_para$coloc_thresh
+        check_temp <- cb_model[[i]]$change_loglike[jk_focal] > cb_model_para$coloc_thresh
         return(check_temp)
       })
-      check_coloc <- check_coloc[-pp_target]
+      check_coloc <- check_coloc[-pp_focal]
 
-      # -- jk_target is colocalized for which trait
+      # -- jk_focal is colocalized for which trait
       pos_not_coloc <- which(check_coloc)
       if (length(pos_not_coloc) == 0) {
-        # - update target trait at jk_target only
-        update_status[pos.update[pp_target]] <- -1
-        real_update_jk[pos.update[pp_target]] <- jk_target
+        # - update focal trait at jk_focal only
+        update_status[pos.update[pp_focal]] <- -1
+        real_update_jk[pos.update[pp_focal]] <- jk_focal
       } else {
-        # - if jk_target is colocalized variant for the trait with jk_each != jk
+        # - if jk_focal is colocalized variant for the trait with jk_each != jk
         # - update this trait at jk_each
-        pp_tmp <- pos.update[-pp_target]
+        pp_tmp <- pos.update[-pp_focal]
         update_status[pp_tmp[pos_not_coloc]] <- -1
-        real_update_jk[pp_tmp[pos_not_coloc]] <- jk_each[-pp_target][pos_not_coloc]
+        real_update_jk[pp_tmp[pos_not_coloc]] <- jk_each[-pp_focal][pos_not_coloc]
       }
     } else {
-      # -- define two sets of traits: one for jk_target = jk_each, one for jk_target != jk_each
-      pos <- which(judge_each) # for jk_target = jk_each
-      pos_not <- which(!judge_each) # for jk_target != jk_each
+      # -- define two sets of traits: one for jk_focal = jk_each, one for jk_focal != jk_each
+      pos <- which(judge_each) # for jk_focal = jk_each
+      pos_not <- which(!judge_each) # for jk_focal != jk_each
       check_coloc <- sapply(pos_not, function(i) {
-        check_temp <- model_update[[i]]$change_loglike[jk_target] > cb_model_para$coloc_thresh
+        check_temp <- model_update[[i]]$change_loglike[jk_focal] > cb_model_para$coloc_thresh
         return(check_temp)
       })
 
-      # - jk_target is colocalized for which trait
+      # - jk_focal is colocalized for which trait
       pos_not_coloc <- which(check_coloc)
       if (length(pos_not_coloc) != 0) {
-        # - jk_target is the colocalized variant for at least one trait
+        # - jk_focal is the colocalized variant for at least one trait
         # - update those traits at jk_each
         true_update <- pos_not[pos_not_coloc]
         update_status[pos.update[true_update]] <- -1
         real_update_jk[pos.update[true_update]] <- jk_each[true_update]
       } else {
-        # - jk_target is not the colocalized variant for other traits
+        # - jk_focal is not the colocalized variant for other traits
         true_update <- pos.update[pos]
         update_status[true_update] <- 1
         abs_cor_vals <- rowSums(abs_cor_vals_each[, pos, drop = FALSE])
         jk <- which(abs_cor_vals == max(abs_cor_vals))
         jk <- ifelse(length(jk) == 1, jk, sample(jk, 1))
-        # - if jk is missing in target trait, we will prioritize jk_target
-        target_trait_missing <- cb_data$data[[pos.update[pp_target]]]$variable_miss
-        if (jk %in% target_trait_missing) {
-          jk <- jk_target
+        # - if jk is missing in focal trait, we will prioritize jk_focal
+        focal_trait_missing <- cb_data$data[[pos.update[pp_focal]]]$variable_miss
+        if (jk %in% focal_trait_missing) {
+          jk <- jk_focal
         }
         update_jk[1] <- jk
         if (prioritize_jkstar) {

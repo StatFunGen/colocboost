@@ -20,7 +20,7 @@ colocboost_workhorse <- function(cb_data,
                                  learning_rate_decay = 1,
                                  func_simplex = "z2z",
                                  lambda = 0.5,
-                                 lambda_target_outcome = 1,
+                                 lambda_focal_outcome = 1,
                                  jk_equiv_corr = 0.8,
                                  jk_equiv_loglik = 1,
                                  stop_thresh = 1e-06,
@@ -34,7 +34,7 @@ colocboost_workhorse <- function(cb_data,
                                  coloc_thresh = 0.1,
                                  LD_free = FALSE,
                                  dynamic_learning_rate = TRUE,
-                                 target_outcome_idx = NULL,
+                                 focal_outcome_idx = NULL,
                                  outcome_names = NULL) {
   if (!inherits(cb_data, "colocboost")) {
     stop("Input must from colocboost function!")
@@ -48,19 +48,19 @@ colocboost_workhorse <- function(cb_data,
     multi_test_max = multi_test_max,
     ash_prior = ash_prior,
     p.adjust.methods = p.adjust.methods,
-    target_outcome_idx = target_outcome_idx
+    focal_outcome_idx = focal_outcome_idx
   )
 
   cb_model_para <- colocboost_init_para(cb_data, cb_model,
     tau = tau,
     func_simplex = func_simplex,
     lambda = lambda,
-    lambda_target_outcome = lambda_target_outcome,
+    lambda_focal_outcome = lambda_focal_outcome,
     multi_test_thresh = multi_test_thresh,
     func_multi_test = func_multi_test,
     LD_free = LD_free,
     outcome_names = outcome_names,
-    target_outcome_idx = target_outcome_idx
+    focal_outcome_idx = focal_outcome_idx
   )
 
 
@@ -75,7 +75,7 @@ colocboost_workhorse <- function(cb_data,
       # - if all outcomes do not have signals, STOP
       message(paste0(
         "Using multiple testing correction method: ", func_multi_test,
-        ". Stop ColocBoost since no outcomes ", target_outcome_idx, " have association signals."
+        ". Stop ColocBoost since no outcomes ", focal_outcome_idx, " have association signals."
       ))
     } else {
       message(paste0(
@@ -85,9 +85,9 @@ colocboost_workhorse <- function(cb_data,
         multi_test_thresh, ". Will not update it!"
       ))
     }
-    if (!is.null(target_outcome_idx) & (M != 1)) {
-      if (sum(cb_model_para$true_stop == target_outcome_idx) != 0) {
-        message(paste("Stop ColocBoost since the target outcome", target_outcome_idx, "do not have association signals."))
+    if (!is.null(focal_outcome_idx) & (M != 1)) {
+      if (sum(cb_model_para$true_stop == focal_outcome_idx) != 0) {
+        message(paste("Stop ColocBoost since the focal outcome", focal_outcome_idx, "do not have association signals."))
         cb_model_para$update_y <- 0
       }
     }
@@ -109,7 +109,7 @@ colocboost_workhorse <- function(cb_data,
       learning_rate_decay = learning_rate_decay,
       func_simplex = func_simplex,
       lambda = lambda,
-      lambda_target_outcome = lambda_target_outcome,
+      lambda_focal_outcome = lambda_focal_outcome,
       LD_free = LD_free
     )
     cb_obj$cb_model_para$coveraged <- "one_causal"
@@ -134,7 +134,7 @@ colocboost_workhorse <- function(cb_data,
           learning_rate_decay = learning_rate_decay,
           func_simplex = func_simplex,
           lambda = lambda,
-          lambda_target_outcome = lambda_target_outcome,
+          lambda_focal_outcome = lambda_focal_outcome,
           LD_free = LD_free,
           dynamic_learning_rate = dynamic_learning_rate
         )
@@ -184,8 +184,8 @@ colocboost_workhorse <- function(cb_data,
             }
           }
         }
-        # if (!is.null(target_outcome_idx)){
-        #     if (!is.na(stop[target_outcome_idx]) & stop[target_outcome_idx]){ stop = TRUE }
+        # if (!is.null(focal_outcome_idx)){
+        #     if (!is.na(stop[focal_outcome_idx]) & stop[focal_outcome_idx]){ stop = TRUE }
         # }
 
         if (all(length(stop) == 1 & stop)) {
@@ -212,17 +212,17 @@ colocboost_workhorse <- function(cb_data,
                 tau = tau,
                 func_simplex = func_simplex,
                 lambda = lambda,
-                lambda_target_outcome = lambda_target_outcome
+                lambda_focal_outcome = lambda_focal_outcome
               )
-              if (!is.null(target_outcome_idx)) {
-                if (target_outcome_idx %in% cb_model_para$true_stop) {
+              if (!is.null(focal_outcome_idx)) {
+                if (focal_outcome_idx %in% cb_model_para$true_stop) {
                   message(paste(
-                    "Boosting iterations for target outcome", target_outcome_idx,
+                    "Boosting iterations for focal outcome", focal_outcome_idx,
                     "converge after", m, "iterations!"
                   ))
-                  if (length(setdiff(cb_model_para$true_stop, target_outcome_idx)) != 0) {
+                  if (length(setdiff(cb_model_para$true_stop, focal_outcome_idx)) != 0) {
                     message(paste(
-                      "Boosting iterations for outcome", paste(setdiff(cb_model_para$true_stop, target_outcome_idx), collapse = ", "),
+                      "Boosting iterations for outcome", paste(setdiff(cb_model_para$true_stop, focal_outcome_idx), collapse = ", "),
                       "converge after", m, "iterations!"
                     ))
                   }
@@ -265,7 +265,7 @@ colocboost_workhorse <- function(cb_data,
         tau = tau,
         func_simplex = func_simplex,
         lambda = lambda,
-        lambda_target_outcome = lambda_target_outcome
+        lambda_focal_outcome = lambda_focal_outcome
       )
       warning(paste("COLOC-BOOST updates did not converge in", M, "iterations; checkpoint at last iteration"))
       cb_model_para$coveraged <- FALSE

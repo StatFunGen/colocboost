@@ -10,7 +10,7 @@
 #' @param gene_name Optional character string. When provided, adds a column with this gene name to the output table for easier filtering in downstream analyses.
 #'
 #' @return A summary table for colocalization events with the following columns:
-#' \item{target_outcome}{The target outcome being analyzed if exists. Otherwise, it is \code{FALSE}.}
+#' \item{focal_outcome}{The focal outcome being analyzed if exists. Otherwise, it is \code{FALSE}.}
 #' \item{colocalized_outcomes}{Colocalized outcomes for colocalization confidence set (CoS) }
 #' \item{cos_id}{Unique identifier for colocalization confidence set (CoS) }
 #' \item{purity}{Minimum absolute correlation of variables with in colocalization confidence set (CoS) }
@@ -48,7 +48,7 @@ get_cos_summary <- function(cb_output,
 
     summary_table <- matrix(NA, nrow = length(coloc_sets), ncol = 12)
     colnames(summary_table) <- c(
-      "target_outcome", "colocalized_outcomes", "cos_id", "purity",
+      "focal_outcome", "colocalized_outcomes", "cos_id", "purity",
       "top_variable", "top_variable_vcp", "cos_npc", "min_npc_outcome", "n_variables",
       "colocalized_index", "colocalized_variables", "colocalized_variables_vcp"
     )
@@ -68,19 +68,19 @@ get_cos_summary <- function(cb_output,
     if (!is.null(gene_name)) {
       summary_table$gene_name <- gene_name
     }
-    # - if target colocalization
-    target_outcome_idx <- which(cb_output$data_info$outcome_info$is_target)
-    if (length(target_outcome_idx) != 0) {
-      target_outcome <- analysis_outcome[target_outcome_idx]
-      tmp <- sapply(target_outcome, function(tmp) grep(paste0(tmp, "\\b"), analysis_outcome))
-      if.target <- sapply(coloc_outcome, function(cp) {
-        tt <- sapply(target_outcome, function(tmp) grep(paste0(tmp, "\\b"), cp))
+    # - if focal colocalization
+    focal_outcome_idx <- which(cb_output$data_info$outcome_info$is_focal)
+    if (length(focal_outcome_idx) != 0) {
+      focal_outcome <- analysis_outcome[focal_outcome_idx]
+      tmp <- sapply(focal_outcome, function(tmp) grep(paste0(tmp, "\\b"), analysis_outcome))
+      if.focal <- sapply(coloc_outcome, function(cp) {
+        tt <- sapply(focal_outcome, function(tmp) grep(paste0(tmp, "\\b"), cp))
         all(sapply(tt, length) != 0)
       })
-      summary_table$target_outcome <- ifelse(if.target, target_outcome, FALSE)
-      summary_table <- summary_table[order(summary_table$target_outcome == "FALSE"), ]
-      if (sum(if.target) == 0) {
-        warnings("No colocalization with target outcomes.")
+      summary_table$focal_outcome <- ifelse(if.focal, focal_outcome, FALSE)
+      summary_table <- summary_table[order(summary_table$focal_outcome == "FALSE"), ]
+      if (sum(if.focal) == 0) {
+        warnings("No colocalization with focal outcomes.")
       }
     }
     # - if extract only interest outcome colocalization
@@ -480,16 +480,16 @@ get_data_info <- function(cb_obj) {
   n_variables <- cb_obj$cb_model_para$P
   analysis_outcome <- cb_obj$cb_model_para$outcome_names
   variables <- cb_obj$cb_data$variable.names
-  target_outcome <- NULL
-  is_target <- rep(FALSE, n_outcome)
-  if (!is.null(cb_obj$cb_model_para$target_outcome_idx)) {
-    target_outcome <- analysis_outcome[cb_obj$cb_model_para$target_outcome_idx]
-    is_target[cb_obj$cb_model_para$target_outcome_idx] <- TRUE
+  focal_outcome <- NULL
+  is_focal <- rep(FALSE, n_outcome)
+  if (!is.null(cb_obj$cb_model_para$focal_outcome_idx)) {
+    focal_outcome <- analysis_outcome[cb_obj$cb_model_para$focal_outcome_idx]
+    is_focal[cb_obj$cb_model_para$focal_outcome_idx] <- TRUE
   }
   is_sumstat <- grepl("sumstat_outcome", names(cb_obj$cb_data$data))
   outcome_info <- data.frame(
     "outcome_names" = analysis_outcome, "sample_size" = cb_obj$cb_model_para$N,
-    "is_sumstats" = is_sumstat, "is_target" = is_target
+    "is_sumstats" = is_sumstat, "is_focal" = is_focal
   )
   rownames(outcome_info) <- paste0("y", 1:n_outcome)
 

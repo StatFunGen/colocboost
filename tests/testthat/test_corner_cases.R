@@ -269,8 +269,8 @@ test_that("colocboost works with custom parameters", {
   expect_s3_class(result, "colocboost")
 })
 
-# Test target outcome functionality
-test_that("colocboost prioritizes target outcome correctly", {
+# Test focal outcome functionality
+test_that("colocboost prioritizes focal outcome correctly", {
   skip_on_cran()
   
   # Generate test data
@@ -294,36 +294,36 @@ test_that("colocboost prioritizes target outcome correctly", {
   Y_list <- list(Y1, Y2)
   X_list <- list(X, X)
   
-  # Run colocboost with Y1 as target
+  # Run colocboost with Y1 as focal
   suppressWarnings({
-    result_target1 <- colocboost(
+    result_focal1 <- colocboost(
       X = X_list, 
       Y = Y_list,
-      target_outcome_idx = 1,
-      lambda_target_outcome = 0.9,  # Higher lambda for target
+      focal_outcome_idx = 1,
+      lambda_focal_outcome = 0.9,  # Higher lambda for focal
       M = 10  # Need more iterations for this test
     )
   })
   
-  # Run colocboost with Y2 as target
+  # Run colocboost with Y2 as focal
   suppressWarnings({
-    result_target2 <- colocboost(
+    result_focal2 <- colocboost(
       X = X_list, 
       Y = Y_list,
-      target_outcome_idx = 2,
-      lambda_target_outcome = 0.9,  # Higher lambda for target
+      focal_outcome_idx = 2,
+      lambda_focal_outcome = 0.9,  # Higher lambda for focal
       M = 10  # Need more iterations for this test
     )
   })
   
   # Both should produce colocboost objects
-  expect_s3_class(result_target1, "colocboost")
-  expect_s3_class(result_target2, "colocboost")
+  expect_s3_class(result_focal1, "colocboost")
+  expect_s3_class(result_focal2, "colocboost")
   
-  # Test that target flag is correctly set
-  expect_equal(result_target1$data_info$outcome_info$is_target[1], TRUE)
-  expect_equal(result_target1$data_info$outcome_info$is_target[2], FALSE)
+  # Test that focal flag is correctly set
+  expect_equal(result_focal1$data_info$outcome_info$is_focal[1], TRUE)
+  expect_equal(result_focal1$data_info$outcome_info$is_focal[2], FALSE)
   
-  expect_equal(result_target2$data_info$outcome_info$is_target[1], FALSE)
-  expect_equal(result_target2$data_info$outcome_info$is_target[2], TRUE)
+  expect_equal(result_focal2$data_info$outcome_info$is_focal[1], FALSE)
+  expect_equal(result_focal2$data_info$outcome_info$is_focal[2], TRUE)
 })

@@ -118,19 +118,19 @@ test_that("colocboost runs with summary statistics", {
   expect_equal(result$data_info$n_outcomes, 2)
 })
 
-# Test target outcome functionality
-test_that("colocboost handles target outcome correctly", {
+# Test focal outcome functionality
+test_that("colocboost handles focal outcome correctly", {
   skip_on_cran()
   
   # Convert Y to list
   Y_list <- list(test_data$Y[,1], test_data$Y[,2])
   X_list <- list(test_data$X, test_data$X)
   
-  # Run colocboost with target_outcome_idx = 1
+  # Run colocboost with focal_outcome_idx = 1
   result <- colocboost(
     X = X_list, 
     Y = Y_list,
-    target_outcome_idx = 1,
+    focal_outcome_idx = 1,
     M = 10,  # Small number of iterations for testing
     output_level = 2  # More detailed output for testing
   )
@@ -138,9 +138,9 @@ test_that("colocboost handles target outcome correctly", {
   # Test that we get a colocboost object
   expect_s3_class(result, "colocboost")
   
-  # Check target outcome is correctly set
-  expect_equal(result$data_info$outcome_info$is_target[1], TRUE)
-  expect_equal(result$data_info$outcome_info$is_target[2], FALSE)
+  # Check focal outcome is correctly set
+  expect_equal(result$data_info$outcome_info$is_focal[1], TRUE)
+  expect_equal(result$data_info$outcome_info$is_focal[2], FALSE)
 })
 
 # Test get_cos_summary functionality
@@ -167,7 +167,7 @@ test_that("get_cos_summary returns expected structure", {
     expect_true(is.data.frame(summary))
     
     # Check expected columns exist
-    expected_cols <- c("target_outcome", "colocalized_outcomes", "cos_id", 
+    expected_cols <- c("focal_outcome", "colocalized_outcomes", "cos_id", 
                       "purity", "top_variable", "top_variable_vcp")
     for (col in expected_cols) {
       expect_true(col %in% colnames(summary))

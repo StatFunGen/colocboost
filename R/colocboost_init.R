@@ -31,8 +31,8 @@ colocboost_init_data <- function(X, Y, dict_YX,
                                  Z, LD, N_sumstat, dict_sumstatLD,
                                  Var_y, SeBhat,
                                  keep_variables = NULL,
-                                 target_outcome_idx = NULL,
-                                 target_outcome_variables = TRUE,
+                                 focal_outcome_idx = NULL,
+                                 focal_outcome_variables = TRUE,
                                  overlap_variables = FALSE,
                                  intercept = TRUE, standardize = TRUE,
                                  residual_correlation = NULL) {
@@ -46,13 +46,13 @@ colocboost_init_data <- function(X, Y, dict_YX,
   } else if (is.null(dict_YX) & !is.null(dict_sumstatLD)) {
     dict <- dict_sumstatLD
   }
-  if (target_outcome_variables & !is.null(target_outcome_idx)) {
-    if (target_outcome_idx > length(dict)) {
+  if (focal_outcome_variables & !is.null(focal_outcome_idx)) {
+    if (focal_outcome_idx > length(dict)) {
       stop("Target outcome index is over the total number of outcomes! please check!")
     }
-    keep_variable_names <- keep_variables[[dict[target_outcome_idx]]]
+    keep_variable_names <- keep_variables[[dict[focal_outcome_idx]]]
     if (overlap_variables) {
-      keep_tmp <- lapply(keep_variables[-dict[target_outcome_idx]], function(tm) {
+      keep_tmp <- lapply(keep_variables[-dict[focal_outcome_idx]], function(tm) {
         intersect(keep_variable_names, tm)
       })
       keep_variable_names <- Reduce(union, keep_tmp)
@@ -246,7 +246,7 @@ colocboost_init_model <- function(cb_data,
                                   multi_test_max = 1,
                                   ash_prior = "normal",
                                   p.adjust.methods = "fdr",
-                                  target_outcome_idx = NULL) {
+                                  focal_outcome_idx = NULL) {
   #################  initialization #######################################
   cb_model <- list()
   class(cb_model) <- "colocboost"
@@ -330,12 +330,12 @@ colocboost_init_model <- function(cb_data,
 #' @importFrom utils tail
 colocboost_init_para <- function(cb_data, cb_model, tau = 0.01,
                                  func_simplex = "z2z",
-                                 lambda = 0.5, lambda_target_outcome = 1,
+                                 lambda = 0.5, lambda_focal_outcome = 1,
                                  multi_test_thresh = 1,
                                  func_multi_test = "lfdr",
                                  LD_free = FALSE,
                                  outcome_names = NULL,
-                                 target_outcome_idx = NULL) {
+                                 focal_outcome_idx = NULL) {
   #################  initialization #######################################
   # - sample size
   N <- sapply(cb_data$data, function(dt) dt$N)
@@ -376,7 +376,7 @@ colocboost_init_para <- function(cb_data, cb_model, tau = 0.01,
     "tau" = tau,
     "func_simplex" = func_simplex,
     "lambda" = lambda,
-    "lambda_target_outcome" = lambda_target_outcome,
+    "lambda_focal_outcome" = lambda_focal_outcome,
     "profile_loglike" = profile_loglike,
     "update_status" = c(),
     "jk" = c(),
@@ -386,7 +386,7 @@ colocboost_init_para <- function(cb_data, cb_model, tau = 0.01,
     "real_update_jk" = c(),
     "outcome_names" = outcome_names,
     "variables" = cb_data$variable.names,
-    "target_outcome_idx" = target_outcome_idx,
+    "focal_outcome_idx" = focal_outcome_idx,
     "coveraged" = TRUE,
     "num_updates" = 1
   )

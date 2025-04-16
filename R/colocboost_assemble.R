@@ -216,7 +216,7 @@ colocboost_assemble <- function(cb_obj,
     class(cb_output) <- "colocboost"
 
     ### - extract summary table
-    target_outcome_idx <- cb_obj$cb_model_para$target_outcome_idx
+    focal_outcome_idx <- cb_obj$cb_model_para$focal_outcome_idx
     summary_table <- get_cos_summary(cb_output)
     cb_output <- c(cb_output, list(cos_summary = summary_table))
     cb_output <- cb_output[c("cos_summary", "vcp", "cos_details", "data_info", "model_info")]

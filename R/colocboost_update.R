@@ -11,12 +11,12 @@ colocboost_update <- function(cb_model, cb_model_para, cb_data,
                               learning_rate_decay = 1,
                               func_simplex = "z2z",
                               lambda = 0.5,
-                              lambda_target_outcome = 1,
+                              lambda_focal_outcome = 1,
                               LD_free = FALSE,
                               dynamic_learning_rate = TRUE) {
   # - clear which outcome need to be updated at which jk
   pos.update <- which(cb_model_para$update_temp$update_status != 0)
-  target_outcome_idx <- cb_model_para$target_outcome_idx
+  focal_outcome_idx <- cb_model_para$focal_outcome_idx
 
   for (i in pos.update) {
     update_jk <- cb_model_para$update_temp$real_update_jk[i]
@@ -44,10 +44,10 @@ colocboost_update <- function(cb_model, cb_model_para, cb_data,
     ld_feature <- sqrt(abs(ld_jk))
 
     # - calculate delta
-    if (is.null(target_outcome_idx)) {
+    if (is.null(focal_outcome_idx)) {
       lambda_outcome <- lambda
     } else {
-      lambda_outcome <- ifelse(i == target_outcome_idx, lambda_target_outcome, lambda)
+      lambda_outcome <- ifelse(i == focal_outcome_idx, lambda_focal_outcome, lambda)
     }
     delta <- boost_KL_delta(
       z = cb_model[[i]]$z,
@@ -222,10 +222,10 @@ boost_obj_last <- function(cb_data, cb_model, cb_model_para,
                            tau = 0.01,
                            func_simplex = "z2z",
                            lambda = 0.5,
-                           lambda_target_outcome = 1,
+                           lambda_focal_outcome = 1,
                            LD_free = TRUE) {
   pos.stop <- cb_model_para$true_stop
-  target_outcome_idx <- cb_model_para$target_outcome_idx
+  focal_outcome_idx <- cb_model_para$focal_outcome_idx
 
   for (i in pos.stop) {
     # - check which jk update
@@ -249,10 +249,10 @@ boost_obj_last <- function(cb_data, cb_model, cb_model_para,
       ld_feature <- sqrt(abs(ld_jk))
 
       # - calculate delta
-      if (is.null(target_outcome_idx)) {
+      if (is.null(focal_outcome_idx)) {
         lambda_outcome <- lambda
       } else {
-        lambda_outcome <- ifelse(i == target_outcome_idx, lambda_target_outcome, lambda)
+        lambda_outcome <- ifelse(i == focal_outcome_idx, lambda_focal_outcome, lambda)
       }
       delta <- boost_KL_delta(
         z = cb_model[[i]]$z,

@@ -20,7 +20,7 @@ colocboost_one_causal <- function(cb_model, cb_model_para, cb_data,
                                   learning_rate_decay = 1,
                                   func_simplex = "z2z",
                                   lambda = 0.5,
-                                  lambda_target_outcome = 1,
+                                  lambda_focal_outcome = 1,
                                   LD_free = FALSE) {
   if (jk_equiv_corr != 0) {
     cb_obj <- colocboost_one_iteration(cb_model, cb_model_para, cb_data,
@@ -30,7 +30,7 @@ colocboost_one_causal <- function(cb_model, cb_model_para, cb_data,
       learning_rate_decay = learning_rate_decay,
       func_simplex = func_simplex,
       lambda = lambda,
-      lambda_target_outcome = lambda_target_outcome,
+      lambda_focal_outcome = lambda_focal_outcome,
       LD_free = LD_free
     )
   } else {
@@ -41,7 +41,7 @@ colocboost_one_causal <- function(cb_model, cb_model_para, cb_data,
       learning_rate_decay = learning_rate_decay,
       func_simplex = func_simplex,
       lambda = lambda,
-      lambda_target_outcome = lambda_target_outcome,
+      lambda_focal_outcome = lambda_focal_outcome,
       LD_free = LD_free
     )
   }
@@ -71,7 +71,7 @@ colocboost_one_iteration <- function(cb_model, cb_model_para, cb_data,
                                      learning_rate_decay = 1,
                                      func_simplex = "z2z",
                                      lambda = 0.5,
-                                     lambda_target_outcome = 1,
+                                     lambda_focal_outcome = 1,
                                      LD_free = FALSE) {
   if (sum(cb_model_para$update_y == 1) != 0) {
     ######## - some traits updated
@@ -94,7 +94,7 @@ colocboost_one_iteration <- function(cb_model, cb_model_para, cb_data,
         learning_rate_decay = learning_rate_decay,
         func_simplex = func_simplex,
         lambda = lambda,
-        lambda_target_outcome = lambda_target_outcome,
+        lambda_focal_outcome = lambda_focal_outcome,
         LD_free = LD_free
       )
     }
@@ -221,7 +221,7 @@ colocboost_diagLD <- function(cb_model, cb_model_para, cb_data,
                               learning_rate_decay = 1,
                               func_simplex = "z2z",
                               lambda = 0.5,
-                              lambda_target_outcome = 1,
+                              lambda_focal_outcome = 1,
                               LD_free = FALSE) {
   if (sum(cb_model_para$update_y == 1) == 1) {
     pos.update <- which(cb_model_para$update_y == 1)
@@ -244,7 +244,7 @@ colocboost_diagLD <- function(cb_model, cb_model_para, cb_data,
     cb_model_para$real_update_jk <- rbind(cb_model_para$real_update_jk, real_update_jk)
     cb_model <- colocboost_update(cb_model, cb_model_para, cb_data,
       tau = tau, learning_rate_decay = learning_rate_decay, func_simplex = func_simplex,
-      lambda = lambda, lambda_target_outcome = lambda_target_outcome, LD_free = LD_free
+      lambda = lambda, lambda_focal_outcome = lambda_focal_outcome, LD_free = LD_free
     )
   }
 
@@ -275,7 +275,7 @@ colocboost_diagLD <- function(cb_model, cb_model_para, cb_data,
       # - update cb_model
       cb_model_tmp <- colocboost_update(cb_model_tmp, cb_model_para, cb_data,
         tau = tau, learning_rate_decay = learning_rate_decay, func_simplex = func_simplex,
-        lambda = lambda, lambda_target_outcome = lambda_target_outcome, LD_free = LD_free
+        lambda = lambda, lambda_focal_outcome = lambda_focal_outcome, LD_free = LD_free
       )
       weights <- rbind(weights, cb_model_tmp[[iy]]$weights_path)
     }
@@ -332,7 +332,7 @@ colocboost_diagLD <- function(cb_model, cb_model_para, cb_data,
         learning_rate_decay = learning_rate_decay,
         func_simplex = func_simplex,
         lambda = lambda,
-        lambda_target_outcome = lambda_target_outcome,
+        lambda_focal_outcome = lambda_focal_outcome,
         LD_free = LD_free
       )
     }
