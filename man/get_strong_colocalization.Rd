@@ -38,4 +38,8 @@ A \code{"colocboost"} object with some or all of the following elements:
 \description{
 \code{get_strong_colocalization} get the colocalization by discarding the weaker colocalization events or colocalized outcomes
 }
-\keyword{cb_get_functions}
+\seealso{
+Other colocboost_inference: 
+\code{\link{get_cos_summary}()}
+}
+\concept{colocboost_inference}

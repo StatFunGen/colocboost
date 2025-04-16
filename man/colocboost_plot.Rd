@@ -7,8 +7,8 @@
 colocboost_plot(
   cb_output,
   y = "log10p",
-  pos = NULL,
-  plot_target_only = FALSE,
+  grange = NULL,
+  plot_focal_only = FALSE,
   plot_cos_idx = NULL,
   outcome_idx = NULL,
   points_color = "grey80",
@@ -18,7 +18,7 @@ colocboost_plot(
   outcome_names = NULL,
   plot_cols = 2,
   variant_coord = FALSE,
-  show_hits = FALSE,
+  show_top_variables = FALSE,
   show_cos_to_uncoloc = FALSE,
   show_cos_to_uncoloc_idx = NULL,
   show_cos_to_uncoloc_outcome = NULL,
@@ -39,9 +39,9 @@ colocboost_plot(
 
 \item{y}{Specifies the y-axis values, default is "log10p" for -log10 transformed marginal association p-values.}
 
-\item{pos}{Optional plotting range of x-axis to zoom in to a specific region.}
+\item{grange}{Optional plotting range of x-axis to zoom in to a specific region.}
 
-\item{plot_target_only}{Logical, if TRUE only plots colocalization with target outcome, default is FALSE.}
+\item{plot_focal_only}{Logical, if TRUE only plots colocalization with focal outcome, default is FALSE.}
 
 \item{plot_cos_idx}{Optional indices of CoS to plot}
 
@@ -61,7 +61,7 @@ colocboost_plot(
 
 \item{variant_coord}{Logical, if TRUE uses variant coordinates on x-axis, default is FALSE. This is required the variable names including position information.}
 
-\item{show_hits}{Logical, if TRUE shows top variables for each CoS, default is FALSE}
+\item{show_top_variables}{Logical, if TRUE shows top variables for each CoS, default is FALSE}
 
 \item{show_cos_to_uncoloc}{Logical, if TRUE shows colocalization to uncolocalized outcomes to diagnose, default is FALSE}
 
@@ -95,4 +95,4 @@ Visualization plot for each colcoalization event.
 \description{
 \code{colocboost_plot} generates visualization plots for colocalization events from a ColocBoost analysis.
 }
-\keyword{cb_plot}
+\concept{colocboost_plot}

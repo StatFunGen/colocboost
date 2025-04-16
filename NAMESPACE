@@ -3,6 +3,7 @@
 export(colocboost)
 export(colocboost_plot)
 export(get_cormat)
+export(get_cos)
 export(get_cos_summary)
 export(get_strong_colocalization)
 importFrom(grDevices,adjustcolor)

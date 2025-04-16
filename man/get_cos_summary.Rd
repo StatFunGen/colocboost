@@ -8,7 +8,7 @@ get_cos_summary(
   cb_output,
   outcome_names = NULL,
   interest_outcome = NULL,
-  gene_name = NULL
+  region_name = NULL
 )
 }
 \arguments{
@@ -18,11 +18,11 @@ get_cos_summary(
 
 \item{interest_outcome}{Optional vector specifying a subset of outcomes from \code{outcome_names} to focus on. When provided, only colocalization events that include at least one of these outcomes will be returned.}
 
-\item{gene_name}{Optional character string. When provided, adds a column with this gene name to the output table for easier filtering in downstream analyses.}
+\item{region_name}{Optional character string. When provided, adds a column with this gene name to the output table for easier filtering in downstream analyses.}
 }
 \value{
 A summary table for colocalization events with the following columns:
-\item{target_outcome}{The target outcome being analyzed if exists. Otherwise, it is \code{FALSE}.}
+\item{focal_outcome}{The focal outcome being analyzed if exists. Otherwise, it is \code{FALSE}.}
 \item{colocalized_outcomes}{Colocalized outcomes for colocalization confidence set (CoS) }
 \item{cos_id}{Unique identifier for colocalization confidence set (CoS) }
 \item{purity}{Minimum absolute correlation of variables with in colocalization confidence set (CoS) }
@@ -38,4 +38,8 @@ A summary table for colocalization events with the following columns:
 \description{
 \code{get_cos_summary} get the colocalization summary table with or without the outcomes of interest.
 }
-\keyword{cb_get_functions}
+\seealso{
+Other colocboost_inference: 
+\code{\link{get_strong_colocalization}()}
+}
+\concept{colocboost_inference}

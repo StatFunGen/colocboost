@@ -34,8 +34,7 @@ colocboost_post_inference <- function() {
 #'
 #' @return A correlation matrix (LD matrix).
 #'
-#' @rdname colocboost_post_inference
-#' @keywords cb_post_inference
+#' @family colocboost_utilities
 #' @export
 get_cormat <- function(X, intercepte = FALSE) {
   X <- t(X)
