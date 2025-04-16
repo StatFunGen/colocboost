@@ -1,5 +1,18 @@
-
-
+#' @title Set of functions for ColocBoost based on per-trait-one-causal assumption, including LD-free mode and one iteration mode.
+#'
+#' @description
+#' The `colocboost_one_causal` functions access the set of functions for ColocBoost based on per-trait-one-causal assumption.
+#'
+#'
+#' @details
+#' The following functions are included in this set:
+#' `get_abc` get the colocalization summary table with or without the specific outcomes.
+#'
+#' These functions are not exported individually and are accessed via `colocboost_one_causal`.
+#'
+#' @rdname colocboost_one_causal
+#' @keywords cb_one_causal
+#' @noRd
 colocboost_one_causal <- function(cb_model, cb_model_para, cb_data,
                                   jk_equiv_corr = 0.8,
                                   jk_equiv_loglik = 1,
@@ -37,8 +50,20 @@ colocboost_one_causal <- function(cb_model, cb_model_para, cb_data,
 
 
 
-
-# under one causal per trait assumption with one iteration
+#' Under one causal per trait assumption with one iteration mode
+#'
+#' @description
+#' Executes one iteration of the ColocBoost algorithm under the one-causal-variant-per-trait
+#' assumption. This function provides a simplified approach to examine colocalization patterns
+#' for traits with strong marginal associations.
+#'
+#' @details
+#' This version implements an LD-dependent mode that can handle scenarios where LD structures
+#' may not perfectly match between datasets but still contain informative signals. The function
+#' identifies the most strongly associated variants and evaluates their colocalization evidence.
+#'
+#' @keywords cb_one_causal
+#' @noRd
 colocboost_one_iteration <- function(cb_model, cb_model_para, cb_data,
                                      jk_equiv_corr = 0.8,
                                      jk_equiv_loglik = 1,
@@ -91,7 +116,14 @@ colocboost_one_iteration <- function(cb_model, cb_model_para, cb_data,
 }
 
 
-
+#' Identify and best update trait group for one causal variant - one iteration mode
+#'
+#' @details
+#' The function operates by partitioning traits into different equivalence groups based on
+#' correlation patterns and log-likelihood differences. 
+#'
+#' @keywords cb_one_causal
+#' @noRd
 boost_check_update_jk_one_causal <- function(cb_model, cb_model_para, cb_data,
                                              prioritize_jkstar = TRUE, 
                                              jk_equiv_corr = 0.8,
@@ -166,7 +198,14 @@ boost_check_update_jk_one_causal <- function(cb_model, cb_model_para, cb_data,
 
 
 
-# under one causal per trait assumption with no LD
+#' ColocBoost under one causal per trait assumption - LD-free mode
+#' @description
+#' Executes one iteration of the ColocBoost algorithm under the one-causal-variant-per-trait
+#' assumption. This function provides a simplified approach to examine colocalization patterns
+#' for traits without using any LD information.
+#' 
+#' @keywords cb_one_causal
+#' @noRd
 colocboost_diagLD <- function(cb_model, cb_model_para, cb_data,
                               jk_equiv_corr = 0,
                               jk_equiv_loglik = 0.1,
@@ -300,6 +339,14 @@ colocboost_diagLD <- function(cb_model, cb_model_para, cb_data,
 }
 
 
+#' Check for overlapping causal effects between trait pairs
+#'
+#' @description
+#' This function evaluates pairs of traits to determine if they share overlapping
+#' causal effects. It will used to create the trait group when LD information is not available.
+#'
+#' @keywords cb_one_causal
+#' @noRd
 check_pair_overlap <- function(weights, coverage = 0.95){
   
   overlap_pair <- matrix(NA, nrow = nrow(weights), ncol =  nrow(weights))

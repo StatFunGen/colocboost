@@ -6,7 +6,14 @@
 #'
 #' @details
 #' The following functions are included in this set:
-#' `get_abc` get the colocalization summary table with or without the specific outcomes.
+#' `get_cormat` a fast function to calulate correlation matrix from individual level data.
+#' `check_null_post` a function to remove the spurious signals.
+#' `get_purity` a function to calculate within-CoS purity.
+#' `get_modularity` a function to calculate modularity for a given number of clusters.
+#' `get_n_cluster` a function to get the number of clusters based on modularity-based hierarchical clustering method.
+#' `get_between_purity` a function to calculate purity between two CoS.
+#' `get_cos_evidence` a function to get the evidence of colocalization.
+#' `w_purity` a function to calculate within-CoS purity for each single weight from one SEC.
 #'
 #' These functions are not exported individually and are accessed via `colocboost_post_inference`.
 #'
@@ -33,7 +40,10 @@ get_cormat <- function(X, intercepte = FALSE){
 }
 
 
+#' Function to remove the spurious signals
 #' @importFrom utils head tail
+#' @keywords cb_post_inference
+#' @noRd
 check_null_post <- function(cb_obj, 
                             coloc_sets_temp,
                             coloc_outcomes,
@@ -181,6 +191,9 @@ check_null_post <- function(cb_obj,
   return(ll)
 }
 
+#' Function to calculate within-CoS purity
+#' @keywords cb_post_inference
+#' @noRd
 #' @importFrom stats na.omit
 get_purity <- function(pos, X=NULL, Xcorr=NULL, N = NULL, n = 100) {
     get_upper_tri = Rfast::upper_tri
@@ -215,6 +228,12 @@ get_purity <- function(pos, X=NULL, Xcorr=NULL, N = NULL, n = 100) {
 }
 
 # ------ Calculate modularity ----------
+#' Function to calculate modularity for a given number of clusters
+#' @param Weight A matrix of weights
+#' @param B A matrix of binary values indicating the clusters
+#' @return The modularity value
+#' @keywords cb_post_inference
+#' @noRd
 get_modularity <- function(Weight, B){
     if (dim(Weight)[1] == 1){
         Q <- 0
@@ -246,6 +265,14 @@ get_modularity <- function(Weight, B){
     }
 }
 
+#' Function to get the number of clusters based on modularity-based hierarchical clustering method
+#' @param hc A hierarchical clustering object
+#' @param Sigma A matrix of weights
+#' @param m The number of clusters
+#' @param min_cluster_corr The minimum correlation threshold for clustering within the same cluster
+#' @return A list containing the number of clusters and modularity values
+#' @keywords cb_post_inference
+#' @noRd
 #' @importFrom stats cutree
 get_n_cluster <- function(hc, Sigma, m=ncol(Sigma), min_cluster_corr = 0.8){
     if (min(Sigma) > min_cluster_corr){
@@ -269,6 +296,9 @@ get_n_cluster <- function(hc, Sigma, m=ncol(Sigma), min_cluster_corr = 0.8){
                 "Qmodularity" = Q))
 }
 
+#' Function to calculate within-CoS purity for each single weight from one SEC
+#' @keywords cb_post_inference
+#' @noRd
 w_purity <- function(weights, X=NULL, Xcorr=NULL, N = NULL, n = 100, coverage = 0.95, 
                      min_abs_corr = 0.5, median_abs_corr = NULL, miss_idx = NULL){
     
@@ -289,9 +319,10 @@ w_purity <- function(weights, X=NULL, Xcorr=NULL, N = NULL, n = 100, coverage = 
     return(is_pure)
 }
 
-
+#' Calculate purity between two CoS
+#' @keywords cb_post_inference
+#' @noRd
 #' @importFrom stats na.omit
-# - Calculate purity between two confidence sets
 get_between_purity <- function(pos1, pos2, X=NULL, Xcorr=NULL, N = NULL, miss_idx = NULL, P = NULL){
     
     get_matrix_mult <- function(X_sub1, X_sub2){
@@ -329,6 +360,9 @@ get_between_purity <- function(pos1, pos2, X=NULL, Xcorr=NULL, N = NULL, miss_id
     return(c(min(value), max(value), get_median(value)))
 }
 
+#' Function to get the evidence of colocalization
+#' @keywords cb_post_inference
+#' @noRd
 #' @importFrom stats var
 #' @importFrom utils tail
 get_cos_evidence <- function(cb_obj, coloc_out, data_info){
@@ -369,7 +403,6 @@ get_cos_evidence <- function(cb_obj, coloc_out, data_info){
     cos_profile
   }
   
-  # - 
   get_outcome_profile_change <- function(outcome_idx, cos, cb_obj, check_null_max){
     extract_last <- function(lst) { tail(lst, n = 1)}
     cb_data <- cb_obj$cb_data
@@ -386,7 +419,7 @@ get_cos_evidence <- function(cb_obj, coloc_out, data_info){
     ifelse(max_profile < cos_profile, 0, max_profile - cos_profile)
   }
   
-  # - calculate best configuration likelihood explained by minimal configuration
+  # - Calculate best configuration likelihood explained by minimal configuration
   get_normalization_evidence <- function(profile_change, null_max, outcomes, outcome_names) {
     # Define the exponential likelihood ratio normalization (ELRN)
     logLR_normalization <- function(ratio) { 1 - exp( - 2*ratio ) }
