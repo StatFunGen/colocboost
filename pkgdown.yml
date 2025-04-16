@@ -8,8 +8,10 @@ articles:
   ColocBoost_tutorial_diagnostic: ColocBoost_tutorial_diagnostic.html
   ColocBoost_tutorial_GTEx: ColocBoost_tutorial_GTEx.html
   ColocBoost_tutorial_strong_colocalization: ColocBoost_tutorial_strong_colocalization.html
+  Individual_Level_Colocalization: Individual_Level_Colocalization.html
+  Input_Data_Format: Input_Data_Format.html
   installation: installation.html
-last_built: 2025-04-16T17:46Z
+last_built: 2025-04-16T18:50Z
 urls:
   reference: https://statfungen.github.io/colocboost/reference
   article: https://statfungen.github.io/colocboost/articles
