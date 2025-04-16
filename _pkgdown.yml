@@ -3,6 +3,22 @@ url: https://statfungen.github.io/colocboost
 template:
   bootstrap: 5
 
+navbar:
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "News"
+      href: articles/announcements.html
+    - text: "Installation"
+      href: articles/installation.html
+    - text: "Tutorials"
+      href: articles/index.html
+    - text: "Functions"
+      href: reference/index.html
+  right:
+    - icon: fa-github
+      href: https://github.com/StatFunGen/colocboost
+
 reference:
   - title: "Example Data"
     desc: "Example datasets for demonstration and testing"
