@@ -401,6 +401,32 @@ get_cos_different_coverage <- function(cb_output, coverage = 0.95){
   return(cos_diff_coverage)
 }
 
+#' Get integrated weight from different outcomes
+#' @keywords cb_get_functions
+#' @noRd
+get_integrated_weight <- function(weights, weight_fudge_factor = 1.5){
+  av <- apply(weights, 1, function(w) prod(w^(weight_fudge_factor/ncol(weights))))
+  return(av / sum(av))
+}
+
+#' Extract CoS based on coverage
+#' @keywords cb_get_functions
+#' @noRd
+get_in_cos <- function(weights, coverage = 0.95){
+  # Get indices in decreasing weight order
+  temp <- order(weights, decreasing=TRUE)
+  weights_ordered <- weights[temp]
+  # Find position where cumsum exceeds coverage
+  pos <- min(which(cumsum(weights_ordered) >= coverage))
+  # Get the actual threshold weight value
+  weight_thresh <- weights_ordered[pos]
+  # Find all indices with weights >= threshold
+  indices <- which(weights >= weight_thresh)
+  # Order these indices by their weights in decreasing order
+  csets <- indices[order(weights[indices], decreasing=TRUE)]
+  return(list(csets))
+}
+
 
 #' @title Set of internal functions to re-organize ColocBoost output format
 #'

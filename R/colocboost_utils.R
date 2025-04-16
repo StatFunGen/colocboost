@@ -270,7 +270,21 @@ merge_ucos <- function(cb_obj, past_out,
     return(ll)
 }
 
-
+#' @title Set of internal utils functions
+#'
+#' @description
+#' The `colocboost_utils` functions serves as a summary for the following two refine functions.
+#'
+#' @details
+#' The following functions are included in this set:
+#' `merge_cos_ucos` merge a trait-specific confidence set CS into a colocalization set CoS.
+#' `merge_ucos` merge two trait-specific confidence sets.
+#'
+#' These functions are not exported individually and are accessed via `colocboost_utils`.
+#'
+#' @rdname colocboost_utils
+#' @keywords cb_utils
+#' @noRd
 get_vcp <- function(past_out, P){
     if (!is.null(past_out$cos$cos$cos)){
         avW_coloc_vcp <- sapply(past_out$cos$cos$avWeight, get_integrated_weight)
@@ -330,7 +344,6 @@ check_two_overlap_sets <- function(total, i, j){
   }
 }
 
-
 # Function to merge overlapping sets
 merge_sets <- function(vec) {
   split_lists <- lapply(vec, function(x) as.numeric(unlist(strsplit(x, ";"))))
@@ -359,7 +372,6 @@ merge_sets <- function(vec) {
 }
 
 
-
 get_avWeigth <- function(cb_model, coloc_outcomes, update, pos.coloc, name_weight=FALSE){
   
   avWeight <- lapply(coloc_outcomes, function(i){
@@ -373,7 +385,6 @@ get_avWeigth <- function(cb_model, coloc_outcomes, update, pos.coloc, name_weigh
   return(avWeight)
   
 }
-
 
 
 get_max_profile <- function(cb_obj, check_null_max=0.02, check_null_method = "profile"){
@@ -392,31 +403,11 @@ get_max_profile <- function(cb_obj, check_null_max=0.02, check_null_method = "pr
 
 
 ### Function for check cs for each weight
-w_cs <- function(w, coverage = 0.95){
-  indices <- unlist(get_in_cos(w, coverage = coverage))
-  result = rep(0,length(w))
+w_cs <- function(weights, coverage = 0.95){
+  indices <- unlist(get_in_cos(weights, coverage = coverage))
+  result = rep(0,length(weights))
   result[indices] = 1
   return(result)
-}
-
-get_integrated_weight <- function(avWeight, weight_fudge_factor = 1.5){
-  av <- apply(avWeight, 1, function(w) prod(w^(weight_fudge_factor/ncol(avWeight))))
-  return(av / sum(av))
-}
-
-get_in_cos <- function(weights, coverage = 0.95){
-  # Get indices in decreasing weight order
-  temp <- order(weights, decreasing=TRUE)
-  weights_ordered <- weights[temp]
-  # Find position where cumsum exceeds coverage
-  pos <- min(which(cumsum(weights_ordered) >= coverage))
-  # Get the actual threshold weight value
-  weight_thresh <- weights_ordered[pos]
-  # Find all indices with weights >= threshold
-  indices <- which(weights >= weight_thresh)
-  # Order these indices by their weights in decreasing order
-  csets <- indices[order(weights[indices], decreasing=TRUE)]
-  return(list(csets))
 }
 
 
