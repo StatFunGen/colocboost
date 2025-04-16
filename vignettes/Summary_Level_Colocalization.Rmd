@@ -1,0 +1,137 @@
+---
+title: "Summary Level Data Colocalization"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Summary Level Data Colocalization}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette demonstrates how to perform multi-trait colocalization analysis using summary statistics data in ColocBoost, 
+specifically focusing on the `Sumstat_5traits` dataset included in the package.
+
+
+
+```{r setup}
+library(colocboost)
+```
+
+
+# 1. The `Sumstat_5traits` Dataset
+
+The `Sumstat_5traits` dataset contains 5 simulated summary statistics, where it is directly derived from the `Ind_5traits` dataset using marginal association.
+The dataset is specifically designed for evaluating and demonstrating the capabilities of ColocBoost in multiple trait colocalization analysis with summary association data.
+
+- `sumstat`: A list of data.frames of summary statistics for different traits.
+- `true_effect_variants`: True effect variants indices for each trait.
+- Note that `LD` could be calculated from the `X` data in the `Ind_5traits` dataset, but it is not included in the `Sumstat_5traits` dataset.
+
+### Causal variant structure
+The dataset features two causal variants with indices 644 and 2289.
+
+- Causal variant 644 is associated with traits 1, 2, 3, and 4.
+- Causal variant 2289 is associated with traits 2, 3, and 5.
+
+This structure creates a realistic scenario where multiple traits are influenced by different but overlapping sets of genetic variants.
+
+```{r load-summary-data}
+# Loading the Dataset
+data("Sumstat_5traits")
+names(Sumstat_5traits)
+Sumstat_5traits$true_effect_variants
+```
+
+### Important data format for summary data
+Must include the following columns:
+- `z` or (`beta`, `sebeta`): either z-score or (effect size and standard error)
+- `n`: sample size for the summary statistics, it is highly recommendation to provide.
+- `variant`: required if sumstat for different outcomes do not have the same number of variables (multiple sumstat and multiple LD).
+
+
+```{r summary-data-format}
+class(Sumstat_5traits$sumstat[[1]])
+head(Sumstat_5traits$sumstat[[1]])
+```
+
+# 2. Run ColocBoost (Basic usage)
+
+
+The preferred format for colocalization analysis in ColocBoost using summary statistics data is where one LD matrix is provided for all traits, 
+and the summary statistics are organized in a list. The **Basic format** us 
+
+- `sumstat` is organized as a list of data.frames for all traits
+- `LD` is a matrix of linkage disequilibrium (LD) information for all variants across all traits.
+
+```{r one-LD}
+# Extract genotype (X) and calculate LD matrix
+data("Ind_5traits")
+LD <- get_cormat(Ind_5traits$X[[1]])
+
+# Run colocboost
+res <- colocboost(sumstat = Sumstat_5traits$sumstat, LD = LD)
+
+# Identified CoS
+res$cos_details$cos$cos_index
+```
+
+
+### Results Interpretation
+
+For comprehensive tutorials on result interpretation and advanced visualization techniques, please visit our documentation portal at FIXME (link).
+
+
+# 3. Run ColocBoost (Advance usage)
+
+## 3.1. Matched LD with multiple sumstat (Trait-specific LD)   
+
+When studying multiple traits with its own trait-specific LD matrix, you could provide a list of LD matrices matched with a list of summary statistics.
+
+- **Basic format**: `sumstat` and `LD` are organized as lists, matched by trait index,
+    - `(sumstat[1], LD[1])` contains information for trait 1,
+    - `(sumstat[2], LD[2])` contains information for trait 2,
+    - And so on for each trait under analysis.
+- **Cross-trait flexibility**: 
+    - There is no requirement for the same variants across different traits. This allows for the analysis of traits with variants avaiable.
+    - This is particularly useful when you have a large dataset with many traits and want to focus on specific variants and trait-specific LD.
+
+```{r matched-LD}
+# Duplicate LD with matched summary statistics
+LD_multiple <- lapply(1:length(Sumstat_5traits$sumstat), function(i) LD )
+
+# Run colocboost
+res <- colocboost(sumstat = Sumstat_5traits$sumstat, LD = LD_multiple)
+
+# Identified CoS
+res$cos_details$cos$cos_index
+```
+
+
+## 3.2. LD matrix is a superset of variants across different summary statistics
+
+When the LD matrix includes a superset of variants across different summary statistics, with **Input Format**:
+- `sumstat` is a list of data.frames for all traits
+- `LD` is a matrix of linkage disequilibrium (LD) information for all variants across all traits.
+- The LD matrix should contain all variants present in the summary statistics data frames.
+- This is particularly useful when you have a large LD matrix from a reference panel and want to use it for multiple summary statistics datasets. 
+It allows for efficient analysis without redundancy.
+
+
+```{r superset-LD}
+# Create sumstat with different number of variants - remove 100 variants in each sumstat
+set.seed(1)
+LD_superset <- LD
+sumstat <- lapply(Sumstat_5traits$sumstat, function(x) x[-sample(1:nrow(x), 100), , drop = FALSE])
+
+# Run colocboost
+res <- colocboost(sumstat = sumstat, LD = LD_superset)
+
+# Identified CoS
+res$cos_details$cos$cos_index
+```
