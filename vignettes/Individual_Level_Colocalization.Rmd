@@ -14,7 +14,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette demonstrates how to perform colocalization analysis using individual-level data with multiple traits in ColocBoost, specifically focusing on the `Ind_5traits` dataset included in the package.
+This vignette demonstrates how to perform multi-trait colocalization analysis using individual-level data in ColocBoost, 
+specifically focusing on the `Ind_5traits` dataset included in the package.
 
 
 ```{r setup}
@@ -22,30 +23,46 @@ library(colocboost)
 ```
 
 
-## Example Data – Ind_5traits
+# 1. The `Ind_5traits` Dataset
 
 
-The `Ind_5traits` dataset contains 5 simulated phenotypes alongside corresponding genotype matrices. 
-The dataset is specifically designed to facilitate the identification of causal variants for complex traits.
+The `Ind_5traits` dataset contains 5 simulated phenotypes alongside corresponding genotype matrices. T
+he dataset is specifically designed for evaluating and demonstrating the capabilities of ColocBoost in multiple trait colocalization analysis with individual-level data.
 
+- `X`: A list of genotype matrices for different outcomes. 
+- `Y`: A list of phenotype vectors for different outcomes. 
+- `true_effect_variants`: True effect variants indices for each trait.
 
-- `X`: A list of genotype matrices for different outcomes. Each matrix with a dimension of (individuals × variables)
-- `Y`: A list of phenotype vectors for different outcomes. Each matrix with a dimension of (individuals × 1)
-- `true_effect_variants`: True effect variable indices for each trait.
+### Causal variant structure
+The dataset features two causal variants with indices 644 and 2289.
+
+- Causal variant 644 is associated with traits 1, 2, 3, and 4.
+- Causal variant 2289 is associated with traits 2, 3, and 5.
+
+This structure creates a realistic scenario where multiple traits are influenced by different but overlapping sets of genetic variants.
 
 
 ```{r load-example-data}
-# Load the example data
+# Loading the Dataset
 data(Ind_5traits)
 names(Ind_5traits)
 Ind_5traits$true_effect_variants
 ```
 
-There are two 
 
-## Multiple X and Multiple Y 
+# 2. Run ColocBoost (Basic usage)
 
-The default and preferred format for colocalization analysis in ColocBoost is where genotype (X) and phenotype (Y) data are matched by individual:
+
+The preferred format for colocalization analysis in ColocBoost using individual level data is where genotype (X) and phenotype (Y) data are properly matched.
+
+- **Basic format**: `X` and `Y` are organized as lists, matched by trait index,
+    - `(X[1], Y[1])` contains individuals for trait 1,
+    - `(X[2], Y[2])` contains individuals for trait 2,
+    - And so on for each trait under analysis.
+- **Cross-trait flexibility**: 
+    - There is no requirement for the same individuals across different traits. This allows for the analysis of traits with different sample sizes.
+    - This is particularly useful when you have a large dataset with many traits and want to focus on specific individuals for each trait.
+
 
 ```{r multiple-matched}
 # Extract genotype (X) and phenotype (Y) data
@@ -55,19 +72,28 @@ Y <- Ind_5traits$Y
 # Run colocboost with matched data
 res <- colocboost(X = X, Y = Y)
 
-# View results
-str(res)
+# Identified CoS
+res$cos_details$cos$cos_index
 ```
 
-Key requirements for this format:
-- Both X and Y must have the same number of rows (individuals)
-- Individuals must be in the same order in both matrices
-- Covariates Z should also have the same number of rows
-- To analyze multiple traits, you can loop over the columns of Y or use the ColocMultiBoost function
 
-## Single X (List) and Multiple Y (Matrix Form)
+### Results Interpretation
 
-When you want to focus on a single variant across multiple traits:
+For comprehensive tutorials on result interpretation and advanced visualization techniques, please visit our documentation portal at FIXME (link).
+
+
+# 3. Run ColocBoost (Advance usage)
+
+## 3.1. Single genotype matrix
+
+When studying multiple traits with a common genotype matrix, such as gene expression in different tissues or cell types, 
+we provide the interface for one single genotype matrix with multiple phenotypes. 
+This is particularly useful when the same individuals are used for different traits, allowing for efficient analysis without redundancy.
+
+- **Input Format**:
+    - `X` is a single matrix containing genotype data for all individuals. 
+    - `Y` can be i) a matrix with N * L dimension; ii) a list of phenotype vectors for L traits.
+
 
 ```{r single-x}
 # Extract a single SNP (as a vector)
@@ -76,43 +102,41 @@ X_single <- X[[1]]  # First SNP for all individuals
 # Run colocboost
 res <- colocboost(X = X, Y = Y)
 
-# View results for the first trait
-str(res)
+# Identified CoS
+res$cos_details$cos$cos_index
 ```
 
-Key aspects of this approach:
-- You can keep X as a single-column matrix or vector
-- For multiple traits, you can loop over the columns of Y or use dedicated functions
-- Covariates are applied consistently across all analyses
+## 3.2. Arbitrary X and Y with dictionary provided
 
-## Multiple X and Multiple Y – Dictionary Provided
+When studying multiple traits with arbitrary genotype matrices for different traits, 
+we also provide the interface for arbitrary genotype matrices with multiple phenotypes. 
+This particularly benefits meta-analysis across heterogeneous datasets where, for different subsets of traits,
+genotype data comes from different genotyping platforms or sequencing technologies.
 
-When you need to map between different X and Y variables using a dictionary:
+- **Input Format**:
+    - `X` is a list of genotype matrices.
+    - `Y` is a list of phenotype vectors.
+    - `dict_YX` is a dictionary matrix that index of Y to index of X.
+
 
 ```{r dictionary-mapped}
 # Create a simple dictionary for demonstration purposes
-X_two <- X[c(1,3)]
+X_arbitrary <- X[c(1,3)] # traits 1 and 2 matched to the first genotype matrix; traits 3,4,5 matched to the third genotype matrix.
 dict_YX = cbind(c(1:5), c(1,1,2,2,2))
 
 # Display the dictionary
 dict_YX
 
 # Run colocboost
-res <- colocboost(X = X_two, Y = Y, dict_YX = dict_YX)
+res <- colocboost(X = X_arbitrary, Y = Y, dict_YX = dict_YX)
 
-# View results for the first trait
-str(res)
+# Identified CoS
+res$cos_details$cos$cos_index
 ```
-
-Key features of dictionary-based mapping:
-- Allows you to organize and filter your data based on metadata
-- Provides a structured way to connect SNPs to genes or other features
-- Can incorporate genomic positions, functional annotations, etc.
-- Particularly useful for large-scale analyses with many variants and traits
 
 
 ## Conclusion
 
-ColocBoost provides flexible methods for individual-level colocalization analysis across multiple formats. By working directly with raw genotype and phenotype data, you gain greater statistical power and more detailed insights compared to summary statistics-based approaches.
+ColocBoost provides flexible methods for individual-level colocalization analysis across multiple formats. 
+By working directly with raw genotype and phenotype data, you gain greater statistical power and more detailed insights compared to summary statistics-based approaches.
 
-For more advanced usage and detailed explanations, please refer to:
