@@ -116,6 +116,7 @@ res$cos_details$cos$cos_index
 ## 3.2. LD matrix is a superset of variants across different summary statistics
 
 When the LD matrix includes a superset of variants across different summary statistics, with **Input Format**:
+
 - `sumstat` is a list of data.frames for all traits
 - `LD` is a matrix of linkage disequilibrium (LD) information for all variants across all traits.
 - The LD matrix should contain all variants present in the summary statistics data frames.
@@ -125,7 +126,6 @@ It allows for efficient analysis without redundancy.
 
 ```{r superset-LD}
 # Create sumstat with different number of variants - remove 100 variants in each sumstat
-set.seed(1)
 LD_superset <- LD
 sumstat <- lapply(Sumstat_5traits$sumstat, function(x) x[-sample(1:nrow(x), 100), , drop = FALSE])
 

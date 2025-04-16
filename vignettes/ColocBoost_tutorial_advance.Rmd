@@ -60,7 +60,7 @@ X <- Ind_5traits$X[[1]]
 Y <- do.call(cbind, Ind_5traits$Y[1:3])
 data("Sumstat_5traits")
 sumstat <- Sumstat_5traits$sumstat[4:5]
-L# D <- get_cormat(Ind_5traits$X[[1]])
+# LD <- get_cormat(Ind_5traits$X[[1]])
 # res <- colocboost(X = X, Y = Y, sumstat = sumstat, LD = LD)
 # res$cos_summary
 ```
