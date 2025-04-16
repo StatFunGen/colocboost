@@ -1,0 +1,61 @@
+---
+title: "Input Data Format"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Input Data Format and Example Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(colocboost)
+```
+
+## Input Data Format
+
+This vignette documents the required input data formats and provides examples of data included in the package.
+
+### Individual Level Data
+
+For analyses using individual-level data, the package requires matched X and Y data. Below is the format and an example from the package:
+
+```{r individual-level-example}
+# Load example individual-level data
+data(Ind_5traits)
+
+# Display the structure
+str(Ind_5traits)
+```
+
+#### Format Requirements
+
+- Data should be in a data frame or matrix
+- Each row represents an individual
+- Columns must include matched genotype (X) and phenotype (Y) data
+- Missing values should be coded as NA
+
+### Summary Statistics
+
+For analyses using summary statistics, the package requires a data frame with matched linkage disequilibrium (LD) information:
+
+```{r summary-stats-example}
+# Load example summary statistics data
+data(Sumstat_5traits)
+
+# Display the structure
+str(Sumstat_5traits)
+```
+
+#### Format Requirements
+
+- Data should be in a data frame
+- Each row represents a variant
+- Must include effect size, standard error, and sample size information
+- LD matrix must be provided separately or calculated from the data
