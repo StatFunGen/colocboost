@@ -32,7 +32,7 @@ test_that("w_cs correctly identifies confidence set for weight vector", {
   
   # Test with different coverage
   result2 <- w_cs(w, coverage = 0.9)
-  expected2 <- c(1, 1, 1, 0)  # First 3 elements cover 90%
+  expected2 <- c(1, 1, 1, 1)  # First 4 elements cover 90% since 3 and 4 with the same 0.1 weight 
   expect_equal(result2, expected2)
 })
 
@@ -51,8 +51,8 @@ test_that("get_in_cos correctly identifies indices in confidence set", {
   
   # Test with higher coverage
   result2 <- get_in_cos(w, coverage = 0.9)
-  # Should include elements 2, 3, 1, 4
-  expect_equal(sort(result2[[1]]), c(1, 2, 3, 4))
+  # Should include elements 2, 3, 1, 4, 5
+  expect_equal(sort(result2[[1]]), c(1, 2, 3, 4, 5))
 })
 
 # Test for merge_sets function
