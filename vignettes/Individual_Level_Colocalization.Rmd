@@ -1,0 +1,118 @@
+---
+title: "Individual Level Data Colocalization"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Individual Level Data Colocalization}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette demonstrates how to perform colocalization analysis using individual-level data with multiple traits in ColocBoost, specifically focusing on the `Ind_5traits` dataset included in the package.
+
+
+```{r setup}
+library(colocboost)
+```
+
+
+## Example Data – Ind_5traits
+
+
+The `Ind_5traits` dataset contains 5 simulated phenotypes alongside corresponding genotype matrices. 
+The dataset is specifically designed to facilitate the identification of causal variants for complex traits.
+
+
+- `X`: A list of genotype matrices for different outcomes. Each matrix with a dimension of (individuals × variables)
+- `Y`: A list of phenotype vectors for different outcomes. Each matrix with a dimension of (individuals × 1)
+- `true_effect_variants`: True effect variable indices for each trait.
+
+
+```{r load-example-data}
+# Load the example data
+data(Ind_5traits)
+names(Ind_5traits)
+Ind_5traits$true_effect_variants
+```
+
+There are two 
+
+## Multiple X and Multiple Y 
+
+The default and preferred format for colocalization analysis in ColocBoost is where genotype (X) and phenotype (Y) data are matched by individual:
+
+```{r multiple-matched}
+# Extract genotype (X) and phenotype (Y) data
+X <- Ind_5traits$X
+Y <- Ind_5traits$Y
+
+# Run colocboost with matched data
+res <- colocboost(X = X, Y = Y)
+
+# View results
+str(res)
+```
+
+Key requirements for this format:
+- Both X and Y must have the same number of rows (individuals)
+- Individuals must be in the same order in both matrices
+- Covariates Z should also have the same number of rows
+- To analyze multiple traits, you can loop over the columns of Y or use the ColocMultiBoost function
+
+## Single X (List) and Multiple Y (Matrix Form)
+
+When you want to focus on a single variant across multiple traits:
+
+```{r single-x}
+# Extract a single SNP (as a vector)
+X_single <- X[[1]]  # First SNP for all individuals
+
+# Run colocboost
+res <- colocboost(X = X, Y = Y)
+
+# View results for the first trait
+str(res)
+```
+
+Key aspects of this approach:
+- You can keep X as a single-column matrix or vector
+- For multiple traits, you can loop over the columns of Y or use dedicated functions
+- Covariates are applied consistently across all analyses
+
+## Multiple X and Multiple Y – Dictionary Provided
+
+When you need to map between different X and Y variables using a dictionary:
+
+```{r dictionary-mapped}
+# Create a simple dictionary for demonstration purposes
+X_two <- X[c(1,3)]
+dict_YX = cbind(c(1:5), c(1,1,2,2,2))
+
+# Display the dictionary
+dict_YX
+
+# Run colocboost
+res <- colocboost(X = X_two, Y = Y, dict_YX = dict_YX)
+
+# View results for the first trait
+str(res)
+```
+
+Key features of dictionary-based mapping:
+- Allows you to organize and filter your data based on metadata
+- Provides a structured way to connect SNPs to genes or other features
+- Can incorporate genomic positions, functional annotations, etc.
+- Particularly useful for large-scale analyses with many variants and traits
+
+
+## Conclusion
+
+ColocBoost provides flexible methods for individual-level colocalization analysis across multiple formats. By working directly with raw genotype and phenotype data, you gain greater statistical power and more detailed insights compared to summary statistics-based approaches.
+
+For more advanced usage and detailed explanations, please refer to:
