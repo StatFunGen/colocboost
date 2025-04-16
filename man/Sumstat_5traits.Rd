@@ -7,16 +7,15 @@
 \format{
 \subsection{\code{Sumstat_5traits}}{
 
-A list with 3 elements
+A list with 2 elements
 \describe{
 \item{sumstat}{Summary statistics for 5 traits}
-\item{LD}{Matrix of LD between variants}
 \item{TrueCausalVariants}{List of causal variants}
 }
 }
 }
 \source{
-FINISH
+See Cao et. al. 2025 for details. TO-DO-LIST
 }
 \usage{
 Sumstat_5traits
