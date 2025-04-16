@@ -36,9 +36,9 @@
 <li><a class="dropdown-item" href="../articles/announcements.html">News</a></li>
     <li><a class="dropdown-item" href="../articles/ColocBoost_tutorial_advance.html">ColocBoost Tutorial (Advanced Usage)</a></li>
     <li><a class="dropdown-item" href="../articles/ColocBoost_tutorial_basic.html">ColocBoost Tutorial (Basic Usage)</a></li>
-    <li><a class="dropdown-item" href="../articles/ColocBoost_tutorial_cbsummary.html">ColocBoost Tutortial (Summary of ColocBoost results)</a></li>
     <li><a class="dropdown-item" href="../articles/ColocBoost_tutorial_diagnostic.html">ColocBoost Tutortial (Diagnostic)</a></li>
     <li><a class="dropdown-item" href="../articles/ColocBoost_tutorial_GTEx.html">ColocBoost Tutortial (GTEx tissues)</a></li>
+    <li><a class="dropdown-item" href="../articles/ColocBoost_tutorial_strong_colocalization.html">ColocBoost Tutortial (Summary of ColocBoost results)</a></li>
   </ul>
 </li>
       </ul>
@@ -63,7 +63,7 @@
       <h1>ColocBoost Tutorial (Basic Usage)</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/description_fix/vignettes/ColocBoost_tutorial_basic.Rmd" class="external-link"><code>vignettes/ColocBoost_tutorial_basic.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/vignettes/ColocBoost_tutorial_basic.Rmd" class="external-link"><code>vignettes/ColocBoost_tutorial_basic.Rmd</code></a></small>
       <div class="d-none name"><code>ColocBoost_tutorial_basic.Rmd</code></div>
     </div>
 
@@ -111,11 +111,29 @@ provide insights into which variants are colocalized across the
 different phenotypes and offer a comprehensive overview of the
 statistical results from the colocalization analysis.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">coloc_results</span><span class="op">$</span><span class="va">coloc_csets</span><span class="op">$</span><span class="va">csets_index</span></span>
-<span><span class="co">#&gt; NULL</span></span>
+<code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
+<span><span class="co">#&gt; $`cos1:y1_y2_y3_y4`</span></span>
+<span><span class="co">#&gt; [1] 636 644 618 655</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`cos2:y2_y3_y5`</span></span>
+<span><span class="co">#&gt; [1] 2289 2293</span></span>
 <span></span>
-<span><span class="va">res</span><span class="op">$</span><span class="va">summary_table</span></span>
-<span><span class="co">#&gt; NULL</span></span></code></pre></div>
+<span><span class="va">res</span><span class="op">$</span><span class="va">cos_summary</span></span>
+<span><span class="co">#&gt;   target_outcome colocalized_outcomes           cos_id    purity</span></span>
+<span><span class="co">#&gt; 1          FALSE       Y1; Y2; Y3; Y4 cos1:y1_y2_y3_y4 0.9941612</span></span>
+<span><span class="co">#&gt; 2          FALSE           Y2; Y3; Y5    cos2:y2_y3_y5 0.9761542</span></span>
+<span><span class="co">#&gt;         top_variable top_variable_vcp cos_npc min_npc_outcome n_variables</span></span>
+<span><span class="co">#&gt; 1 chr6:42289028:G:GA        0.2836988  0.9997          0.7709           4</span></span>
+<span><span class="co">#&gt; 2 chr6:43825335:AG:A        0.8255616  0.9990          0.9659           2</span></span>
+<span><span class="co">#&gt;    colocalized_index</span></span>
+<span><span class="co">#&gt; 1 636; 644; 618; 655</span></span>
+<span><span class="co">#&gt; 2         2289; 2293</span></span>
+<span><span class="co">#&gt;                                                         colocalized_variables</span></span>
+<span><span class="co">#&gt; 1 chr6:42289028:G:GA; chr6:42290388:T:C; chr6:42283804:C:T; chr6:42293814:G:A</span></span>
+<span><span class="co">#&gt; 2                                       chr6:43825335:AG:A; chr6:43826407:G:A</span></span>
+<span><span class="co">#&gt;                                                  colocalized_variables_vcp</span></span>
+<span><span class="co">#&gt; 1 0.28369876492126; 0.235702230723101; 0.23031420452193; 0.224447006039487</span></span>
+<span><span class="co">#&gt; 2                                     0.825561570826322; 0.174327004623822</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="summary-statistics-only">Summary statistics only<a class="anchor" aria-label="anchor" href="#summary-statistics-only"></a>
@@ -138,7 +156,8 @@ the data using summary statistics, apply the colocboost function
 specifying the summary statistics and LD matrices.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Sumstat_5traits"</span><span class="op">)</span></span>
-<span><span class="va">LD</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="va">Sumstat_5traits</span><span class="op">$</span><span class="va">LD</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Ind_5traits"</span><span class="op">)</span></span>
+<span><span class="va">LD</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost_post_inference.html">get_cormat</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>sumstat <span class="op">=</span> <span class="va">Sumstat_5traits</span><span class="op">$</span><span class="va">sumstat</span>, LD <span class="op">=</span> <span class="va">LD</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Starting checking the input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
@@ -162,11 +181,29 @@ provide insights into which variants are colocalized across the
 different phenotypes and offer a comprehensive overview of the
 statistical results from the colocalization analysis.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">coloc_results</span><span class="op">$</span><span class="va">coloc_csets</span><span class="op">$</span><span class="va">csets_index</span></span>
-<span><span class="co">#&gt; NULL</span></span>
+<code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
+<span><span class="co">#&gt; $`cos1:y1_y2_y3_y4`</span></span>
+<span><span class="co">#&gt; [1] 636 644 618 655</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`cos2:y2_y3_y5`</span></span>
+<span><span class="co">#&gt; [1] 2289 2293</span></span>
 <span></span>
-<span><span class="va">res</span><span class="op">$</span><span class="va">summary_table</span></span>
-<span><span class="co">#&gt; NULL</span></span></code></pre></div>
+<span><span class="va">res</span><span class="op">$</span><span class="va">cos_summary</span></span>
+<span><span class="co">#&gt;   target_outcome colocalized_outcomes           cos_id    purity</span></span>
+<span><span class="co">#&gt; 1          FALSE       Y1; Y2; Y3; Y4 cos1:y1_y2_y3_y4 0.9941612</span></span>
+<span><span class="co">#&gt; 2          FALSE           Y2; Y3; Y5    cos2:y2_y3_y5 0.9761542</span></span>
+<span><span class="co">#&gt;         top_variable top_variable_vcp cos_npc min_npc_outcome n_variables</span></span>
+<span><span class="co">#&gt; 1 chr6:42289028:G:GA        0.2834123  0.9997          0.7709           4</span></span>
+<span><span class="co">#&gt; 2 chr6:43825335:AG:A        0.8255616  0.9990          0.9659           2</span></span>
+<span><span class="co">#&gt;    colocalized_index</span></span>
+<span><span class="co">#&gt; 1 636; 644; 618; 655</span></span>
+<span><span class="co">#&gt; 2         2289; 2293</span></span>
+<span><span class="co">#&gt;                                                         colocalized_variables</span></span>
+<span><span class="co">#&gt; 1 chr6:42289028:G:GA; chr6:42290388:T:C; chr6:42283804:C:T; chr6:42293814:G:A</span></span>
+<span><span class="co">#&gt; 2                                       chr6:43825335:AG:A; chr6:43826407:G:A</span></span>
+<span><span class="co">#&gt;                                                    colocalized_variables_vcp</span></span>
+<span><span class="co">#&gt; 1 0.283412263114826; 0.235602650856619; 0.230180173078151; 0.224434184721907</span></span>
+<span><span class="co">#&gt; 2                                       0.825561570826219; 0.174327004623929</span></span></code></pre></div>
 <p>This section of the analysis provides insights into which variants
 are colocalized across the different phenotypes and offers a
 comprehensive overview of the statistical results from the
@@ -193,7 +230,7 @@ and 5, we use summary statistics and duplicated LD matrices.</p>
 <span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">Y</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
 <span><span class="va">sumstat</span> <span class="op">&lt;-</span> <span class="va">Sumstat_5traits</span><span class="op">$</span><span class="va">sumstat</span><span class="op">[</span><span class="fl">4</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
-<span><span class="va">LD</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="va">Sumstat_5traits</span><span class="op">$</span><span class="va">LD</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">LD</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost_post_inference.html">get_cormat</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><em>Note</em>: This step duplicates the single LD matrix into a list
 of two matrices, one for each trait. This is to mimic scenarios where
 different traits might have different LD structures. ColocBoost allows
@@ -223,11 +260,29 @@ provide insights into which variants are colocalized across the
 different phenotypes and offer a comprehensive overview of the
 statistical results from the colocalization analysis.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">coloc_results</span><span class="op">$</span><span class="va">coloc_csets</span><span class="op">$</span><span class="va">csets_index</span></span>
-<span><span class="co">#&gt; NULL</span></span>
+<code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
+<span><span class="co">#&gt; $`cos1:y1_y2_y3_y4`</span></span>
+<span><span class="co">#&gt; [1] 636 644 618 655</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`cos2:y2_y3_y5`</span></span>
+<span><span class="co">#&gt; [1] 2289 2293</span></span>
 <span></span>
-<span><span class="va">res</span><span class="op">$</span><span class="va">summary_table</span></span>
-<span><span class="co">#&gt; NULL</span></span></code></pre></div>
+<span><span class="va">res</span><span class="op">$</span><span class="va">cos_summary</span></span>
+<span><span class="co">#&gt;   target_outcome colocalized_outcomes           cos_id    purity</span></span>
+<span><span class="co">#&gt; 1          FALSE       Y1; Y2; Y3; Y4 cos1:y1_y2_y3_y4 0.9941612</span></span>
+<span><span class="co">#&gt; 2          FALSE           Y2; Y3; Y5    cos2:y2_y3_y5 0.9761542</span></span>
+<span><span class="co">#&gt;         top_variable top_variable_vcp cos_npc min_npc_outcome n_variables</span></span>
+<span><span class="co">#&gt; 1 chr6:42289028:G:GA        0.2836289  0.9997          0.7709           4</span></span>
+<span><span class="co">#&gt; 2 chr6:43825335:AG:A        0.8255616  0.9990          0.9659           2</span></span>
+<span><span class="co">#&gt;    colocalized_index</span></span>
+<span><span class="co">#&gt; 1 636; 644; 618; 655</span></span>
+<span><span class="co">#&gt; 2         2289; 2293</span></span>
+<span><span class="co">#&gt;                                                         colocalized_variables</span></span>
+<span><span class="co">#&gt; 1 chr6:42289028:G:GA; chr6:42290388:T:C; chr6:42283804:C:T; chr6:42293814:G:A</span></span>
+<span><span class="co">#&gt; 2                                       chr6:43825335:AG:A; chr6:43826407:G:A</span></span>
+<span><span class="co">#&gt;                                                    colocalized_variables_vcp</span></span>
+<span><span class="co">#&gt; 1 0.283628854140325; 0.235677828780845; 0.230281236239856; 0.224444167049743</span></span>
+<span><span class="co">#&gt; 2                                       0.825561570826286; 0.174327004623859</span></span></code></pre></div>
 <p>This section of the analysis provides insights into which variants
 are colocalized across the different phenotypes and offers a
 comprehensive overview of the statistical results from the

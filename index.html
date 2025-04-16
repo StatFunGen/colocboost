@@ -38,9 +38,9 @@
 <li><a class="dropdown-item" href="articles/announcements.html">News</a></li>
     <li><a class="dropdown-item" href="articles/ColocBoost_tutorial_advance.html">ColocBoost Tutorial (Advanced Usage)</a></li>
     <li><a class="dropdown-item" href="articles/ColocBoost_tutorial_basic.html">ColocBoost Tutorial (Basic Usage)</a></li>
-    <li><a class="dropdown-item" href="articles/ColocBoost_tutorial_cbsummary.html">ColocBoost Tutortial (Summary of ColocBoost results)</a></li>
     <li><a class="dropdown-item" href="articles/ColocBoost_tutorial_diagnostic.html">ColocBoost Tutortial (Diagnostic)</a></li>
     <li><a class="dropdown-item" href="articles/ColocBoost_tutorial_GTEx.html">ColocBoost Tutortial (GTEx tissues)</a></li>
+    <li><a class="dropdown-item" href="articles/ColocBoost_tutorial_strong_colocalization.html">ColocBoost Tutortial (Summary of ColocBoost results)</a></li>
   </ul>
 </li>
       </ul>
@@ -98,16 +98,9 @@
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
 <div class="section level3">
-<h3 id="single-trait-fine-mapping-fineboost">Single-trait Fine-mapping (FineBoost)<a class="anchor" aria-label="anchor" href="#single-trait-fine-mapping-fineboost"></a>
-</h3>
-<p>Run FineBoost for single-trait fine-mapping (similar interface to SuSiE)</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/colocboost.html">colocboost</a></span><span class="op">(</span>X<span class="op">=</span><span class="va">X</span>, Y<span class="op">=</span><span class="va">y</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level3">
 <h3 id="multi-trait-colocalization">Multi-trait Colocalization<a class="anchor" aria-label="anchor" href="#multi-trait-colocalization"></a>
 </h3>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Basic multi-trait analysis</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/colocboost.html">colocboost</a></span><span class="op">(</span>X<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, Y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">y1</span>, <span class="va">y2</span>, <span class="va">y3</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -123,6 +116,13 @@
 <span><span class="co"># Filter for stronger colocalization evidence</span></span>
 <span><span class="va">filtered</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_strong_colocalization.html">get_strong_colocalization</a></span><span class="op">(</span><span class="va">result</span>, cos_npc_cutoff <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
 <p>For more complex analyses involving multiple datasets mixing individual level and summary statistics data, we recommend using <a href="https://github.com/StatFunGen/pecotmr/blob/main/R/colocboost_pipeline.R" class="external-link">this pipeline wrapper</a> from the <code>pecotmr</code> package. The <code>pecotmr</code> package can be installed either from source or from our conda package at <a href="https://anaconda.org/dnachun/r-pecotmr" class="external-link uri">https://anaconda.org/dnachun/r-pecotmr</a>.</p>
+</div>
+<div class="section level3">
+<h3 id="single-trait-fine-mapping-fineboost---special-case">Single-trait Fine-mapping (FineBoost) - Special Case<a class="anchor" aria-label="anchor" href="#single-trait-fine-mapping-fineboost---special-case"></a>
+</h3>
+<p>Run FineBoost for single-trait fine-mapping (similar interface to SuSiE)</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/colocboost.html">colocboost</a></span><span class="op">(</span>X<span class="op">=</span><span class="va">X</span>, Y<span class="op">=</span><span class="va">y</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
