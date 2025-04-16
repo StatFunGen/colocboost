@@ -8,6 +8,7 @@
 <url><loc>https://statfungen.github.io/colocboost/articles/ColocBoost_tutorial_strong_colocalization.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/articles/announcements.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/articles/index.html</loc></url>
+<url><loc>https://statfungen.github.io/colocboost/articles/installation.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/authors.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/index.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/reference/Heterogeneous_Effect.html</loc></url>
@@ -17,7 +18,8 @@
 <url><loc>https://statfungen.github.io/colocboost/reference/Weaker_GWAS_Effect.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/reference/colocboost.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/reference/colocboost_plot.html</loc></url>
-<url><loc>https://statfungen.github.io/colocboost/reference/colocboost_post_inference.html</loc></url>
+<url><loc>https://statfungen.github.io/colocboost/reference/get_cormat.html</loc></url>
+<url><loc>https://statfungen.github.io/colocboost/reference/get_cos.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/reference/get_cos_summary.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/reference/get_strong_colocalization.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/reference/index.html</loc></url>
