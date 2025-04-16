@@ -5,10 +5,10 @@ articles:
   announcements: announcements.html
   ColocBoost_tutorial_advance: ColocBoost_tutorial_advance.html
   ColocBoost_tutorial_basic: ColocBoost_tutorial_basic.html
-  ColocBoost_tutorial_cbsummary: ColocBoost_tutorial_cbsummary.html
   ColocBoost_tutorial_diagnostic: ColocBoost_tutorial_diagnostic.html
   ColocBoost_tutorial_GTEx: ColocBoost_tutorial_GTEx.html
-last_built: 2025-04-15T18:13Z
+  ColocBoost_tutorial_strong_colocalization: ColocBoost_tutorial_strong_colocalization.html
+last_built: 2025-04-16T01:38Z
 urls:
   reference: https://statfungen.github.io/colocboost/reference
   article: https://statfungen.github.io/colocboost/articles

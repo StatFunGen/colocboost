@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>ColocBoost Tutortial (Diagnostic) • colocboost</title>
+<title>ColocBoost Tutortial (Summary of ColocBoost results) • colocboost</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="ColocBoost Tutortial (Diagnostic)">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="ColocBoost Tutortial (Summary of ColocBoost results)">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -60,11 +60,11 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>ColocBoost Tutortial (Diagnostic)</h1>
+      <h1>ColocBoost Tutortial (Summary of ColocBoost results)</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/vignettes/ColocBoost_tutorial_diagnostic.Rmd" class="external-link"><code>vignettes/ColocBoost_tutorial_diagnostic.Rmd</code></a></small>
-      <div class="d-none name"><code>ColocBoost_tutorial_diagnostic.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/vignettes/ColocBoost_tutorial_strong_colocalization.Rmd" class="external-link"><code>vignettes/ColocBoost_tutorial_strong_colocalization.Rmd</code></a></small>
+      <div class="d-none name"><code>ColocBoost_tutorial_strong_colocalization.Rmd</code></div>
     </div>
 
     
@@ -74,16 +74,15 @@ causal variants for complex diseases.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/StatFunGen/colocboost" class="external-link">colocboost</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="diagnostic-for-the-post-processing-to-filter-the-small-effects">Diagnostic for the post-processing to filter the small effects<a class="anchor" aria-label="anchor" href="#diagnostic-for-the-post-processing-to-filter-the-small-effects"></a>
+<h2 id="get-summary-table-with-or-without-target-phenotype">Get summary table (with or without target phenotype)<a class="anchor" aria-label="anchor" href="#get-summary-table-with-or-without-target-phenotype"></a>
 </h2>
 </div>
 <div class="section level2">
-<h2 id="diagnostic-for-add-hoc-colocalized-sets-based-on-between-purity">Diagnostic for add-hoc colocalized sets based on between-purity<a class="anchor" aria-label="anchor" href="#diagnostic-for-add-hoc-colocalized-sets-based-on-between-purity"></a>
+<h2 id="plot-colocboost-results">Plot ColocBoost results<a class="anchor" aria-label="anchor" href="#plot-colocboost-results"></a>
 </h2>
 </div>
 <div class="section level2">
-<h2 id="diagnostic-for-checking-the-updates-in-each-gradient-boosting-iteration">Diagnostic for checking the updates in each gradient-boosting
-iteration<a class="anchor" aria-label="anchor" href="#diagnostic-for-checking-the-updates-in-each-gradient-boosting-iteration"></a>
+<h2 id="check-others---">Check others …..???<a class="anchor" aria-label="anchor" href="#check-others---"></a>
 </h2>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
