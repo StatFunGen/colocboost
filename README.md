@@ -22,13 +22,13 @@ Install the development version from GitHub
 devtools::install_github("StatFunGen/colocboost")
 ```
 
-For a detailed installation guidance, please refer to [https://statfungen.github.io/colocboost/articles/installation.html](https://statfungen.github.io/colocboost/articles/installation.html).
+For a detailed installation guidance, please refer to [Installation](https://statfungen.github.io/colocboost/articles/installation.html).
 
 
 
 ## Tutorial Website
 
-Learn how to perform colocalization analysis with step-by-step examples. For detailed tutorials and use cases, explore our FIXME (link).
+Learn how to perform colocalization analysis with step-by-step examples. For detailed tutorials and use cases in [Tutorials](https://statfungen.github.io/colocboost/articles/index.html).
 
 
 ## Citation
