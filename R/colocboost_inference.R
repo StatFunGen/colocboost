@@ -25,7 +25,10 @@ colocboost_post_inference <- function() {
 }
 
 
-# - Fast calculate correlation matrix
+#' Fast calculate correlation matrix
+#' @rdname colocboost_post_inference
+#' @keywords cb_post_inference
+#' @noRd
 get_cormat <- function(X, intercepte = FALSE){
   X = t(X)
   # Center each variable
