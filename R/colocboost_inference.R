@@ -25,10 +25,18 @@ colocboost_post_inference <- function() {
 }
 
 
-#' Fast calculate correlation matrix
+#' @title A fast function to calculate correlation matrix (LD matrix) from individual level data
+#' @description
+#' This function calculates the correlation matrix (LD matrix) from individual level data.
+#' 
+#' @param X A matrix of individual level data.
+#' @param intercepte A logical value indicating whether to include an intercept in the model. Default is FALSE.
+#' 
+#' @return A correlation matrix (LD matrix).
+#' 
 #' @rdname colocboost_post_inference
 #' @keywords cb_post_inference
-#' @noRd
+#' @export
 get_cormat <- function(X, intercepte = FALSE){
   X = t(X)
   # Center each variable
