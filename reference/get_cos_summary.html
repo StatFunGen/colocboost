@@ -24,6 +24,7 @@
     <li><a class="dropdown-item" href="../articles/ColocBoost_tutorial_diagnostic.html">ColocBoost Tutortial (Diagnostic)</a></li>
     <li><a class="dropdown-item" href="../articles/ColocBoost_tutorial_GTEx.html">ColocBoost Tutortial (GTEx tissues)</a></li>
     <li><a class="dropdown-item" href="../articles/ColocBoost_tutorial_strong_colocalization.html">ColocBoost Tutortial (Summary of ColocBoost results)</a></li>
+    <li><a class="dropdown-item" href="../articles/installation.html">Installation</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -51,7 +52,7 @@
 <span>  <span class="va">cb_output</span>,</span>
 <span>  outcome_names <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  interest_outcome <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  gene_name <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  region_name <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -71,15 +72,15 @@
 <dd><p>Optional vector specifying a subset of outcomes from <code>outcome_names</code> to focus on. When provided, only colocalization events that include at least one of these outcomes will be returned.</p></dd>
 
 
-<dt id="arg-gene-name">gene_name<a class="anchor" aria-label="anchor" href="#arg-gene-name"></a></dt>
+<dt id="arg-region-name">region_name<a class="anchor" aria-label="anchor" href="#arg-region-name"></a></dt>
 <dd><p>Optional character string. When provided, adds a column with this gene name to the output table for easier filtering in downstream analyses.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A summary table for colocalization events with the following columns:</p>
-<dl><dt>target_outcome</dt>
-<dd><p>The target outcome being analyzed if exists. Otherwise, it is <code>FALSE</code>.</p></dd>
+<dl><dt>focal_outcome</dt>
+<dd><p>The focal outcome being analyzed if exists. Otherwise, it is <code>FALSE</code>.</p></dd>
 
 <dt>colocalized_outcomes</dt>
 <dd><p>Colocalized outcomes for colocalization confidence set (CoS)</p></dd>
@@ -115,6 +116,11 @@
 <dd><p>Variant colocalization probabilities for all colocalized variables</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p>Other colocboost_inference:
+<code><a href="get_strong_colocalization.html">get_strong_colocalization</a>()</code></p></div>
+    </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
