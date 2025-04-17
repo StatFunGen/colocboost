@@ -38,6 +38,27 @@ A summary table for colocalization events with the following columns:
 \description{
 \code{get_cos_summary} get the colocalization summary table with or without the outcomes of interest.
 }
+\examples{
+# colocboost example
+set.seed(1)
+N = 1000
+P = 100
+# Generate X with LD structure
+sigma <- 0.9^abs(outer(1:P, 1:P, "-"))
+X <- MASS::mvrnorm(N, rep(0, P), sigma)
+colnames(X) <- paste0("SNP", 1:P)
+L = 3
+true_beta <- matrix(0, P, L)
+true_beta[5, 1] <- 0.5  # SNP5 affects trait 1
+true_beta[5, 2] <- 0.4  # SNP5 also affects trait 2 (colocalized)
+true_beta[10, 2] <- 0.3 # SNP10 only affects trait 2
+true_beta[20, 3] <- 0.6 # SNP20 only affects trait 3
+Y <- matrix(0, N, L)
+for (l in 1:L){  Y[, l] <- X \%*\% true_beta[, l] + rnorm(N, 0, 1) }
+res <- colocboost(X = X, Y = Y)
+get_cos_summary(res)
+
+}
 \seealso{
 Other colocboost_inference: 
 \code{\link{get_strong_colocalization}()}
