@@ -91,31 +91,8 @@ be a single matrix.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Ind_5traits"</span><span class="op">)</span></span>
 <span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">cbind</span>, <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">Y</span><span class="op">)</span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Starting checking the input data.</span></span>
-<span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 4 converge after 34 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 5 converge after 43 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 1 converge after 46 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 2 converge after 67 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 3 converge after 68 iterations!</span></span>
-<span><span class="co">#&gt; Starting assemble analyses and results summary.</span></span>
-<span><span class="va">res</span><span class="op">$</span><span class="va">cos_summary</span></span>
-<span><span class="co">#&gt;   focal_outcome colocalized_outcomes           cos_id    purity</span></span>
-<span><span class="co">#&gt; 1         FALSE       Y1; Y2; Y3; Y4 cos1:y1_y2_y3_y4 0.9941612</span></span>
-<span><span class="co">#&gt; 2         FALSE           Y2; Y3; Y5    cos2:y2_y3_y5 0.9761542</span></span>
-<span><span class="co">#&gt;         top_variable top_variable_vcp cos_npc min_npc_outcome n_variables</span></span>
-<span><span class="co">#&gt; 1 chr6:42289028:G:GA        0.2836988  0.9997          0.7709           4</span></span>
-<span><span class="co">#&gt; 2 chr6:43825335:AG:A        0.8255616  0.9990          0.9659           2</span></span>
-<span><span class="co">#&gt;    colocalized_index</span></span>
-<span><span class="co">#&gt; 1 636; 644; 618; 655</span></span>
-<span><span class="co">#&gt; 2         2289; 2293</span></span>
-<span><span class="co">#&gt;                                                         colocalized_variables</span></span>
-<span><span class="co">#&gt; 1 chr6:42289028:G:GA; chr6:42290388:T:C; chr6:42283804:C:T; chr6:42293814:G:A</span></span>
-<span><span class="co">#&gt; 2                                       chr6:43825335:AG:A; chr6:43826407:G:A</span></span>
-<span><span class="co">#&gt;                                                  colocalized_variables_vcp</span></span>
-<span><span class="co">#&gt; 1 0.28369876492126; 0.235702230723101; 0.23031420452193; 0.224447006039487</span></span>
-<span><span class="co">#&gt; 2                                     0.825561570826322; 0.174327004623822</span></span></code></pre></div>
+<span><span class="co"># res &lt;- colocboost(X = X, Y = Y)</span></span>
+<span><span class="co"># res$cos_summary</span></span></code></pre></div>
 <p><strong>Example of using summary statistics</strong></p>
 <p>For summary statistics, similar optimization is applied using
 <code>Sumstat_5traits</code> dataset where all statistical summaries
@@ -124,31 +101,8 @@ share the same LD matrix.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Sumstat_5traits"</span><span class="op">)</span></span>
 <span><span class="va">sumstat</span> <span class="op">&lt;-</span> <span class="va">Sumstat_5traits</span><span class="op">$</span><span class="va">sumstat</span></span>
 <span><span class="va">LD</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_cormat.html">get_cormat</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>sumstat <span class="op">=</span> <span class="va">sumstat</span>, LD <span class="op">=</span> <span class="va">LD</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Starting checking the input data.</span></span>
-<span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 4 converge after 34 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 5 converge after 43 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 1 converge after 46 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 2 converge after 67 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 3 converge after 68 iterations!</span></span>
-<span><span class="co">#&gt; Starting assemble analyses and results summary.</span></span>
-<span><span class="va">res</span><span class="op">$</span><span class="va">cos_summary</span></span>
-<span><span class="co">#&gt;   focal_outcome colocalized_outcomes           cos_id    purity</span></span>
-<span><span class="co">#&gt; 1         FALSE       Y1; Y2; Y3; Y4 cos1:y1_y2_y3_y4 0.9941612</span></span>
-<span><span class="co">#&gt; 2         FALSE           Y2; Y3; Y5    cos2:y2_y3_y5 0.9761542</span></span>
-<span><span class="co">#&gt;         top_variable top_variable_vcp cos_npc min_npc_outcome n_variables</span></span>
-<span><span class="co">#&gt; 1 chr6:42289028:G:GA        0.2834123  0.9997          0.7709           4</span></span>
-<span><span class="co">#&gt; 2 chr6:43825335:AG:A        0.8255616  0.9990          0.9659           2</span></span>
-<span><span class="co">#&gt;    colocalized_index</span></span>
-<span><span class="co">#&gt; 1 636; 644; 618; 655</span></span>
-<span><span class="co">#&gt; 2         2289; 2293</span></span>
-<span><span class="co">#&gt;                                                         colocalized_variables</span></span>
-<span><span class="co">#&gt; 1 chr6:42289028:G:GA; chr6:42290388:T:C; chr6:42283804:C:T; chr6:42293814:G:A</span></span>
-<span><span class="co">#&gt; 2                                       chr6:43825335:AG:A; chr6:43826407:G:A</span></span>
-<span><span class="co">#&gt;                                                    colocalized_variables_vcp</span></span>
-<span><span class="co">#&gt; 1 0.283412263114826; 0.235602650856619; 0.230180173078151; 0.224434184721907</span></span>
-<span><span class="co">#&gt; 2                                       0.825561570826219; 0.174327004623929</span></span></code></pre></div>
+<span><span class="co"># res &lt;- colocboost(sumstat = sumstat, LD = LD)</span></span>
+<span><span class="co"># res$cos_summary</span></span></code></pre></div>
 <p><strong>Example of combining individual-level data and summary
 statistics</strong></p>
 <p>Consider a scenario where several individual-level phenotypes share a
@@ -162,32 +116,9 @@ statistics.</p>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">cbind</span>, <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">Y</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Sumstat_5traits"</span><span class="op">)</span></span>
 <span><span class="va">sumstat</span> <span class="op">&lt;-</span> <span class="va">Sumstat_5traits</span><span class="op">$</span><span class="va">sumstat</span><span class="op">[</span><span class="fl">4</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
-<span><span class="va">LD</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_cormat.html">get_cormat</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span>, sumstat <span class="op">=</span> <span class="va">sumstat</span>, LD <span class="op">=</span> <span class="va">LD</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Starting checking the input data.</span></span>
-<span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 4 converge after 34 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 5 converge after 43 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 1 converge after 46 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 2 converge after 67 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 3 converge after 68 iterations!</span></span>
-<span><span class="co">#&gt; Starting assemble analyses and results summary.</span></span>
-<span><span class="va">res</span><span class="op">$</span><span class="va">cos_summary</span></span>
-<span><span class="co">#&gt;   focal_outcome colocalized_outcomes           cos_id    purity</span></span>
-<span><span class="co">#&gt; 1         FALSE       Y1; Y2; Y3; Y4 cos1:y1_y2_y3_y4 0.9941612</span></span>
-<span><span class="co">#&gt; 2         FALSE           Y2; Y3; Y5    cos2:y2_y3_y5 0.9761542</span></span>
-<span><span class="co">#&gt;         top_variable top_variable_vcp cos_npc min_npc_outcome n_variables</span></span>
-<span><span class="co">#&gt; 1 chr6:42289028:G:GA        0.2836289  0.9997          0.7709           4</span></span>
-<span><span class="co">#&gt; 2 chr6:43825335:AG:A        0.8255616  0.9990          0.9659           2</span></span>
-<span><span class="co">#&gt;    colocalized_index</span></span>
-<span><span class="co">#&gt; 1 636; 644; 618; 655</span></span>
-<span><span class="co">#&gt; 2         2289; 2293</span></span>
-<span><span class="co">#&gt;                                                         colocalized_variables</span></span>
-<span><span class="co">#&gt; 1 chr6:42289028:G:GA; chr6:42290388:T:C; chr6:42283804:C:T; chr6:42293814:G:A</span></span>
-<span><span class="co">#&gt; 2                                       chr6:43825335:AG:A; chr6:43826407:G:A</span></span>
-<span><span class="co">#&gt;                                                    colocalized_variables_vcp</span></span>
-<span><span class="co">#&gt; 1 0.283628854140325; 0.235677828780845; 0.230281236239856; 0.224444167049743</span></span>
-<span><span class="co">#&gt; 2                                       0.825561570826286; 0.174327004623859</span></span></code></pre></div>
+<span><span class="co"># LD &lt;- get_cormat(Ind_5traits$X[[1]])</span></span>
+<span><span class="co"># res &lt;- colocboost(X = X, Y = Y, sumstat = sumstat, LD = LD)</span></span>
+<span><span class="co"># res$cos_summary</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="few-genotype-matrices-or-few-ld-matrices-than-phenotypes-and-summary-statistics-dict_yx-and-dict_sumstat">Few genotype matrices or few LD matrices than phenotypes and summary

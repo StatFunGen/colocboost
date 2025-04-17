@@ -11,7 +11,8 @@ articles:
   Individual_Level_Colocalization: Individual_Level_Colocalization.html
   Input_Data_Format: Input_Data_Format.html
   installation: installation.html
-last_built: 2025-04-16T21:03Z
+  Summary_Level_Colocalization: Summary_Level_Colocalization.html
+last_built: 2025-04-17T00:15Z
 urls:
   reference: https://statfungen.github.io/colocboost/reference
   article: https://statfungen.github.io/colocboost/articles
