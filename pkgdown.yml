@@ -3,15 +3,15 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   announcements: announcements.html
-  ColocBoost_tutorial_advance: ColocBoost_tutorial_advance.html
   ColocBoost_tutorial_diagnostic: ColocBoost_tutorial_diagnostic.html
-  ColocBoost_tutorial_strong_colocalization: ColocBoost_tutorial_strong_colocalization.html
   Disease_Prioritized_Colocalization: Disease_Prioritized_Colocalization.html
   Individual_Level_Colocalization: Individual_Level_Colocalization.html
   Input_Data_Format: Input_Data_Format.html
   installation: installation.html
-  Summary_Level_Colocalization: Summary_Level_Colocalization.html
-last_built: 2025-04-17T02:42Z
+  Interpret_ColocBoost_Output: Interpret_ColocBoost_Output.html
+  Summary_Statistics_Colocalization: Summary_Statistics_Colocalization.html
+  Visualization_ColocBoost_Output: Visualization_ColocBoost_Output.html
+last_built: 2025-04-17T07:46Z
 urls:
   reference: https://statfungen.github.io/colocboost/reference
   article: https://statfungen.github.io/colocboost/articles
