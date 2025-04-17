@@ -19,6 +19,23 @@ navbar:
     - icon: fa-github
       href: https://github.com/StatFunGen/colocboost
 
+articles:
+  - title: Vignettes
+    contents:
+    - Input_Data_Format
+    - Individual_Level_Colocalization
+    - Summary_Level_Colocalization
+    - ColocBoost_tutorial_basic
+    - ColocBoost_tutorial_advance
+    - ColocBoost_tutorial_GTEx
+    - ColocBoost_tutorial_strong_colocalization
+    - ColocBoost_tutorial_diagnostic
+
+  - title: internal
+    contents:
+    - announcements
+    - installation
+
 reference:
   - title: "Example Data"
     desc: "Example datasets for demonstration and testing"
