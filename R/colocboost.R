@@ -114,6 +114,7 @@
 #' Y <- matrix(0, N, L)
 #' for (l in 1:L){  Y[, l] <- X %*% true_beta[, l] + rnorm(N, 0, 1) }
 #' res <- colocboost(X = X, Y = Y)
+#' res$cos_details$cos$cos_index
 #'
 #' @family colocboost
 #' @importFrom stats na.omit

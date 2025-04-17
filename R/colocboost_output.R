@@ -166,7 +166,9 @@ get_cos_summary <- function(cb_output,
 #' Y <- matrix(0, N, L)
 #' for (l in 1:L){  Y[, l] <- X %*% true_beta[, l] + rnorm(N, 0, 1) }
 #' res <- colocboost(X = X, Y = Y)
+#' res$cos_details$cos$cos_index
 #' filter_res <- get_strong_colocalization(res, cos_npc_cutoff = 0.5, npc_outcome_cutoff = 0.2)
+#' filter_res$cos_details$cos$cos_index
 #'
 #' @family colocboost_inference
 #' @export
