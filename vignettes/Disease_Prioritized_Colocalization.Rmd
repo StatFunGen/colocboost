@@ -1,0 +1,21 @@
+---
+title: "Mixed Data-type and Disease Prioritized Colocalization"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Mixed Data-type and Disease Prioritized Colocalization}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+step-by-step guide on using both individual-level data and summary statistics within the colocboost package to perform multi-trait colocalization analysis.
+
+This vignette demonstrates how to perform multi-trait colocalization analysis using individual-level data in ColocBoost, 
+specifically focusing on the `Ind_5traits` dataset included in the package.

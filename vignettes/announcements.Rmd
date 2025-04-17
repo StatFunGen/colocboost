@@ -8,7 +8,8 @@ vignette: >
 
 ---
 
-## **Initial release in ColocBoost**
+## Initial release in ColocBoost
 
-We are excited to release ColocBoost, where it is now the default version for new installs. 
+
+We are excited to release ColocBoost (FIXME version), where it is now the default version for new installs. 
 
