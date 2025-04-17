@@ -64,6 +64,7 @@ The preferred format for colocalization analysis in ColocBoost using individual 
     - This is particularly useful when you have a large dataset with many traits and want to focus on specific individuals for each trait.
 
 
+This function requires specifying genotypes `X` and phenotypes `Y` from the dataset:
 ```{r multiple-matched}
 # Extract genotype (X) and phenotype (Y) data
 X <- Ind_5traits$X

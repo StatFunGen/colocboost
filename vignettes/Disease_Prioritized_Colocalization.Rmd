@@ -15,7 +15,84 @@ knitr::opts_chunk$set(
 ```
 
 
-step-by-step guide on using both individual-level data and summary statistics within the colocboost package to perform multi-trait colocalization analysis.
+This vignette demonstrates how to perform multi-trait colocalization analysis using a mixed-type dataset, including both individual level data and summary statistics. 
+ColocBoost provides a flexible framework to integrate data both at the individual level or at the summary statistic level, 
+allowing to handle scenarios where the individual data is available for some traits (like xQTLs) and the summary data is available for other traits (disease/trait GWAS).
 
-This vignette demonstrates how to perform multi-trait colocalization analysis using individual-level data in ColocBoost, 
-specifically focusing on the `Ind_5traits` dataset included in the package.
+
+```{r setup}
+library(colocboost)
+```
+
+# 1. Loading and Analyzing Datasets
+
+To get started, load both Ind_5traits and Sumstat_5traits datasets into your R session. Once loaded, create a mixed dataset as follows:
+
+- For traits 1, 2, 3, 4: use individual-level gentype and phenotype data.
+- For trait 5: use summary statistics data.
+- Note that `LD` could be calculated from the `X` data in the `Ind_5traits` dataset, but it is not included in the `Sumstat_5traits` dataset.
+
+### Causal variant structure
+The dataset features two causal variants with indices 644 and 2289.
+
+- Causal variant 644 is associated with traits 1, 2, 3, and 4.
+- Causal variant 2289 is associated with traits 2, 3, and 5 (summary level data).
+
+```{r load-mixed-data}
+# Load example data
+data(Ind_5traits)
+data(Sumstat_5traits) 
+
+# Create a mixed dataset
+X <- Ind_5traits$X[1:4]
+Y <- Ind_5traits$Y[1:4]
+sumstat <- Sumstat_5traits$sumstat[5]
+LD <- get_cormat(Ind_5traits$X[[1]])
+```
+
+For analyze the specific one type of data, you can refer to the following 
+tutorals [Individual Level Data Colocalization](https://statfungen.github.io/colocboost/articles/Individual_Level_Colocalization.html) and 
+[Summary Level Data Colocalization](https://statfungen.github.io/colocboost/articles/Summary_Level_Colocalization.html).
+
+
+# 2. Run ColocBoost (Basic usage)
+
+
+The preferred format for colocalization analysis in ColocBoost using mixed-type dataset:
+
+- **Individual level data**: `X` and `Y` are organized as lists, matched by trait index,
+    - `(X[1], Y[1])` contains individuals for trait 1,
+    - `(X[2], Y[2])` contains individuals for trait 2,
+    - And so on for each trait under analysis.
+
+- **Summary level data**:
+    - `sumstat` is organized as a list of data.frames for all traits
+    - `LD` is a matrix of linkage disequilibrium (LD) information for all variants across all traits.
+
+This function requires specifying genotypes `X` and phenotypes `Y` from the individual-level dataset and summary statistics `sumstat` and LD matrix `LD` from summary dataset:
+
+
+```{r mixd-basic}
+# Run colocboost
+res <- colocboost(X = X, Y = Y, sumstat = sumstat, LD = LD)
+
+# Identified CoS
+res$cos_details$cos$cos_index
+```
+
+### Results Interpretation
+
+For comprehensive tutorials on result interpretation and advanced visualization techniques, please visit our documentation portal at FIXME (link).
+
+
+
+# 3. Run ColocBoost (Disease Prioritized Colocalization)
+
+
+```{r disease-basic}
+# Run colocboost
+res <- colocboost(X = X, Y = Y, sumstat = sumstat, LD = LD, focal_outcome_idx = 5)
+
+# Identified CoS
+res$cos_details$cos$cos_index
+```

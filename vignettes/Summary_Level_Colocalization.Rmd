@@ -69,6 +69,8 @@ and the summary statistics are organized in a list. The **Basic format** us
 - `sumstat` is organized as a list of data.frames for all traits
 - `LD` is a matrix of linkage disequilibrium (LD) information for all variants across all traits.
 
+
+This function requires specifying summary statistics `sumstat` and LD matrix `LD` from the dataset:
 ```{r one-LD}
 # Extract genotype (X) and calculate LD matrix
 data("Ind_5traits")
