@@ -69,12 +69,25 @@
 trait is as follows:</p>
 <ul>
 <li>
-<code>X</code> is an N * P matrix with N individuals and P variants.
-Including variant names as column names is highly recommended,
-especially when working with multiple X matrices and Y vectors.</li>
+<code>X</code> is an
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>×</mo><mi>P</mi></mrow><annotation encoding="application/x-tex">N \times P</annotation></semantics></math>
+matrix with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>
+individuals and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>P</mi><annotation encoding="application/x-tex">P</annotation></semantics></math>
+variants. Including variant names as column names is highly recommended,
+especially when working with multiple
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+matrices and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math>
+vectors.</li>
 <li>
-<code>Y</code> is a length N vector containing phenotype values for
-the same N individuals with X.</li>
+<code>Y</code> is a length
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>
+vector containing phenotype values for the same
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>
+individuals as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>.</li>
 </ul>
 <p>The input format for multiple traits is similar, but <code>X</code>
 matrix should be a list of matrices, each corresponding to a different
@@ -91,9 +104,14 @@ is a vector for trait <code>i</code> - with Ni individuals.</li>
 </ul>
 <p><code>colocboost</code> also offers flexible input options (see
 detailed usage with different input formats, refer to <a href="https://statfungen.github.io/colocboost/articles/Individual_Level_Colocalization.html">Individual
-Data Colocalization</a>.):</p>
+Level Data Colocalization</a>.):</p>
 <ul>
-<li>Single X matrix with N * P with Y matrix with N * L for L
+<li>Single X matrix with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>×</mo><mi>P</mi></mrow><annotation encoding="application/x-tex">N \times P</annotation></semantics></math>
+with Y matrix with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>×</mo><mi>L</mi></mrow><annotation encoding="application/x-tex">N \times L</annotation></semantics></math>
+for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>L</mi><annotation encoding="application/x-tex">L</annotation></semantics></math>
 traits.</li>
 <li>Multiple X matrices and unmatched Y vectors with a mapping
 dictionary.</li>
@@ -136,7 +154,7 @@ should include the <code>variant</code> names for proper alignment.</li>
 <code>sumstat = list(sumstat1, sumstat2, sumstat3)</code>. The
 flexibility of input format for multiple traits is as follows (see
 detailed usage with different input formats, refer to <a href="https://statfungen.github.io/colocboost/articles/Summary_Level_Colocalization.html">Summary
-Statistics Colocalization</a>.)::</p>
+Statistics Colocalization</a>.):</p>
 <ul>
 <li>One LD matrix with a superset of variants in <code>sumstat</code>
 for all traits is allowed.</li>
@@ -147,14 +165,79 @@ with a mapping dictionary are also allowed.</li>
 </ul>
 </div>
 <div class="section level2">
-<h2 id="dictionary-format-for-mapping">3. Dictionary format for mapping<a class="anchor" aria-label="anchor" href="#dictionary-format-for-mapping"></a>
+<h2 id="optional-mapping-between-arbitary-input-x-and-y">3. Optional: mapping between arbitary input
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math><a class="anchor" aria-label="anchor" href="#optional-mapping-between-arbitary-input-x-and-y"></a>
 </h2>
-<p>TO-DO-LIST</p>
+<p>For analysis when including multiple genotype matrices <code>X</code>
+with unmatched arbitary phenotype vectors <code>Y</code>, a mapping
+dictionary <code>dict_YX</code> is required to indicate the relationship
+between <code>X</code> and <code>Y</code>. Similiarly, when multiple LD
+matrices with unmatched arbitrary multiple summary statistics
+<code>sumstat</code> are used, a mapping dictionary
+<code>dict_sumstatLD</code> is required to indicate the relationship
+between <code>sumstat</code> and <code>LD</code>.</p>
+<p>For example, considering three genotype matrices
+<code>X = list(X1, X2, X3)</code> and 6 phenotype vectors
+<code>Y = list(Y1, Y2, Y3, Y4, Y5, Y6)</code>, where</p>
+<ul>
+<li>
+<code>X1</code> is for trait 1, trait 2, trait 3</li>
+<li>
+<code>X2</code> is for trait 4, trait 5</li>
+<li>
+<code>X3</code> is for trait 6</li>
+</ul>
+<p>Then, you need to define a 6 by 2 matrix mapping dictionary
+<code>dict_YX</code> as follows:</p>
+<ul>
+<li>The first column should be <code>c(1,2,3,4,5,6)</code> for 6
+traits.</li>
+<li>The second column should be <code>c(1,1,1,2,2,3)</code> for 3
+genotype matrices.</li>
+</ul>
+<p>Here, each row indicates the trait index and the corresponding
+genotype matrix index.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dict_YX</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">5</span>,<span class="fl">6</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">dict_YX</span></span>
+<span><span class="co">#&gt;      [,1] [,2]</span></span>
+<span><span class="co">#&gt; [1,]    1    1</span></span>
+<span><span class="co">#&gt; [2,]    2    1</span></span>
+<span><span class="co">#&gt; [3,]    3    1</span></span>
+<span><span class="co">#&gt; [4,]    4    2</span></span>
+<span><span class="co">#&gt; [5,]    5    2</span></span>
+<span><span class="co">#&gt; [6,]    6    3</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="effect-size-and-standard-error-of-effect-size-matrices">4. Effect size and standard error of effect size matrices<a class="anchor" aria-label="anchor" href="#effect-size-and-standard-error-of-effect-size-matrices"></a>
+<h2 id="hyprcoloc-compatible-format-effect-size-and-standard-error-matrices">4. Hyprcoloc compatible format: effect size and standard error
+matrices<a class="anchor" aria-label="anchor" href="#hyprcoloc-compatible-format-effect-size-and-standard-error-matrices"></a>
 </h2>
-<p>TO-DO-LIST</p>
+<p>ColocBoost also provides a flexibility to use Hyprcoloc compatible
+format for summary statistics with and without LD matrix. For example,
+when anaylze L traits for the same P variants with the specified effect
+size and standard error matrices:</p>
+<ul>
+<li>
+<code>effect_est</code> (required) is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>×</mo><mi>L</mi></mrow><annotation encoding="application/x-tex">P \times L</annotation></semantics></math>
+matrix of variable regression coefficients (i.e. regression beta values)
+in the genomic region.</li>
+<li>
+<code>effect_se</code> (required) is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>×</mo><mi>L</mi></mrow><annotation encoding="application/x-tex">P \times L</annotation></semantics></math>
+matrix of standard errors for the regression coefficients.</li>
+<li>
+<code>effect_n</code> (highly recommended) is either a scalar or a
+vector of sample sizes for estimating regression coefficients.</li>
+<li>
+<code>LD</code> (optional) is LD matrix for the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>P</mi><annotation encoding="application/x-tex">P</annotation></semantics></math>
+variants. If it is not provided, it will apply LD-free ColocBoost.</li>
+</ul>
+<p>See more details about data format to implement LD-free ColocBoost
+and LD-mistmatch diagnosis in FIXME.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

@@ -58,6 +58,11 @@
 
     
     
+<p>ColocBoost provides flexible interface for individual-level
+colocalization analysis across multiple formats. We recommend using
+individual level genotype and phenotype data when available, to gain
+both sensitivity and precision compared to summary statistics-based
+approaches.</p>
 <p>This vignette demonstrates how to perform multi-trait colocalization
 analysis using individual-level data in ColocBoost, specifically
 focusing on the <code>Ind_5traits</code> dataset included in the
@@ -117,7 +122,10 @@ influenced by different but overlapping sets of genetic variants.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="run-colocboost-basic-usage">2. Run ColocBoost (Basic usage)<a class="anchor" aria-label="anchor" href="#run-colocboost-basic-usage"></a>
+<h2 id="matched-individual-level-inputs-x-and-y">2. Matched individual level inputs
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math><a class="anchor" aria-label="anchor" href="#matched-individual-level-inputs-x-and-y"></a>
 </h2>
 <p>The preferred format for colocalization analysis in ColocBoost using
 individual level data is where genotype (X) and phenotype (Y) data are
@@ -178,12 +186,13 @@ phenotypes <code>Y</code> from the dataset:</p>
 <h4 id="results-interpretation">Results Interpretation<a class="anchor" aria-label="anchor" href="#results-interpretation"></a>
 </h4>
 <p>For comprehensive tutorials on result interpretation and advanced
-visualization techniques, please visit our documentation portal at FIXME
-(link).</p>
+visualization techniques, please visit our documentation portal at <a href="https://statfungen.github.io/colocboost/articles/Visualization_ColocBoost_Output.html">Visualization
+of ColocBoost Results</a> and <a href="https://statfungen.github.io/colocboost/articles/Interpret_ColocBoost_Output.html">Interpret
+ColocBoost Output</a>.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="run-colocboost-advance-usage">3. Run ColocBoost (Advance usage)<a class="anchor" aria-label="anchor" href="#run-colocboost-advance-usage"></a>
+<h2 id="other-structures-of-individual-level-data">3. Other structures of individual level data<a class="anchor" aria-label="anchor" href="#other-structures-of-individual-level-data"></a>
 </h2>
 <div class="section level3">
 <h3 id="single-genotype-matrix">3.1. Single genotype matrix<a class="anchor" aria-label="anchor" href="#single-genotype-matrix"></a>
@@ -201,8 +210,11 @@ traits, allowing for efficient analysis without redundancy.</p>
 <code>X</code> is a single matrix containing genotype data for all
 individuals.</li>
 <li>
-<code>Y</code> can be i) a matrix with N * L dimension; ii) a list
-of phenotype vectors for L traits.</li>
+<code>Y</code> can be i) a matrix with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>×</mo><mi>L</mi></mrow><annotation encoding="application/x-tex">N \times L</annotation></semantics></math>
+dimension; ii) a list of phenotype vectors for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>L</mi><annotation encoding="application/x-tex">L</annotation></semantics></math>
+traits.</li>
 </ul>
 </li>
 </ul>
@@ -211,7 +223,7 @@ of phenotype vectors for L traits.</li>
 <span><span class="va">X_single</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>  <span class="co"># First SNP for all individuals</span></span>
 <span></span>
 <span><span class="co"># Run colocboost</span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span><span class="op">)</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X_single</span>, Y <span class="op">=</span> <span class="va">Y</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Starting checking the input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
 <span><span class="co">#&gt; Boosting iterations for outcome 4 converge after 34 iterations!</span></span>
@@ -230,7 +242,54 @@ of phenotype vectors for L traits.</li>
 <span><span class="co">#&gt; [1] 2289 2293</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="arbitrary-x-and-y-with-dictionary-provided">3.2. Arbitrary X and Y with dictionary provided<a class="anchor" aria-label="anchor" href="#arbitrary-x-and-y-with-dictionary-provided"></a>
+<h3 id="genotype-matrix-is-a-superset-of-samples-across-different-phenotypes">3.2. Genotype matrix is a superset of samples across different
+phenotypes<a class="anchor" aria-label="anchor" href="#genotype-matrix-is-a-superset-of-samples-across-different-phenotypes"></a>
+</h3>
+<p>When the genotype matrix includes a superset of samples across
+different phenotypes, with <strong>Input Format</strong>:</p>
+<ul>
+<li>
+<code>X</code> is a matrix of genotype data for all
+individuals.</li>
+<li>
+<code>Y</code> is a list of phenotype vectors for different
+outcomes.</li>
+<li>Row names of both <code>X</code> and <code>Y</code> should be
+provided to match individuals - same format of individual id.</li>
+<li>It is bettern if <code>X</code> contain all samples present in the
+phenotype vectors (optional).</li>
+<li>This is particularly useful when you have a large genotype matrix
+and want to use it for multiple phenotypes with different samples. It
+allows for efficient analysis without redundancy.</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Create phenotype with different samples - remove 50 samples trait 1 and trait 3.</span></span>
+<span><span class="va">X_superset</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> </span>
+<span><span class="va">Y_remove</span> <span class="op">&lt;-</span> <span class="va">Y</span></span>
+<span><span class="va">Y_remove</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">Y</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">Y</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,<span class="fl">50</span><span class="op">)</span>, , drop<span class="op">=</span><span class="cn">F</span><span class="op">]</span></span>
+<span><span class="va">Y_remove</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">Y</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">Y</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,<span class="fl">50</span><span class="op">)</span>, , drop<span class="op">=</span><span class="cn">F</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Run colocboost</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X_superset</span>, Y <span class="op">=</span> <span class="va">Y_remove</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Starting checking the input data.</span></span>
+<span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
+<span><span class="co">#&gt; Boosting iterations for outcome 4 converge after 35 iterations!</span></span>
+<span><span class="co">#&gt; Boosting iterations for outcome 1 converge after 55 iterations!</span></span>
+<span><span class="co">#&gt; Boosting iterations for outcome 5 converge after 56 iterations!</span></span>
+<span><span class="co">#&gt; Boosting iterations for outcome 2 converge after 72 iterations!</span></span>
+<span><span class="co">#&gt; Boosting iterations for outcome 3 converge after 73 iterations!</span></span>
+<span><span class="co">#&gt; Starting assemble analyses and results summary.</span></span>
+<span></span>
+<span><span class="co"># Identified CoS</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
+<span><span class="co">#&gt; $`cos1:y1_y2_y3_y4`</span></span>
+<span><span class="co">#&gt; [1] 636 644 618 655</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`cos2:y2_y3_y5`</span></span>
+<span><span class="co">#&gt; [1] 2289 2293</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="arbitrary-input-matrices-with-mapping-provided">3.3. Arbitrary input matrices with mapping provided<a class="anchor" aria-label="anchor" href="#arbitrary-input-matrices-with-mapping-provided"></a>
 </h3>
 <p>When studying multiple traits with arbitrary genotype matrices for
 different traits, we also provide the interface for arbitrary genotype
@@ -252,7 +311,7 @@ of X.</li>
 </ul>
 </li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create a simple dictionary for demonstration purposes</span></span>
 <span><span class="va">X_arbitrary</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span><span class="op">]</span> <span class="co"># traits 1 and 2 matched to the first genotype matrix; traits 3,4,5 matched to the third genotype matrix.</span></span>
 <span><span class="va">dict_YX</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
@@ -284,15 +343,6 @@ of X.</li>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`cos2:y2_y3_y5`</span></span>
 <span><span class="co">#&gt; [1] 2289 2293</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
-</h3>
-<p>ColocBoost provides flexible methods for individual-level
-colocalization analysis across multiple formats. By working directly
-with raw genotype and phenotype data, you gain greater statistical power
-and more detailed insights compared to summary statistics-based
-approaches.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
