@@ -135,3 +135,33 @@ res <- colocboost(sumstat = sumstat, LD = LD_superset)
 # Identified CoS
 res$cos_details$cos$cos_index
 ```
+
+
+## 3.3. Arbitrary LD and sumstat with dictionary provided
+
+When studying multiple traits with arbitrary LD matrices for different summary statistics, 
+we also provide the interface for arbitrary LD matrices with multiple sumstat. 
+This particularly benefits meta-analysis across heterogeneous datasets where, 
+for different subsets of summary statistics, LD comes from different population.
+
+- **Input Format**:
+    - `sumstat` is a list of data.frames for all traits.
+    - `LD` is a list of LD matrices.
+    - `dict_sumstatLD` is a dictionary matrix that index of sumstat to index of LD.
+
+
+```{r dictionary-mapped}
+# Create a simple dictionary for demonstration purposes
+LD_arbitrary <- list(LD, LD) # traits 1 and 2 matched to the first genotype matrix; traits 3,4,5 matched to the third genotype matrix.
+dict_sumstatLD = cbind(c(1:5), c(1,1,2,2,2))
+
+# Display the dictionary
+dict_sumstatLD
+
+# Run colocboost
+res <- colocboost(sumstat = Sumstat_5traits$sumstat, LD = LD_arbitrary, dict_sumstatLD = dict_sumstatLD)
+
+# Identified CoS
+res$cos_details$cos$cos_index
+```
+
