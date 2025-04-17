@@ -136,84 +136,16 @@ colocboost_init_data <- function(X, Y, dict_YX,
   if (!is.null(Z) & !is.null(LD)) {
     ####################### need to consider more #########################
     # ------ only code up one sumstat
-
+    variant_lists <- keep_variables[c(flag:length(keep_variables))]
+    sumstat_formated <- process_sumstat(Z, N_sumstat, Var_y, SeBhat, LD, 
+                                        variant_lists, dict_sumstatLD, 
+                                        keep_variable_names)
     for (i in 1:length(Z)) {
-      tmp <- list(
-        "XtX" = NULL,
-        "XtY" = NULL,
-        "YtY" = NULL,
-        "N" = N_sumstat[[i]],
-        "variable_miss" = NULL
-      )
-
-      flag1 <- dict_sumstatLD[i] + ind_idx
-      # check LD
-      if (dict_sumstatLD[i] == i) {
-        # - intersect variables
-        tmp_variables <- intersect(keep_variables[[flag1]], colnames(LD[[i]]))
-        pos.final <- sort(match(tmp_variables, keep_variable_names))
-        final_variables <- keep_variable_names[pos.final] # keep the same rank with keep_variable_names
-        # - check missing variables
-        tmp$variable_miss <- setdiff(1:length(keep_variable_names), pos.final)
-        # - set 0 to LD
-        pos.LD <- match(final_variables, colnames(LD[[i]]))
-        LD_tmp <- LD[[i]][pos.LD, pos.LD]
-      } else {
-        variable_i <- keep_variables[[flag1]]
-        variable_LD <- keep_variables[[dict_sumstatLD[i] + ind_idx]]
-        if (length(which(is.na(match(variable_i, variable_LD)))) != 0) {
-          # - intersect variables
-          tmp_variables <- intersect(keep_variables[[flag]], colnames(LD[[dict_sumstatLD[i]]]))
-          pos.final <- sort(match(tmp_variables, keep_variable_names))
-          final_variables <- keep_variable_names[pos.final] # keep the same rank with keep_variable_names
-          # - check missing variables
-          tmp$variable_miss <- setdiff(1:length(keep_variable_names), pos.final)
-          # - set 0 to LD
-          pos.LD <- match(final_variables, colnames(LD[[dict_sumstatLD[i]]]))
-          LD_tmp <- LD[[dict_sumstatLD[i]]][pos.LD, pos.LD]
-          # - need to change LD
-          dict_sumstatLD[i] <- i
-        } else {
-          tmp$variable_miss <- cb_data$data[[dict_sumstatLD[i] + n_ind]]$variable_miss
-          LD_tmp <- NULL
-        }
-      }
-
-      # - set 0 to Z
-      Z_extend <- rep(0, length(keep_variable_names)) # N
-      pos.z <- match(final_variables, keep_variables[[flag1]]) # M <- M2
-      Z_extend[pos.final] <- Z[[i]][pos.z]
-
-      # - organize data
-      if (is.null(N_sumstat[[i]])) {
-        tmp$XtX <- LD_tmp
-        tmp$XtY <- Z_extend
-        tmp$YtY <- 1
-      } else {
-        if (!is.null(SeBhat[[i]]) & !is.null(Var_y[[i]])) {
-          # var_y, shat (and bhat) are provided, so the effects are on the
-          # *original scale*.
-          adj <- 1 / (Z_extend^2 + N_sumstat[[i]] - 2)
-          if (!is.null(LD_tmp)) {
-            XtXdiag <- Var_y[[i]] * adj / (SeBhat[[i]]^2)
-            xtx <- t(LD_tmp * sqrt(XtXdiag)) * sqrt(XtXdiag)
-            tmp$XtX <- (xtx + t(xtx)) / 2
-          }
-          tmp$YtY <- (N_sumstat[[i]] - 1) * Var_y[[i]]
-          tmp$XtY <- Z_extend * sqrt(adj) * Var_y[[i]] / SeBhat[[i]]
-        } else {
-          if (!is.null(LD_tmp)) {
-            tmp$XtX <- LD_tmp
-          }
-          tmp$YtY <- (N_sumstat[[i]] - 1)
-          tmp$XtY <- sqrt(N_sumstat[[i]] - 1) * Z_extend
-        }
-      }
-      cb_data$data[[flag]] <- tmp
+      cb_data$data[[flag]] <- sumstat_formated$results[[i]]
       names(cb_data$data)[flag] <- paste0("sumstat_outcome_", i)
       flag <- flag + 1
     }
-    cb_data$dict <- c(cb_data$dict, dict_sumstatLD + n_ind)
+    cb_data$dict <- c(cb_data$dict, sumstat_formated$unified_dict + n_ind)
   }
   # - if residual correlation matrix is not NULL, we need to adjust the study dependence
   if (is.null(residual_correlation)) {
@@ -584,4 +516,136 @@ get_multiple_testing_correction <- function(z, miss_idx = NULL, func_multi_test 
   } else {
     stop("Invalid option for func_multi_test")
   }
+}
+
+
+#' Process LD matrices and variant lists with optimized storage
+#'
+#' @param ld_matrices List of LD matrices (e.g., list(PP=PP_matrix, QQ=QQ_matrix))
+#' @param variant_lists List of variant lists (e.g., list(P1=P1_variants, P2=P2_variants, ...))
+#' @param dict Vector mapping variant lists to LD matrices (e.g., c(1,1,2,2,2))
+#' @param target_variants Vector of variants to be considered (M variants)
+#'
+#' @return List containing processed data with optimized LD submatrix storage
+#' @noRd
+process_sumstat <- function(Z, N, Var_y, SeBhat, ld_matrices, variant_lists, dict, target_variants) {
+  
+  # Step 1: Identify unique combinations of (variant list, LD matrix)
+  unified_dict <- integer(length(variant_lists))
+  
+  # First item is always assigned its own position
+  unified_dict[1] <- 1
+  
+  # Process remaining items
+  if (length(variant_lists) > 1){
+    for (i in 2:length(variant_lists)) {
+      # Check if current combination is duplicate of any previous one
+      is_duplicate <- FALSE
+      for (j in 1:(i-1)) {
+        if (identical(variant_lists[[i]], variant_lists[[j]]) && dict[i] == dict[j]) {
+          unified_dict[i] <- unified_dict[j]
+          is_duplicate <- TRUE
+          break
+        }
+      }
+      
+      if (!is_duplicate) {
+        # If not a duplicate, assign its exact index
+        unified_dict[i] <- i
+      }
+    }
+  }
+  
+  # Step 2: Process each variant list
+  results <- list()
+  
+  for (i in 1:length(variant_lists)) {
+    
+    tmp <- list(
+      "XtX" = NULL,
+      "XtY" = NULL,
+      "YtY" = NULL,
+      "N" = N[[i]],
+      "variable_miss" = NULL
+    )
+    
+    # Get current status
+    current_variants <- variant_lists[[i]]
+    current_z <- Z[[i]]
+    current_n <- N[[i]]
+    
+    # Get corresponding LD matrix from original dictionary mapping
+    ld_index <- dict[i]
+    current_ld_matrix <- ld_matrices[[ld_index]]
+    
+    # Find common variants between current list and target variants
+    common_variants <- intersect(current_variants, target_variants)
+    
+    # Find variants in target but not in current list
+    missing_variants <- setdiff(target_variants, current_variants)
+    tmp$variable_miss <- which(target_variants %in% missing_variants)
+    
+    # - creat extend Z by setting 0 to missing variants
+    Z_extend <- rep(0, length(target_variants)) 
+    pos_z <- match(common_variants, current_variants) 
+    pos_target <- match(common_variants, target_variants)
+    Z_extend[pos_target] <- current_z[pos_z]
+    
+    # Calculate submatrix for each unique entry (not duplicates)
+    ld_submatrix <- NULL
+    
+    if (length(common_variants) > 0) {
+      # Only include the submatrix if this entry is unique or is the first occurrence
+      if (i == unified_dict[i]) {
+        # Check if common_variants and rownames have identical order
+        if (identical(common_variants, rownames(current_ld_matrix))) {
+          # If order is identical, use the matrix directly without reordering
+          ld_submatrix <- current_ld_matrix
+        } else {
+          # If order is different, reorder using matched indices
+          matched_indices <- match(common_variants, rownames(current_ld_matrix))
+          ld_submatrix <- current_ld_matrix[matched_indices, matched_indices, drop = FALSE]
+          rownames(ld_submatrix) <- common_variants
+          colnames(ld_submatrix) <- common_variants
+        }
+      }
+    }
+    
+    # Organize data
+    if (is.null(current_n)) {
+      tmp$XtX <- ld_submatrix
+      tmp$XtY <- Z_extend
+      tmp$YtY <- 1
+    } else {
+      if (!is.null(SeBhat[[i]]) & !is.null(Var_y[[i]])) {
+        # var_y, shat (and bhat) are provided, so the effects are on the
+        # *original scale*.
+        adj <- 1 / (Z_extend^2 + current_n - 2)
+        if (!is.null(LD_tmp)) {
+          XtXdiag <- Var_y[[i]] * adj / (SeBhat[[i]]^2)
+          xtx <- t(ld_submatrix * sqrt(XtXdiag)) * sqrt(XtXdiag)
+          tmp$XtX <- (xtx + t(xtx)) / 2
+        }
+        tmp$YtY <- (current_n - 1) * Var_y[[i]]
+        tmp$XtY <- Z_extend * sqrt(adj) * Var_y[[i]] / SeBhat[[i]]
+      } else {
+        if (!is.null(ld_submatrix)) {
+          tmp$XtX <- ld_submatrix
+        }
+        tmp$YtY <- (current_n - 1)
+        tmp$XtY <- sqrt(current_n - 1) * Z_extend
+      }
+    }
+    
+    # Store results for current list
+    results[[i]] <- tmp
+  }
+  
+  
+  # Return results with the unified dictionary
+  return(list(
+    results = results,
+    unified_dict = unified_dict,
+    original_dict = dict
+  ))
 }

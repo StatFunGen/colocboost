@@ -33,6 +33,16 @@ colocboost_post_inference <- function() {
 #' @param intercepte A logical value indicating whether to include an intercept in the model. Default is FALSE.
 #'
 #' @return A correlation matrix (LD matrix).
+#' 
+#' @examples
+#' # colocboost example
+#' set.seed(1)
+#' N = 1000
+#' P = 100
+#' # Generate X with LD structure
+#' sigma <- 0.9^abs(outer(1:P, 1:P, "-"))
+#' X <- MASS::mvrnorm(N, rep(0, P), sigma)
+#' cormat <- get_cormat(X)
 #'
 #' @family colocboost_utilities
 #' @export
