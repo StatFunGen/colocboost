@@ -45,14 +45,15 @@
 #' colnames(X) <- paste0("SNP", 1:P)
 #' L = 3
 #' true_beta <- matrix(0, P, L)
-#' true_beta[5, 1] <- 0.5  # SNP5 affects trait 1
-#' true_beta[5, 2] <- 0.4  # SNP5 also affects trait 2 (colocalized)
-#' true_beta[10, 2] <- 0.3 # SNP10 only affects trait 2
-#' true_beta[20, 3] <- 0.6 # SNP20 only affects trait 3
+#' true_beta[10, 1] <- 0.5  # SNP10 affects trait 1
+#' true_beta[10, 2] <- 0.4  # SNP10 also affects trait 2 (colocalized)
+#' true_beta[50, 2] <- 0.3 # SNP50 only affects trait 2
+#' true_beta[80, 3] <- 0.6 # SNP80 only affects trait 3
 #' Y <- matrix(0, N, L)
 #' for (l in 1:L){  Y[, l] <- X %*% true_beta[, l] + rnorm(N, 0, 1) }
 #' res <- colocboost(X = X, Y = Y)
 #' colocboost_plot(res, plot_cols = 1)
+#' colocboost_plot(res, plot_cols = 1, outcome_idx = 1:3)
 #'
 #'
 #' @importFrom utils head tail
