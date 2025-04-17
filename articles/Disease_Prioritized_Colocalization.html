@@ -157,7 +157,11 @@ summary dataset:</p>
 <span><span class="co">#&gt; [1] 636 644 618 655</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`cos2:y2_y3_y5`</span></span>
-<span><span class="co">#&gt; [1] 2289 2293</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 2289 2293</span></span>
+<span></span>
+<span><span class="co"># Plotting the results</span></span>
+<span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Disease_Prioritized_Colocalization_files/figure-html/mixd-basic-1.png" width="700"></p>
 <div class="section level4">
 <h4 id="results-interpretation">Results Interpretation<a class="anchor" aria-label="anchor" href="#results-interpretation"></a>
 </h4>
@@ -169,6 +173,7 @@ visualization techniques, please visit our documentation portal at FIXME
 <div class="section level2">
 <h2 id="run-colocboost-disease-prioritized-colocalization">3. Run ColocBoost (Disease Prioritized Colocalization)<a class="anchor" aria-label="anchor" href="#run-colocboost-disease-prioritized-colocalization"></a>
 </h2>
+<p>TO-DO-LIST</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run colocboost</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span>, sumstat <span class="op">=</span> <span class="va">sumstat</span>, LD <span class="op">=</span> <span class="va">LD</span>, focal_outcome_idx <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
@@ -187,7 +192,15 @@ visualization techniques, please visit our documentation portal at FIXME
 <span><span class="co">#&gt; [1] 636 644 618 655</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`cos2:y2_y3_y5`</span></span>
-<span><span class="co">#&gt; [1] 2289 2293</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 2289 2293</span></span>
+<span></span>
+<span><span class="co"># Plotting results</span></span>
+<span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Disease_Prioritized_Colocalization_files/figure-html/disease-basic-1.png" width="700"></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Plotting the focal only results</span></span>
+<span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, plot_focal_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Disease_Prioritized_Colocalization_files/figure-html/disease-basic-focal-1.png" width="700"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
