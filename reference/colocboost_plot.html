@@ -43,9 +43,10 @@
 <span>  <span class="va">cb_output</span>,</span>
 <span>  y <span class="op">=</span> <span class="st">"log10p"</span>,</span>
 <span>  grange <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  plot_focal_only <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  plot_cos_idx <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  outcome_idx <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  plot_focal_only <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  plot_focal_cos_outocme_only <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  points_color <span class="op">=</span> <span class="st">"grey80"</span>,</span>
 <span>  cos_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  add_vertical <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -57,11 +58,13 @@
 <span>  show_cos_to_uncoloc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  show_cos_to_uncoloc_idx <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  show_cos_to_uncoloc_outcome <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  plot_ucos <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  plot_ucos_idx <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  gene_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ylim_each <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  outcome_legend_pos <span class="op">=</span> <span class="st">"top"</span>,</span>
-<span>  outcome_legend_size <span class="op">=</span> <span class="fl">1.2</span>,</span>
-<span>  cos_legend_pos <span class="op">=</span> <span class="st">"bottomleft"</span>,</span>
+<span>  outcome_legend_size <span class="op">=</span> <span class="fl">1.8</span>,</span>
+<span>  cos_legend_pos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.4</span><span class="op">)</span>,</span>
 <span>  show_variable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  lab_style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>  axis_style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span>
@@ -70,6 +73,10 @@
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
+    <p>See detailed instructions in our tutorial portal: <a href="https://statfungen.github.io/colocboost/articles/Visualization_ColocBoost_Output.html">https://statfungen.github.io/colocboost/articles/Visualization_ColocBoost_Output.html</a></p>
+    </div>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
@@ -86,16 +93,20 @@
 <dd><p>Optional plotting range of x-axis to zoom in to a specific region.</p></dd>
 
 
-<dt id="arg-plot-focal-only">plot_focal_only<a class="anchor" aria-label="anchor" href="#arg-plot-focal-only"></a></dt>
-<dd><p>Logical, if TRUE only plots colocalization with focal outcome, default is FALSE.</p></dd>
-
-
 <dt id="arg-plot-cos-idx">plot_cos_idx<a class="anchor" aria-label="anchor" href="#arg-plot-cos-idx"></a></dt>
 <dd><p>Optional indices of CoS to plot</p></dd>
 
 
 <dt id="arg-outcome-idx">outcome_idx<a class="anchor" aria-label="anchor" href="#arg-outcome-idx"></a></dt>
 <dd><p>Optional indices of outcomes to include in the plot. <code>outcome_idx=NULL</code> to plot only the outcomes having colocalization.</p></dd>
+
+
+<dt id="arg-plot-focal-only">plot_focal_only<a class="anchor" aria-label="anchor" href="#arg-plot-focal-only"></a></dt>
+<dd><p>Logical, if TRUE only plots colocalization with focal outcome, default is FALSE.</p></dd>
+
+
+<dt id="arg-plot-focal-cos-outocme-only">plot_focal_cos_outocme_only<a class="anchor" aria-label="anchor" href="#arg-plot-focal-cos-outocme-only"></a></dt>
+<dd><p>Logical, if TRUE only plots colocalization including at least on colocalized outcome with focal outcome, default is FALSE.</p></dd>
 
 
 <dt id="arg-points-color">points_color<a class="anchor" aria-label="anchor" href="#arg-points-color"></a></dt>
@@ -142,6 +153,14 @@
 <dd><p>Optional outcomes for showing CoS to uncolocalized outcomes</p></dd>
 
 
+<dt id="arg-plot-ucos">plot_ucos<a class="anchor" aria-label="anchor" href="#arg-plot-ucos"></a></dt>
+<dd><p>Logical, if TRUE plots also trait-specific (uncolocalized) sets , default is FALSE</p></dd>
+
+
+<dt id="arg-plot-ucos-idx">plot_ucos_idx<a class="anchor" aria-label="anchor" href="#arg-plot-ucos-idx"></a></dt>
+<dd><p>Optional indices of trait-specific (uncolocalized) sets to plot when included</p></dd>
+
+
 <dt id="arg-gene-name">gene_name<a class="anchor" aria-label="anchor" href="#arg-gene-name"></a></dt>
 <dd><p>Optional gene name to display in plot title</p></dd>
 
@@ -159,7 +178,7 @@
 
 
 <dt id="arg-cos-legend-pos">cos_legend_pos<a class="anchor" aria-label="anchor" href="#arg-cos-legend-pos"></a></dt>
-<dd><p>Position for colocalization set legend, default is "bottomleft"</p></dd>
+<dd><p>Proportion of the legend from (left edge, bottom edge), default as (0.05, 0.4) at the left - median position</p></dd>
 
 
 <dt id="arg-show-variable">show_variable<a class="anchor" aria-label="anchor" href="#arg-show-variable"></a></dt>

@@ -157,6 +157,33 @@ ensure that meaningful colocalization signals are not missed.</p>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span><span class="co">#&gt; There is no colocalization in this region!. Showing margianl for all outcomes!</span></span></code></pre></div>
 <p><img src="Partial_Overlap_Variants_files/figure-html/run-code-overlap-1.png" width="700"></p>
+<p>In disease-prioritized colocalization analysis with a focal trait,
+<code>ColocBoost</code> recommends prioritizing variants in the focal
+trait as the default setting. For the example above, if we consider
+trait 3 as the focal trait, only variants present in trait 3 will be
+included in the analysis. This ensures that the analysis focuses on
+variants relevant to the focal trait while accounting for partial
+overlaps across other traits. If you want to include all variants across
+traits, you can set <code>focal_outcome_variables = FALSE</code> to
+disable this default behavior.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Run colocboost</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span>, focal_outcome_idx <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Validating input data.</span></span>
+<span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
+<span><span class="co">#&gt; Using multiple testing correction method: lfdr. Outcome 2, 5 for all variants are greater than 1. Will not update it!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 12 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 17 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for focal outcome 3 converged after 24 iterations!</span></span>
+<span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
+<span></span>
+<span><span class="co"># The number of variants in the analysis</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">data_info</span><span class="op">$</span><span class="va">n_variables</span></span>
+<span><span class="co">#&gt; [1] 2399</span></span>
+<span></span>
+<span><span class="co"># Plotting the results</span></span>
+<span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Partial_Overlap_Variants_files/figure-html/run-code-focal-1.png" width="700"></p>
 </div>
   </main>
 </div>

@@ -178,8 +178,8 @@ traits.</li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, show_cos_to_uncoloc <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in get_input_plot(cb_output, plot_cos_idx = plot_cos_idx,</span></span>
-<span><span class="co">#&gt; plot_focal_only = plot_focal_only, : Show all CoSs to uncolocalized outcomes.</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning in get_input_plot(cb_output, plot_cos_idx = plot_cos_idx, variant_coord</span></span>
+<span><span class="co">#&gt; = variant_coord, : Show all CoSs to uncolocalized outcomes.</span></span></code></pre></div>
 <p><img src="Visualization_ColocBoost_Output_files/figure-html/ucos-plot-1.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -192,8 +192,98 @@ add a vertical line at true causal variants, you can set
 <code>add_vertical_idx = unique(unlist(Ind_5traits$true_effect_variants))</code>.
 Following plot also shows the top variants.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, show_top_variables <span class="op">=</span> <span class="cn">TRUE</span>, add_vertical <span class="op">=</span> <span class="cn">TRUE</span>, add_vertical_idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">$</span><span class="va">true_effect_variants</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, show_top_variables <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>                add_vertical <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>                add_vertical_idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">$</span><span class="va">true_effect_variants</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Visualization_ColocBoost_Output_files/figure-html/vertical-plot-1.png" width="700"></p>
+</div>
+<div class="section level3">
+<h3 id="plot-with-trait-specific-sets-if-exists">2.5. Plot with trait-specific sets if exists<a class="anchor" aria-label="anchor" href="#plot-with-trait-specific-sets-if-exists"></a>
+</h3>
+<p>There are two options avaiable for plotting the trait-specific
+(uncolocalized) variants:</p>
+<ul>
+<li>
+<code>plot_ucos = FALSE</code> (default), if <code>TRUE</code> will
+plot all trait-specific (uncolocalized) sets.</li>
+<li>
+<code>plot_ucos_idx = NULL</code> (default) indicates all confidence
+sets are plotted. <code>plot_cos_idx = 1</code> can be specified to plot
+the 1st confidence sets, and so on.</li>
+</ul>
+<p><em>Important Note</em>: You should use
+<code>colocboost(..., output_level = 2)</code> to obtain the
+trait-specific (uncolocalized) information.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Create a mixed dataset</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Heterogeneous_Effect</span><span class="op">)</span></span>
+<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
+<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">Y</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
+<span><span class="va">X1</span> <span class="op">&lt;-</span> <span class="va">Heterogeneous_Effect</span><span class="op">$</span><span class="va">X</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">3000</span><span class="op">]</span></span>
+<span><span class="va">Y1</span> <span class="op">&lt;-</span> <span class="va">Heterogeneous_Effect</span><span class="op">$</span><span class="va">Y</span><span class="op">[</span>,<span class="fl">1</span>,drop<span class="op">=</span><span class="cn">F</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Run colocboost</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">X</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">X1</span><span class="op">)</span><span class="op">)</span>, Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Y</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">Y1</span><span class="op">)</span><span class="op">)</span>, output_level <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Validating input data.</span></span>
+<span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 77 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 79 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 84 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 87 iterations!</span></span>
+<span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
+<span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, plot_ucos <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Visualization_ColocBoost_Output_files/figure-html/trait-specific-1.png" width="700"></p>
+<p>In this example, there are two colocalized sets (<span style="color:blue">blue</span> and <span style="color:orange">orange</span>) and two trait-specific sets for
+trait 4 only (<span style="color:green">green</span> and <span style="color:purple">purple</span>). For comprehensive tutorials on
+result interpretation, please please visit our documentation portal at
+<a href="https://statfungen.github.io/colocboost/articles/Interpret_ColocBoost_Output.html">Interpret
+ColocBoost Output</a>.</p>
+</div>
+<div class="section level3">
+<h3 id="plot-with-focal-trait-for-disease-prioritized-colocalization">2.6 Plot with focal trait for disease prioritized
+colocalization<a class="anchor" aria-label="anchor" href="#plot-with-focal-trait-for-disease-prioritized-colocalization"></a>
+</h3>
+<p>There are three options avaiable for plotting the results from
+disease prioritized colocalization, considering a focal trait:</p>
+<ul>
+<li>
+<code>plot_focal_only = FALSE</code> (default), if <code>TRUE</code>
+will only plot CoS with focal trait and ignoring other CoS.</li>
+<li>
+<code>plot_focal_cos_outocme_only = FALSE</code> (default) and
+recommend for visulization for disease prioritized colocalization. If
+<code>TRUE</code> will plot all CoS colocalized with at least on traits
+within CoS of focal traits.</li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Create a mixed dataset</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Sumstat_5traits</span><span class="op">)</span> </span>
+<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
+<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">Y</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
+<span><span class="va">sumstat</span> <span class="op">&lt;-</span> <span class="va">Sumstat_5traits</span><span class="op">$</span><span class="va">sumstat</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span></span>
+<span><span class="va">LD</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_cormat.html">get_cormat</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Run colocboost</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span>, </span>
+<span>                  sumstat <span class="op">=</span> <span class="va">sumstat</span>, LD <span class="op">=</span> <span class="va">LD</span>, </span>
+<span>                  focal_outcome_idx <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Validating input data.</span></span>
+<span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
+<span><span class="co">#&gt; Gradient boosting for focal outcome 4 converged after 18 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 32 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 44 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 45 iterations!</span></span>
+<span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
+<span></span>
+<span><span class="co"># Only plot CoS with focal trait</span></span>
+<span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, plot_focal_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Visualization_ColocBoost_Output_files/figure-html/focal-colocalization-1.png" width="700"></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Plot all CoS including at least one traits colocalized with focal trait</span></span>
+<span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, plot_focal_cos_outocme_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Visualization_ColocBoost_Output_files/figure-html/focal-colocalization-2.png" width="700"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -167,7 +167,7 @@ configuration can be defined by using both <code>cos_npc</code> and
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">filter_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_robust_colocalization.html">get_robust_colocalization</a></span><span class="op">(</span><span class="va">res</span>, cos_npc_cutoff <span class="op">=</span> <span class="fl">0.5</span>, npc_outcome_cutoff <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Extracting colocalization results with cos_npc_cutoff = 0.5 and npc_outcome_cutoff = 0.2.</span></span>
-<span><span class="co">#&gt; For each CoS, keep the outcomes configurations that the npc_outcome &gt; 0.2.</span></span></code></pre></div>
+<span><span class="co">#&gt; For each CoS, keep the outcomes configurations that the npc_outcome &gt;= 0.2.</span></span></code></pre></div>
 <ul>
 <li>The output from <code>get_robust_colocalization</code> is the same
 as output from <code>colocboost</code>, which can be directly used in
@@ -466,8 +466,17 @@ being updated in the model at each boosting round.</li>
 </ul>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Pick arbitrary SEC updates, see entire update in advance</span></span>
-<span><span class="va">res</span><span class="op">$</span><span class="va">model_info</span><span class="op">$</span><span class="va">jk_update</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span><span class="op">:</span><span class="fl">10</span>,<span class="fl">36</span><span class="op">:</span><span class="fl">38</span><span class="op">)</span>, <span class="op">]</span></span>
-<span><span class="co">#&gt; NULL</span></span></code></pre></div>
+<span><span class="va">res</span><span class="op">$</span><span class="va">model_info</span><span class="op">$</span><span class="va">jk_star</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span><span class="op">:</span><span class="fl">10</span>,<span class="fl">36</span><span class="op">:</span><span class="fl">38</span><span class="op">)</span>, <span class="op">]</span></span>
+<span><span class="co">#&gt;             Y1   Y2   Y3  Y4   Y5</span></span>
+<span><span class="co">#&gt; jk_star_5   NA   NA   NA  NA 2293</span></span>
+<span><span class="co">#&gt; jk_star_6   NA   NA   NA  NA 2293</span></span>
+<span><span class="co">#&gt; jk_star_7  636  636  636 636   NA</span></span>
+<span><span class="co">#&gt; jk_star_8   NA   NA   NA  NA 2293</span></span>
+<span><span class="co">#&gt; jk_star_9  636  636  636 636   NA</span></span>
+<span><span class="co">#&gt; jk_star_10  NA   NA   NA  NA 2293</span></span>
+<span><span class="co">#&gt; jk_star_36 609   NA   NA  NA   NA</span></span>
+<span><span class="co">#&gt; jk_star_37  NA 2289 2289  NA 2289</span></span>
+<span><span class="co">#&gt; jk_star_38 618  618  618  NA   NA</span></span></code></pre></div>
 <ul>
 <li>
 <strong><code>profile_loglik</code></strong>: joint profile
@@ -477,7 +486,8 @@ log-likelihood changes over boosting rounds.</li>
 profile log-likelihood changes over boosting rounds.</li>
 </ul>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Plotting joint profile log-likelihood (blue) and trait-specific profile log-likelihood (red).</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">model_info</span><span class="op">$</span><span class="va">profile_loglik</span>, type<span class="op">=</span><span class="st">"p"</span>, col<span class="op">=</span><span class="st">"#3366CC"</span>, lwd<span class="op">=</span><span class="fl">2</span>, xlab<span class="op">=</span><span class="st">""</span>, ylab<span class="op">=</span><span class="st">"Joint Profile"</span><span class="op">)</span></span>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">{</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">model_info</span><span class="op">$</span><span class="va">outcome_profile_loglik</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"p"</span>, col<span class="op">=</span><span class="st">"#CC3333"</span>, lwd<span class="op">=</span><span class="fl">2</span>, xlab<span class="op">=</span><span class="st">""</span>, ylab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Profile (Trait "</span>, <span class="va">i</span>, <span class="st">")"</span><span class="op">)</span><span class="op">)</span></span>
@@ -492,40 +502,215 @@ proximity smoothed objective for each trait.</li>
 objective at the (coupled) best update variant for each outcome.</li>
 </ul>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Plotting trait-specific proximity objective</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">{</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">model_info</span><span class="op">$</span><span class="va">outcome_proximity_obj</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"p"</span>, col<span class="op">=</span><span class="st">"#3366CC"</span>, lwd<span class="op">=</span><span class="fl">2</span>, xlab<span class="op">=</span><span class="st">""</span>, ylab<span class="op">=</span><span class="st">"Trait-specific Objective"</span>, main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Trait "</span>, <span class="va">i</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p><img src="Interpret_ColocBoost_Output_files/figure-html/objetive-proximity-1.png" width="700"></p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Plotting trait-specific objective at the best update variant</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">{</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">model_info</span><span class="op">$</span><span class="va">outcome_coupled_best_update_obj</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"p"</span>, col<span class="op">=</span><span class="st">"#CC3333"</span>, lwd<span class="op">=</span><span class="fl">2</span>, xlab<span class="op">=</span><span class="st">""</span>, ylab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Objetive at best update variant"</span><span class="op">)</span>, main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Trait "</span>, <span class="va">i</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="op">}</span></span></code></pre></div>
 <p><img src="Interpret_ColocBoost_Output_files/figure-html/objetive-best-1.png" width="700"></p>
 </div>
-</div>
-<div class="section level2">
-<h2 id="trait-specific-effects-information-ucos">4. Trait-specific effects information (UCoS)<a class="anchor" aria-label="anchor" href="#trait-specific-effects-information-ucos"></a>
-</h2>
-<p>TO-DO-LIST</p>
+<div class="section level3">
+<h3 id="trait-specific-effects-information-ucos_details">3.5. Trait-specific effects information
+(<strong><code>ucos_details</code></strong>)<a class="anchor" aria-label="anchor" href="#trait-specific-effects-information-ucos_details"></a>
+</h3>
+<p>There is <code>ucos_details</code> in ColocBoost output when setting
+<code>output_level = 2</code>, including the trait-specific
+(uncolocalized) information from the single-effect learner (SEL).</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span>, sumstat <span class="op">=</span> <span class="va">sumstat</span>, LD <span class="op">=</span> <span class="va">LD</span>, output_level <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Create a mixed dataset</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Heterogeneous_Effect</span><span class="op">)</span></span>
+<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
+<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">Y</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
+<span><span class="va">X1</span> <span class="op">&lt;-</span> <span class="va">Heterogeneous_Effect</span><span class="op">$</span><span class="va">X</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">3000</span><span class="op">]</span></span>
+<span><span class="va">Y1</span> <span class="op">&lt;-</span> <span class="va">Heterogeneous_Effect</span><span class="op">$</span><span class="va">Y</span><span class="op">[</span>,<span class="fl">1</span>,drop<span class="op">=</span><span class="cn">F</span><span class="op">]</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">X</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">X1</span><span class="op">)</span><span class="op">)</span>, Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Y</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">Y1</span><span class="op">)</span><span class="op">)</span>, output_level <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 34 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 43 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 46 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 67 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 68 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 77 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 79 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 84 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 87 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="trait-specific-uncolocalized-traits-ucos">3.5.1. Trait-specific (uncolocalized) traits
+(<strong><code>ucos</code></strong>)<a class="anchor" aria-label="anchor" href="#trait-specific-uncolocalized-traits-ucos"></a>
+</h4>
+<ul>
+<li>
+<strong><code>ucos</code></strong>: A list containing detailed
+information about trait-specific (uncolocalized) traits for each uCoS.
+<ul>
+<li>
+<strong><code>ucos_index</code></strong>: Indices of trait-specific
+(uncolocalized) variables.</li>
+<li>
+<strong><code>ucos_variables</code></strong>: Names of
+trait-specific (uncolocalized) variables.</li>
+</ul>
+</li>
+</ul>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">ucos_details</span><span class="op">$</span><span class="va">ucos</span></span>
+<span><span class="co">#&gt; $ucos_index</span></span>
+<span><span class="co">#&gt; $ucos_index$`ucos1:y4`</span></span>
+<span><span class="co">#&gt; [1] 622</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $ucos_index$`ucos2:y4`</span></span>
+<span><span class="co">#&gt;  [1] 1282 1293 1283 1281 1270 1288 1242 1272 1300 1287 1305 1271 1273 1290 1291</span></span>
+<span><span class="co">#&gt; [16] 1258 1276 1277 1275 1206 1238</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $ucos_variables</span></span>
+<span><span class="co">#&gt; $ucos_variables$`ucos1:y4`</span></span>
+<span><span class="co">#&gt; [1] "rs_622"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $ucos_variables$`ucos2:y4`</span></span>
+<span><span class="co">#&gt;  [1] "rs_1282" "rs_1293" "rs_1283" "rs_1281" "rs_1270" "rs_1288" "rs_1242"</span></span>
+<span><span class="co">#&gt;  [8] "rs_1272" "rs_1300" "rs_1287" "rs_1305" "rs_1271" "rs_1273" "rs_1290"</span></span>
+<span><span class="co">#&gt; [15] "rs_1291" "rs_1258" "rs_1276" "rs_1277" "rs_1275" "rs_1206" "rs_1238"</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="diagnostic-details">5. Diagnostic details<a class="anchor" aria-label="anchor" href="#diagnostic-details"></a>
-</h2>
-<p>TO-DO-LIST</p>
+<div class="section level4">
+<h4 id="trait-specific-uncolocalized-outcomes-ucos_outcomes">3.5.2. Trait-specific (uncolocalized) outcomes
+(<strong><code>ucos_outcomes</code></strong>)<a class="anchor" aria-label="anchor" href="#trait-specific-uncolocalized-outcomes-ucos_outcomes"></a>
+</h4>
+<ul>
+<li>
+<strong><code>ucos_outcomes</code></strong>: A list with detailed
+information about trait-specific (uncolocalized) outcomes for each uCoS.
+<ul>
+<li>
+<strong><code>outcome_index</code></strong>: Indices of
+trait-specific (uncolocalized) outcomes.</li>
+<li>
+<strong><code>outcome_name</code></strong>: Names of trait-specific
+(uncolocalized) outcomes.</li>
+</ul>
+</li>
+</ul>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">ucos_details</span><span class="op">$</span><span class="va">ucos_outcomes</span></span>
+<span><span class="co">#&gt; $outcome_index</span></span>
+<span><span class="co">#&gt; $outcome_index$`ucos1:y4`</span></span>
+<span><span class="co">#&gt; [1] 4</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $outcome_index$`ucos2:y4`</span></span>
+<span><span class="co">#&gt; [1] 4</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $outcome_name</span></span>
+<span><span class="co">#&gt; $outcome_name$`ucos1:y4`</span></span>
+<span><span class="co">#&gt; [1] "Y4"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $outcome_name$`ucos2:y4`</span></span>
+<span><span class="co">#&gt; [1] "Y4"</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="purity-across-cos-and-ucos-cos_ucos_purity">3.5.3. Purity across CoS and uCoS
+(<strong><code>cos_ucos_purity</code></strong>)<a class="anchor" aria-label="anchor" href="#purity-across-cos-and-ucos-cos_ucos_purity"></a>
+</h4>
+<ul>
+<li>
+<strong><code>cos_ucos_purity</code></strong>: Includes three lists,
+each containing an
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>×</mo><mi>u</mi><mi>S</mi></mrow><annotation encoding="application/x-tex">S \times uS</annotation></semantics></math>
+matrix, where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math>
+is the number of CoS and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mi>S</mi></mrow><annotation encoding="application/x-tex">uS</annotation></semantics></math>
+is the number of uCoS:
+<ul>
+<li>
+<code>min_abs_cor</code>: Minimum absolute correlation of variables
+across each pair of CoS and uCoS.</li>
+<li>
+<code>median_abs_cor</code>: Median absolute correlation of
+variables across each pair of CoS and uCoS.</li>
+<li>
+<code>max_abs_cor</code>: Maximum absolute correlation of variables
+across each pair of CoS and uCoS.</li>
+</ul>
+</li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">ucos_details</span><span class="op">$</span><span class="va">cos_ucos_purity</span></span>
+<span><span class="co">#&gt; $min_abs_cor</span></span>
+<span><span class="co">#&gt;                     ucos1:y4     ucos2:y4</span></span>
+<span><span class="co">#&gt; cos1:y1_y2_y3     0.10776723 0.0003910911</span></span>
+<span><span class="co">#&gt; cos2:y2_y3:merged 0.01715554 0.0010503630</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $max_abs_cor</span></span>
+<span><span class="co">#&gt;                     ucos1:y4   ucos2:y4</span></span>
+<span><span class="co">#&gt; cos1:y1_y2_y3     0.12750880 0.08585638</span></span>
+<span><span class="co">#&gt; cos2:y2_y3:merged 0.02127266 0.05141726</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $median_abs_cor</span></span>
+<span><span class="co">#&gt;                    ucos1:y4   ucos2:y4</span></span>
+<span><span class="co">#&gt; cos1:y1_y2_y3     0.1222969 0.02610479</span></span>
+<span><span class="co">#&gt; cos2:y2_y3:merged 0.0192141 0.01566816</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="other-components">3.5.4. Other components<a class="anchor" aria-label="anchor" href="#other-components"></a>
+</h4>
+<ul>
+<li>
+<strong><code>ucos_weight</code></strong>: Integrative weights for
+each trait-specific (uncolocalized) trait, used to recalibrate UCoS when
+traits are filtered out.</li>
+<li>
+<strong><code>ucos_top_variables</code></strong>: Indices and names
+of the top variable for each UCoS, which is the variable with the
+highest VCP.</li>
+<li>
+<strong><code>ucos_purity</code></strong>: Includes three lists,
+each containing an
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mi>S</mi><mo>×</mo><mi>u</mi><mi>S</mi></mrow><annotation encoding="application/x-tex">uS \times uS</annotation></semantics></math>
+matrix, where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mi>S</mi></mrow><annotation encoding="application/x-tex">uS</annotation></semantics></math>
+is the number of uCoS:
+<ul>
+<li>
+<code>min_abs_cor</code>: Minimum absolute correlation of variables
+within (diagonal) UCoS or between (off-diagonal) different uCoS.</li>
+<li>
+<code>median_abs_cor</code>: Median absolute correlation of
+variables within or between UCoS.</li>
+<li>
+<code>max_abs_cor</code>: Maximum absolute correlation of variables
+within or between UCoS.</li>
+</ul>
+</li>
+</ul>
+<p>By analyzing these components, you can gain a deeper understanding of
+trait-specific (uncolocalized) effects that are not colocalized,
+providing additional insights into the dataset.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="diagnostic-details-diagnostic_details">3.6. Diagnostic details
+(<strong><code>diagnostic_details</code></strong>)<a class="anchor" aria-label="anchor" href="#diagnostic-details-diagnostic_details"></a>
+</h3>
+<p>There is <code>diagnostic_details</code> in ColocBoost output when
+setting <code>output_level = 3</code>:</p>
+<ul>
+<li>
+<strong><code>cb_model</code></strong>: trait-specific proximity
+gradient boosting model, including proximity weight at each iteration,
+residual after gradient boosting, et al.</li>
+<li>
+<strong><code>cb_model_para</code></strong>: parameters used in
+fitting ColocBoost model.</li>
+</ul>
 <p>For more diagnosis of ColocBoost model fitting, please refer to our
 Tutorial (TO-DO-LIST).</p>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
