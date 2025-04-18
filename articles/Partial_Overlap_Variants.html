@@ -63,7 +63,101 @@ variants across traits in ColocBoost.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/StatFunGen/colocboost" class="external-link">colocboost</a></span><span class="op">)</span></span></code></pre></div>
 <p><img src="../reference/figures/missing_representation.png"></p>
-<p>TO-DO-LIST</p>
+<div class="section level3">
+<h3 id="causal-variant-structure">Causal variant structure<a class="anchor" aria-label="anchor" href="#causal-variant-structure"></a>
+</h3>
+<p>We create an example data from <code>Ind_5traits</code> with two
+causal variants, 644 and 2289, but each of them are only partially
+overlapping across traits.</p>
+<ul>
+<li>Causal variant 644 is associated with traits 1, 3, and 4, but is
+missing in trait 2.</li>
+<li>Causal variant 2289 is associated with traits 2 and 3, but is
+missing in trait 5.</li>
+</ul>
+<p>This structure creates a realistic scenario where multiple traits
+from different datasets are not fully overlapping, and the causal
+variants are not shared across all traits.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Load example data</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">)</span></span>
+<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span></span>
+<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">Y</span></span>
+<span></span>
+<span><span class="co"># Creeate causal variants with potentially LD proxies</span></span>
+<span><span class="va">causal_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">200</span><span class="op">:</span><span class="fl">1000</span><span class="op">)</span></span>
+<span><span class="va">causal_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2000</span><span class="op">:</span><span class="fl">2600</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create missing data</span></span>
+<span><span class="va">X</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="op">-</span><span class="va">causal_1</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
+<span><span class="va">X</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="op">-</span><span class="va">causal_2</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Show format</span></span>
+<span><span class="va">X</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
+<span><span class="co">#&gt;                rs_1       rs_2       rs_3     rs_4      rs_5      rs_6</span></span>
+<span><span class="co">#&gt; sample_1 -0.1480797 -0.5904965 -0.4200375 0.919275 0.6668304 0.9677904</span></span>
+<span><span class="co">#&gt; sample_2 -0.1480797 -0.5904965 -0.4200375 0.919275 0.6668304 0.9677904</span></span>
+<span><span class="co">#&gt;                 rs_7      rs_8     rs_9    rs_10</span></span>
+<span><span class="co">#&gt; sample_1 -0.04574728 0.4802802 1.060642 1.529031</span></span>
+<span><span class="co">#&gt; sample_2 -0.04574728 0.4802802 1.060642 1.529031</span></span>
+<span><span class="va">X</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
+<span><span class="co">#&gt;                rs_1       rs_2       rs_3     rs_4      rs_5      rs_6</span></span>
+<span><span class="co">#&gt; sample_1 -0.1480797 -0.5904965 -0.4200375 0.919275 0.6668304 0.9677904</span></span>
+<span><span class="co">#&gt; sample_2 -0.1480797 -0.5904965 -0.4200375 0.919275 0.6668304 0.9677904</span></span>
+<span><span class="co">#&gt;                 rs_7      rs_8     rs_9    rs_10</span></span>
+<span><span class="co">#&gt; sample_1 -0.04574728 0.4802802 1.060642 1.529031</span></span>
+<span><span class="co">#&gt; sample_2 -0.04574728 0.4802802 1.060642 1.529031</span></span></code></pre></div>
+<p>To run ColocBoost to the different genotypes with different causal
+variants, the variant names should be provided as the column names of
+the <code>X</code> matrices. Otherwise, the <code>colocboost</code>
+function will not be able to identify the variants correctly from
+different genotype matrices, and the analysis will fail with an error
+message
+<code>Please verify the variable names across different outcomes.</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Run colocboost</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Starting checking the input data.</span></span>
+<span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
+<span><span class="co">#&gt; Boosting iterations for outcome 4 converge after 18 iterations!</span></span>
+<span><span class="co">#&gt; Boosting iterations for outcome 2 converge after 27 iterations!</span></span>
+<span><span class="co">#&gt; Boosting iterations for outcome 5 converge after 35 iterations!</span></span>
+<span><span class="co">#&gt; Boosting iterations for outcome 1 converge after 38 iterations!</span></span>
+<span><span class="co">#&gt; Boosting iterations for outcome 3 converge after 44 iterations!</span></span>
+<span><span class="co">#&gt; Starting assemble analyses and results summary.</span></span>
+<span></span>
+<span><span class="co"># The number of variants in the analysis</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">data_info</span><span class="op">$</span><span class="va">n_variables</span></span>
+<span><span class="co">#&gt; [1] 3000</span></span>
+<span></span>
+<span><span class="co"># Plotting the results</span></span>
+<span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Partial_Overlap_Variants_files/figure-html/run-code-1.png" width="700"></p>
+<p>If we perform colocalization analysis using only overlapping
+variables, we may fail to detect any colocalization events. This is
+because the causal variants, which are only partially overlapping across
+traits, are excluded during the preprocessing step. As a result, even
+though these variants are associated with some traits, they are removed
+from the analysis, leading to a loss of critical information. This
+highlights the importance of handling partial overlaps effectively to
+ensure that meaningful colocalization signals are not missed.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Run colocboost with only overlapping variables</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span>, overlap_variables <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Starting checking the input data.</span></span>
+<span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
+<span><span class="co">#&gt; Using multiple testing correction method: lfdr. Stop ColocBoost since no outcomes have association signals.</span></span>
+<span><span class="co">#&gt; Starting assemble analyses and results summary.</span></span>
+<span></span>
+<span><span class="co"># The number of variants in the analysis</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">data_info</span><span class="op">$</span><span class="va">n_variables</span></span>
+<span><span class="co">#&gt; [1] 1598</span></span>
+<span></span>
+<span><span class="co"># Plotting the results</span></span>
+<span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span><span class="co">#&gt; There is no colocalization in this region!. Showing margianl for all outcomes!</span></span></code></pre></div>
+<p><img src="Partial_Overlap_Variants_files/figure-html/run-code-overlap-1.png" width="700"></p>
+</div>
   </main>
 </div>
 
