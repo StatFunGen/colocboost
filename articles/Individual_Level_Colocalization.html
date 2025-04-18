@@ -162,14 +162,14 @@ phenotypes <code>Y</code> from the dataset:</p>
 <span></span>
 <span><span class="co"># Run colocboost with matched data</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Starting checking the input data.</span></span>
+<span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 4 converge after 34 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 5 converge after 43 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 1 converge after 46 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 2 converge after 67 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 3 converge after 68 iterations!</span></span>
-<span><span class="co">#&gt; Starting assemble analyses and results summary.</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 34 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 43 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 46 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 67 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 68 iterations!</span></span>
+<span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span></span>
 <span><span class="co"># Identified CoS</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
@@ -224,14 +224,14 @@ traits.</li>
 <span></span>
 <span><span class="co"># Run colocboost</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X_single</span>, Y <span class="op">=</span> <span class="va">Y</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Starting checking the input data.</span></span>
+<span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 4 converge after 34 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 5 converge after 43 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 1 converge after 46 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 2 converge after 67 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 3 converge after 68 iterations!</span></span>
-<span><span class="co">#&gt; Starting assemble analyses and results summary.</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 34 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 43 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 46 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 67 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 68 iterations!</span></span>
+<span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span></span>
 <span><span class="co"># Identified CoS</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
@@ -271,14 +271,14 @@ allows for efficient analysis without redundancy.</li>
 <span></span>
 <span><span class="co"># Run colocboost</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X_superset</span>, Y <span class="op">=</span> <span class="va">Y_remove</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Starting checking the input data.</span></span>
+<span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 4 converge after 35 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 1 converge after 55 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 5 converge after 56 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 2 converge after 72 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 3 converge after 73 iterations!</span></span>
-<span><span class="co">#&gt; Starting assemble analyses and results summary.</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 35 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 55 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 56 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 72 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 73 iterations!</span></span>
+<span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span></span>
 <span><span class="co"># Identified CoS</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
@@ -327,14 +327,14 @@ of X.</li>
 <span></span>
 <span><span class="co"># Run colocboost</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X_arbitrary</span>, Y <span class="op">=</span> <span class="va">Y</span>, dict_YX <span class="op">=</span> <span class="va">dict_YX</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Starting checking the input data.</span></span>
+<span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 4 converge after 34 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 5 converge after 43 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 1 converge after 46 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 2 converge after 67 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 3 converge after 68 iterations!</span></span>
-<span><span class="co">#&gt; Starting assemble analyses and results summary.</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 34 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 43 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 46 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 67 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 68 iterations!</span></span>
+<span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span></span>
 <span><span class="co"># Identified CoS</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>

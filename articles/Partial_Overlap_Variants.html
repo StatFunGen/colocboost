@@ -117,14 +117,14 @@ message
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run colocboost</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Starting checking the input data.</span></span>
+<span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 4 converge after 18 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 2 converge after 27 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 5 converge after 35 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 1 converge after 38 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 3 converge after 44 iterations!</span></span>
-<span><span class="co">#&gt; Starting assemble analyses and results summary.</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 18 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 27 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 35 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 38 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 44 iterations!</span></span>
+<span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span></span>
 <span><span class="co"># The number of variants in the analysis</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">data_info</span><span class="op">$</span><span class="va">n_variables</span></span>
@@ -144,10 +144,10 @@ ensure that meaningful colocalization signals are not missed.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run colocboost with only overlapping variables</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span>, overlap_variables <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Starting checking the input data.</span></span>
+<span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
 <span><span class="co">#&gt; Using multiple testing correction method: lfdr. Stop ColocBoost since no outcomes have association signals.</span></span>
-<span><span class="co">#&gt; Starting assemble analyses and results summary.</span></span>
+<span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span></span>
 <span><span class="co"># The number of variants in the analysis</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">data_info</span><span class="op">$</span><span class="va">n_variables</span></span>

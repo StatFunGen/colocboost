@@ -74,14 +74,14 @@ of ColocBoost results.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">)</span></span>
 <span><span class="co"># Run colocboost </span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span>, Y <span class="op">=</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">Y</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Starting checking the input data.</span></span>
+<span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 4 converge after 34 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 5 converge after 43 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 1 converge after 46 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 2 converge after 67 iterations!</span></span>
-<span><span class="co">#&gt; Boosting iterations for outcome 3 converge after 68 iterations!</span></span>
-<span><span class="co">#&gt; Starting assemble analyses and results summary.</span></span></code></pre></div>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 34 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 43 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 46 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 67 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 68 iterations!</span></span>
+<span><span class="co">#&gt; Performing inference on colocalization events.</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="default-plot-function">1. Default plot function<a class="anchor" aria-label="anchor" href="#default-plot-function"></a>
 </h2>
@@ -162,13 +162,20 @@ top variants with highest VCP for each CoS.</p>
 colocalization.<a class="anchor" aria-label="anchor" href="#plot-cos-variants-to-uncolocalized-traits-to-diagnostic-the-colocalization-"></a>
 </h3>
 <p>There are three options available for plotting the CoS variants to
-uncolocalized traits: - <code>show_cos_to_uncoloc = FALSE</code>
-(default), if <code>TRUE</code> will plot all CoS variants to all
-uncolocalized traits. - <code>show_cos_to_uncoloc_idx = NULL</code>
-(default), if specified, will plot the specified CoS variants to all
-uncolocalized traits. - <code>show_cos_to_uncoloc_outcome = NULL</code>
-(default), if specified, will plot the all CoS variants to the specified
-uncolocalized traits.</p>
+uncolocalized traits:</p>
+<ul>
+<li>
+<code>show_cos_to_uncoloc = FALSE</code> (default), if
+<code>TRUE</code> will plot all CoS variants to all uncolocalized
+traits.</li>
+<li>
+<code>show_cos_to_uncoloc_idx = NULL</code> (default), if specified,
+will plot the specified CoS variants to all uncolocalized traits.</li>
+<li>
+<code>show_cos_to_uncoloc_outcome = NULL</code> (default), if
+specified, will plot the all CoS variants to the specified uncolocalized
+traits.</li>
+</ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, show_cos_to_uncoloc <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in get_input_plot(cb_output, plot_cos_idx = plot_cos_idx,</span></span>
