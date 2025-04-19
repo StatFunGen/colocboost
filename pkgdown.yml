@@ -4,15 +4,19 @@ pkgdown_sha: ~
 articles:
   announcements: announcements.html
   ColocBoost_tutorial_diagnostic: ColocBoost_tutorial_diagnostic.html
+  ColocBoost_Wrapper: ColocBoost_Wrapper.html
   Disease_Prioritized_Colocalization: Disease_Prioritized_Colocalization.html
+  FineBoost_Special_Case: FineBoost_Special_Case.html
   Individual_Level_Colocalization: Individual_Level_Colocalization.html
   Input_Data_Format: Input_Data_Format.html
   installation: installation.html
   Interpret_ColocBoost_Output: Interpret_ColocBoost_Output.html
+  LD_Free_Colocalization: LD_Free_Colocalization.html
+  Pairwise_Colocalization: Pairwise_Colocalization.html
   Partial_Overlap_Variants: Partial_Overlap_Variants.html
   Summary_Statistics_Colocalization: Summary_Statistics_Colocalization.html
   Visualization_ColocBoost_Output: Visualization_ColocBoost_Output.html
-last_built: 2025-04-18T23:05Z
+last_built: 2025-04-19T11:33Z
 urls:
   reference: https://statfungen.github.io/colocboost/reference
   article: https://statfungen.github.io/colocboost/articles

@@ -1,11 +1,15 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://statfungen.github.io/colocboost/404.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/LICENSE-text.html</loc></url>
+<url><loc>https://statfungen.github.io/colocboost/articles/ColocBoost_Wrapper.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/articles/ColocBoost_tutorial_diagnostic.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/articles/Disease_Prioritized_Colocalization.html</loc></url>
+<url><loc>https://statfungen.github.io/colocboost/articles/FineBoost_Special_Case.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/articles/Individual_Level_Colocalization.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/articles/Input_Data_Format.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/articles/Interpret_ColocBoost_Output.html</loc></url>
+<url><loc>https://statfungen.github.io/colocboost/articles/LD_Free_Colocalization.html</loc></url>
+<url><loc>https://statfungen.github.io/colocboost/articles/Pairwise_Colocalization.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/articles/Partial_Overlap_Variants.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/articles/Summary_Statistics_Colocalization.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/articles/Visualization_ColocBoost_Output.html</loc></url>

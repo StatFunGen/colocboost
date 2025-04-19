@@ -107,6 +107,10 @@ variants are not shared across all traits.</p>
 <span><span class="co">#&gt;                 rs_7      rs_8     rs_9    rs_10</span></span>
 <span><span class="co">#&gt; sample_1 -0.04574728 0.4802802 1.060642 1.529031</span></span>
 <span><span class="co">#&gt; sample_2 -0.04574728 0.4802802 1.060642 1.529031</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="run-colocboost-with-partial-overlapping-variants">1. Run ColocBoost with partial overlapping variants<a class="anchor" aria-label="anchor" href="#run-colocboost-with-partial-overlapping-variants"></a>
+</h2>
 <p>To run ColocBoost to the different genotypes with different causal
 variants, the variant names should be provided as the column names of
 the <code>X</code> matrices. Otherwise, the <code>colocboost</code>
@@ -133,6 +137,10 @@ message
 <span><span class="co"># Plotting the results</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Partial_Overlap_Variants_files/figure-html/run-code-1.png" width="700"></p>
+</div>
+<div class="section level2">
+<h2 id="limitations-of-using-only-overlapping-variables">2. Limitations of using only overlapping variables<a class="anchor" aria-label="anchor" href="#limitations-of-using-only-overlapping-variables"></a>
+</h2>
 <p>If we perform colocalization analysis using only overlapping
 variables, we may fail to detect any colocalization events. This is
 because the causal variants, which are only partially overlapping across
@@ -157,6 +165,11 @@ ensure that meaningful colocalization signals are not missed.</p>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span><span class="co">#&gt; There is no colocalization in this region!. Showing margianl for all outcomes!</span></span></code></pre></div>
 <p><img src="Partial_Overlap_Variants_files/figure-html/run-code-overlap-1.png" width="700"></p>
+</div>
+<div class="section level2">
+<h2 id="disease-prioritized-colocalization-analysis-with-variables-in-the-focal-trait">3. Disease-prioritized colocalization analysis with variables in the
+focal trait<a class="anchor" aria-label="anchor" href="#disease-prioritized-colocalization-analysis-with-variables-in-the-focal-trait"></a>
+</h2>
 <p>In disease-prioritized colocalization analysis with a focal trait,
 <code>ColocBoost</code> recommends prioritizing variants in the focal
 trait as the default setting. For the example above, if we consider
@@ -185,7 +198,8 @@ disable this default behavior.</p>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Partial_Overlap_Variants_files/figure-html/run-code-focal-1.png" width="700"></p>
 </div>
-  </main>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 

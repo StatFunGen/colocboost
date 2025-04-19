@@ -127,6 +127,10 @@ specified to plot the 1st colocalization event, and so on.</li>
 with colocalization are plotted. <code>outcome_idx = c(1,2,5)</code> can
 be specified to plot the traits 1, 2, and 5.</li>
 <li>
+<code>plot_all_outcome = FALSE</code> (default) indicates only the
+traits with colocalization are plotted. If <code>TRUE</code> can plot
+all traits.</li>
+<li>
 <code>cos_color = NULL</code> (default) indicates the colors of the
 colocalization events. Specify a vector of colors to customize the
 plot.</li>
@@ -192,9 +196,11 @@ add a vertical line at true causal variants, you can set
 <code>add_vertical_idx = unique(unlist(Ind_5traits$true_effect_variants))</code>.
 Following plot also shows the top variants.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, show_top_variables <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>                add_vertical <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>                add_vertical_idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">$</span><span class="va">true_effect_variants</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span></span>
+<span>  <span class="va">res</span>, show_top_variables <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>  add_vertical <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>  add_vertical_idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">$</span><span class="va">true_effect_variants</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="Visualization_ColocBoost_Output_files/figure-html/vertical-plot-1.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -252,9 +258,9 @@ disease prioritized colocalization, considering a focal trait:</p>
 will only plot CoS with focal trait and ignoring other CoS.</li>
 <li>
 <code>plot_focal_cos_outocme_only = FALSE</code> (default) and
-recommend for visulization for disease prioritized colocalization. If
-<code>TRUE</code> will plot all CoS colocalized with at least on traits
-within CoS of focal traits.</li>
+<strong>recommend</strong> for visulization for disease prioritized
+colocalization. If <code>TRUE</code> will plot all CoS colocalized with
+at least on traits within CoS of focal traits.</li>
 </ul>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create a mixed dataset</span></span>
