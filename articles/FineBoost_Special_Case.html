@@ -69,6 +69,10 @@ dataset included in the package.</p>
 <div class="section level2">
 <h2 id="fine-mapping-with-individual-level-data">1. Fine-mapping with individual-level data<a class="anchor" aria-label="anchor" href="#fine-mapping-with-individual-level-data"></a>
 </h2>
+<p>In this section, we demonstrate how to perform fine-mapping using
+individual-level genotype (<code>X</code>) and phenotype
+(<code>Y</code>) data. This approach directly uses the raw data to
+identify causal variants.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load example data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">)</span></span>
@@ -86,6 +90,8 @@ dataset included in the package.</p>
 <div class="section level2">
 <h2 id="fine-mapping-with-summary-statistics">2. Fine-mapping with summary statistics<a class="anchor" aria-label="anchor" href="#fine-mapping-with-summary-statistics"></a>
 </h2>
+<p>This section demonstrates fine-mapping analysis using summary
+statistics and a proper LD matrix.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load example data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Sumstat_5traits</span><span class="op">)</span> </span>
@@ -103,6 +109,10 @@ dataset included in the package.</p>
 <div class="section level2">
 <h2 id="ld-free-fine-mapping-with-one-causal-variant-assumption">3. LD-free fine-mapping with one causal variant assumption<a class="anchor" aria-label="anchor" href="#ld-free-fine-mapping-with-one-causal-variant-assumption"></a>
 </h2>
+<p>In scenarios where LD information is unavailable, FineBoost can still
+perform fine-mapping under the assumption of a single causal variant.
+This approach is less computationally intensive but assumes that only
+one variant in a region is causal.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load example data</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>sumstat <span class="op">=</span> <span class="va">sumstat</span><span class="op">)</span></span>

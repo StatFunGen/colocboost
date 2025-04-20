@@ -1,8 +1,8 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://statfungen.github.io/colocboost/404.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/LICENSE-text.html</loc></url>
-<url><loc>https://statfungen.github.io/colocboost/articles/ColocBoost_Wrapper.html</loc></url>
-<url><loc>https://statfungen.github.io/colocboost/articles/ColocBoost_tutorial_diagnostic.html</loc></url>
+<url><loc>https://statfungen.github.io/colocboost/articles/ColocBoost_Diagnostics.html</loc></url>
+<url><loc>https://statfungen.github.io/colocboost/articles/ColocBoost_Wrapper_Pipeline.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/articles/Disease_Prioritized_Colocalization.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/articles/FineBoost_Special_Case.html</loc></url>
 <url><loc>https://statfungen.github.io/colocboost/articles/Individual_Level_Colocalization.html</loc></url>
