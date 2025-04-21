@@ -79,10 +79,13 @@ original genotype data.</p>
 <h4 id="why-ld-mismatch-matters">Why LD Mismatch Matters<a class="anchor" aria-label="anchor" href="#why-ld-mismatch-matters"></a>
 </h4>
 <p>An inaccurate LD matrix can cause inconsistencies between the summary
-statistics and the reference LD matrix, leading to: - Biased estimates
-of causal variants. - Increased computational time due to slower
-algorithm convergence. - Potentially misleading colocalization
-results.</p>
+statistics and the reference LD matrix, leading to:</p>
+<ul>
+<li>Biased estimates of causal variants.</li>
+<li>Increased computational time due to slower algorithm
+convergence.</li>
+<li>Potentially misleading colocalization results.</li>
+</ul>
 <p>ColocBoost provides diagnostic warnings for assessing the consistency
 of the summary statistics with the reference LD matrix.</p>
 <ul>
@@ -158,8 +161,9 @@ approaches for colocalization analysis with the assumption of one causal
 variant per trait per region:</p>
 <ul>
 <li>
-<strong>One iteration approach</strong> (recommended): performing
-only 1 iteration of gradient boosting with the LD matrix ensures that:
+<p><strong>One iteration approach</strong> (recommended): performing
+only 1 iteration of gradient boosting with the LD matrix ensures
+that:</p>
 <ul>
 <li>The LD matrix is only used to check the equivalence among
 trait-specific best update variants.</li>
