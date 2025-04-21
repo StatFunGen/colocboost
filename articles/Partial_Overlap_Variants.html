@@ -67,7 +67,7 @@ variants across traits in ColocBoost.</p>
 <h3 id="causal-variant-structure">Causal variant structure<a class="anchor" aria-label="anchor" href="#causal-variant-structure"></a>
 </h3>
 <p>We create an example data from <code>Ind_5traits</code> with two
-causal variants, 644 and 2289, but each of them are only partially
+causal variants, 644 and 2289, but each of them is only partially
 overlapping across traits.</p>
 <ul>
 <li>Causal variant 644 is associated with traits 1, 3, and 4, but is
@@ -75,7 +75,7 @@ missing in trait 2.</li>
 <li>Causal variant 2289 is associated with traits 2 and 3, but is
 missing in trait 5.</li>
 </ul>
-<p>This structure creates a realistic scenario where multiple traits
+<p>This structure creates a realistic scenario in which multiple traits
 from different datasets are not fully overlapping, and the causal
 variants are not shared across all traits.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -84,7 +84,7 @@ variants are not shared across all traits.</p>
 <span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span></span>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">Y</span></span>
 <span></span>
-<span><span class="co"># Creeate causal variants with potentially LD proxies</span></span>
+<span><span class="co"># Create causal variants with potentially LD proxies</span></span>
 <span><span class="va">causal_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">200</span><span class="op">:</span><span class="fl">1000</span><span class="op">)</span></span>
 <span><span class="va">causal_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2000</span><span class="op">:</span><span class="fl">2600</span><span class="op">)</span></span>
 <span></span>
@@ -93,31 +93,25 @@ variants are not shared across all traits.</p>
 <span><span class="va">X</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="op">-</span><span class="va">causal_2</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
 <span></span>
 <span><span class="co"># Show format</span></span>
-<span><span class="va">X</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
+<span><span class="va">X</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
 <span><span class="co">#&gt;                rs_1       rs_2       rs_3     rs_4      rs_5      rs_6</span></span>
 <span><span class="co">#&gt; sample_1 -0.1480797 -0.5904965 -0.4200375 0.919275 0.6668304 0.9677904</span></span>
 <span><span class="co">#&gt; sample_2 -0.1480797 -0.5904965 -0.4200375 0.919275 0.6668304 0.9677904</span></span>
-<span><span class="co">#&gt;                 rs_7      rs_8     rs_9    rs_10</span></span>
-<span><span class="co">#&gt; sample_1 -0.04574728 0.4802802 1.060642 1.529031</span></span>
-<span><span class="co">#&gt; sample_2 -0.04574728 0.4802802 1.060642 1.529031</span></span>
-<span><span class="va">X</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
+<span><span class="va">X</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
 <span><span class="co">#&gt;                rs_1       rs_2       rs_3     rs_4      rs_5      rs_6</span></span>
 <span><span class="co">#&gt; sample_1 -0.1480797 -0.5904965 -0.4200375 0.919275 0.6668304 0.9677904</span></span>
-<span><span class="co">#&gt; sample_2 -0.1480797 -0.5904965 -0.4200375 0.919275 0.6668304 0.9677904</span></span>
-<span><span class="co">#&gt;                 rs_7      rs_8     rs_9    rs_10</span></span>
-<span><span class="co">#&gt; sample_1 -0.04574728 0.4802802 1.060642 1.529031</span></span>
-<span><span class="co">#&gt; sample_2 -0.04574728 0.4802802 1.060642 1.529031</span></span></code></pre></div>
+<span><span class="co">#&gt; sample_2 -0.1480797 -0.5904965 -0.4200375 0.919275 0.6668304 0.9677904</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="run-colocboost-with-partial-overlapping-variants">1. Run ColocBoost with partial overlapping variants<a class="anchor" aria-label="anchor" href="#run-colocboost-with-partial-overlapping-variants"></a>
 </h2>
-<p>To run ColocBoost to the different genotypes with different causal
+<p>To run ColocBoost on different genotypes with different causal
 variants, the variant names should be provided as the column names of
 the <code>X</code> matrices. Otherwise, the <code>colocboost</code>
 function will not be able to identify the variants correctly from
-different genotype matrices, and the analysis will fail with an error
+different genotype matrices, and the analysis will fail with the error
 message
-<code>Please verify the variable names across different outcomes.</code>.</p>
+<code>Please verify the variable names across different outcomes.</code></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run colocboost</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span><span class="op">)</span></span>
@@ -141,7 +135,7 @@ message
 <div class="section level2">
 <h2 id="limitations-of-using-only-overlapping-variables">2. Limitations of using only overlapping variables<a class="anchor" aria-label="anchor" href="#limitations-of-using-only-overlapping-variables"></a>
 </h2>
-<p>If we perform colocalization analysis using only overlapping
+<p>If we perform a colocalization analysis using only overlapping
 variables, we may fail to detect any colocalization events. This is
 because the causal variants, which are only partially overlapping across
 traits, are excluded during the preprocessing step. As a result, even
@@ -175,10 +169,10 @@ focal trait<a class="anchor" aria-label="anchor" href="#disease-prioritized-colo
 trait as the default setting. For the example above, if we consider
 trait 3 as the focal trait, only variants present in trait 3 will be
 included in the analysis. This ensures that the analysis focuses on
-variants relevant to the focal trait while accounting for partial
+variants relevant to the focal trait while also accounting for partial
 overlaps across other traits. If you want to include all variants across
 traits, you can set <code>focal_outcome_variables = FALSE</code> to
-disable this default behavior.</p>
+override this default behavior.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run colocboost</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span>, focal_outcome_idx <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>

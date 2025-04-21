@@ -59,8 +59,8 @@
     
     
 <p>This vignette demonstrates how to interpret the output of ColocBoost,
-specifically to get the summary of colocalization and filtering our the
-weak signals.</p>
+specifically to get the summary of colocalization and focusing only on
+strong colocalization events.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/StatFunGen/colocboost" class="external-link">colocboost</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
@@ -141,7 +141,7 @@ colocalization probabilities for all colocalized variables.</li>
 </ul>
 <p>To obtain the summary of colocalization with a specific focus on
 traits of interest, you can use the <code>get_cos_summary</code>, see
-detailed usage of this function in <a href="https://statfungen.github.io/colocboost/reference/get_cos_summary.html">link</a>.
+the detailed usage of this function in <a href="https://statfungen.github.io/colocboost/reference/get_cos_summary.html">link</a>.
 This function allows you to filter the colocalization summary based on a
 particular outcome of interest, making it easier to interpret the
 results for specific traits. For example, if you are interested in the
@@ -160,10 +160,10 @@ evidence<a class="anchor" aria-label="anchor" href="#filter-colocalization-event
 <code>cos_npc</code> column provides a normalized probability of
 colocalization and <code>min_npc_outcome</code> column provides the
 minimum normalized probability among colocalized traits. Those two
-metrices are measured as an empirical evidence of colocalization both in
+metrics are measured as an empirical evidence of colocalization both in
 CoS-level and in trait-level. To obtain the best minimal colocalization
 configuration can be defined by using both <code>cos_npc</code> and
-<code>npc_outcome</code> See detailed usage of this function in <a href="https://statfungen.github.io/colocboost/reference/get_robust_colocalization.html">link</a>.</p>
+<code>npc_outcome</code>. See the detailed usage of this function in <a href="https://statfungen.github.io/colocboost/reference/get_robust_colocalization.html">link</a>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">filter_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_robust_colocalization.html">get_robust_colocalization</a></span><span class="op">(</span><span class="va">res</span>, cos_npc_cutoff <span class="op">=</span> <span class="fl">0.5</span>, npc_outcome_cutoff <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Extracting colocalization results with cos_npc_cutoff = 0.5 and npc_outcome_cutoff = 0.2.</span></span>
@@ -175,7 +175,7 @@ any post inference and visualization.</li>
 <li>
 <code>npc=0.5</code> or <code>npc_outcome = 0.2</code> maintains
 robust colocalization signals for cases when many traits are evaluated.
-Higher thresholds can be specified if users only want to focus on strong
+Higher thresholds can be specified if users want to focus only on strong
 colocalization events.</li>
 </ul>
 </div>
@@ -196,10 +196,10 @@ probability for each variable.</li>
 <strong><code>cos_details</code></strong>: A object with all
 information for colocalization results.</li>
 <li>
-<strong><code>data_info</code></strong>: A object with detailed
+<strong><code>data_info</code></strong>: A object with the detailed
 information from input data.</li>
 <li>
-<strong><code>model_info</code></strong>: A object with detailed
+<strong><code>model_info</code></strong>: A object with the detailed
 information for colocboost model.</li>
 </ul>
 <p>In this section, we will provide a detailed explanation of the
@@ -233,7 +233,7 @@ dataset.</p>
 <strong><code>vcp</code></strong> is the probability of a variant
 being colocalized with at least one traits, serving as analogs of
 posterior inclusion probabilities (PIPs) in single-trait fine-mapping.
-To plot the VCP for the variants with in at least one CoS, you can use
+To plot the VCP for the variants within at least one CoS, you can use
 the <code>colocboost_plot</code> function with the <code>y</code>
 argument set to <code>"vcp"</code>.</li>
 </ul>
@@ -281,8 +281,8 @@ analyzed data, including sample size and data type.</li>
 <h3 id="colocalization-details-cos_details">3.3. Colocalization details
 (<strong><code>cos_details</code></strong>)<a class="anchor" aria-label="anchor" href="#colocalization-details-cos_details"></a>
 </h3>
-<p><strong><code>cos_details</code></strong> provides detailed
-information for colocalization evetns identified by
+<p><strong><code>cos_details</code></strong> provides a detailed
+information for colocalization events identified by
 <code>colocboost</code>. This section will provide a detailed
 explanation of the components in <code>cos_details</code>.</p>
 <div class="section level4">
@@ -291,8 +291,8 @@ explanation of the components in <code>cos_details</code>.</p>
 </h4>
 <ul>
 <li>
-<strong><code>cos</code></strong>: A list with detailed information
-of colocalized variants for each CoS.
+<strong><code>cos</code></strong>: A list with a detailed
+information of colocalized variants for each CoS.
 <ul>
 <li>
 <strong><code>cos_index</code></strong>: Indices of colocalized
@@ -328,7 +328,7 @@ order.</li>
 </h4>
 <ul>
 <li>
-<strong><code>cos_outcomes</code></strong>: A list with detailed
+<strong><code>cos_outcomes</code></strong>: A list with a detailed
 information of colocalized traits for each CoS.
 <ul>
 <li>
@@ -365,7 +365,7 @@ colocalization over a trait-specific configuration.</li>
 <strong><code>cos_outcomes_npc</code></strong>: normalized
 probability for each colocalized trait in order with evidence
 strength.</li>
-<li>These two metrices could be used to filter the colocalization events
+<li>These two metrics could be used to filter the colocalization events
 by relative strength of evidence, see details in Section 2.</li>
 </ul>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -441,7 +441,7 @@ same highest VCP.</li>
 <ul>
 <li>
 <strong><code>cos_weights</code></strong>: the integrative weights
-for each colocalized trait in the CoS. This is used to re-calibrate CoS
+for each colocalized trait in the CoS. This is used to recalibrate CoS
 when some traits are filtered out..</li>
 <li>
 <strong><code>cos_vcp</code></strong>: the single-effect VCP for
@@ -482,7 +482,7 @@ being updated in the model at each boosting round.</li>
 <strong><code>profile_loglik</code></strong>: joint profile
 log-likelihood changes over boosting rounds.</li>
 <li>
-<strong><code>outcome_profile_loglik</code></strong>: trait-specifc
+<strong><code>outcome_profile_loglik</code></strong>: trait-specific
 profile log-likelihood changes over boosting rounds.</li>
 </ul>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -507,14 +507,14 @@ objective at the (coupled) best update variant for each outcome.</li>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">{</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">model_info</span><span class="op">$</span><span class="va">outcome_proximity_obj</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"p"</span>, col<span class="op">=</span><span class="st">"#3366CC"</span>, lwd<span class="op">=</span><span class="fl">2</span>, xlab<span class="op">=</span><span class="st">""</span>, ylab<span class="op">=</span><span class="st">"Trait-specific Objective"</span>, main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Trait "</span>, <span class="va">i</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p><img src="Interpret_ColocBoost_Output_files/figure-html/objetive-proximity-1.png" width="700"></p>
+<p><img src="Interpret_ColocBoost_Output_files/figure-html/objective-proximity-1.png" width="700"></p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Plotting trait-specific objective at the best update variant</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">{</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">model_info</span><span class="op">$</span><span class="va">outcome_coupled_best_update_obj</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"p"</span>, col<span class="op">=</span><span class="st">"#CC3333"</span>, lwd<span class="op">=</span><span class="fl">2</span>, xlab<span class="op">=</span><span class="st">""</span>, ylab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Objetive at best update variant"</span><span class="op">)</span>, main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Trait "</span>, <span class="va">i</span><span class="op">)</span><span class="op">)</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">model_info</span><span class="op">$</span><span class="va">outcome_coupled_best_update_obj</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"p"</span>, col<span class="op">=</span><span class="st">"#CC3333"</span>, lwd<span class="op">=</span><span class="fl">2</span>, xlab<span class="op">=</span><span class="st">""</span>, ylab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Objective at best update variant"</span><span class="op">)</span>, main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Trait "</span>, <span class="va">i</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="op">}</span></span></code></pre></div>
-<p><img src="Interpret_ColocBoost_Output_files/figure-html/objetive-best-1.png" width="700"></p>
+<p><img src="Interpret_ColocBoost_Output_files/figure-html/objective-best-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="trait-specific-effects-information-ucos_details">3.5. Trait-specific effects information
@@ -540,20 +540,20 @@ objective at the (coupled) best update variant for each outcome.</li>
 <span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 87 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span></code></pre></div>
 <div class="section level4">
-<h4 id="trait-specific-uncolocalized-traits-ucos">3.5.1. Trait-specific (uncolocalized) traits
-(<strong><code>ucos</code></strong>)<a class="anchor" aria-label="anchor" href="#trait-specific-uncolocalized-traits-ucos"></a>
+<h4 id="trait-specific-uncolocalized-confidence-sets-ucos">3.5.1. Trait-specific (uncolocalized) confidence sets
+(<strong><code>ucos</code></strong>)<a class="anchor" aria-label="anchor" href="#trait-specific-uncolocalized-confidence-sets-ucos"></a>
 </h4>
 <ul>
 <li>
-<strong><code>ucos</code></strong>: A list containing detailed
-information about trait-specific (uncolocalized) traits for each uCoS.
+<strong><code>ucos</code></strong>: A list containing a detailed
+information about trait-specific (uncolocalized) variants for each uCoS.
 <ul>
 <li>
 <strong><code>ucos_index</code></strong>: Indices of trait-specific
-(uncolocalized) variables.</li>
+(uncolocalized) variants.</li>
 <li>
 <strong><code>ucos_variables</code></strong>: Names of
-trait-specific (uncolocalized) variables.</li>
+trait-specific (uncolocalized) variants.</li>
 </ul>
 </li>
 </ul>
@@ -583,7 +583,7 @@ trait-specific (uncolocalized) variables.</li>
 </h4>
 <ul>
 <li>
-<strong><code>ucos_outcomes</code></strong>: A list with detailed
+<strong><code>ucos_outcomes</code></strong>: A list with a detailed
 information about trait-specific (uncolocalized) outcomes for each uCoS.
 <ul>
 <li>
@@ -666,7 +666,7 @@ each trait-specific (uncolocalized) trait, used to recalibrate UCoS when
 traits are filtered out.</li>
 <li>
 <strong><code>ucos_top_variables</code></strong>: Indices and names
-of the top variable for each UCoS, which is the variable with the
+of the top variable for each uCoS, which is the variable with the
 highest VCP.</li>
 <li>
 <strong><code>ucos_purity</code></strong>: Includes three lists,
@@ -690,7 +690,7 @@ within or between UCoS.</li>
 </ul>
 <p>By analyzing these components, you can gain a deeper understanding of
 trait-specific (uncolocalized) effects that are not colocalized,
-providing additional insights into the dataset.</p>
+providing additional insights into the data.</p>
 </div>
 </div>
 <div class="section level3">
@@ -699,17 +699,60 @@ providing additional insights into the dataset.</p>
 </h3>
 <p>There is <code>diagnostic_details</code> in ColocBoost output when
 setting <code>output_level = 3</code>:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Loading the dataset</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">)</span></span>
+<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span></span>
+<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">Y</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span>, output_level <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Validating input data.</span></span>
+<span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 34 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 43 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 46 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 67 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 68 iterations!</span></span>
+<span><span class="co">#&gt; Performing inference on colocalization events.</span></span></code></pre></div>
 <ul>
 <li>
 <strong><code>cb_model</code></strong>: trait-specific proximity
 gradient boosting model, including proximity weight at each iteration,
 residual after gradient boosting, et al.</li>
 <li>
+<strong><code>weights_paths</code></strong>: individual
+trait-specific weights for each iteration.</li>
+</ul>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">diagnostic_details</span><span class="op">$</span><span class="va">cb_model</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "ind_outcome_1" "ind_outcome_2" "ind_outcome_3" "ind_outcome_4"</span></span>
+<span><span class="co">#&gt; [5] "ind_outcome_5"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">diagnostic_details</span><span class="op">$</span><span class="va">cb_model</span><span class="op">$</span><span class="va">ind_outcome_1</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "res"                         "beta"                       </span></span>
+<span><span class="co">#&gt;  [3] "weights_path"                "profile_loglike_each"       </span></span>
+<span><span class="co">#&gt;  [5] "obj_path"                    "obj_single"                 </span></span>
+<span><span class="co">#&gt;  [7] "change_loglike"              "correlation"                </span></span>
+<span><span class="co">#&gt;  [9] "z"                           "learning_rate_init"         </span></span>
+<span><span class="co">#&gt; [11] "stop_thresh"                 "ld_jk"                      </span></span>
+<span><span class="co">#&gt; [13] "jk"                          "z_univariate"               </span></span>
+<span><span class="co">#&gt; [15] "beta_hat_univariate"         "multi_correction"           </span></span>
+<span><span class="co">#&gt; [17] "multi_correction_univariate" "stop_null"                  </span></span>
+<span><span class="co">#&gt; [19] "check_null_max"              "beta_hat"</span></span></code></pre></div>
+<ul>
+<li>
 <strong><code>cb_model_para</code></strong>: parameters used in
 fitting ColocBoost model.</li>
 </ul>
-<p>For more diagnosis of ColocBoost model fitting, please refer to our
-Tutorial (TO-DO-LIST).</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">diagnostic_details</span><span class="op">$</span><span class="va">cb_model_para</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "L"                     "P"                     "N"                    </span></span>
+<span><span class="co">#&gt;  [4] "tau"                   "func_simplex"          "lambda"               </span></span>
+<span><span class="co">#&gt;  [7] "lambda_focal_outcome"  "learning_rate_decay"   "profile_loglike"      </span></span>
+<span><span class="co">#&gt; [10] "dynamic_learning_rate" "prioritize_jkstar"     "jk_equiv_corr"        </span></span>
+<span><span class="co">#&gt; [13] "jk_equiv_loglik"       "func_compare"          "coloc_thresh"         </span></span>
+<span><span class="co">#&gt; [16] "update_status"         "jk"                    "LD_free"              </span></span>
+<span><span class="co">#&gt; [19] "real_update_jk"        "outcome_names"         "variables"            </span></span>
+<span><span class="co">#&gt; [22] "focal_outcome_idx"     "coveraged"             "num_updates"          </span></span>
+<span><span class="co">#&gt; [25] "M"                     "weight_fudge_factor"   "coverage"</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

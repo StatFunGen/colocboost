@@ -69,9 +69,9 @@ analysis using summary statistics data, specifically focusing on the
 <p>The <code>Sumstat_5traits</code> dataset contains 5 simulated summary
 statistics, where it is directly derived from the
 <code>Ind_5traits</code> dataset using marginal association. The dataset
-is specifically designed for evaluating and demonstrating the
-capabilities of ColocBoost in multiple trait colocalization analysis
-with summary association data.</p>
+is specifically designed to evaluate and demonstrate the capabilities of
+ColocBoost in multi-trait colocalization analysis with summary
+association data.</p>
 <ul>
 <li>
 <code>sumstat</code>: A list of data.frames of summary statistics
@@ -92,8 +92,9 @@ not included in the <code>Sumstat_5traits</code> dataset.</li>
 <li>Causal variant 644 is associated with traits 1, 2, 3, and 4.</li>
 <li>Causal variant 2289 is associated with traits 2, 3, and 5.</li>
 </ul>
-<p>This structure creates a realistic scenario where multiple traits are
-influenced by different but overlapping sets of genetic variants.</p>
+<p>This structure creates a realistic scenario in which multiple traits
+are influenced by different but overlapping sets of genetic
+variants.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Loading the Dataset</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Sumstat_5traits"</span><span class="op">)</span></span>
@@ -118,13 +119,19 @@ influenced by different but overlapping sets of genetic variants.</p>
 <div class="section level4">
 <h4 id="important-data-format-for-summary-data">Important data format for summary data<a class="anchor" aria-label="anchor" href="#important-data-format-for-summary-data"></a>
 </h4>
-<p>Must include the following columns: - <code>z</code> or
-(<code>beta</code>, <code>sebeta</code>): either z-score or (effect size
-and standard error) - <code>n</code>: sample size for the summary
-statistics, it is highly recommendation to provide. -
-<code>variant</code>: required if sumstat for different outcomes do not
-have the same number of variables (multiple sumstat and multiple
-LD).</p>
+<p><code>sumstat</code> must include the following columns:</p>
+<ul>
+<li>
+<code>z</code> or (<code>beta</code>, <code>sebeta</code>): either
+z-score or (effect size and standard error)</li>
+<li>
+<code>n</code>: sample size for the summary statistics, it is highly
+recommended to provide.</li>
+<li>
+<code>variant</code>: required if <code>sumstat</code> for different
+outcomes do not have the same number of variables (multiple
+<code>sumstat</code> and multiple <code>LD</code>).</li>
+</ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">Sumstat_5traits</span><span class="op">$</span><span class="va">sumstat</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "data.frame"</span></span>
@@ -186,7 +193,7 @@ information for all variants across all traits.</li>
 <h4 id="results-interpretation">Results Interpretation<a class="anchor" aria-label="anchor" href="#results-interpretation"></a>
 </h4>
 <p>For comprehensive tutorials on result interpretation and advanced
-visualization techniques, please visit our documentation portal at <a href="https://statfungen.github.io/colocboost/articles/Visualization_ColocBoost_Output.html">Visualization
+visualization techniques, please visit our tutorials portal at <a href="https://statfungen.github.io/colocboost/articles/Visualization_ColocBoost_Output.html">Visualization
 of ColocBoost Results</a> and <a href="https://statfungen.github.io/colocboost/articles/Interpret_ColocBoost_Output.html">Interpret
 ColocBoost Output</a>.</p>
 </div>
@@ -197,9 +204,9 @@ ColocBoost Output</a>.</p>
 <div class="section level3">
 <h3 id="matched-ld-with-multiple-sumstat-trait-specific-ld">3.1. Matched LD with multiple sumstat (Trait-specific LD)<a class="anchor" aria-label="anchor" href="#matched-ld-with-multiple-sumstat-trait-specific-ld"></a>
 </h3>
-<p>When studying multiple traits with its own trait-specific LD matrix,
-you could provide a list of LD matrices matched with a list of summary
-statistics.</p>
+<p>When studying multiple traits with their own trait-specific LD
+matrices, you could provide a list of LD matrices matched with a list of
+summary statistics.</p>
 <ul>
 <li>
 <strong>Basic format</strong>: <code>sumstat</code> and
@@ -218,8 +225,8 @@ statistics.</p>
 <strong>Cross-trait flexibility</strong>:
 <ul>
 <li>There is no requirement for the same variants across different
-traits. This allows for the analysis of traits with variants
-avaiable.</li>
+traits. This allows for the analysis of traits with available
+variants.</li>
 <li>This is particularly useful when you have a large dataset with many
 traits and want to focus on specific variants and trait-specific
 LD.</li>
@@ -261,8 +268,8 @@ summary statistics, with <strong>Input Format</strong>:</p>
 <li>
 <code>LD</code> is a matrix of linkage disequilibrium (LD)
 information for all variants across all traits.</li>
-<li>The LD matrix should contain all variants present in the summary
-statistics data frames.</li>
+<li>The LD matrix should contain superset of variants presented in the
+summary statistics data frames.</li>
 <li>This is particularly useful when you have a large LD matrix from a
 reference panel and want to use it for multiple summary statistics
 datasets. It allows for efficient analysis without redundancy.</li>
@@ -298,15 +305,16 @@ datasets. It allows for efficient analysis without redundancy.</li>
 different summary statistics, we also provide the interface for
 arbitrary LD matrices with multiple sumstat. This particularly benefits
 meta-analysis across heterogeneous datasets where, for different subsets
-of summary statistics, LD comes from different population.</p>
+of summary statistics, LD comes from different populations.</p>
 <ul>
 <li>
 <strong>Input Format</strong>:
 <ul>
 <li>
-<code>sumstat</code> is a list of data.frames for all traits.</li>
+<code>sumstat = list(sumstat1, sumstat2, sumstat3, sumstat4, sumstat5)</code>
+is a list of data.frames for all traits.</li>
 <li>
-<code>LD</code> is a list of LD matrices.</li>
+<code>LD = list(LD1, LD2)</code> is a list of LD matrices.</li>
 <li>
 <code>dict_sumstatLD</code> is a dictionary matrix that index of
 sumstat to index of LD.</li>
@@ -345,6 +353,66 @@ sumstat to index of LD.</li>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`cos2:y2_y3_y5`</span></span>
 <span><span class="co">#&gt; [1] 2289 2293</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="hyprcoloc-compatible-format-effect-size-and-standard-error-matrices">3.4. Hyprcoloc compatible format: effect size and standard error
+matrices<a class="anchor" aria-label="anchor" href="#hyprcoloc-compatible-format-effect-size-and-standard-error-matrices"></a>
+</h3>
+<p>ColocBoost also provides a flexibility to use Hyprcoloc compatible
+format for summary statistics with and without LD matrix.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Loading the Dataset</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">)</span></span>
+<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span></span>
+<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">Y</span></span>
+<span></span>
+<span><span class="co"># Coverting to Hyprcoloc compatible format</span></span>
+<span><span class="va">effect_est</span> <span class="op">&lt;-</span> <span class="va">effect_se</span> <span class="op">&lt;-</span> <span class="va">effect_n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span></span>
+<span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">Y</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span></span>
+<span>  <span class="va">effect_n</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
+<span>  <span class="co"># simply use `rr &lt;- susieR::univariate_regression(X = x, y = y)`</span></span>
+<span>  <span class="va">output</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">fit</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">coef</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span></span>
+<span>      <span class="va">output</span><span class="op">[</span><span class="va">i</span>,<span class="op">]</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="va">fit</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="kw">else</span></span>
+<span>      <span class="va">output</span><span class="op">[</span><span class="va">i</span>,<span class="op">]</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">effect_est</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">effect_est</span>, <span class="va">output</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="va">effect_se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">effect_se</span>, <span class="va">output</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">effect_est</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">effect_se</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Y1"</span>, <span class="st">"Y2"</span>, <span class="st">"Y3"</span>, <span class="st">"Y4"</span>, <span class="st">"Y5"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">effect_est</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">effect_se</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Run colocboost</span></span>
+<span><span class="va">LD</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_cormat.html">get_cormat</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>effect_est <span class="op">=</span> <span class="va">effect_est</span>, effect_se <span class="op">=</span> <span class="va">effect_se</span>, effect_n <span class="op">=</span> <span class="va">effect_n</span>, LD <span class="op">=</span> <span class="va">LD</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Validating input data.</span></span>
+<span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 34 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 43 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 46 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 67 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 68 iterations!</span></span>
+<span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
+<span></span>
+<span><span class="co"># Identified CoS</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
+<span><span class="co">#&gt; $`cos1:y1_y2_y3_y4`</span></span>
+<span><span class="co">#&gt; [1] 636 644 618 655</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`cos2:y2_y3_y5`</span></span>
+<span><span class="co">#&gt; [1] 2289 2293</span></span>
+<span></span>
+<span><span class="co"># Plotting the results</span></span>
+<span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Summary_Statistics_Colocalization_files/figure-html/hyprcoloc-compatible-1.png" width="700"></p>
+<p>See more details about data format to implement LD-free ColocBoost
+and LD-mistmatch diagnosis in <a href="https://statfungen.github.io/colocboost/articles/LD_Free_Colocalization.html">LD
+mismatch and LD-free Colocalization</a>).</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

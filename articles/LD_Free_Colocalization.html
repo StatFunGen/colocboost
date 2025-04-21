@@ -59,16 +59,32 @@
     
     
 <p>This vignette demonstrates LD mismatch diagnosis in the
-<code>colocboost</code> package and how to perform LD-free
-colocalization analysis, when some traits completely lack LD information
-or share only partial variant coverage with other traits.</p>
+<code>colocboost</code> package and how to perform LD-mismatch and
+LD-free colocalization analysis, when some traits completely lack LD
+information or share only partial variant coverage with other
+traits.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/StatFunGen/colocboost" class="external-link">colocboost</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="ld-mismatch-diagnosis">1. LD mismatch diagnosis<a class="anchor" aria-label="anchor" href="#ld-mismatch-diagnosis"></a>
 </h2>
-<p>ColocBoost provides the diagnostic warnings for LD matrix is not
-compatible with the summary statistics.</p>
+<p>The <code>colocboost</code> assumes that the LD matrix accurately
+estimates the correlations among variants from the original GWAS
+genotype data. Typically, the LD matrix comes from some public databases
+of genotypes in a suitable reference population. An inaccurate LD matrix
+may lead to unreliable colocalization results, especially if the LD
+matrix is significantly different from the one estimated from the
+original genotype data.</p>
+<div class="section level4">
+<h4 id="why-ld-mismatch-matters">Why LD Mismatch Matters<a class="anchor" aria-label="anchor" href="#why-ld-mismatch-matters"></a>
+</h4>
+<p>An inaccurate LD matrix can cause inconsistencies between the summary
+statistics and the reference LD matrix, leading to: - Biased estimates
+of causal variants. - Increased computational time due to slower
+algorithm convergence. - Potentially misleading colocalization
+results.</p>
+<p>ColocBoost provides diagnostic warnings for assessing the consistency
+of the summary statistics with the reference LD matrix.</p>
 <ul>
 <li>Estimated residual variance of the model is negative or greater than
 phenotypic variance (<code>rtr &lt; 0</code> or
@@ -77,25 +93,36 @@ S3.5.2).</li>
 <li>Change in trait-specific profile log-likelihood according to a CoS
 is negative (see details in Supplementary Note S3.5.3).</li>
 </ul>
+</div>
+<div class="section level4">
+<h4 id="example-of-including-ld-mismatch">Example of including LD mismatch<a class="anchor" aria-label="anchor" href="#example-of-including-ld-mismatch"></a>
+</h4>
 <p>In this example, we create a simulated dataset with LD mismatch by
-changing the sign of Z-scores for 1% variants of each trait.</p>
+changing the sign of Z-scores for 1% of variants for each trait.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create a simulated dataset with LD mismatch</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Sumstat_5traits"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Ind_5traits"</span><span class="op">)</span></span>
 <span><span class="va">LD</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_cormat.html">get_cormat</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Change sign of Z-score for 1% variants of each trait by including mismatched with LD</span></span>
+<span><span class="co"># Change sign of Z-score for 1% of variants for each trait by including mismatched LD</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">miss_prop</span> <span class="op">&lt;-</span> <span class="fl">0.01</span> </span>
 <span><span class="va">sumstat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">Sumstat_5traits</span><span class="op">$</span><span class="va">sumstat</span>, <span class="kw">function</span><span class="op">(</span><span class="va">ss</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">ss</span><span class="op">)</span></span>
-<span>  <span class="va">pos_miss</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">p</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="va">miss_prop</span><span class="op">*</span><span class="va">p</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">pos_miss</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">p</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="va">miss_prop</span> <span class="op">*</span> <span class="va">p</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="va">ss</span><span class="op">$</span><span class="va">z</span><span class="op">[</span><span class="va">pos_miss</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="va">ss</span><span class="op">$</span><span class="va">z</span><span class="op">[</span><span class="va">pos_miss</span><span class="op">]</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">ss</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
-<p>There may two types of warnings when running <code>colocboost</code>
-with LD mismatch:</p>
+</div>
+<div class="section level4">
+<h4 id="running-colocboost-with-ld-mismatch">Running ColocBoost with LD Mismatch<a class="anchor" aria-label="anchor" href="#running-colocboost-with-ld-mismatch"></a>
+</h4>
+<p>When running <code>colocboost</code> with an LD mismatch, you may
+encounter diagnostic warnings. These warnings are not errors, and the
+analysis will still proceed. However, the results may be less reliable
+due to the mismatch, and the computational time may increase as the
+algorithm takes longer to converge.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>sumstat <span class="op">=</span> <span class="va">sumstat</span>, LD <span class="op">=</span> <span class="va">LD</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
@@ -112,42 +139,49 @@ with LD mismatch:</p>
 <span><span class="co">#&gt; Warning in get_cos_profile(cs_beta, outcome_idx, X = cb_data$data[[X_dict]]$X,</span></span>
 <span><span class="co">#&gt; : Warning message: potential sumstat &amp; LD mismatch may happens for outcome 1 .</span></span>
 <span><span class="co">#&gt; Using logLR = CoS(profile) - max(profile). Please check our website.</span></span></code></pre></div>
-<p>Note that the warning messages are not errors, and the analysis will
-still be performed. But the results may not be reliable due to the LD
-mismatch. Additional, the computational time may be longer than
-expected, as the algorithm may take longer to converge due to the LD
-mismatch.</p>
+<p>These warnings serve as diagnostic tools to alert users about
+potential inconsistencies in the input data.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="ld-free-and-ld-mismatch-colocalization-analysis">2. LD-free and LD-mismatch colocalization analysis<a class="anchor" aria-label="anchor" href="#ld-free-and-ld-mismatch-colocalization-analysis"></a>
 </h2>
-<p>ColocBoost can perform LD-free colocalization analysis when some
-traits completely lack LD information with one causal per trait per
-region assumption. There are two ways to perform LD-free and LD-mismatch
-colocalization analysis:</p>
+<p>When there is substantial discordance between the LD matrix and
+summary statistics, the reliability of colocalization analysis may be
+compromised. Such discordance can arise when the LD matrix and summary
+statistics are derived from different populations or when the LD matrix
+is estimated from a smaller or less representative reference sample.
+This can lead to unexpected results, such as biased causal variant
+identification or reduced accuracy in the analysis.</p>
+<p>To address these challenges, ColocBoost provides two alternative
+approaches for colocalization analysis with the assumption of one causal
+variant per trait per region:</p>
 <ul>
 <li>
-<strong>LD-mismatch</strong> (recommended): when LD matrix is
-esimated from out-of sample LD reference (smaller sample size or
-different population), summary statistics are not compatible with the LD
-matrix but the LD matrix is still informative for indicating the
-correlations among different variants. We recommended to perform
-colocalization analysis with LD matrix and only 1 iteration of gradient
-boosting. In this case, the LD matrix is only used in checking the
-equivalence among the trait-specific best update variants. Specially,
-using the LD matrix for colocalization analysis can help to improve the
-accuracy of the results.</li>
+<strong>One iteration approach</strong> (recommended): performing
+only 1 iteration of gradient boosting with the LD matrix ensures that:
+<ul>
+<li>The LD matrix is only used to check the equivalence among
+trait-specific best update variants.</li>
+<li>The accuracy of the results is improved compared to completely
+ignoring the LD matrix.</li>
 </ul>
+</li>
+</ul>
+<p>This method is particularly useful when the LD matrix is mismatched
+but still provides valuable insights into variant correlations.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res_mismatch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>sumstat <span class="op">=</span> <span class="va">sumstat</span>, LD <span class="op">=</span> <span class="va">LD</span>, M<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Perform only 1 iteration of gradient boosting with LD matrix</span></span>
+<span><span class="va">res_mismatch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>sumstat <span class="op">=</span> <span class="va">sumstat</span>, LD <span class="op">=</span> <span class="va">LD</span>, M <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
 <span><span class="co">#&gt; Running ColocBoost with assumption of one causal per outcome per region!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span></code></pre></div>
 <ul>
 <li>
-<strong>LD-free</strong>: when some traits completely lack LD
-information, the LD matrix is not required.</li>
+<strong>LD-free</strong>: when the mismatch between the LD matrix
+and summary statistics is too large to be useful or when LD information
+is completely unavailable, ColocBoost provides an LD-free approach.</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_free</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>sumstat <span class="op">=</span> <span class="va">sumstat</span><span class="op">)</span></span>
@@ -159,6 +193,56 @@ information, the LD matrix is not required.</li>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
 <span><span class="co">#&gt; Running ColocBoost with assumption of one causal per outcome per region!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span></code></pre></div>
+<p>While this method is computationally efficient, it has limitations
+due to the strong assumption of a single causal variant per trait per
+region. Users should interpret the results with caution, especially in
+regions with complex LD structures or multiple causal variants.</p>
+<p>ColocBoost also provides a flexibility to use Hyprcoloc compatible
+format for summary statistics without LD matrix.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Loading the Dataset</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">)</span></span>
+<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span></span>
+<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">Y</span></span>
+<span></span>
+<span><span class="co"># Coverting to Hyprcoloc compatible format</span></span>
+<span><span class="va">effect_est</span> <span class="op">&lt;-</span> <span class="va">effect_se</span> <span class="op">&lt;-</span> <span class="va">effect_n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span></span>
+<span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">Y</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span></span>
+<span>  <span class="va">effect_n</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
+<span>  <span class="co"># simply use `rr &lt;- susieR::univariate_regression(X = x, y = y)`</span></span>
+<span>  <span class="va">output</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">fit</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">coef</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span></span>
+<span>      <span class="va">output</span><span class="op">[</span><span class="va">i</span>,<span class="op">]</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="va">fit</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="kw">else</span></span>
+<span>      <span class="va">output</span><span class="op">[</span><span class="va">i</span>,<span class="op">]</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">effect_est</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">effect_est</span>, <span class="va">output</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="va">effect_se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">effect_se</span>, <span class="va">output</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">effect_est</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">effect_se</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Y1"</span>, <span class="st">"Y2"</span>, <span class="st">"Y3"</span>, <span class="st">"Y4"</span>, <span class="st">"Y5"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">effect_est</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">effect_se</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Run colocboost</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>effect_est <span class="op">=</span> <span class="va">effect_est</span>, effect_se <span class="op">=</span> <span class="va">effect_se</span>, effect_n <span class="op">=</span> <span class="va">effect_n</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Validating input data.</span></span>
+<span><span class="co">#&gt; Warning in colocboost(effect_est = effect_est, effect_se = effect_se, effect_n</span></span>
+<span><span class="co">#&gt; = effect_n): Providing the LD for summary statistics data is highly</span></span>
+<span><span class="co">#&gt; recommended. Without LD, only a single iteration will be performed under the</span></span>
+<span><span class="co">#&gt; assumption of one causal variable per outcome. Additionally, the purity of CoS</span></span>
+<span><span class="co">#&gt; cannot be evaluated!</span></span>
+<span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
+<span><span class="co">#&gt; Running ColocBoost with assumption of one causal per outcome per region!</span></span>
+<span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
+<span></span>
+<span><span class="co"># Identified CoS</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
+<span><span class="co">#&gt; $`cos1:y1_y3_y4`</span></span>
+<span><span class="co">#&gt; [1] 636 655 644 618</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

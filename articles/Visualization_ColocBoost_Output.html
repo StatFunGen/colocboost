@@ -88,8 +88,8 @@ of ColocBoost results.</p>
 <p>The default plot of the colocboost results provides a visual
 representation of the colocalization events.</p>
 <ul>
-<li>The x-axis indicates the indices of variants and y-axis indicates
-the -log10(p-value) from marginal associations.</li>
+<li>The x-axis indicates the indices of variants, and the y-axis
+indicates the -log10(p-value) from marginal associations.</li>
 <li>The colors of the points represent the colocalization events, with
 different colors indicating different colocalization events.</li>
 </ul>
@@ -111,7 +111,7 @@ in the plot.</li>
 (single plot for all variants),</li>
 <li>
 <code>y = "coef"</code> for regression coefficients estimated from
-the colocboost model.</li>
+the ColocBoost model.</li>
 <li>
 <code>y = "cos_vcp"</code> for variant colocalization probabilities
 (multiple plots for each CoS - only draw VCP for variants in CoS to the
@@ -128,8 +128,8 @@ with colocalization are plotted. <code>outcome_idx = c(1,2,5)</code> can
 be specified to plot the traits 1, 2, and 5.</li>
 <li>
 <code>plot_all_outcome = FALSE</code> (default) indicates only the
-traits with colocalization are plotted. If <code>TRUE</code> can plot
-all traits.</li>
+traits with colocalization are plotted. If <code>TRUE</code>, it will
+plot all traits.</li>
 <li>
 <code>cos_color = NULL</code> (default) indicates the colors of the
 colocalization events. Specify a vector of colors to customize the
@@ -145,8 +145,8 @@ by deepening the visualization of the colocboost results.</p>
 <h3 id="plot-with-a-zoom-in-region">2.1. Plot with a zoom-in region<a class="anchor" aria-label="anchor" href="#plot-with-a-zoom-in-region"></a>
 </h3>
 <p>You can specify a zoom-in region by providing a <code>grange</code>
-argument, which is a vector of length 2 indicating the start and end
-indices of the region to be zoomed in.</p>
+argument, which is a vector indicating the indices of the region to be
+zoomed in.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, grange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Visualization_ColocBoost_Output_files/figure-html/zoomin-plot-1.png" width="700"></p>
@@ -206,7 +206,7 @@ Following plot also shows the top variants.</p>
 <div class="section level3">
 <h3 id="plot-with-trait-specific-sets-if-exists">2.5. Plot with trait-specific sets if exists<a class="anchor" aria-label="anchor" href="#plot-with-trait-specific-sets-if-exists"></a>
 </h3>
-<p>There are two options avaiable for plotting the trait-specific
+<p>There are two options available for plotting the trait-specific
 (uncolocalized) variants:</p>
 <ul>
 <li>
@@ -214,8 +214,8 @@ Following plot also shows the top variants.</p>
 plot all trait-specific (uncolocalized) sets.</li>
 <li>
 <code>plot_ucos_idx = NULL</code> (default) indicates all confidence
-sets are plotted. <code>plot_cos_idx = 1</code> can be specified to plot
-the 1st confidence sets, and so on.</li>
+sets are plotted. <code>plot_ucos_idx = 1</code> can be specified to
+plot the 1st uncolocalized confidence sets, and so on.</li>
 </ul>
 <p><em>Important Note</em>: You should use
 <code>colocboost(..., output_level = 2)</code> to obtain the
@@ -242,23 +242,22 @@ trait-specific (uncolocalized) information.</p>
 <p><img src="Visualization_ColocBoost_Output_files/figure-html/trait-specific-1.png" width="700"></p>
 <p>In this example, there are two colocalized sets (<span style="color:blue">blue</span> and <span style="color:orange">orange</span>) and two trait-specific sets for
 trait 4 only (<span style="color:green">green</span> and <span style="color:purple">purple</span>). For comprehensive tutorials on
-result interpretation, please please visit our documentation portal at
-<a href="https://statfungen.github.io/colocboost/articles/Interpret_ColocBoost_Output.html">Interpret
+result interpretation, please visit our tutorials portal at <a href="https://statfungen.github.io/colocboost/articles/Interpret_ColocBoost_Output.html">Interpret
 ColocBoost Output</a>.</p>
 </div>
 <div class="section level3">
 <h3 id="plot-with-focal-trait-for-disease-prioritized-colocalization">2.6 Plot with focal trait for disease prioritized
 colocalization<a class="anchor" aria-label="anchor" href="#plot-with-focal-trait-for-disease-prioritized-colocalization"></a>
 </h3>
-<p>There are three options avaiable for plotting the results from
+<p>There are three options available for plotting the results from
 disease prioritized colocalization, considering a focal trait:</p>
 <ul>
 <li>
 <code>plot_focal_only = FALSE</code> (default), if <code>TRUE</code>
 will only plot CoS with focal trait and ignoring other CoS.</li>
 <li>
-<code>plot_focal_cos_outocme_only = FALSE</code> (default) and
-<strong>recommend</strong> for visulization for disease prioritized
+<code>plot_focal_cos_outcome_only = FALSE</code> (default) and
+<strong>recommend</strong> for visualization for disease prioritized
 colocalization. If <code>TRUE</code> will plot all CoS colocalized with
 at least on traits within CoS of focal traits.</li>
 </ul>
@@ -288,7 +287,7 @@ at least on traits within CoS of focal traits.</li>
 <p><img src="Visualization_ColocBoost_Output_files/figure-html/focal-colocalization-1.png" width="700"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Plot all CoS including at least one traits colocalized with focal trait</span></span>
-<span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, plot_focal_cos_outocme_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, plot_focal_cos_outcome_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Visualization_ColocBoost_Output_files/figure-html/focal-colocalization-2.png" width="700"></p>
 </div>
 </div>

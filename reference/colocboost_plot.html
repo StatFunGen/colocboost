@@ -47,7 +47,7 @@
 <span>  outcome_idx <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  plot_all_outcome <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  plot_focal_only <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  plot_focal_cos_outocme_only <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  plot_focal_cos_outcome_only <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  points_color <span class="op">=</span> <span class="st">"grey80"</span>,</span>
 <span>  cos_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  add_vertical <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -61,7 +61,7 @@
 <span>  show_cos_to_uncoloc_outcome <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  plot_ucos <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  plot_ucos_idx <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  gene_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  title_specific <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ylim_each <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  outcome_legend_pos <span class="op">=</span> <span class="st">"top"</span>,</span>
 <span>  outcome_legend_size <span class="op">=</span> <span class="fl">1.8</span>,</span>
@@ -110,7 +110,7 @@
 <dd><p>Logical, if TRUE only plots colocalization with focal outcome, default is FALSE.</p></dd>
 
 
-<dt id="arg-plot-focal-cos-outocme-only">plot_focal_cos_outocme_only<a class="anchor" aria-label="anchor" href="#arg-plot-focal-cos-outocme-only"></a></dt>
+<dt id="arg-plot-focal-cos-outcome-only">plot_focal_cos_outcome_only<a class="anchor" aria-label="anchor" href="#arg-plot-focal-cos-outcome-only"></a></dt>
 <dd><p>Logical, if TRUE only plots colocalization including at least on colocalized outcome with focal outcome, default is FALSE.</p></dd>
 
 
@@ -166,8 +166,8 @@
 <dd><p>Optional indices of trait-specific (uncolocalized) sets to plot when included</p></dd>
 
 
-<dt id="arg-gene-name">gene_name<a class="anchor" aria-label="anchor" href="#arg-gene-name"></a></dt>
-<dd><p>Optional gene name to display in plot title</p></dd>
+<dt id="arg-title-specific">title_specific<a class="anchor" aria-label="anchor" href="#arg-title-specific"></a></dt>
+<dd><p>Optional specific title to display in plot title</p></dd>
 
 
 <dt id="arg-ylim-each">ylim_each<a class="anchor" aria-label="anchor" href="#arg-ylim-each"></a></dt>

@@ -90,8 +90,8 @@ individuals as
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>.</li>
 </ul>
 <p>The input format for multiple traits is similar, but <code>X</code>
-matrix should be a list of matrices, each corresponding to a different
-trait. <code>Y</code> vector should also be a list of vectors. For
+should be a list of genotype matrices, each corresponding to a different
+trait. <code>Y</code> should also be a list of phenotype vectors. For
 example:</p>
 <ul>
 <li>
@@ -111,13 +111,13 @@ individuals.</li>
 </ul>
 <p><code>colocboost</code> also offers flexible input options (see
 detailed usage with different input formats, refer to <a href="https://statfungen.github.io/colocboost/articles/Individual_Level_Colocalization.html">Individual
-Level Data Colocalization</a>.):</p>
+Level Data Colocalization</a>):</p>
 <ul>
 <li>Single
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
 matrix with
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>×</mo><mi>P</mi></mrow><annotation encoding="application/x-tex">N \times P</annotation></semantics></math>
-with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>×</mo><mi>P</mi></mrow><annotation encoding="application/x-tex">N \times P</annotation></semantics></math>,
+and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math>
 matrix with
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>×</mo><mi>L</mi></mrow><annotation encoding="application/x-tex">N \times L</annotation></semantics></math>
@@ -128,7 +128,8 @@ traits.</li>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
 matrices and unmatched
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math>
-vectors with a mapping dictionary.</li>
+vectors with a mapping dictionary (example shown in section 3
+below).</li>
 </ul>
 </div>
 <div class="section level2">
@@ -168,14 +169,15 @@ should include the <code>variant</code> names for proper alignment.</li>
 <code>sumstat = list(sumstat1, sumstat2, sumstat3)</code>. The
 flexibility of input format for multiple traits is as follows (see
 detailed usage with different input formats, refer to <a href="https://statfungen.github.io/colocboost/articles/Summary_Level_Colocalization.html">Summary
-Statistics Colocalization</a>.):</p>
+Statistics Colocalization</a>):</p>
 <ul>
 <li>One LD matrix with a superset of variants in <code>sumstat</code>
 for all traits is allowed.</li>
 <li>Multiple LD matrices, each corresponding to a different trait, are
 also allowed for the trait-specific LD structure.</li>
 <li>Multiple LD matrices and unmatched <code>sumstat</code> data frames
-with a mapping dictionary are also allowed.</li>
+with a mapping dictionary are also allowed (example shown in section 3
+below).</li>
 </ul>
 </div>
 <div class="section level2">
@@ -253,9 +255,11 @@ vector of sample sizes for estimating regression coefficients.</li>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>P</mi><annotation encoding="application/x-tex">P</annotation></semantics></math>
 variants. If it is not provided, it will apply LD-free ColocBoost.</li>
 </ul>
+<p>See more details about Hyprcoloc compatible format in <a href="https://statfungen.github.io/colocboost/articles/Summary_Level_Colocalization.html">Summary
+Statistics Colocalization</a>).</p>
 <p>See more details about data format to implement LD-free ColocBoost
-and LD-mistmatch diagnosis in (LD mismatch diagnosis and LD-free
-analysis (avaiable soon)).</p>
+and LD-mistmatch diagnosis in <a href="https://statfungen.github.io/colocboost/articles/LD_Free_Colocalization.html">LD
+mismatch and LD-free Colocalization</a>).</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

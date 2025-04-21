@@ -60,10 +60,10 @@
     
 <p>This vignette demonstrates how to perform single-trait fine-mapping
 analysis using FineBoost, a specialized single-trait version of
-ColocBoost, from both individual-level data and summary statistics.
+ColocBoost, with both individual-level data and summary statistics.
 Specifically focusing on the 2nd trait with 2 causal variants (644 and
-2289) from <code>Ind_5traits</code> and <code>Sumstat_5traits</code>
-dataset included in the package.</p>
+2289) from the <code>Ind_5traits</code> and <code>Sumstat_5traits</code>
+datasets included in the package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/StatFunGen/colocboost" class="external-link">colocboost</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
@@ -71,8 +71,8 @@ dataset included in the package.</p>
 </h2>
 <p>In this section, we demonstrate how to perform fine-mapping using
 individual-level genotype (<code>X</code>) and phenotype
-(<code>Y</code>) data. This approach directly uses the raw data to
-identify causal variants.</p>
+(<code>Y</code>) data. This approach uses raw data directly to identify
+causal variants.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load example data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">)</span></span>
@@ -85,13 +85,13 @@ identify causal variants.</p>
 <span><span class="co">#&gt; Gradient boosting for outcome 1 converge after 31 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<p><img src="FineBoost_Special_Case_files/figure-html/load-example-indiviudal-1.png" width="700"></p>
+<p><img src="FineBoost_Special_Case_files/figure-html/load-example-individual-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="fine-mapping-with-summary-statistics">2. Fine-mapping with summary statistics<a class="anchor" aria-label="anchor" href="#fine-mapping-with-summary-statistics"></a>
 </h2>
 <p>This section demonstrates fine-mapping analysis using summary
-statistics and a proper LD matrix.</p>
+statistics along with a proper LD matrix.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load example data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Sumstat_5traits</span><span class="op">)</span> </span>
@@ -110,9 +110,9 @@ statistics and a proper LD matrix.</p>
 <h2 id="ld-free-fine-mapping-with-one-causal-variant-assumption">3. LD-free fine-mapping with one causal variant assumption<a class="anchor" aria-label="anchor" href="#ld-free-fine-mapping-with-one-causal-variant-assumption"></a>
 </h2>
 <p>In scenarios where LD information is unavailable, FineBoost can still
-perform fine-mapping under the assumption of a single causal variant.
-This approach is less computationally intensive but assumes that only
-one variant in a region is causal.</p>
+perform fine-mapping under the assumption that there is a single causal
+variant. This approach is less computationally intensive but assumes
+that only one variant within a region is causal.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load example data</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>sumstat <span class="op">=</span> <span class="va">sumstat</span><span class="op">)</span></span>

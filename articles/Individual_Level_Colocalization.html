@@ -58,13 +58,13 @@
 
     
     
-<p>ColocBoost provides flexible interface for individual-level
+<p>ColocBoost provides a flexible interface for individual-level
 colocalization analysis across multiple formats. We recommend using
 individual level genotype and phenotype data when available, to gain
 both sensitivity and precision compared to summary statistics-based
 approaches.</p>
 <p>This vignette demonstrates how to perform multi-trait colocalization
-analysis using individual-level data in ColocBoost, specifically
+analysis using individual level data in ColocBoost, specifically
 focusing on the <code>Ind_5traits</code> dataset included in the
 package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -73,10 +73,9 @@ package.</p>
 <h2 id="the-ind_5traits-dataset">1. The <code>Ind_5traits</code> Dataset<a class="anchor" aria-label="anchor" href="#the-ind_5traits-dataset"></a>
 </h2>
 <p>The <code>Ind_5traits</code> dataset contains 5 simulated phenotypes
-alongside corresponding genotype matrices. T he dataset is specifically
-designed for evaluating and demonstrating the capabilities of ColocBoost
-in multiple trait colocalization analysis with individual-level
-data.</p>
+alongside corresponding genotype matrices. The dataset is specifically
+designed to evaluate and demonstrate the capabilities of ColocBoost in
+multi-trait colocalization analysis with individual-level data.</p>
 <ul>
 <li>
 <code>X</code>: A list of genotype matrices for different
@@ -122,10 +121,10 @@ influenced by different but overlapping sets of genetic variants.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="matched-individual-level-inputs-x-and-y">2. Matched individual level inputs
+<h2 id="matched-individual-level-input-x-and-y">2. Matched individual level input
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
 and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math><a class="anchor" aria-label="anchor" href="#matched-individual-level-inputs-x-and-y"></a>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math><a class="anchor" aria-label="anchor" href="#matched-individual-level-input-x-and-y"></a>
 </h2>
 <p>The preferred format for colocalization analysis in ColocBoost using
 individual level data is where genotype
@@ -139,9 +138,11 @@ data are properly matched.</p>
 organized as lists, matched by trait index,
 <ul>
 <li>
-<code>(X[1], Y[1])</code> contains individuals for trait 1,</li>
+<code>(X[1], Y[1])</code> contains individual level data for trait
+1,</li>
 <li>
-<code>(X[2], Y[2])</code> contains individuals for trait 2,</li>
+<code>(X[2], Y[2])</code> contains individual level data for trait
+2,</li>
 <li>And so on for each trait under analysis.</li>
 </ul>
 </li>
@@ -189,7 +190,7 @@ phenotypes <code>Y</code> from the dataset:</p>
 <h4 id="results-interpretation">Results Interpretation<a class="anchor" aria-label="anchor" href="#results-interpretation"></a>
 </h4>
 <p>For comprehensive tutorials on result interpretation and advanced
-visualization techniques, please visit our documentation portal at <a href="https://statfungen.github.io/colocboost/articles/Visualization_ColocBoost_Output.html">Visualization
+visualization techniques, please visit our tutorials portal at <a href="https://statfungen.github.io/colocboost/articles/Visualization_ColocBoost_Output.html">Visualization
 of ColocBoost Results</a> and <a href="https://statfungen.github.io/colocboost/articles/Interpret_ColocBoost_Output.html">Interpret
 ColocBoost Output</a>.</p>
 </div>
@@ -245,10 +246,10 @@ traits.</li>
 <span><span class="co">#&gt; [1] 2289 2293</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="genotype-matrix-is-a-superset-of-samples-across-different-phenotypes">3.2. Genotype matrix is a superset of samples across different
-phenotypes<a class="anchor" aria-label="anchor" href="#genotype-matrix-is-a-superset-of-samples-across-different-phenotypes"></a>
+<h3 id="genotype-matrix-is-a-superset-of-individuals-across-different-phenotypes">3.2. Genotype matrix is a superset of individuals across different
+phenotypes<a class="anchor" aria-label="anchor" href="#genotype-matrix-is-a-superset-of-individuals-across-different-phenotypes"></a>
 </h3>
-<p>When the genotype matrix includes a superset of samples across
+<p>When the genotype matrix includes a superset of individuals across
 different phenotypes, with <strong>Input Format</strong>:</p>
 <ul>
 <li>
@@ -256,14 +257,14 @@ different phenotypes, with <strong>Input Format</strong>:</p>
 individuals.</li>
 <li>
 <code>Y</code> is a list of phenotype vectors for different
-outcomes.</li>
+traits.</li>
 <li>Row names of both <code>X</code> and <code>Y</code> should be
 provided to match individuals - same format of individual id.</li>
-<li>It is bettern if <code>X</code> contain all samples present in the
-phenotype vectors (optional).</li>
+<li>It is better if <code>X</code> contain all individuals present in
+the phenotype vectors (optional).</li>
 <li>This is particularly useful when you have a large genotype matrix
-and want to use it for multiple phenotypes with different samples. It
-allows for efficient analysis without redundancy.</li>
+and want to use it for multiple phenotypes with different individuals.
+It allows for efficient analysis without redundancy.</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create phenotype with different samples - remove 50 samples trait 1 and trait 3.</span></span>
@@ -292,7 +293,7 @@ allows for efficient analysis without redundancy.</li>
 <span><span class="co">#&gt; [1] 2289 2293</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="arbitrary-input-matrices-with-mapping-provided">3.3. Arbitrary input matrices with mapping provided<a class="anchor" aria-label="anchor" href="#arbitrary-input-matrices-with-mapping-provided"></a>
+<h3 id="arbitrary-input-matrices-with-mapping-dictionary-provided">3.3. Arbitrary input matrices with mapping dictionary provided<a class="anchor" aria-label="anchor" href="#arbitrary-input-matrices-with-mapping-dictionary-provided"></a>
 </h3>
 <p>When studying multiple traits with arbitrary genotype matrices for
 different traits, we also provide the interface for arbitrary genotype
@@ -305,9 +306,12 @@ sequencing technologies.</p>
 <strong>Input Format</strong>:
 <ul>
 <li>
-<code>X</code> is a list of genotype matrices.</li>
+<code>X = list(X1, X3)</code> is a list of genotype matrices.</li>
 <li>
-<code>Y</code> is a list of phenotype vectors.</li>
+<code>Y = list(Y1, Y2, Y3, Y4, Y5)</code> is a list of phenotype
+vectors, where traits 1 and 2 matched to the 1st genotype matrix
+<code>X1</code>; traits 3,4,5 matched to 2nd genotype matrix
+<code>X3</code>.</li>
 <li>
 <code>dict_YX</code> is a dictionary matrix that index of Y to index
 of X.</li>
@@ -316,7 +320,7 @@ of X.</li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create a simple dictionary for demonstration purposes</span></span>
-<span><span class="va">X_arbitrary</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span><span class="op">]</span> <span class="co"># traits 1 and 2 matched to the first genotype matrix; traits 3,4,5 matched to the third genotype matrix.</span></span>
+<span><span class="va">X_arbitrary</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span><span class="op">]</span> </span>
 <span><span class="va">dict_YX</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Display the dictionary</span></span>

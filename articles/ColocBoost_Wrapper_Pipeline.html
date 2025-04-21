@@ -59,39 +59,43 @@
     
     
 <p>This vignette demonstrates how to use the ColocBoost wrapper pipeline
-to perform colocalization analysis using <code>colocboost</code>. See
-more details about functions in package <code>pecotmr</code> with <a href="https://github.com/StatFunGen/pecotmr/tree/main" class="external-link">link</a> and
-<code>colocboost_pipeline</code> with <a href="https://github.com/StatFunGen/pecotmr/blob/main/R/colocboost_pipeline.R" class="external-link">link</a>.
-See more etails about input data preparation in
-<code>xqtl_protocal</code> with [<a href="https://statfungen.github.io/xqtl-protocol/code/mnm_analysis/mnm_methods/colocboost.html" class="external-link uri">https://statfungen.github.io/xqtl-protocol/code/mnm_analysis/mnm_methods/colocboost.html</a>].</p>
+to perform colocalization analysis with <code>colocboost</code>.</p>
+<ul>
+<li>See more details about functions in the package <code>pecotmr</code>
+with <a href="https://github.com/StatFunGen/pecotmr/tree/main" class="external-link">link</a>
+and <code>colocboost_pipeline</code> with <a href="https://github.com/StatFunGen/pecotmr/blob/main/R/colocboost_pipeline.R" class="external-link">link</a>.</li>
+<li>See more details about input data preparation in
+<code>xqtl_protocol</code> with <a href="https://statfungen.github.io/xqtl-protocol/code/mnm_analysis/mnm_methods/colocboost.html" class="external-link">link</a>.</li>
+</ul>
 <div class="section level2">
-<h2 id="loading-data-use-colocboost_analysis_pipeline-function">1. Loading Data use <code>colocboost_analysis_pipeline</code>
-function<a class="anchor" aria-label="anchor" href="#loading-data-use-colocboost_analysis_pipeline-function"></a>
+<h2 id="loading-data-using-colocboost_analysis_pipeline-function">1. Loading Data using <code>colocboost_analysis_pipeline</code>
+function<a class="anchor" aria-label="anchor" href="#loading-data-using-colocboost_analysis_pipeline-function"></a>
 </h2>
 <p>This function harmonizes the input data and prepares it for
 colocalization analysis. In this section, we introduce how to load the
 regional data required for the ColocBoost analysis using the
 <code>load_multitask_regional_data</code> function. This function loads
-a mixture data sets for a specific region, including individual-level
-data (genotype, phenotype, covariate data) or summary statistics
-(sumstats, LD). Run and multiple times for different datasets</p>
+mixed datasets for a specific region, including individual-level data
+(genotype, phenotype, covariate data) or summary statistics (sumstats,
+LD). Run <code>load_regional_univariate_data</code> and
+<code>load_rss_data</code> multiple times for different datasets.</p>
 <p>Below are the input parameters for this function:</p>
 <div class="section level3">
-<h3 id="loading-individual-level-data-from-multiple-corhorts">1.1. Loading individual level data from multiple corhorts<a class="anchor" aria-label="anchor" href="#loading-individual-level-data-from-multiple-corhorts"></a>
+<h3 id="loading-individual-level-data-from-multiple-cohorts">1.1. Loading individual-level data from multiple cohorts<a class="anchor" aria-label="anchor" href="#loading-individual-level-data-from-multiple-cohorts"></a>
 </h3>
 <ul>
 <li>
 <strong><code>region</code></strong> (required): A string of
 <code>chr:start-end</code> for the phenotype region you want to
-analyzed.</li>
+analyze.</li>
 <li>
-<strong><code>genotype_list</code></strong>: A vector of path for
+<strong><code>genotype_list</code></strong>: A vector of paths for
 PLINK bed files containing genotype data.</li>
 <li>
-<strong><code>phenotype_list</code></strong>: A vector of path for
+<strong><code>phenotype_list</code></strong>: A vector of paths for
 phenotype file names.</li>
 <li>
-<strong><code>covariate_list</code></strong>: A vector of path for
+<strong><code>covariate_list</code></strong>: A vector of paths for
 covariate file names corresponding to the phenotype file vector.</li>
 <li>
 <strong><code>conditions_list_individual</code></strong>: A vector
@@ -131,20 +135,9 @@ to keep insertions/deletions (INDELs). Default is
 <li>
 <strong><code>keep_samples</code></strong>: A vector of sample names
 to keep. Default is <code>NULL</code>.</li>
-<li>
-<strong><code>phenotype_header</code></strong>: Number of rows to
-skip at the beginning of the transposed phenotype file (default is 4 for
-<code>chr</code>, <code>start</code>, <code>end</code>, and
-<code>ID</code>).</li>
-<li>
-<strong><code>scale_residuals</code></strong>: Logical indicating
-whether to scale residuals. Default is <code>FALSE</code>.</li>
-<li>
-<strong><code>tabix_header</code></strong>: Logical indicating
-whether the tabix file has a header. Default is <code>TRUE</code>.</li>
 </ul>
 <p><strong>Illustrated example</strong></p>
-<p>The following example demonstrates how to set up an input with 3
+<p>The following example demonstrates how to set up input data with 3
 phenotypes and 2 cohorts, where the first cohort has 2 phenotypes and
 the second cohort has 1 phenotype.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -166,8 +159,8 @@ the second cohort has 1 phenotype.</p>
 <span><span class="co"># More advanced parameters see pecotmr::load_multitask_regional_data()</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="loading-summary-statistics-from-multiple-corhorts-or-data-set">1.2. Loading summary statistics from multiple corhorts or data
-set<a class="anchor" aria-label="anchor" href="#loading-summary-statistics-from-multiple-corhorts-or-data-set"></a>
+<h3 id="loading-summary-statistics-from-multiple-cohorts-or-datasets">1.2. Loading summary statistics from multiple cohorts or
+datasets<a class="anchor" aria-label="anchor" href="#loading-summary-statistics-from-multiple-cohorts-or-datasets"></a>
 </h3>
 <ul>
 <li>
@@ -216,8 +209,8 @@ frame with columns “chrom” and “pos” for specific coordinates
 extraction.</li>
 </ul>
 <p><strong>Illustrated example</strong></p>
-<p>The following example demonstrates how to set up an input with 2
-summary and one LD reference.</p>
+<p>The following example demonstrates how to set up input data with 2
+summary statistics and one LD reference.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Example of loading summary statistics</span></span>
 <span><span class="va">sumstat_path_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sumstat1.tsv.gz"</span>, <span class="st">"sumstat2.tsv.gz"</span><span class="op">)</span></span>
@@ -235,8 +228,8 @@ summary and one LD reference.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="perform-colocboost-using-colocboost_analysis_pipeline-function">Perform ColocBoost using <code>colocboost_analysis_pipeline</code>
-function<a class="anchor" aria-label="anchor" href="#perform-colocboost-using-colocboost_analysis_pipeline-function"></a>
+<h2 id="perform-colocboost-using-colocboost_analysis_pipeline-function">2. Perform ColocBoost using
+<code>colocboost_analysis_pipeline</code> function<a class="anchor" aria-label="anchor" href="#perform-colocboost-using-colocboost_analysis_pipeline-function"></a>
 </h2>
 <p>In this section, we perform the colocalization analysis using the
 <code>colocboost_analysis_pipeline</code> function. Below are the input
@@ -244,12 +237,10 @@ parameters for this function:</p>
 <ul>
 <li>
 <strong><code>region_data</code></strong>: The output of the
-<code>load_multitask_regional_data</code> function, which contains
-harmonized summary statistics and LD matrices for the region of
-interest.</li>
+<code>load_multitask_regional_data</code> function.</li>
 <li>
-<strong><code>focal_trait</code></strong>: Name of trait if
-performing disease prioritized ColocBoost.</li>
+<strong><code>focal_trait</code></strong>: Name of the trait if
+performing disease-prioritized ColocBoost.</li>
 <li>
 <strong><code>event_filters</code></strong>: A list of patterns for
 filtering events based on context names. Example: for sQTL,
@@ -279,6 +270,9 @@ imputation for outliers identified in the analysis (default: TRUE).</li>
 options including rcond, R2_threshold, and minimum_ld (default:
 list(rcond = 0.01, R2_threshold = 0.6, minimum_ld = 5)).</li>
 </ul>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># region_data &lt;- load_multitask_regional_data(...)</span></span>
+<span><span class="co"># res &lt;- colocboost_analysis_pipeline(region_data)</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
