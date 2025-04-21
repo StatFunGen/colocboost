@@ -52,7 +52,7 @@
       <h1>Installation</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/vignettes/installation.Rmd" class="external-link"><code>vignettes/installation.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/install_fix/vignettes/installation.Rmd" class="external-link"><code>vignettes/installation.Rmd</code></a></small>
       <div class="d-none name"><code>installation.Rmd</code></div>
     </div>
 
@@ -82,16 +82,16 @@
 conda-compatible package manager (recommended)</p>
 <p>Global pixi installation is the easiest way to use the conda
 package</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">pixi</span> global install r-base <span class="co"># Install r-base as a global package if not already installed</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="ex">pixi</span> global install <span class="at">--environment</span> r-base r-colocboost <span class="co"># Inject r-colocboost into r-base global environment</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">pixi</span> global install <span class="at">-c</span> dnachun <span class="at">-c</span> conda-forge r-base <span class="co"># Install r-base as a global package if not already installed</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="ex">pixi</span> global install <span class="at">-c</span> dnachun <span class="at">-c</span> conda-forge <span class="at">--environment</span> r-base r-colocboost <span class="co"># Inject r-colocboost into r-base global environment</span></span></code></pre></div>
 <p>The package can also be added to a local pixi environment</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">pixi</span> workspace channel add dnachun <span class="co"># Add the dnachun channel to the workspace</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="ex">pixi</span> add r-colocboost <span class="co"># Add r-colocboost as a dependency to the environment</span></span></code></pre></div>
 <p>Micromamba is recommended instead of conda or mamba for traditional
 conda environments</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">micromamba</span> install <span class="at">-c</span> dnachun r-colocboost</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="ex">mamba</span> install <span class="at">-c</span> dnachun r-colocboost</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="ex">conda</span> install <span class="at">-c</span> dnachun r-colocboost</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">micromamba</span> install <span class="at">-c</span> dnachun <span class="at">-c</span> conda-forge r-colocboost</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="ex">mamba</span> install <span class="at">-c</span> dnachun <span class="at">-c</span> conda-forge r-colocboost</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="ex">conda</span> install <span class="at">-c</span> dnachun <span class="at">-c</span> conda-forge r-colocboost</span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
