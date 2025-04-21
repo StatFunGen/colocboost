@@ -125,8 +125,11 @@ variants.</p>
 <code>z</code> or (<code>beta</code>, <code>sebeta</code>): either
 z-score or (effect size and standard error)</li>
 <li>
-<code>n</code>: sample size for the summary statistics, it is highly
-recommended to provide.</li>
+<code>n</code>: sample size for the summary statistics.
+<strong>Higly recommended</strong>: Provding the sample size, or even a
+rough estimate of <code>n</code>, is highly recommended. Without
+<code>n</code>, the implicit assumption is <code>n</code> is large (Inf)
+and the effect sizes are small (close to zero).</li>
 <li>
 <code>variant</code>: required if <code>sumstat</code> for different
 outcomes do not have the same number of variables (multiple

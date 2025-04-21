@@ -130,14 +130,11 @@ algorithm takes longer to converge.</p>
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>sumstat <span class="op">=</span> <span class="va">sumstat</span>, LD <span class="op">=</span> <span class="va">LD</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 5 stop since rtr &lt; 0 or max(correlation) &gt; 1 after 266 iterations! Results for this locus are not stable, please check if mismatch between sumstat and LD! See details in tutorial website.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 266 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 292 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 3 stop since rtr &lt; 0 or max(correlation) &gt; 1 after 649 iterations! Results for this locus are not stable, please check if mismatch between sumstat and LD! See details in tutorial website.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 649 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 672 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 stop since rtr &lt; 0 or max(correlation) &gt; 1 after 860 iterations! Results for this locus are not stable, please check if mismatch between sumstat and LD! See details in tutorial website.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 860 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 200 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 226 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 405 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 428 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 606 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span><span class="co">#&gt; Warning in get_cos_profile(cs_beta, outcome_idx, X = cb_data$data[[X_dict]]$X,</span></span>
 <span><span class="co">#&gt; : Warning message: potential sumstat &amp; LD mismatch may happens for outcome 1 .</span></span>
