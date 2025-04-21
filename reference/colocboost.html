@@ -67,7 +67,7 @@ ColocBoost can be generally used in multi-task variable selection regression pro
 <span>  effect_est <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  effect_se <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  effect_n <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  M <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  M <span class="op">=</span> <span class="fl">500</span>,</span>
 <span>  stop_thresh <span class="op">=</span> <span class="fl">1e-06</span>,</span>
 <span>  tau <span class="op">=</span> <span class="fl">0.01</span>,</span>
 <span>  learning_rate_init <span class="op">=</span> <span class="fl">0.01</span>,</span>
@@ -188,7 +188,7 @@ The innovation: do not provide the same matrix in <code>LD</code> to reduce the 
 
 
 <dt id="arg-m">M<a class="anchor" aria-label="anchor" href="#arg-m"></a></dt>
-<dd><p>The maximum number of gradient boosting rounds. If the number of outcomes are large, it will be automatically increased to a larger number.</p></dd>
+<dd><p>The maximum number of gradient boosting rounds for each outcome (default is 500).</p></dd>
 
 
 <dt id="arg-stop-thresh">stop_thresh<a class="anchor" aria-label="anchor" href="#arg-stop-thresh"></a></dt>
