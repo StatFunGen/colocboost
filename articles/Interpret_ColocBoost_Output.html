@@ -52,7 +52,7 @@
       <h1>Interpret ColocBoost Output</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/install_fix/vignettes/Interpret_ColocBoost_Output.Rmd" class="external-link"><code>vignettes/Interpret_ColocBoost_Output.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/vignettes/Interpret_ColocBoost_Output.Rmd" class="external-link"><code>vignettes/Interpret_ColocBoost_Output.Rmd</code></a></small>
       <div class="d-none name"><code>Interpret_ColocBoost_Output.Rmd</code></div>
     </div>
 
@@ -285,6 +285,11 @@ analyzed data, including sample size and data type.</li>
 information for colocalization events identified by
 <code>colocboost</code>. This section will provide a detailed
 explanation of the components in <code>cos_details</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "cos"                 "cos_outcomes"        "cos_vcp"            </span></span>
+<span><span class="co">#&gt; [4] "cos_outcomes_npc"    "cos_npc"             "cos_min_npc_outcome"</span></span>
+<span><span class="co">#&gt; [7] "cos_purity"          "cos_top_variables"   "cos_weights"</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="colocalized-variants-for-each-cos-cos">3.3.1. Colocalized variants for each CoS
 (<strong><code>cos</code></strong>)<a class="anchor" aria-label="anchor" href="#colocalized-variants-for-each-cos-cos"></a>
@@ -305,7 +310,7 @@ variables with unique identifier for each CoS.</li>
 <li>Note that variants are ordered by their VCP in descending
 order.</li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span></span>
 <span><span class="co">#&gt; $cos_index</span></span>
 <span><span class="co">#&gt; $cos_index$`cos1:y1_y2_y3_y4`</span></span>
@@ -340,7 +345,7 @@ traits with unique identifier for each CoS.</li>
 </ul>
 </li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos_outcomes</span></span>
 <span><span class="co">#&gt; $outcome_index</span></span>
 <span><span class="co">#&gt; $outcome_index$`cos1:y1_y2_y3_y4`</span></span>
@@ -368,7 +373,7 @@ strength.</li>
 <li>These two metrics could be used to filter the colocalization events
 by relative strength of evidence, see details in Section 2.</li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos_npc</span></span>
 <span><span class="co">#&gt; cos1:y1_y2_y3_y4    cos2:y2_y3_y5 </span></span>
 <span><span class="co">#&gt;        0.9997211        0.9990328</span></span>
@@ -409,7 +414,7 @@ CoS.</li>
 </ul>
 </li>
 </ul>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos_purity</span></span>
 <span><span class="co">#&gt; $min_abs_cor</span></span>
 <span><span class="co">#&gt;                  cos1:y1_y2_y3_y4 cos2:y2_y3_y5</span></span>
@@ -433,7 +438,7 @@ VCP.</li>
 <li>Note that there may exist multiple variants in perfect LD with the
 same highest VCP.</li>
 </ul>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos_top_variables</span></span>
 <span><span class="co">#&gt;                  top_index top_variables</span></span>
 <span><span class="co">#&gt; cos1:y1_y2_y3_y4       636        rs_636</span></span>
@@ -458,13 +463,19 @@ each CoS.</li>
 <strong><code>model_coveraged</code></strong>: if the model is
 converged.</li>
 <li>
+<strong><code>outcome_model_coveraged</code></strong>: if the
+trait-specific model is converged.</li>
+<li>
 <strong><code>n_updates</code></strong>: number of boosting
 rounds</li>
+<li>
+<strong><code>outcome_n_updates</code></strong>: number of boosting
+rounds for each trait.</li>
 <li>
 <strong><code>jk_update</code></strong>: indices of the variants
 being updated in the model at each boosting round.</li>
 </ul>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Pick arbitrary SEC updates, see entire update in advance</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">model_info</span><span class="op">$</span><span class="va">jk_star</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span><span class="op">:</span><span class="fl">10</span>,<span class="fl">36</span><span class="op">:</span><span class="fl">38</span><span class="op">)</span>, <span class="op">]</span></span>
 <span><span class="co">#&gt;             Y1   Y2   Y3  Y4   Y5</span></span>
@@ -485,7 +496,7 @@ log-likelihood changes over boosting rounds.</li>
 <strong><code>outcome_profile_loglik</code></strong>: trait-specific
 profile log-likelihood changes over boosting rounds.</li>
 </ul>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Plotting joint profile log-likelihood (blue) and trait-specific profile log-likelihood (red).</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">model_info</span><span class="op">$</span><span class="va">profile_loglik</span>, type<span class="op">=</span><span class="st">"p"</span>, col<span class="op">=</span><span class="st">"#3366CC"</span>, lwd<span class="op">=</span><span class="fl">2</span>, xlab<span class="op">=</span><span class="st">""</span>, ylab<span class="op">=</span><span class="st">"Joint Profile"</span><span class="op">)</span></span>
@@ -501,14 +512,14 @@ proximity smoothed objective for each trait.</li>
 <strong><code>outcome_coupled_best_update_obj</code></strong>:
 objective at the (coupled) best update variant for each outcome.</li>
 </ul>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Plotting trait-specific proximity objective</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">{</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">model_info</span><span class="op">$</span><span class="va">outcome_proximity_obj</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"p"</span>, col<span class="op">=</span><span class="st">"#3366CC"</span>, lwd<span class="op">=</span><span class="fl">2</span>, xlab<span class="op">=</span><span class="st">""</span>, ylab<span class="op">=</span><span class="st">"Trait-specific Objective"</span>, main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Trait "</span>, <span class="va">i</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p><img src="Interpret_ColocBoost_Output_files/figure-html/objective-proximity-1.png" width="700"></p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Plotting trait-specific objective at the best update variant</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">{</span> </span>
@@ -523,7 +534,7 @@ objective at the (coupled) best update variant for each outcome.</li>
 <p>There is <code>ucos_details</code> in ColocBoost output when setting
 <code>output_level = 2</code>, including the trait-specific
 (uncolocalized) information from the single-effect learner (SEL).</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create a mixed dataset</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Heterogeneous_Effect</span><span class="op">)</span></span>
@@ -538,7 +549,11 @@ objective at the (coupled) best update variant for each outcome.</li>
 <span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 79 iterations!</span></span>
 <span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 84 iterations!</span></span>
 <span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 87 iterations!</span></span>
-<span><span class="co">#&gt; Performing inference on colocalization events.</span></span></code></pre></div>
+<span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">ucos_details</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "ucos"                "ucos_outcomes"       "ucos_weight"        </span></span>
+<span><span class="co">#&gt; [4] "ucos_top_variables"  "ucos_purity"         "cos_ucos_purity"    </span></span>
+<span><span class="co">#&gt; [7] "ucos_outcomes_delta"</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="trait-specific-uncolocalized-confidence-sets-ucos">3.5.1. Trait-specific (uncolocalized) confidence sets
 (<strong><code>ucos</code></strong>)<a class="anchor" aria-label="anchor" href="#trait-specific-uncolocalized-confidence-sets-ucos"></a>
@@ -557,7 +572,7 @@ trait-specific (uncolocalized) variants.</li>
 </ul>
 </li>
 </ul>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">ucos_details</span><span class="op">$</span><span class="va">ucos</span></span>
 <span><span class="co">#&gt; $ucos_index</span></span>
 <span><span class="co">#&gt; $ucos_index$`ucos1:y4`</span></span>
@@ -595,7 +610,7 @@ trait-specific (uncolocalized) outcomes.</li>
 </ul>
 </li>
 </ul>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">ucos_details</span><span class="op">$</span><span class="va">ucos_outcomes</span></span>
 <span><span class="co">#&gt; $outcome_index</span></span>
 <span><span class="co">#&gt; $outcome_index$`ucos1:y4`</span></span>
@@ -639,7 +654,7 @@ across each pair of CoS and uCoS.</li>
 </ul>
 </li>
 </ul>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">ucos_details</span><span class="op">$</span><span class="va">cos_ucos_purity</span></span>
 <span><span class="co">#&gt; $min_abs_cor</span></span>
 <span><span class="co">#&gt;                     ucos1:y4     ucos2:y4</span></span>
@@ -699,7 +714,7 @@ providing additional insights into the data.</p>
 </h3>
 <p>There is <code>diagnostic_details</code> in ColocBoost output when
 setting <code>output_level = 3</code>:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Loading the dataset</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">)</span></span>
 <span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span></span>
@@ -722,7 +737,7 @@ residual after gradient boosting, et al.</li>
 <strong><code>weights_paths</code></strong>: individual
 trait-specific weights for each iteration.</li>
 </ul>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">diagnostic_details</span><span class="op">$</span><span class="va">cb_model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "ind_outcome_1" "ind_outcome_2" "ind_outcome_3" "ind_outcome_4"</span></span>
 <span><span class="co">#&gt; [5] "ind_outcome_5"</span></span>
@@ -742,7 +757,7 @@ trait-specific weights for each iteration.</li>
 <strong><code>cb_model_para</code></strong>: parameters used in
 fitting ColocBoost model.</li>
 </ul>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">diagnostic_details</span><span class="op">$</span><span class="va">cb_model_para</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "L"                     "P"                     "N"                    </span></span>
 <span><span class="co">#&gt;  [4] "tau"                   "func_simplex"          "lambda"               </span></span>
