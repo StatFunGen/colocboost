@@ -347,7 +347,8 @@ to merge colocalized sets, which may resulting in a huge set.</p></dd>
 
 
 <dt id="arg-output-level">output_level<a class="anchor" aria-label="anchor" href="#arg-output-level"></a></dt>
-<dd><p>When <code>output_level = 2</code>, return the ucos details for the single specific effects.
+<dd><p>When <code>output_level = 1</code>, return basic cos details for colocalization results
+When <code>output_level = 2</code>, return the ucos details for the single specific effects.
 When <code>output_level = 3</code>, return the entire Colocboost model to diagnostic results (more space).</p></dd>
 
 </dl></div>
@@ -368,6 +369,12 @@ When <code>output_level = 3</code>, return the entire Colocboost model to diagno
 
 <dt>model_info</dt>
 <dd><p>A object with detailed information for colocboost model</p></dd>
+
+<dt>ucos_details</dt>
+<dd><p>A object with all information for trait-specific effects when <code>output_level = 2</code>.</p></dd>
+
+<dt>diagnositci_details</dt>
+<dd><p>A object with diagnostic details for ColocBoost model when <code>output_level = 3</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

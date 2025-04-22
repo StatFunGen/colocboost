@@ -45,7 +45,14 @@ or for summarizing results from single-trait FineBoost analyses.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_ucos_summary</span><span class="op">(</span><span class="va">cb_output</span>, outcome_names <span class="op">=</span> <span class="cn">NULL</span>, region_name <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_ucos_summary</span><span class="op">(</span></span>
+<span>  <span class="va">cb_output</span>,</span>
+<span>  outcome_names <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  region_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ambiguous_ucos <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  min_abs_corr_between_ucos <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  median_abs_corr_between_ucos <span class="op">=</span> <span class="fl">0.8</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -68,49 +75,54 @@ or for summarizing results from single-trait FineBoost analyses.</p>
 <dt id="arg-region-name">region_name<a class="anchor" aria-label="anchor" href="#arg-region-name"></a></dt>
 <dd><p>Optional character string. When provided, adds a column with this gene name to the output table for easier filtering in downstream analyses.</p></dd>
 
+
+<dt id="arg-ambiguous-ucos">ambiguous_ucos<a class="anchor" aria-label="anchor" href="#arg-ambiguous-ucos"></a></dt>
+<dd><p>Logical indicating whether to include ambiguous colocalization events. The default is FALSE.</p></dd>
+
+
+<dt id="arg-min-abs-corr-between-ucos">min_abs_corr_between_ucos<a class="anchor" aria-label="anchor" href="#arg-min-abs-corr-between-ucos"></a></dt>
+<dd><p>Minimum absolute correlation for variants across two trait-specific (uncolocalized) effects to be considered colocalized. The default is 0.5.</p></dd>
+
+
+<dt id="arg-median-abs-corr-between-ucos">median_abs_corr_between_ucos<a class="anchor" aria-label="anchor" href="#arg-median-abs-corr-between-ucos"></a></dt>
+<dd><p>Median absolute correlation for variants across two trait-specific (uncolocalized) effects to be considered colocalized. The default is 0.8.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A summary table for trait-specific, uncolocalized associations with the following columns:</p>
-<dl><dt>outcomes</dt>
-<dd><p>Outcome being analyzed</p></dd>
-
-<dt>ucos_id</dt>
-<dd><p>Unique identifier for trait-specific confidence sets</p></dd>
-
-<dt>purity</dt>
-<dd><p>Minimum absolute correlation of variables within trait-specific confidence sets</p></dd>
-
-<dt>top_variable</dt>
-<dd><p>The variable with highest variant-level probability of association (VPA)</p></dd>
-
-<dt>top_variable_vpa</dt>
-<dd><p>Variant-level probability of association (VPA) for the top variable</p></dd>
-
-<dt>ucos_npc</dt>
-<dd><p>Normalized probability of causal association for the trait-specific confidence set</p></dd>
-
-<dt>n_variables</dt>
-<dd><p>Number of variables in trait-specific confidence set</p></dd>
-
-<dt>ucos_index</dt>
-<dd><p>Indices of variables in the trait-specific confidence set</p></dd>
-
-<dt>ucos_variables</dt>
-<dd><p>List of variables in the trait-specific confidence set</p></dd>
-
-<dt>ucos_variables_vpa</dt>
-<dd><p>Variant-level probability of association (VPA) for all variables in the confidence set</p></dd>
-
-<dt>region_name</dt>
-<dd><p>Region name if provided through the region_name parameter</p></dd>
-
-</dl></div>
+    <p>A list containing:</p><ul><li><p><code>ucos_summary</code>: A summary table for trait-specific, uncolocalized associations with the following columns:</p><ul><li><p><code>outcomes</code>: Outcome being analyzed</p></li>
+<li><p><code>ucos_id</code>: Unique identifier for trait-specific confidence sets</p></li>
+<li><p><code>purity</code>: Minimum absolute correlation of variables within trait-specific confidence sets</p></li>
+<li><p><code>top_variable</code>: The variable with highest variant-level probability of association (VPA)</p></li>
+<li><p><code>top_variable_vpa</code>: Variant-level probability of association (VPA) for the top variable</p></li>
+<li><p><code>ucos_npc</code>: Normalized probability of causal association for the trait-specific confidence set</p></li>
+<li><p><code>n_variables</code>: Number of variables in trait-specific confidence set</p></li>
+<li><p><code>ucos_index</code>: Indices of variables in the trait-specific confidence set</p></li>
+<li><p><code>ucos_variables</code>: List of variables in the trait-specific confidence set</p></li>
+<li><p><code>ucos_variables_vpa</code>: Variant-level probability of association (VPA) for all variables in the confidence set</p></li>
+<li><p><code>region_name</code>: Region name if provided through the region_name parameter</p></li>
+</ul></li>
+<li><p><code>ambiguous_ucos_summary</code>: A summary table for ambiguous colocalization events with the following columns:</p><ul><li><p><code>outcomes</code>: Outcome in the ambiguous colocalization event</p></li>
+<li><p><code>ucos_id</code>: Unique identifiers for the ambiguous event</p></li>
+<li><p><code>min_between_purity</code>: Minimum absolute correlation between variables across trait-specific sets in the ambiguous event</p></li>
+<li><p><code>median_between_purity</code>: Median absolute correlation between variables across trait-specific sets in the ambiguous event</p></li>
+<li><p><code>overlap_idx</code>: Indices of variables that overlap between ambiguous trait-specific sets</p></li>
+<li><p><code>overlap_variables</code>: Names of variables that overlap between ambiguous trait-specific sets</p></li>
+<li><p><code>n_recalibrated_variables</code>: Number of variables in the recalibrated colocalization set from an ambiguous event</p></li>
+<li><p><code>recalibrated_index</code>: Indices of variables in the recalibrated colocalization set from an ambiguous event</p></li>
+<li><p><code>recalibrated_variables</code>: Names of variables in the recalibrated colocalization set from an ambiguous event</p></li>
+<li><p><code>recalibrated_variables_vcp</code>: Variant colocalization probabilities for recalibrated variables from an ambiguous event</p></li>
+<li><p><code>region_name</code>: Region name if provided through the region_name parameter</p></li>
+</ul></li>
+</ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Other colocboost_inference:
+    <div class="dont-index"><p>Other colocboost_utilities:
+<code><a href="get_cormat.html">get_cormat</a>()</code>,
+<code><a href="get_cos.html">get_cos</a>()</code>,
+<code><a href="get_cos_purity.html">get_cos_purity</a>()</code>,
 <code><a href="get_cos_summary.html">get_cos_summary</a>()</code>,
-<code><a href="get_robust_colocalization.html">get_robust_colocalization</a>()</code></p></div>
+<code><a href="get_hierarchical_clusters.html">get_hierarchical_clusters</a>()</code></p></div>
     </div>
 
     <div class="section level2">
