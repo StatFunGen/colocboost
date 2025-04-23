@@ -61,9 +61,9 @@
 <p>This vignette demonstrates an example of ambiguous colocalization
 from trait-specific effects using the <code>colocboost</code>.
 Specifically, we will use the <code>Ambiguous_Colocalization</code>,
-which is an example result from GTEx relsease v8 and UK Biobank summary
-statistics (see more details of data license in Acknowledgement
-section).</p>
+which is output from <code>colocboost</code> analyzing GTEx relsease v8
+and UK Biobank summary statistics (see more details of the original data
+source in Acknowledgement section).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/StatFunGen/colocboost" class="external-link">colocboost</a></span><span class="op">)</span></span>
 <span><span class="co"># Run colocboost with diagnostic details</span></span>
@@ -79,8 +79,10 @@ trait-specific effects between eQTL (expression quantitative trait loci)
 and GWAS (genome-wide association study) signals. Ambiguous
 colocalization occurs when there appears to be shared causal variants
 between traits, but the evidence is complicated by the presence of
-trait-specific effects. This dataset is structured as a list with two
-main components:</p>
+trait-specific effects. This ambiguity typically arises when some
+trait-specific boosting learners are updating very similar, yet not the
+same sets of variants as these traits did not share coupled updates.</p>
+<p>This dataset is structured as a list with two main components:</p>
 <ol style="list-style-type: decimal">
 <li><p><code>ColocBoost_Results</code>: Contains the output from running
 the ColocBoost algorithm.</p></li>
@@ -161,7 +163,8 @@ independent, but they are not fully overlapping.</p>
 <p><img src="Ambiguous_Colocalization_files/figure-html/plot-ambiguous-1.png" width="700"></p>
 </div>
 <div class="section level2">
-<h2 id="fine-mapping-results-from-susie">2. Fine-mapping results from SuSiE<a class="anchor" aria-label="anchor" href="#fine-mapping-results-from-susie"></a>
+<h2 id="fine-mapping-results-from-susie-and-colocalization-with-coloc">2. Fine-mapping results from SuSiE and colocalization with
+COLOC<a class="anchor" aria-label="anchor" href="#fine-mapping-results-from-susie-and-colocalization-with-coloc"></a>
 </h2>
 <p>In this example, we also have fine-mapping results from SuSiE for
 both eQTL and GWAS data separately.</p>
@@ -319,12 +322,12 @@ trait-specific effects.</li>
 <div class="section level2">
 <h2 id="take-home-message">4. Take home message<a class="anchor" aria-label="anchor" href="#take-home-message"></a>
 </h2>
-<p>In this vignette, we have demonstrated how the post-processing of
-ColocBoost results to handle ambiguous colocalization scenarios where
-trait-specific effects share overlapping variants with high
-correlation.</p>
+<p>In this vignette, we have demonstrated how post-processing of
+ColocBoost results may be use to reconciliate ambiguous colocalization
+scenarios where trait-specific effects share highly correlated and
+overlapping variants.</p>
 <ul>
-<li>Through empirical studies, we have found that the minimum absolute
+<li>Through simulation studies, we have found that the minimum absolute
 correlation cutoff of 0.5 and median absolute correlation cutoff of 0.8
 produce reasonable results when merging two uCoS. We recommend users not
 to lower these thresholds further without strong justification.</li>
@@ -332,14 +335,14 @@ to lower these thresholds further without strong justification.</li>
 interpreting ambiguous results, users can still choose between
 recalibrated weights and trait-specific weights based on their research
 context.</li>
-<li>This ambiguity typically arises when some trait-specific boosting
-learners are updating very similar sets of variants, leading to
-substantial correlation between what initially appear to be separate
-signals.</li>
+<li>We suggest treating this scenario with caution and distinct such
+merged CoS from typical colocalization events as a result of coupled
+updates between traits, if researcher decides to investigate these
+ambigous colocalization events. As such, the
+<code>colocboost_plot</code> function will not consider it as
+colocalized but still showing them as uncolocalized events, with
+overlapping variants color labelled.</li>
 </ul>
-<p>By properly identifying and quantifying this ambiguity, users can
-gain a more nuanced understanding of the underlying genetic architecture
-of the traits they are studying.</p>
 </div>
 <div class="section level2">
 <h2 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
