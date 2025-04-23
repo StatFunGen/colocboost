@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +29,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Get ambiguous colocalization events from trait-specific (uncolocalized) effects.</h1>
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/add_susie/R/colocboost_output.R" class="external-link"><code>R/colocboost_output.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/R/colocboost_output.R" class="external-link"><code>R/colocboost_output.R</code></a></small>
       <div class="d-none name"><code>get_ambiguous_colocalization.Rd</code></div>
     </div>
 
@@ -75,7 +75,7 @@
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A <code>"colocboost"</code> object of colocboost output with additional elements:</p>
-<dl><dt>ambiguous_ucos</dt>
+<dl><dt>ambiguous_cos</dt>
 <dd><p>If exists, a list of ambiguous trait-specific (uncolocalized) effects.</p></dd>
 
 </dl></div>
@@ -93,7 +93,7 @@
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">get_ambiguous_colocalization</span><span class="op">(</span><span class="va">test_colocboost_results</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> There exists the ambiguous colocalization events from trait-specific effects. Extracting!</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> There are 1 ambiguous trait-specific effects.</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">ambigous_ucos</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">ambiguous_cos</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ucos1:y1;ucos2:y2"</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

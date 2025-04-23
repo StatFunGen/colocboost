@@ -9,7 +9,7 @@ with or without the outcomes of interest."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@ with or without the outcomes of interest."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Get summary tables from a ColocBoost output.</h1>
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/add_susie/R/colocboost_output.R" class="external-link"><code>R/colocboost_output.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/R/colocboost_output.R" class="external-link"><code>R/colocboost_output.R</code></a></small>
       <div class="d-none name"><code>get_colocboost_summary.Rd</code></div>
     </div>
 
@@ -111,12 +111,13 @@ with or without the outcomes of interest.</p>
 </ul></li>
 <li><p>When <code>summary_level = 3</code>:</p><ul><li><p><code>cos_summary</code>: As described above</p></li>
 <li><p><code>ucos_summary</code>: A summary table for trait-specific (uncolocalized) effects</p></li>
-<li><p><code>ambiguous_ucos_summary</code>: A summary table for ambiguous colocalization events from trait-specific effects</p></li>
+<li><p><code>ambiguous_cos_summary</code>: A summary table for ambiguous colocalization events from trait-specific effects</p></li>
 </ul></li>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>When <code>summary_level = 2</code> or <code>summary_level = 3</code>, additional details for trait-specific effects and ambiguous
+    <p>When <code>summary_level = 1</code>, additional details and examples are introduced in <code><a href="get_cos_summary.html">get_cos_summary</a></code>.
+When <code>summary_level = 2</code> or <code>summary_level = 3</code>, additional details for trait-specific effects and ambiguous
 colocalization events are included. See <code><a href="get_ucos_summary.html">get_ucos_summary</a></code> for details on these tables.</p>
     </div>
     <div class="section level2">

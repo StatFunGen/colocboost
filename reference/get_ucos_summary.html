@@ -11,7 +11,7 @@ or for summarizing results from single-trait FineBoost analyses."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +33,7 @@ or for summarizing results from single-trait FineBoost analyses."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Get trait-specific summary table from a ColocBoost output.</h1>
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/add_susie/R/colocboost_output.R" class="external-link"><code>R/colocboost_output.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/R/colocboost_output.R" class="external-link"><code>R/colocboost_output.R</code></a></small>
       <div class="d-none name"><code>get_ucos_summary.Rd</code></div>
     </div>
 
@@ -49,7 +49,7 @@ or for summarizing results from single-trait FineBoost analyses.</p>
 <span>  <span class="va">cb_output</span>,</span>
 <span>  outcome_names <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  region_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  ambiguous_ucos <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  ambiguous_cos <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  min_abs_corr_between_ucos <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  median_abs_corr_between_ucos <span class="op">=</span> <span class="fl">0.8</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -76,7 +76,7 @@ or for summarizing results from single-trait FineBoost analyses.</p>
 <dd><p>Optional character string. When provided, adds a column with this gene name to the output table for easier filtering in downstream analyses.</p></dd>
 
 
-<dt id="arg-ambiguous-ucos">ambiguous_ucos<a class="anchor" aria-label="anchor" href="#arg-ambiguous-ucos"></a></dt>
+<dt id="arg-ambiguous-cos">ambiguous_cos<a class="anchor" aria-label="anchor" href="#arg-ambiguous-cos"></a></dt>
 <dd><p>Logical indicating whether to include ambiguous colocalization events. The default is FALSE.</p></dd>
 
 
@@ -102,7 +102,7 @@ or for summarizing results from single-trait FineBoost analyses.</p>
 <li><p><code>ucos_variables_vpa</code>: Variant-level probability of association (VPA) for all variables in the confidence set</p></li>
 <li><p><code>region_name</code>: Region name if provided through the region_name parameter</p></li>
 </ul></li>
-<li><p><code>ambiguous_ucos_summary</code>: A summary table for ambiguous colocalization events with the following columns:</p><ul><li><p><code>outcomes</code>: Outcome in the ambiguous colocalization event</p></li>
+<li><p><code>ambiguous_cos_summary</code>: A summary table for ambiguous colocalization events with the following columns:</p><ul><li><p><code>outcomes</code>: Outcome in the ambiguous colocalization event</p></li>
 <li><p><code>ucos_id</code>: Unique identifiers for the ambiguous event</p></li>
 <li><p><code>min_between_purity</code>: Minimum absolute correlation between variables across trait-specific sets in the ambiguous event</p></li>
 <li><p><code>median_between_purity</code>: Median absolute correlation between variables across trait-specific sets in the ambiguous event</p></li>
