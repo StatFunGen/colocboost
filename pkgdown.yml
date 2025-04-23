@@ -4,6 +4,7 @@ pkgdown_sha: ~
 articles:
   Ambiguous_Colocalization: Ambiguous_Colocalization.html
   announcements: announcements.html
+  ColocBoost_Update: ColocBoost_Update.html
   ColocBoost_Wrapper_Pipeline: ColocBoost_Wrapper_Pipeline.html
   Disease_Prioritized_Colocalization: Disease_Prioritized_Colocalization.html
   FineBoost_Special_Case: FineBoost_Special_Case.html
@@ -16,7 +17,7 @@ articles:
   Partial_Overlap_Variants: Partial_Overlap_Variants.html
   Summary_Statistics_Colocalization: Summary_Statistics_Colocalization.html
   Visualization_ColocBoost_Output: Visualization_ColocBoost_Output.html
-last_built: 2025-04-23T15:32Z
+last_built: 2025-04-23T17:09Z
 urls:
   reference: https://statfungen.github.io/colocboost/reference
   article: https://statfungen.github.io/colocboost/articles
