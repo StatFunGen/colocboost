@@ -61,7 +61,7 @@
 <p>This vignette demonstrates an example of ambiguous colocalization
 from trait-specific effects using the <code>colocboost</code>.
 Specifically, we will use the <code>Ambiguous_Colocalization</code>,
-which is output from <code>colocboost</code> analyzing GTEx relsease v8
+which is output from <code>colocboost</code> analyzing GTEx release v8
 and UK Biobank summary statistics (see more details of the original data
 source in Acknowledgement section).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -96,8 +96,8 @@ objects.</p></li>
 <div class="section level2">
 <h2 id="colocboost-results">2. ColocBoost results<a class="anchor" aria-label="anchor" href="#colocboost-results"></a>
 </h2>
-<p>In this example, there are two trait-specifc effects for the eQTL and
-GWAS signals, respectively. But two uCoS have overlapping variants,
+<p>In this example, there are two trait-specific effects for the eQTL
+and GWAS signals, respectively. But two uCoS have overlapping variants,
 which indicates that the two uCoS are not independent. ColocBoost
 identifies two uCoS:</p>
 <ul>
@@ -162,7 +162,8 @@ independent, but they are not fully overlapping.</p>
 <span>  show_cos_to_uncoloc <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in get_input_plot(cb_output, plot_cos_idx = plot_cos_idx, variant_coord</span></span>
-<span><span class="co">#&gt; = variant_coord, : Show all CoSs to uncolocalized outcomes.</span></span></code></pre></div>
+<span><span class="co">#&gt; = variant_coord, : No colocalized effects in this region!</span></span>
+<span><span class="co">#&gt; Show all CoSs to uncolocalized outcomes.</span></span></code></pre></div>
 <p><img src="Ambiguous_Colocalization_files/figure-html/plot-ambiguous-1.png" width="700"></p>
 </div>
 <div class="section level2">
@@ -198,7 +199,7 @@ sets.</li>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">intersect</a></span><span class="op">(</span><span class="va">susie_eQTL</span><span class="op">$</span><span class="va">sets</span><span class="op">$</span><span class="va">cs</span><span class="op">$</span><span class="va">L1</span>, <span class="va">susie_GWAS</span><span class="op">$</span><span class="va">sets</span><span class="op">$</span><span class="va">cs</span><span class="op">$</span><span class="va">L1</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] 2491 2509 2526 2534 2540 2568 2570 2577 2581 2610 2612 2677 2680 2681 2768</span></span>
 <span><span class="co">#&gt; [16] 2800 2829 2858 2860 2862 2869 2888 2894 2899</span></span></code></pre></div>
-<p>To visulize the fine-mapping results,</p>
+<p>To visualize the fine-mapping results,</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">susieR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/susieR/man/susie_plots.html" class="external-link">susie_plot</a></span><span class="op">(</span><span class="va">susie_eQTL</span>, y <span class="op">=</span> <span class="st">"PIP"</span>, pos <span class="op">=</span> <span class="fl">2000</span><span class="op">:</span><span class="va">n_variables</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Ambiguous_Colocalization_files/figure-html/plot-susie-1.png" width="700"></p>
@@ -235,7 +236,7 @@ determine which method is more precise.</p>
 <h2 id="get-the-ambiguous-colocalization-results-and-summary">3. Get the ambiguous colocalization results and summary<a class="anchor" aria-label="anchor" href="#get-the-ambiguous-colocalization-results-and-summary"></a>
 </h2>
 <p>ColocBoost provides a function to get the ambiguous colocalization
-results and summary from trait-specifc effects, by considering the
+results and summary from trait-specific effects, by considering the
 correlation of variants between the two uCoS.</p>
 <div class="section level3">
 <h3 id="get-the-ambiguous-colocalization-results">3.1. Get the ambiguous colocalization results<a class="anchor" aria-label="anchor" href="#get-the-ambiguous-colocalization-results"></a>
@@ -273,27 +274,28 @@ than <code>min_abs_corr_between_ucos</code> (default is 0.5).</li>
 colocalization, the following information is provided:</p>
 <ul>
 <li>
-<code>ambigous_cos</code>: Contains variants indices and names of
-the original trait-specific uCoS used to constuct this ambiguouse
+<code>ambiguous_cos</code>: Contains variants indices and names of
+the original trait-specific uCoS used to construct this ambiguouse
 colocalization.</li>
 <li>
-<code>ambigouse_cos_overlap</code>: Contains the overlapping
-variants information across the uCoS used to constuct this ambiguouse
+<code>ambiguous_cos_overlap</code>: Contains the overlapping
+variants information across the uCoS used to construct this ambiguouse
 colocalization.</li>
 <li>
-<code>ambigouse_cos_union</code>: Contains the union of variants
-information across the uCoS used to constuct this ambiguouse
+<code>ambiguous_cos_union</code>: Contains the union of variants
+information across the uCoS used to construct this ambiguouse
 colocalization.</li>
 <li>
-<code>ambigouse_cos_outcomes</code>: Contains the outcomes indicies
-and names for uCoS used to constuct this ambiguouse colocalization.</li>
-<li>
-<code>ambigous_cos_weight</code>: Contains the trait-specific
-weights of the uCoS used to constuct this ambiguouse
+<code>ambiguous_cos_outcomes</code>: Contains the outcomes indices
+and names for uCoS used to construct this ambiguouse
 colocalization.</li>
 <li>
-<code>ambigous_cos_puriry</code>: Contains the purity of across uCoS
-used to constuct this ambiguouse colocalization.</li>
+<code>ambiguous_cos_weight</code>: Contains the trait-specific
+weights of the uCoS used to construct this ambiguouse
+colocalization.</li>
+<li>
+<code>ambiguous_cos_puriry</code>: Contains the purity of across
+uCoS used to construct this ambiguouse colocalization.</li>
 <li>
 <code>recalibrated_cos_vcp</code>: Contains the recalibrated
 integrative weight to analogous to variant colocalization probability
@@ -340,8 +342,8 @@ results if exists.</li>
 <span><span class="co">#&gt;  [9] "recalibrated_variables"     "recalibrated_variables_vcp"</span></span></code></pre></div>
 <ul>
 <li>
-<code>recalibrated_*</code>: giving the recalibrated weigths and
-recalibrated 95% colocalization confidece sets (CoS) from the
+<code>recalibrated_*</code>: giving the recalibrated weights and
+recalibrated 95% colocalization confidence sets (CoS) from the
 trait-specific effects.</li>
 </ul>
 <p>See details of function usage in the <a href="https://statfungen.github.io/colocboost/reference/index.html">Functions</a>.</p>
@@ -364,7 +366,7 @@ these thresholds further without strong justification.</li>
 <li>We suggest treating this scenario with caution and distinct such
 merged CoS from typical colocalization events as a result of coupled
 updates between traits, if researcher decides to investigate these
-ambigous colocalization events.</li>
+ambiguous colocalization events.</li>
 <li>As such,
 <ul>
 <li>While we provide recalibrated weights as a suggested approach for
@@ -373,13 +375,13 @@ recalibrated weights and trait-specific weights based on their research
 context.</li>
 <li>The <code>colocboost_plot</code> function will not consider it as
 colocalized but still showing them as uncolocalized events, with
-overlapping variants color labelled.</li>
+overlapping variants color labeled.</li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section level2">
-<h2 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
+<h2 id="acknowledgement">Acknowledgement<a class="anchor" aria-label="anchor" href="#acknowledgement"></a>
 </h2>
 <ul>
 <li>The eQTL data used for the analyses described in this example
