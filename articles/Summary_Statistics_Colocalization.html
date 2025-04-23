@@ -358,10 +358,10 @@ sumstat to index of LD.</li>
 <span><span class="co">#&gt; [1] 2289 2293</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="hyprcoloc-compatible-format-effect-size-and-standard-error-matrices">3.4. Hyprcoloc compatible format: effect size and standard error
+<h3 id="hyprcoloc-compatible-format-effect-size-and-standard-error-matrices">3.4. HyPrColoc compatible format: effect size and standard error
 matrices<a class="anchor" aria-label="anchor" href="#hyprcoloc-compatible-format-effect-size-and-standard-error-matrices"></a>
 </h3>
-<p>ColocBoost also provides a flexibility to use Hyprcoloc compatible
+<p>ColocBoost also provides a flexibility to use HyPrColoc compatible
 format for summary statistics with and without LD matrix.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Loading the Dataset</span></span>
@@ -369,7 +369,7 @@ format for summary statistics with and without LD matrix.</p>
 <span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span></span>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">Y</span></span>
 <span></span>
-<span><span class="co"># Coverting to Hyprcoloc compatible format</span></span>
+<span><span class="co"># Coverting to HyPrColoc compatible format</span></span>
 <span><span class="va">effect_est</span> <span class="op">&lt;-</span> <span class="va">effect_se</span> <span class="op">&lt;-</span> <span class="va">effect_n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span></span>

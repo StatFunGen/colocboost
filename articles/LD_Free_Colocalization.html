@@ -199,7 +199,7 @@ is completely unavailable, ColocBoost provides an LD-free approach.</li>
 due to the strong assumption of a single causal variant per trait per
 region. Users should interpret the results with caution, especially in
 regions with complex LD structures or multiple causal variants.</p>
-<p>ColocBoost also provides a flexibility to use Hyprcoloc compatible
+<p>ColocBoost also provides a flexibility to use HyPrColoc compatible
 format for summary statistics without LD matrix.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Loading the Dataset</span></span>
@@ -207,7 +207,7 @@ format for summary statistics without LD matrix.</p>
 <span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span></span>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">Y</span></span>
 <span></span>
-<span><span class="co"># Coverting to Hyprcoloc compatible format</span></span>
+<span><span class="co"># Coverting to HyPrColoc compatible format</span></span>
 <span><span class="va">effect_est</span> <span class="op">&lt;-</span> <span class="va">effect_se</span> <span class="op">&lt;-</span> <span class="va">effect_n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span></span>
