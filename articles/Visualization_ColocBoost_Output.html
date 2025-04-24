@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,11 +63,11 @@ of ColocBoost results.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/StatFunGen/colocboost" class="external-link">colocboost</a></span><span class="op">)</span></span></code></pre></div>
 <p><strong>Causal variants (simulated)</strong></p>
-<p>The dataset features two causal variants with indices 644 and
-2289.</p>
+<p>The dataset features two causal variants with indices 194 and
+589.</p>
 <ul>
-<li>Causal variant 644 is associated with traits 1, 2, 3, and 4.</li>
-<li>Causal variant 2289 is associated with traits 2, 3, and 5.</li>
+<li>Causal variant 194 is associated with traits 1, 2, 3, and 4.</li>
+<li>Causal variant 589 is associated with traits 2, 3, and 5.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Loading the Dataset</span></span>
@@ -76,11 +76,11 @@ of ColocBoost results.</p>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span>, Y <span class="op">=</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">Y</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 34 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 43 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 46 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 67 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 68 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 40 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 59 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 61 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 91 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 94 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="default-plot-function">1. Default plot function<a class="anchor" aria-label="anchor" href="#default-plot-function"></a>
@@ -95,7 +95,7 @@ different colors indicating different colocalization events.</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization_ColocBoost_Output_files/figure-html/basic-plot-1.png" width="700"></p>
+<p><img src="Visualization_ColocBoost_Output_files/figure-html/basic-plot-1.png" width="583.333333333333"></p>
 <p><strong>Parameters to adjust plot</strong></p>
 <ul>
 <li>
@@ -148,8 +148,8 @@ by deepening the visualization of the colocboost results.</p>
 argument, which is a vector indicating the indices of the region to be
 zoomed in.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, grange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization_ColocBoost_Output_files/figure-html/zoomin-plot-1.png" width="700"></p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, grange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">400</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Visualization_ColocBoost_Output_files/figure-html/zoomin-plot-1.png" width="583.333333333333"></p>
 </div>
 <div class="section level3">
 <h3 id="plot-with-marked-top-variants">2.2. Plot with marked top variants<a class="anchor" aria-label="anchor" href="#plot-with-marked-top-variants"></a>
@@ -159,7 +159,7 @@ zoomed in.</p>
 top variants with highest VCP for each CoS.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, show_top_variables <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization_ColocBoost_Output_files/figure-html/top-plot-1.png" width="700"></p>
+<p><img src="Visualization_ColocBoost_Output_files/figure-html/top-plot-1.png" width="583.333333333333"></p>
 </div>
 <div class="section level3">
 <h3 id="plot-cos-variants-to-uncolocalized-traits-to-diagnostic-the-colocalization-">2.3. Plot CoS variants to uncolocalized traits to diagnostic the
@@ -183,7 +183,7 @@ traits.</li>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, show_cos_to_uncoloc <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Show all CoSs to uncolocalized outcomes.</span></span></code></pre></div>
-<p><img src="Visualization_ColocBoost_Output_files/figure-html/ucos-plot-1.png" width="700"></p>
+<p><img src="Visualization_ColocBoost_Output_files/figure-html/ucos-plot-1.png" width="583.333333333333"></p>
 </div>
 <div class="section level3">
 <h3 id="plot-with-an-added-vertical-line">2.4. Plot with an added vertical line<a class="anchor" aria-label="anchor" href="#plot-with-an-added-vertical-line"></a>
@@ -200,7 +200,7 @@ Following plot also shows the top variants.</p>
 <span>  add_vertical <span class="op">=</span> <span class="cn">TRUE</span>, </span>
 <span>  add_vertical_idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">$</span><span class="va">true_effect_variants</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization_ColocBoost_Output_files/figure-html/vertical-plot-1.png" width="700"></p>
+<p><img src="Visualization_ColocBoost_Output_files/figure-html/vertical-plot-1.png" width="583.333333333333"></p>
 </div>
 <div class="section level3">
 <h3 id="plot-with-trait-specific-sets-if-exists">2.5. Plot with trait-specific sets if exists<a class="anchor" aria-label="anchor" href="#plot-with-trait-specific-sets-if-exists"></a>
@@ -225,20 +225,20 @@ trait-specific (uncolocalized) information.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Heterogeneous_Effect</span><span class="op">)</span></span>
 <span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">Y</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
-<span><span class="va">X1</span> <span class="op">&lt;-</span> <span class="va">Heterogeneous_Effect</span><span class="op">$</span><span class="va">X</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">3000</span><span class="op">]</span></span>
+<span><span class="va">X1</span> <span class="op">&lt;-</span> <span class="va">Heterogeneous_Effect</span><span class="op">$</span><span class="va">X</span></span>
 <span><span class="va">Y1</span> <span class="op">&lt;-</span> <span class="va">Heterogeneous_Effect</span><span class="op">$</span><span class="va">Y</span><span class="op">[</span>,<span class="fl">1</span>,drop<span class="op">=</span><span class="cn">F</span><span class="op">]</span></span>
 <span></span>
 <span><span class="co"># Run colocboost</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">X</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">X1</span><span class="op">)</span><span class="op">)</span>, Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Y</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">Y1</span><span class="op">)</span><span class="op">)</span>, output_level <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 77 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 79 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 84 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 87 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 86 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 99 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 103 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 113 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, plot_ucos <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization_ColocBoost_Output_files/figure-html/trait-specific-1.png" width="700"></p>
+<p><img src="Visualization_ColocBoost_Output_files/figure-html/trait-specific-1.png" width="583.333333333333"></p>
 <p>In this example, there are two colocalized sets (<span style="color:blue">blue</span> and <span style="color:orange">orange</span>) and two trait-specific sets for
 trait 4 only (<span style="color:green">green</span> and <span style="color:purple">purple</span>). For comprehensive tutorials on
 result interpretation, please visit our tutorials portal at <a href="https://statfungen.github.io/colocboost/articles/Interpret_ColocBoost_Output.html">Interpret
@@ -275,19 +275,19 @@ at least on traits within CoS of focal traits.</li>
 <span>                  focal_outcome_idx <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Gradient boosting for focal outcome 4 converged after 18 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 32 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 44 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 45 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for focal outcome 4 converged after 25 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 45 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 66 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 77 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span></span>
 <span><span class="co"># Only plot CoS with focal trait</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, plot_focal_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization_ColocBoost_Output_files/figure-html/focal-colocalization-1.png" width="700"></p>
+<p><img src="Visualization_ColocBoost_Output_files/figure-html/focal-colocalization-1.png" width="583.333333333333"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Plot all CoS including at least one traits colocalized with focal trait</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, plot_focal_cos_outcome_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization_ColocBoost_Output_files/figure-html/focal-colocalization-2.png" width="700"></p>
+<p><img src="Visualization_ColocBoost_Output_files/figure-html/focal-colocalization-2.png" width="583.333333333333"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

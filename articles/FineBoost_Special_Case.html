@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,10 +82,10 @@ causal variants.</p>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 31 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 44 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<p><img src="FineBoost_Special_Case_files/figure-html/load-example-individual-1.png" width="700"></p>
+<p><img src="FineBoost_Special_Case_files/figure-html/load-example-individual-1.png" width="364.583333333333"></p>
 </div>
 <div class="section level2">
 <h2 id="fine-mapping-with-summary-statistics">2. Fine-mapping with summary statistics<a class="anchor" aria-label="anchor" href="#fine-mapping-with-summary-statistics"></a>
@@ -101,10 +101,10 @@ statistics along with a proper LD matrix.</p>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>sumstat <span class="op">=</span> <span class="va">sumstat</span>, LD <span class="op">=</span> <span class="va">LD</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 31 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 44 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<p><img src="FineBoost_Special_Case_files/figure-html/load-example-sumstat-1.png" width="700"></p>
+<p><img src="FineBoost_Special_Case_files/figure-html/load-example-sumstat-1.png" width="364.583333333333"></p>
 </div>
 <div class="section level2">
 <h2 id="ld-free-fine-mapping-with-one-causal-variant-assumption">3. LD-free fine-mapping with one causal variant assumption<a class="anchor" aria-label="anchor" href="#ld-free-fine-mapping-with-one-causal-variant-assumption"></a>
@@ -125,7 +125,7 @@ that only one variant within a region is causal.</p>
 <span><span class="co">#&gt; Running ColocBoost with assumption of one causal per outcome per region!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<p><img src="FineBoost_Special_Case_files/figure-html/ld-free-1.png" width="700"></p>
+<p><img src="FineBoost_Special_Case_files/figure-html/ld-free-1.png" width="364.583333333333"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

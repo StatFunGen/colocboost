@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,11 +84,11 @@ not included in the <code>Sumstat_5traits</code> dataset.</li>
 <div class="section level4">
 <h4 id="causal-variant-structure">Causal variant structure<a class="anchor" aria-label="anchor" href="#causal-variant-structure"></a>
 </h4>
-<p>The dataset features two causal variants with indices 644 and
-2289.</p>
+<p>The dataset features two causal variants with indices 194 and
+589.</p>
 <ul>
-<li>Causal variant 644 is associated with traits 1, 2, 3, and 4.</li>
-<li>Causal variant 2289 is associated with traits 2, 3, and 5 (summary
+<li>Causal variant 194 is associated with traits 1, 2, 3, and 4.</li>
+<li>Causal variant 589 is associated with traits 2, 3, and 5 (summary
 level data).</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -105,6 +105,9 @@ level data).</li>
 following tutorials <a href="https://statfungen.github.io/colocboost/articles/Individual_Level_Colocalization.html">Individual
 Level Data Colocalization</a> and <a href="https://statfungen.github.io/colocboost/articles/Summary_Level_Colocalization.html">Summary
 Level Data Colocalization</a>.</p>
+<p>Due to the file size limitation of CRAN release, this is a subset of
+simulated data. See full dataset in <a href="https://github.com/StatFunGen/colocboost-paper" class="external-link">colocboost paper
+repo</a>.</p>
 </div>
 </div>
 <div class="section level2">
@@ -147,24 +150,20 @@ summary dataset:</p>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span>, sumstat <span class="op">=</span> <span class="va">sumstat</span>, LD <span class="op">=</span> <span class="va">LD</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 34 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 43 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 46 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 67 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 68 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 40 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 59 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 61 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 91 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 94 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span></span>
 <span><span class="co"># Identified CoS</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
 <span><span class="co">#&gt; $`cos1:y1_y2_y3_y4`</span></span>
-<span><span class="co">#&gt; [1] 636 644 618 655</span></span>
+<span><span class="co">#&gt; [1] 186 194 168 205</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`cos2:y2_y3_y5`</span></span>
-<span><span class="co">#&gt; [1] 2289 2293</span></span>
-<span></span>
-<span><span class="co"># Plotting the results</span></span>
-<span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Disease_Prioritized_Colocalization_files/figure-html/mixd-basic-1.png" width="700"></p>
+<span><span class="co">#&gt; [1] 589 593</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="results-interpretation">Results Interpretation<a class="anchor" aria-label="anchor" href="#results-interpretation"></a>
 </h4>
@@ -203,16 +202,16 @@ traits) and (1 summary statistics).</li>
 <span>                  focal_outcome_idx <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Gradient boosting for focal outcome 5 converged after 20 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 44 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 58 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 63 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 66 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for focal outcome 5 converged after 29 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 60 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 82 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 97 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 99 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span></span>
 <span><span class="co"># Plotting the focal only results colocalization results</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, plot_focal_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Disease_Prioritized_Colocalization_files/figure-html/disease-basic-1.png" width="700"></p>
+<p><img src="Disease_Prioritized_Colocalization_files/figure-html/disease-basic-1.png" width="583.333333333333"></p>
 <p>Unlike the other existing methods, the disease-prioritized mode of
 ColocBoost only used a soft prioritization strategy. Therefore, it not
 only identify the colocalization of the focal trait, but also the
@@ -223,14 +222,14 @@ use the following code:</p>
 <code class="sourceCode R"><span><span class="co"># Identified CoS</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
 <span><span class="co">#&gt; $`cos1:y1_y2_y3_y4`</span></span>
-<span><span class="co">#&gt; [1] 636 644 618 655</span></span>
+<span><span class="co">#&gt; [1] 186 194 168 205</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`cos2:y2_y3_y5`</span></span>
-<span><span class="co">#&gt; [1] 2289 2293</span></span>
+<span><span class="co">#&gt; $`cos2:y2_y3_y5:merged`</span></span>
+<span><span class="co">#&gt; [1] 589 593</span></span>
 <span></span>
 <span><span class="co"># Plotting all results</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Disease_Prioritized_Colocalization_files/figure-html/all-basic-1.png" width="700"></p>
+<p><img src="Disease_Prioritized_Colocalization_files/figure-html/all-basic-1.png" width="583.333333333333"></p>
 <div class="section level4">
 <h4 id="results-interpretation-1">Results Interpretation<a class="anchor" aria-label="anchor" href="#results-interpretation-1"></a>
 </h4>

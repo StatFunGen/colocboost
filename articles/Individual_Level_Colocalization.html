@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,11 +90,11 @@ each trait.</li>
 <div class="section level4">
 <h4 id="causal-variant-structure">Causal variant structure<a class="anchor" aria-label="anchor" href="#causal-variant-structure"></a>
 </h4>
-<p>The dataset features two causal variants with indices 644 and
-2289.</p>
+<p>The dataset features two causal variants with indices 194 and
+589.</p>
 <ul>
-<li>Causal variant 644 is associated with traits 1, 2, 3, and 4.</li>
-<li>Causal variant 2289 is associated with traits 2, 3, and 5.</li>
+<li>Causal variant 194 is associated with traits 1, 2, 3, and 4.</li>
+<li>Causal variant 589 is associated with traits 2, 3, and 5.</li>
 </ul>
 <p>This structure creates a realistic scenario where multiple traits are
 influenced by different but overlapping sets of genetic variants.</p>
@@ -105,19 +105,22 @@ influenced by different but overlapping sets of genetic variants.</p>
 <span><span class="co">#&gt; [1] "X"                    "Y"                    "true_effect_variants"</span></span>
 <span><span class="va">Ind_5traits</span><span class="op">$</span><span class="va">true_effect_variants</span></span>
 <span><span class="co">#&gt; $Outcome_1</span></span>
-<span><span class="co">#&gt; [1] 644</span></span>
+<span><span class="co">#&gt; [1] 194</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $Outcome_2</span></span>
-<span><span class="co">#&gt; [1]  644 2289</span></span>
+<span><span class="co">#&gt; [1] 194 589</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $Outcome_3</span></span>
-<span><span class="co">#&gt; [1]  644 2289</span></span>
+<span><span class="co">#&gt; [1] 194 589</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $Outcome_4</span></span>
-<span><span class="co">#&gt; [1] 644</span></span>
+<span><span class="co">#&gt; [1] 194</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $Outcome_5</span></span>
-<span><span class="co">#&gt; [1] 2289</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 589</span></span></code></pre></div>
+<p>Due to the file size limitation of CRAN release, this is a subset of
+simulated data. See full dataset in <a href="https://github.com/StatFunGen/colocboost-paper" class="external-link">colocboost paper
+repo</a>.</p>
 </div>
 </div>
 <div class="section level2">
@@ -168,24 +171,24 @@ phenotypes <code>Y</code> from the dataset:</p>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 34 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 43 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 46 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 67 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 68 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 40 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 59 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 61 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 91 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 94 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span></span>
 <span><span class="co"># Identified CoS</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
 <span><span class="co">#&gt; $`cos1:y1_y2_y3_y4`</span></span>
-<span><span class="co">#&gt; [1] 636 644 618 655</span></span>
+<span><span class="co">#&gt; [1] 186 194 168 205</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`cos2:y2_y3_y5`</span></span>
-<span><span class="co">#&gt; [1] 2289 2293</span></span>
+<span><span class="co">#&gt; [1] 589 593</span></span>
 <span></span>
 <span><span class="co"># Plotting the results</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Individual_Level_Colocalization_files/figure-html/multiple-matched-1.png" width="700"></p>
+<p><img src="Individual_Level_Colocalization_files/figure-html/multiple-matched-1.png" width="583.333333333333"></p>
 <div class="section level4">
 <h4 id="results-interpretation">Results Interpretation<a class="anchor" aria-label="anchor" href="#results-interpretation"></a>
 </h4>
@@ -230,20 +233,20 @@ traits.</li>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X_single</span>, Y <span class="op">=</span> <span class="va">Y</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 34 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 43 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 46 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 67 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 68 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 40 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 59 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 61 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 91 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 94 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span></span>
 <span><span class="co"># Identified CoS</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
 <span><span class="co">#&gt; $`cos1:y1_y2_y3_y4`</span></span>
-<span><span class="co">#&gt; [1] 636 644 618 655</span></span>
+<span><span class="co">#&gt; [1] 186 194 168 205</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`cos2:y2_y3_y5`</span></span>
-<span><span class="co">#&gt; [1] 2289 2293</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 589 593</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="genotype-matrix-is-a-superset-of-individuals-across-different-phenotypes">3.2. Genotype matrix is a superset of individuals across different
@@ -277,20 +280,20 @@ It allows for efficient analysis without redundancy.</li>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X_superset</span>, Y <span class="op">=</span> <span class="va">Y_remove</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 35 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 55 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 56 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 72 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 73 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 38 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 51 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 62 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 98 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 99 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span></span>
 <span><span class="co"># Identified CoS</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
 <span><span class="co">#&gt; $`cos1:y1_y2_y3_y4`</span></span>
-<span><span class="co">#&gt; [1] 636 644 618 655</span></span>
+<span><span class="co">#&gt; [1] 205 186 194 168</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`cos2:y2_y3_y5`</span></span>
-<span><span class="co">#&gt; [1] 2289 2293</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 589 593</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="arbitrary-input-matrices-with-mapping-dictionary-provided">3.3. Arbitrary input matrices with mapping dictionary provided<a class="anchor" aria-label="anchor" href="#arbitrary-input-matrices-with-mapping-dictionary-provided"></a>
@@ -336,20 +339,20 @@ of X.</li>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X_arbitrary</span>, Y <span class="op">=</span> <span class="va">Y</span>, dict_YX <span class="op">=</span> <span class="va">dict_YX</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 34 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 43 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 46 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 67 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 68 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 40 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 59 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 61 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 91 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 94 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span></span>
 <span><span class="co"># Identified CoS</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
 <span><span class="co">#&gt; $`cos1:y1_y2_y3_y4`</span></span>
-<span><span class="co">#&gt; [1] 636 644 618 655</span></span>
+<span><span class="co">#&gt; [1] 186 194 168 205</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`cos2:y2_y3_y5`</span></span>
-<span><span class="co">#&gt; [1] 2289 2293</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 589 593</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

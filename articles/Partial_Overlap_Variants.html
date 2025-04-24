@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,10 +70,10 @@ variants across traits in ColocBoost.</p>
 causal variants, 644 and 2289, but each of them is only partially
 overlapping across traits.</p>
 <ul>
-<li>Causal variant 644 is associated with traits 1, 3, and 4, but is
+<li>Causal variant 194 is associated with traits 1, 3, and 4, but is
 missing in trait 2.</li>
-<li>Causal variant 2289 is associated with traits 2 and 3, but is
-missing in trait 5.</li>
+<li>Causal variant 589 is associated with traits 2 and 3, but is missing
+in trait 5.</li>
 </ul>
 <p>This structure creates a realistic scenario in which multiple traits
 from different datasets are not fully overlapping, and the causal
@@ -85,8 +85,8 @@ variants are not shared across all traits.</p>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">Y</span></span>
 <span></span>
 <span><span class="co"># Create causal variants with potentially LD proxies</span></span>
-<span><span class="va">causal_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">200</span><span class="op">:</span><span class="fl">1000</span><span class="op">)</span></span>
-<span><span class="va">causal_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2000</span><span class="op">:</span><span class="fl">2600</span><span class="op">)</span></span>
+<span><span class="va">causal_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span><span class="op">:</span><span class="fl">350</span><span class="op">)</span></span>
+<span><span class="va">causal_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">450</span><span class="op">:</span><span class="fl">650</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create missing data</span></span>
 <span><span class="va">X</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="op">-</span><span class="va">causal_1</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
@@ -94,13 +94,13 @@ variants are not shared across all traits.</p>
 <span></span>
 <span><span class="co"># Show format</span></span>
 <span><span class="va">X</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
-<span><span class="co">#&gt;                rs_1       rs_2       rs_3     rs_4      rs_5      rs_6</span></span>
-<span><span class="co">#&gt; sample_1 -0.1480797 -0.5904965 -0.4200375 0.919275 0.6668304 0.9677904</span></span>
-<span><span class="co">#&gt; sample_2 -0.1480797 -0.5904965 -0.4200375 0.919275 0.6668304 0.9677904</span></span>
+<span><span class="co">#&gt;               rs_1     rs_2     rs_3     rs_4       rs_5       rs_6</span></span>
+<span><span class="co">#&gt; sample_1 0.6197206 1.064107 1.064107 1.103145 -0.3373669 -0.3919608</span></span>
+<span><span class="co">#&gt; sample_2 0.6197206 1.064107 1.064107 1.103145 -0.3373669 -0.3919608</span></span>
 <span><span class="va">X</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
-<span><span class="co">#&gt;                rs_1       rs_2       rs_3     rs_4      rs_5      rs_6</span></span>
-<span><span class="co">#&gt; sample_1 -0.1480797 -0.5904965 -0.4200375 0.919275 0.6668304 0.9677904</span></span>
-<span><span class="co">#&gt; sample_2 -0.1480797 -0.5904965 -0.4200375 0.919275 0.6668304 0.9677904</span></span></code></pre></div>
+<span><span class="co">#&gt;               rs_1     rs_2     rs_3     rs_4       rs_5       rs_6</span></span>
+<span><span class="co">#&gt; sample_1 0.6197206 1.064107 1.064107 1.103145 -0.3373669 -0.3919608</span></span>
+<span><span class="co">#&gt; sample_2 0.6197206 1.064107 1.064107 1.103145 -0.3373669 -0.3919608</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="run-colocboost-with-partial-overlapping-variants">1. Run ColocBoost with partial overlapping variants<a class="anchor" aria-label="anchor" href="#run-colocboost-with-partial-overlapping-variants"></a>
@@ -117,20 +117,20 @@ message
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 18 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 27 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 35 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 38 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 44 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 26 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 50 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 51 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 53 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 60 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span></span>
 <span><span class="co"># The number of variants in the analysis</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">data_info</span><span class="op">$</span><span class="va">n_variables</span></span>
-<span><span class="co">#&gt; [1] 3000</span></span>
+<span><span class="co">#&gt; [1] 700</span></span>
 <span></span>
 <span><span class="co"># Plotting the results</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Partial_Overlap_Variants_files/figure-html/run-code-1.png" width="700"></p>
+<p><img src="Partial_Overlap_Variants_files/figure-html/run-code-1.png" width="583.333333333333"></p>
 </div>
 <div class="section level2">
 <h2 id="limitations-of-using-only-overlapping-variables">2. Limitations of using only overlapping variables<a class="anchor" aria-label="anchor" href="#limitations-of-using-only-overlapping-variables"></a>
@@ -148,19 +148,23 @@ ensure that meaningful colocalization signals are not missed.</p>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span>, overlap_variables <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Using multiple testing correction method: lfdr. Stop ColocBoost since no outcomes have association signals.</span></span>
+<span><span class="co">#&gt; Using multiple testing correction method: lfdr. Outcome 4 for all variants are greater than 1. Will not update it!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 2 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 9 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 12 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 21 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span></span>
 <span><span class="co"># The number of variants in the analysis</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">data_info</span><span class="op">$</span><span class="va">n_variables</span></span>
-<span><span class="co">#&gt; [1] 1598</span></span>
+<span><span class="co">#&gt; [1] 248</span></span>
 <span></span>
 <span><span class="co"># Plotting the results</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in get_input_plot(cb_output, plot_cos_idx = plot_cos_idx, variant_coord</span></span>
 <span><span class="co">#&gt; = variant_coord, : No colocalized effects in this region!</span></span>
 <span><span class="co">#&gt; There is no colocalization in this region!. Showing margianl for all outcomes!</span></span></code></pre></div>
-<p><img src="Partial_Overlap_Variants_files/figure-html/run-code-overlap-1.png" width="700"></p>
+<p><img src="Partial_Overlap_Variants_files/figure-html/run-code-overlap-1.png" width="583.333333333333"></p>
 </div>
 <div class="section level2">
 <h2 id="disease-prioritized-colocalization-analysis-with-variables-in-the-focal-trait">3. Disease-prioritized colocalization analysis with variables in the
@@ -180,19 +184,20 @@ override this default behavior.</p>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span>, focal_outcome_idx <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Using multiple testing correction method: lfdr. Outcome 2, 5 for all variants are greater than 1. Will not update it!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 12 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 17 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for focal outcome 3 converged after 24 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 17 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 27 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for focal outcome 3 converged after 39 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 49 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 53 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span></span>
 <span><span class="co"># The number of variants in the analysis</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">data_info</span><span class="op">$</span><span class="va">n_variables</span></span>
-<span><span class="co">#&gt; [1] 2399</span></span>
+<span><span class="co">#&gt; [1] 499</span></span>
 <span></span>
 <span><span class="co"># Plotting the results</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Partial_Overlap_Variants_files/figure-html/run-code-focal-1.png" width="700"></p>
+<p><img src="Partial_Overlap_Variants_files/figure-html/run-code-focal-1.png" width="583.333333333333"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

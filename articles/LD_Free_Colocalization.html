@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,6 +95,7 @@ phenotypic variance (<code>rtr &lt; 0</code> or
 S3.5.2).</li>
 <li>Change in trait-specific profile log-likelihood according to a CoS
 is negative (see details in Supplementary Note S3.5.3).</li>
+<li>The trait-specific gradient boosting model fails to converge.</li>
 </ul>
 </div>
 <div class="section level4">
@@ -109,8 +110,8 @@ changing the sign of Z-scores for 1% of variants for each trait.</p>
 <span><span class="va">LD</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_cormat.html">get_cormat</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Change sign of Z-score for 1% of variants for each trait by including mismatched LD</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">miss_prop</span> <span class="op">&lt;-</span> <span class="fl">0.01</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">miss_prop</span> <span class="op">&lt;-</span> <span class="fl">0.005</span> </span>
 <span><span class="va">sumstat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">Sumstat_5traits</span><span class="op">$</span><span class="va">sumstat</span>, <span class="kw">function</span><span class="op">(</span><span class="va">ss</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">ss</span><span class="op">)</span></span>
 <span>  <span class="va">pos_miss</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">p</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="va">miss_prop</span> <span class="op">*</span> <span class="va">p</span><span class="op">)</span><span class="op">)</span></span>
@@ -130,14 +131,23 @@ algorithm takes longer to converge.</p>
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>sumstat <span class="op">=</span> <span class="va">sumstat</span>, LD <span class="op">=</span> <span class="va">LD</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 5  stop since rtr &lt; 0 or max(correlation) &gt; 1 after 266 iterations! Results for this locus are not stable, please check if mismatch between sumstat and LD! See details in tutorial website https://statfungen.github.io/colocboost/articles/.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 292 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 3  stop since rtr &lt; 0 or max(correlation) &gt; 1 after 649 iterations! Results for this locus are not stable, please check if mismatch between sumstat and LD! See details in tutorial website https://statfungen.github.io/colocboost/articles/.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 672 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1  stop since rtr &lt; 0 or max(correlation) &gt; 1 after 860 iterations! Results for this locus are not stable, please check if mismatch between sumstat and LD! See details in tutorial website https://statfungen.github.io/colocboost/articles/.</span></span>
+<span><span class="co">#&gt; Warning in colocboost_workhorse(cb_data, M = M, prioritize_jkstar =</span></span>
+<span><span class="co">#&gt; prioritize_jkstar, : ColocBoost gradient boosting for outcome 5 did not</span></span>
+<span><span class="co">#&gt; coverage in 500 iterations! Please check consistency between summary statistics</span></span>
+<span><span class="co">#&gt; and LD matrix. See details in tutorial website</span></span>
+<span><span class="co">#&gt; https://statfungen.github.io/colocboost/articles/.</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 523 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting at 1000 iterations, still updating.</span></span>
+<span><span class="co">#&gt; Warning in colocboost_workhorse(cb_data, M = M, prioritize_jkstar =</span></span>
+<span><span class="co">#&gt; prioritize_jkstar, : ColocBoost gradient boosting for outcome 1 did not</span></span>
+<span><span class="co">#&gt; coverage in 500 iterations! Please check consistency between summary statistics</span></span>
+<span><span class="co">#&gt; and LD matrix. See details in tutorial website</span></span>
+<span><span class="co">#&gt; https://statfungen.github.io/colocboost/articles/.</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2  stop since rtr &lt; 0 or max(correlation) &gt; 1 after 1213 iterations! Results for this locus are not stable, please check if mismatch between sumstat and LD! See details in tutorial website https://statfungen.github.io/colocboost/articles/.</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3  stop since rtr &lt; 0 or max(correlation) &gt; 1 after 1475 iterations! Results for this locus are not stable, please check if mismatch between sumstat and LD! See details in tutorial website https://statfungen.github.io/colocboost/articles/.</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span><span class="co">#&gt; Warning in get_cos_profile(cs_beta, outcome_idx, X = cb_data$data[[X_dict]]$X,</span></span>
-<span><span class="co">#&gt; : Warning message: potential sumstat &amp; LD mismatch may happens for outcome 1 .</span></span>
+<span><span class="co">#&gt; : Warning message: potential sumstat &amp; LD mismatch may happens for outcome 2 .</span></span>
 <span><span class="co">#&gt; Using logLR = CoS(profile) - max(profile). Please check our website</span></span>
 <span><span class="co">#&gt; https://statfungen.github.io/colocboost/articles/.</span></span></code></pre></div>
 <p>These warnings serve as diagnostic tools to alert users about
@@ -236,7 +246,7 @@ format for summary statistics without LD matrix.</p>
 <span><span class="co"># Identified CoS</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
 <span><span class="co">#&gt; $`cos1:y1_y3_y4`</span></span>
-<span><span class="co">#&gt; [1] 636 655 644 618</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 186 205 194 168</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

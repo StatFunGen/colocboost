@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,11 +69,11 @@ strong colocalization events.</p>
 <div class="section level3">
 <h3 id="causal-variant-structure">Causal variant structure<a class="anchor" aria-label="anchor" href="#causal-variant-structure"></a>
 </h3>
-<p>The dataset features two causal variants with indices 644 and
-2289.</p>
+<p>The dataset features two causal variants with indices 194 and
+589.</p>
 <ul>
-<li>Causal variant 644 is associated with traits 1, 2, 3, and 4.</li>
-<li>Causal variant 2289 is associated with traits 2, 3, and 5.</li>
+<li>Causal variant 194 is associated with traits 1, 2, 3, and 4.</li>
+<li>Causal variant 589 is associated with traits 2, 3, and 5.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Loading the Dataset</span></span>
@@ -82,11 +82,11 @@ strong colocalization events.</p>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span>, Y <span class="op">=</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">Y</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 34 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 43 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 46 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 67 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 68 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 40 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 59 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 61 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 91 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 94 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span><span class="va">cos_summary</span> <span class="op">&lt;-</span> <span class="va">res</span><span class="op">$</span><span class="va">cos_summary</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">cos_summary</span><span class="op">)</span></span>
@@ -218,11 +218,11 @@ dataset.</p>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span>, sumstat <span class="op">=</span> <span class="va">sumstat</span>, LD <span class="op">=</span> <span class="va">LD</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 34 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 43 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 46 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 67 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 68 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 40 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 59 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 61 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 91 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 94 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="variant-colocalization-probability-vcp">3.1. Variant colocalization probability
@@ -239,7 +239,7 @@ argument set to <code>"vcp"</code>.</li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, y <span class="op">=</span> <span class="st">"vcp"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Interpret_ColocBoost_Output_files/figure-html/vcp-plot-1.png" width="700"></p>
+<p><img src="Interpret_ColocBoost_Output_files/figure-html/vcp-plot-1.png" width="583.333333333333"></p>
 <p>Please visit our documentation portal at <a href="https://statfungen.github.io/colocboost/articles/Visualization_ColocBoost_Output.html">Visualization
 of ColocBoost Results</a> for more details on the
 <code>colocboost_plot</code> function</p>
@@ -314,18 +314,18 @@ order.</li>
 <code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span></span>
 <span><span class="co">#&gt; $cos_index</span></span>
 <span><span class="co">#&gt; $cos_index$`cos1:y1_y2_y3_y4`</span></span>
-<span><span class="co">#&gt; [1] 636 644 618 655</span></span>
+<span><span class="co">#&gt; [1] 186 194 168 205</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $cos_index$`cos2:y2_y3_y5`</span></span>
-<span><span class="co">#&gt; [1] 2289 2293</span></span>
+<span><span class="co">#&gt; [1] 589 593</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $cos_variables</span></span>
 <span><span class="co">#&gt; $cos_variables$`cos1:y1_y2_y3_y4`</span></span>
-<span><span class="co">#&gt; [1] "rs_636" "rs_644" "rs_618" "rs_655"</span></span>
+<span><span class="co">#&gt; [1] "rs_186" "rs_194" "rs_168" "rs_205"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $cos_variables$`cos2:y2_y3_y5`</span></span>
-<span><span class="co">#&gt; [1] "rs_2289" "rs_2293"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "rs_589" "rs_593"</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="colocalized-traits-for-each-95-cos-cos_outcomes">3.3.2. Colocalized traits for each 95% CoS
@@ -376,20 +376,20 @@ by relative strength of evidence, see details in Section 2.</li>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos_npc</span></span>
 <span><span class="co">#&gt; cos1:y1_y2_y3_y4    cos2:y2_y3_y5 </span></span>
-<span><span class="co">#&gt;        0.9985794        0.9961811</span></span>
+<span><span class="co">#&gt;        0.9989418        0.9974159</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos_outcomes_npc</span></span>
 <span><span class="co">#&gt; $`cos1:y1_y2_y3_y4`</span></span>
 <span><span class="co">#&gt;    outcomes_index relative_logLR npc_outcome</span></span>
-<span><span class="co">#&gt; Y3              3      2.2156245   0.9881004</span></span>
-<span><span class="co">#&gt; Y1              1      1.7776875   0.9714293</span></span>
-<span><span class="co">#&gt; Y4              4      0.9051591   0.8363979</span></span>
-<span><span class="co">#&gt; Y2              2      0.5895075   0.6924184</span></span>
+<span><span class="co">#&gt; Y3              3      2.2563485   0.9890312</span></span>
+<span><span class="co">#&gt; Y1              1      1.8287003   0.9742005</span></span>
+<span><span class="co">#&gt; Y4              4      0.9499365   0.8504124</span></span>
+<span><span class="co">#&gt; Y2              2      0.6414479   0.7227667</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`cos2:y2_y3_y5`</span></span>
 <span><span class="co">#&gt;    outcomes_index relative_logLR npc_outcome</span></span>
-<span><span class="co">#&gt; Y5              5       1.926323   0.9787765</span></span>
-<span><span class="co">#&gt; Y3              3       1.422188   0.9418294</span></span>
-<span><span class="co">#&gt; Y2              2       1.350981   0.9329263</span></span></code></pre></div>
+<span><span class="co">#&gt; Y5              5       1.994252   0.9814726</span></span>
+<span><span class="co">#&gt; Y3              3       1.494458   0.9496581</span></span>
+<span><span class="co">#&gt; Y2              2       1.475390   0.9477011</span></span></code></pre></div>
 <ul>
 <li>
 <strong><code>cos_purity</code></strong>: includes three lists, for
@@ -441,8 +441,8 @@ same highest VCP.</li>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos_top_variables</span></span>
 <span><span class="co">#&gt;                  top_index top_variables</span></span>
-<span><span class="co">#&gt; cos1:y1_y2_y3_y4       636        rs_636</span></span>
-<span><span class="co">#&gt; cos2:y2_y3_y5         2289       rs_2289</span></span></code></pre></div>
+<span><span class="co">#&gt; cos1:y1_y2_y3_y4       186        rs_186</span></span>
+<span><span class="co">#&gt; cos2:y2_y3_y5          589        rs_589</span></span></code></pre></div>
 <ul>
 <li>
 <strong><code>cos_weights</code></strong>: the integrative weights
@@ -478,16 +478,16 @@ being updated in the model at each boosting round.</li>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Pick arbitrary SEC updates, see entire update in advance</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">model_info</span><span class="op">$</span><span class="va">jk_star</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span><span class="op">:</span><span class="fl">10</span>,<span class="fl">36</span><span class="op">:</span><span class="fl">38</span><span class="op">)</span>, <span class="op">]</span></span>
-<span><span class="co">#&gt;             Y1   Y2   Y3  Y4   Y5</span></span>
-<span><span class="co">#&gt; jk_star_5   NA   NA   NA  NA 2293</span></span>
-<span><span class="co">#&gt; jk_star_6   NA   NA   NA  NA 2293</span></span>
-<span><span class="co">#&gt; jk_star_7  636  636  636 636   NA</span></span>
-<span><span class="co">#&gt; jk_star_8   NA   NA   NA  NA 2293</span></span>
-<span><span class="co">#&gt; jk_star_9  636  636  636 636   NA</span></span>
-<span><span class="co">#&gt; jk_star_10  NA   NA   NA  NA 2293</span></span>
-<span><span class="co">#&gt; jk_star_36 609   NA   NA  NA   NA</span></span>
-<span><span class="co">#&gt; jk_star_37  NA 2289 2289  NA 2289</span></span>
-<span><span class="co">#&gt; jk_star_38 618  618  618  NA   NA</span></span></code></pre></div>
+<span><span class="co">#&gt;             Y1  Y2  Y3  Y4  Y5</span></span>
+<span><span class="co">#&gt; jk_star_5   NA  NA  NA  NA 593</span></span>
+<span><span class="co">#&gt; jk_star_6   NA  NA  NA  NA 593</span></span>
+<span><span class="co">#&gt; jk_star_7  186 186 186 186  NA</span></span>
+<span><span class="co">#&gt; jk_star_8   NA  NA  NA  NA 593</span></span>
+<span><span class="co">#&gt; jk_star_9  186 186 186 186  NA</span></span>
+<span><span class="co">#&gt; jk_star_10  NA  NA  NA  NA 593</span></span>
+<span><span class="co">#&gt; jk_star_36 186  NA 186 186  NA</span></span>
+<span><span class="co">#&gt; jk_star_37  NA  NA 589 340  NA</span></span>
+<span><span class="co">#&gt; jk_star_38  NA  NA  NA 436  NA</span></span></code></pre></div>
 <ul>
 <li>
 <strong><code>profile_loglik</code></strong>: joint profile
@@ -503,7 +503,7 @@ profile log-likelihood changes over boosting rounds.</li>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">{</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">model_info</span><span class="op">$</span><span class="va">outcome_profile_loglik</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"p"</span>, col<span class="op">=</span><span class="st">"#CC3333"</span>, lwd<span class="op">=</span><span class="fl">2</span>, xlab<span class="op">=</span><span class="st">""</span>, ylab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Profile (Trait "</span>, <span class="va">i</span>, <span class="st">")"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p><img src="Interpret_ColocBoost_Output_files/figure-html/profile_loglik-1.png" width="700"></p>
+<p><img src="Interpret_ColocBoost_Output_files/figure-html/profile_loglik-1.png" width="583.333333333333"></p>
 <ul>
 <li>
 <strong><code>outcome_proximity_obj</code></strong>: trait-specific
@@ -518,14 +518,14 @@ objective at the (coupled) best update variant for each outcome.</li>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">{</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">model_info</span><span class="op">$</span><span class="va">outcome_proximity_obj</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"p"</span>, col<span class="op">=</span><span class="st">"#3366CC"</span>, lwd<span class="op">=</span><span class="fl">2</span>, xlab<span class="op">=</span><span class="st">""</span>, ylab<span class="op">=</span><span class="st">"Trait-specific Objective"</span>, main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Trait "</span>, <span class="va">i</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p><img src="Interpret_ColocBoost_Output_files/figure-html/objective-proximity-1.png" width="700"></p>
+<p><img src="Interpret_ColocBoost_Output_files/figure-html/objective-proximity-1.png" width="583.333333333333"></p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Plotting trait-specific objective at the best update variant</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">{</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">model_info</span><span class="op">$</span><span class="va">outcome_coupled_best_update_obj</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"p"</span>, col<span class="op">=</span><span class="st">"#CC3333"</span>, lwd<span class="op">=</span><span class="fl">2</span>, xlab<span class="op">=</span><span class="st">""</span>, ylab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Objective at best update variant"</span><span class="op">)</span>, main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Trait "</span>, <span class="va">i</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="op">}</span></span></code></pre></div>
-<p><img src="Interpret_ColocBoost_Output_files/figure-html/objective-best-1.png" width="700"></p>
+<p><img src="Interpret_ColocBoost_Output_files/figure-html/objective-best-1.png" width="583.333333333333"></p>
 </div>
 <div class="section level3">
 <h3 id="trait-specific-effects-information-ucos_details">3.5. Trait-specific effects information
@@ -540,15 +540,15 @@ objective at the (coupled) best update variant for each outcome.</li>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Heterogeneous_Effect</span><span class="op">)</span></span>
 <span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">Y</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
-<span><span class="va">X1</span> <span class="op">&lt;-</span> <span class="va">Heterogeneous_Effect</span><span class="op">$</span><span class="va">X</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">3000</span><span class="op">]</span></span>
+<span><span class="va">X1</span> <span class="op">&lt;-</span> <span class="va">Heterogeneous_Effect</span><span class="op">$</span><span class="va">X</span></span>
 <span><span class="va">Y1</span> <span class="op">&lt;-</span> <span class="va">Heterogeneous_Effect</span><span class="op">$</span><span class="va">Y</span><span class="op">[</span>,<span class="fl">1</span>,drop<span class="op">=</span><span class="cn">F</span><span class="op">]</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">X</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">X1</span><span class="op">)</span><span class="op">)</span>, Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Y</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">Y1</span><span class="op">)</span><span class="op">)</span>, output_level <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 77 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 79 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 84 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 87 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 86 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 99 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 103 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 113 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">ucos_details</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "ucos"                "ucos_outcomes"       "ucos_weight"        </span></span>
@@ -576,21 +576,21 @@ trait-specific (uncolocalized) variants.</li>
 <code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">ucos_details</span><span class="op">$</span><span class="va">ucos</span></span>
 <span><span class="co">#&gt; $ucos_index</span></span>
 <span><span class="co">#&gt; $ucos_index$`ucos1:y4`</span></span>
-<span><span class="co">#&gt; [1] 622</span></span>
+<span><span class="co">#&gt; [1] 322</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $ucos_index$`ucos2:y4`</span></span>
-<span><span class="co">#&gt;  [1] 1282 1293 1283 1281 1270 1288 1242 1272 1300 1287 1305 1271 1273 1290 1291</span></span>
-<span><span class="co">#&gt; [16] 1258 1276 1277 1275 1206 1238</span></span>
+<span><span class="co">#&gt;  [1]  982  993  983  981  970  988  942  972 1000  987 1005  971  973  990  991</span></span>
+<span><span class="co">#&gt; [16]  958  976  977  975  906  938</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $ucos_variables</span></span>
 <span><span class="co">#&gt; $ucos_variables$`ucos1:y4`</span></span>
-<span><span class="co">#&gt; [1] "rs_622"</span></span>
+<span><span class="co">#&gt; [1] "rs_322"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $ucos_variables$`ucos2:y4`</span></span>
-<span><span class="co">#&gt;  [1] "rs_1282" "rs_1293" "rs_1283" "rs_1281" "rs_1270" "rs_1288" "rs_1242"</span></span>
-<span><span class="co">#&gt;  [8] "rs_1272" "rs_1300" "rs_1287" "rs_1305" "rs_1271" "rs_1273" "rs_1290"</span></span>
-<span><span class="co">#&gt; [15] "rs_1291" "rs_1258" "rs_1276" "rs_1277" "rs_1275" "rs_1206" "rs_1238"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "rs_982"  "rs_993"  "rs_983"  "rs_981"  "rs_970"  "rs_988"  "rs_942" </span></span>
+<span><span class="co">#&gt;  [8] "rs_972"  "rs_1000" "rs_987"  "rs_1005" "rs_971"  "rs_973"  "rs_990" </span></span>
+<span><span class="co">#&gt; [15] "rs_991"  "rs_958"  "rs_976"  "rs_977"  "rs_975"  "rs_906"  "rs_938"</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="trait-specific-uncolocalized-outcomes-ucos_outcomes">3.5.2. Trait-specific (uncolocalized) outcomes
@@ -657,19 +657,19 @@ across each pair of CoS and uCoS.</li>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">ucos_details</span><span class="op">$</span><span class="va">cos_ucos_purity</span></span>
 <span><span class="co">#&gt; $min_abs_cor</span></span>
-<span><span class="co">#&gt;                     ucos1:y4   ucos2:y4</span></span>
-<span><span class="co">#&gt; cos1:y1_y2_y3     0.10796715 0.01698445</span></span>
-<span><span class="co">#&gt; cos2:y2_y3:merged 0.06218806 0.03261737</span></span>
+<span><span class="co">#&gt;                    ucos1:y4   ucos2:y4</span></span>
+<span><span class="co">#&gt; cos1:y1_y2_y3     0.1132965 0.05866258</span></span>
+<span><span class="co">#&gt; cos2:y2_y3:merged 0.1675803 0.03404661</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $max_abs_cor</span></span>
 <span><span class="co">#&gt;                    ucos1:y4  ucos2:y4</span></span>
-<span><span class="co">#&gt; cos1:y1_y2_y3     0.6269772 0.5044536</span></span>
-<span><span class="co">#&gt; cos2:y2_y3:merged 0.0769700 0.1035735</span></span>
+<span><span class="co">#&gt; cos1:y1_y2_y3     0.4111256 0.4507412</span></span>
+<span><span class="co">#&gt; cos2:y2_y3:merged 0.5222858 0.5905318</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $median_abs_cor</span></span>
-<span><span class="co">#&gt;                     ucos1:y4   ucos2:y4</span></span>
-<span><span class="co">#&gt; cos1:y1_y2_y3     0.34688699 0.26291987</span></span>
-<span><span class="co">#&gt; cos2:y2_y3:merged 0.06957903 0.06020656</span></span></code></pre></div>
+<span><span class="co">#&gt;                    ucos1:y4  ucos2:y4</span></span>
+<span><span class="co">#&gt; cos1:y1_y2_y3     0.3633263 0.2969155</span></span>
+<span><span class="co">#&gt; cos2:y2_y3:merged 0.3449331 0.3134146</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="other-components">3.5.4. Other components<a class="anchor" aria-label="anchor" href="#other-components"></a>
@@ -722,11 +722,11 @@ setting <code>output_level = 3</code>:</p>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span>, output_level <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 34 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 43 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 46 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 67 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 68 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 40 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 59 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 61 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 91 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 94 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span></code></pre></div>
 <ul>
 <li>

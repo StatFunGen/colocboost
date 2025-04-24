@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -147,13 +147,13 @@ columns but highly recommended <code>n</code> and
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Sumstat_5traits</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Sumstat_5traits</span><span class="op">$</span><span class="va">sumstat</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            z    n variant</span></span>
-<span><span class="co">#&gt; 1 -0.5857591 1153    rs_1</span></span>
-<span><span class="co">#&gt; 2  0.1063202 1153    rs_2</span></span>
-<span><span class="co">#&gt; 3 -1.0509808 1153    rs_3</span></span>
-<span><span class="co">#&gt; 4 -0.4521718 1153    rs_4</span></span>
-<span><span class="co">#&gt; 5 -0.6840536 1153    rs_5</span></span>
-<span><span class="co">#&gt; 6 -0.5796573 1153    rs_6</span></span></code></pre></div>
+<span><span class="co">#&gt;              z    n variant</span></span>
+<span><span class="co">#&gt; 451 -1.0945531 1153    rs_1</span></span>
+<span><span class="co">#&gt; 452 -0.4113347 1153    rs_2</span></span>
+<span><span class="co">#&gt; 453 -0.4113347 1153    rs_3</span></span>
+<span><span class="co">#&gt; 454 -0.7467923 1153    rs_4</span></span>
+<span><span class="co">#&gt; 455 -0.3018575 1153    rs_5</span></span>
+<span><span class="co">#&gt; 456 -0.5256479 1153    rs_6</span></span></code></pre></div>
 <pre><code>- `z` or (`beta`, `sebeta`) - required: either z-score or (effect size and standard error)
 - `n` - highly recommended: sample size for the summary statistics, it is highly recommendation to provide.
 - `variant` - highly recommended: required if sumstat for different outcomes do not have the same number of variables (multiple sumstat and multiple LD).</code></pre>
