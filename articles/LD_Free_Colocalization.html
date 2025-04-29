@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -93,9 +93,9 @@ of the summary statistics with the reference LD matrix.</p>
 phenotypic variance (<code>rtr &lt; 0</code> or
 <code>rtr &gt; var_y</code>; see details in Supplementary Note
 S3.5.2).</li>
+<li>The trait-specific gradient boosting model fails to converge.</li>
 <li>Change in trait-specific profile log-likelihood according to a CoS
 is negative (see details in Supplementary Note S3.5.3).</li>
-<li>The trait-specific gradient boosting model fails to converge.</li>
 </ul>
 </div>
 <div class="section level4">
@@ -149,9 +149,47 @@ algorithm takes longer to converge.</p>
 <span><span class="co">#&gt; Warning in get_cos_profile(cs_beta, outcome_idx, X = cb_data$data[[X_dict]]$X,</span></span>
 <span><span class="co">#&gt; : Warning message: potential sumstat &amp; LD mismatch may happens for outcome 2 .</span></span>
 <span><span class="co">#&gt; Using logLR = CoS(profile) - max(profile). Please check our website</span></span>
-<span><span class="co">#&gt; https://statfungen.github.io/colocboost/articles/.</span></span></code></pre></div>
+<span><span class="co">#&gt; https://statfungen.github.io/colocboost/articles/.</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
+<span><span class="co">#&gt; $`cos1:y1_y2_y3_y4`</span></span>
+<span><span class="co">#&gt; [1] 229 186 194 205 168</span></span></code></pre></div>
 <p>These warnings serve as diagnostic tools to alert users about
 potential inconsistencies in the input data.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos_outcomes_npc</span></span>
+<span><span class="co">#&gt; $`cos1:y1_y2_y3_y4`</span></span>
+<span><span class="co">#&gt;    outcomes_index relative_logLR npc_outcome</span></span>
+<span><span class="co">#&gt; Y3              3      2.3111393   0.9901696</span></span>
+<span><span class="co">#&gt; Y1              1      1.9710178   0.9805913</span></span>
+<span><span class="co">#&gt; Y4              4      0.9895934   0.8618184</span></span>
+<span><span class="co">#&gt; Y2              2      0.0000000   0.0000000</span></span></code></pre></div>
+<p><strong>Note</strong>: In the above example, the normalized
+probability of trait 2 is 0, indicating that colocalization with trait 2
+may be less reliable due to the LD mismatch. This is a warning, not an
+error, and the colocalization analysis will still proceed. Therefore, in
+this case, we suggest treating the colocalization of trait 2 with
+caution.</p>
+<p>Potential solutions include:</p>
+<ul>
+<li>Using a more accurate LD matrix for trait 2.</li>
+<li>Excluding trait 2 from the analysis or colocalization results.</li>
+<li>Using the LD-mismatch or LD-free approach for colocalization
+analysis (below).</li>
+<li>Check the visualization of colocalization results including trait 2
+using <code>colocboost_plot(res)</code>. Remove the potential spurious
+signals when LD mismatch is detected using
+<ul>
+<li>
+<code>get_robust_colocalization(res, cos_npc_cutoff = 0.5, npc_outcome_cutoff = 0.2)</code>
+to exclude the trait 2 in the above example if the signals are not
+reasonable.</li>
+<li>
+<code>get_robust_colocalization(res, pvalue_cutoff = 1e-5, cos_npc_cutoff = 0, npc_outcome_cutoff = 0)</code>
+to include all colocalized traits with the larger marginal evidence, but
+the mismatch is detected.</li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 <div class="section level2">
@@ -182,7 +220,7 @@ ignoring the LD matrix.</li>
 </ul>
 <p>This method is particularly useful when the LD matrix is mismatched
 but still provides valuable insights into variant correlations.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Perform only 1 iteration of gradient boosting with LD matrix</span></span>
 <span><span class="va">res_mismatch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>sumstat <span class="op">=</span> <span class="va">sumstat</span>, LD <span class="op">=</span> <span class="va">LD</span>, M <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
@@ -195,7 +233,7 @@ but still provides valuable insights into variant correlations.</p>
 and summary statistics is too large to be useful or when LD information
 is completely unavailable, ColocBoost provides an LD-free approach.</li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_free</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>sumstat <span class="op">=</span> <span class="va">sumstat</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Warning in colocboost(sumstat = sumstat): Providing the LD for summary</span></span>
@@ -211,7 +249,7 @@ region. Users should interpret the results with caution, especially in
 regions with complex LD structures or multiple causal variants.</p>
 <p>ColocBoost also provides a flexibility to use HyPrColoc compatible
 format for summary statistics without LD matrix.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Loading the Dataset</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">)</span></span>
 <span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span></span>
@@ -259,7 +297,7 @@ format for summary statistics without LD matrix.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer>

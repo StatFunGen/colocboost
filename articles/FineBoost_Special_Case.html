@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,8 +61,8 @@
 <p>This vignette demonstrates how to perform single-trait fine-mapping
 analysis using FineBoost, a specialized single-trait version of
 ColocBoost, with both individual-level data and summary statistics.
-Specifically focusing on the 2nd trait with 2 causal variants (644 and
-2289) from the <code>Ind_5traits</code> and <code>Sumstat_5traits</code>
+Specifically focusing on the 2nd trait with 2 causal variants (194 and
+589) from the <code>Ind_5traits</code> and <code>Sumstat_5traits</code>
 datasets included in the package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/StatFunGen/colocboost" class="external-link">colocboost</a></span><span class="op">)</span></span></code></pre></div>
@@ -126,6 +126,16 @@ that only one variant within a region is causal.</p>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
 <p><img src="FineBoost_Special_Case_files/figure-html/ld-free-1.png" width="364.583333333333"></p>
+<p><strong>Note</strong>: Weak learners SEL in FineBoost may capture
+noise as putative signals, potentially introducing false positives to
+our findings. To identify and filter spurious signals, we discard
+fine-tunned the threshold of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><msub><mi>L</mi><mi>l</mi></msub></mrow><annotation encoding="application/x-tex">\Delta L_l</annotation></semantics></math>
+using extensive simulations to balance sensitivity and specificity. This
+threshold is set to 0.025 by default for ColocBoost when detect the
+colocalization, but we suggested a less conservative threshold of 0.015
+for FineBoost when performing single-trait fine-mapping analysis
+(<code>check_null_max = 0.015</code> as we suggested).</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
@@ -138,7 +148,7 @@ that only one variant within a region is causal.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer>
