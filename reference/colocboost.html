@@ -37,7 +37,7 @@ ColocBoost can be generally used in multi-task variable selection regression pro
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>ColocBoost: A gradient boosting informed multi-omics xQTL colocalization method</h1>
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/fix_license/R/colocboost.R" class="external-link"><code>R/colocboost.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/R/colocboost.R" class="external-link"><code>R/colocboost.R</code></a></small>
       <div class="d-none name"><code>colocboost.Rd</code></div>
     </div>
 
@@ -103,6 +103,7 @@ ColocBoost can be generally used in multi-task variable selection regression pro
 <span>  check_null <span class="op">=</span> <span class="fl">0.1</span>,</span>
 <span>  check_null_method <span class="op">=</span> <span class="st">"profile"</span>,</span>
 <span>  check_null_max <span class="op">=</span> <span class="fl">0.025</span>,</span>
+<span>  check_null_max_ucos <span class="op">=</span> <span class="fl">0.015</span>,</span>
 <span>  weaker_effect <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  LD_free <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  output_level <span class="op">=</span> <span class="fl">1</span></span>
@@ -335,7 +336,11 @@ to merge colocalized sets, which may resulting in a huge set.</p></dd>
 
 
 <dt id="arg-check-null-max">check_null_max<a class="anchor" aria-label="anchor" href="#arg-check-null-max"></a></dt>
-<dd><p>The smallest value of change of profile loglikelihood for each outcome.</p></dd>
+<dd><p>The smallest value of change of profile loglikelihood for each outcome in CoS.</p></dd>
+
+
+<dt id="arg-check-null-max-ucos">check_null_max_ucos<a class="anchor" aria-label="anchor" href="#arg-check-null-max-ucos"></a></dt>
+<dd><p>The smallest value of change of profile loglikelihood for each outcome in uCoS.</p></dd>
 
 
 <dt id="arg-weaker-effect">weaker_effect<a class="anchor" aria-label="anchor" href="#arg-weaker-effect"></a></dt>
@@ -428,7 +433,7 @@ that may arise from small sample sizes or discrepancies in minor allele frequenc
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>
