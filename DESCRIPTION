@@ -20,7 +20,7 @@ Description: A multi-task learning approach to variable selection regression wit
 Encoding: UTF-8
 LazyDataCompression: xz
 LazyData: true
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 URL: https://github.com/StatFunGen/colocboost
 BugReports: https://github.com/StatFunGen/colocboost/issues
 Depends:
