@@ -38,10 +38,20 @@ A \code{"colocboost"} object with some or all of the following elements:
 \item{cos_details}{A object with all information for colocalization results.}
 \item{data_info}{A object with detailed information from input data}
 \item{model_info}{A object with detailed information for colocboost model}
-\item{ucos_from_cos}{A object with information for trait-specific effects if exists after removing weaker signals.}
+\item{ucos_details}{Updated with trait-specific effects converted from filtered-out outcomes and single-trait CoS that pass the UCoS criterion. If \code{ucos_details} did not exist, it will be created.}
 }
 \description{
-\code{get_robust_colocalization} get the colocalization by discarding the weaker colocalization events or colocalized outcomes
+\code{get_robust_colocalization} filters and recalibrates colocalization results by discarding weaker colocalization events or colocalized outcomes that do not meet evidence thresholds
+}
+\details{
+This function filters colocalization confidence sets (CoS) based on evidence thresholds.
+
+For single-trait CoS and filtered-out outcomes from multi-trait CoS, this function uses the stored
+\code{cos_cs_change} (profile likelihood change) and \code{check_null_max_ucos} (UCoS threshold) from the
+original colocboost output to determine if they meet the original UCoS criterion (cs_change >= check_null_max_ucos).
+Qualified UCoS candidates are merged into \code{ucos_details} (or \code{ucos_details} is created if it doesn't exist).
+Single-trait CoS are removed from \code{cos_details} after conversion since they represent trait-specific
+rather than colocalized signals.
 }
 \examples{
 # colocboost example
