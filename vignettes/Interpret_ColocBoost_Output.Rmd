@@ -87,6 +87,7 @@ filter_res <- get_robust_colocalization(res, cos_npc_cutoff = 0.5, npc_outcome_c
 - The output from `get_robust_colocalization` is the same as output from `colocboost`, which can be directly used in any post inference and visualization.
 - `npc=0.5` or `npc_outcome = 0.2` maintains robust colocalization signals for cases when many traits are evaluated. 
 Higher thresholds can be specified if users want to focus only on strong colocalization events.
+- `get_robust_colocalization` automatically identifies strong trait-specific signals from outcomes that were filtered out of colocalization sets or from single-trait signals that no longer qualify as colocalization events. These strong non-colocalized signals that still qualify as UCoS are merged into `ucos_details` for further analysis.
 
 
 ## 3. More details on ColocBoost output

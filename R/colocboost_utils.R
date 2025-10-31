@@ -730,6 +730,10 @@ get_cos_details <- function(cb_obj, coloc_out, data_info = NULL) {
       names(csets_purity) <- c("min_abs_cor", "max_abs_cor", "median_abs_cor")
     }
 
+    # Get check_null_max_ucos for filtering single-trait CoS to UCOS
+    check_null_max_ucos <- sapply(cb_obj$cb_model, function(cb) cb$check_null_max_ucos)
+    names(check_null_max_ucos) <- analysis_outcome
+    
     # - save coloc_results
     coloc_results <- list(
       "cos" = coloc_csets,
@@ -740,7 +744,9 @@ get_cos_details <- function(cb_obj, coloc_out, data_info = NULL) {
       "cos_min_npc_outcome" = cos_min_npc_outcome,
       "cos_purity" = csets_purity,
       "cos_top_variables" = coloc_hits,
-      "cos_weights" = cos_weights
+      "cos_weights" = cos_weights,
+      "cos_cs_change" = cs_change,
+      "check_null_max_ucos" = check_null_max_ucos
     )
 
 

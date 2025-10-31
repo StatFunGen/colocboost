@@ -118,7 +118,7 @@ get_colocboost_summary <- function(cb_output,
 #'
 #' @title Recalibrate and summarize robust colocalization events.
 #'
-#' @description `get_robust_colocalization` get the colocalization by discarding the weaker colocalization events or colocalized outcomes
+#' @description `get_robust_colocalization` filters and recalibrates colocalization results by discarding weaker colocalization events or colocalized outcomes that do not meet evidence thresholds
 #'
 #' @param cb_output Output object from `colocboost` analysis
 #' @param cos_npc_cutoff Minimum threshold of normalized probability of colocalization (NPC) for CoS.
@@ -134,7 +134,17 @@ get_colocboost_summary <- function(cb_output,
 #' \item{cos_details}{A object with all information for colocalization results.}
 #' \item{data_info}{A object with detailed information from input data}
 #' \item{model_info}{A object with detailed information for colocboost model}
-#' \item{ucos_from_cos}{A object with information for trait-specific effects if exists after removing weaker signals.}
+#' \item{ucos_details}{Updated with trait-specific effects converted from filtered-out outcomes and single-trait CoS that pass the UCoS criterion. If `ucos_details` did not exist, it will be created.}
+#'
+#' @details 
+#' This function filters colocalization confidence sets (CoS) based on evidence thresholds.
+#' 
+#' For single-trait CoS and filtered-out outcomes from multi-trait CoS, this function uses the stored 
+#' `cos_cs_change` (profile likelihood change) and `check_null_max_ucos` (UCoS threshold) from the 
+#' original colocboost output to determine if they meet the original UCoS criterion (cs_change >= check_null_max_ucos). 
+#' Qualified UCoS candidates are merged into `ucos_details` (or `ucos_details` is created if it doesn't exist).
+#' Single-trait CoS are removed from `cos_details` after conversion since they represent trait-specific 
+#' rather than colocalized signals.
 #'
 #' @examples
 #' # colocboost example
@@ -174,6 +184,7 @@ get_robust_colocalization <- function(cb_output,
   if (!inherits(cb_output, "colocboost")) {
     stop("Input must from colocboost object!")
   }
+
 
   if (is.null(cb_output$cos_details)) {
     warning("No colocalization results in this region!")
@@ -234,6 +245,18 @@ get_robust_colocalization <- function(cb_output,
     cos_details$cos_purity$min_abs_cor <- as.matrix(cos_details$cos_purity$min_abs_cor)[-remove_idx, -remove_idx, drop = FALSE]
     cos_details$cos_purity$median_abs_cor <- as.matrix(cos_details$cos_purity$median_abs_cor)[-remove_idx, -remove_idx, drop = FALSE]
     cos_details$cos_purity$max_abs_cor <- as.matrix(cos_details$cos_purity$max_abs_cor)[-remove_idx, -remove_idx, drop = FALSE]
+    # Also update cos_cs_change if it exists
+    if (!is.null(cos_details$cos_cs_change)) {
+      if (is.data.frame(cos_details$cos_cs_change)) {
+        cos_details$cos_cs_change <- cos_details$cos_cs_change[-remove_idx, , drop = FALSE]
+      }
+    }
+    # Ensure names align with remaining CoS structure after removal
+    remaining_cos_names <- names(cos_details$cos$cos_index)
+    if (length(remaining_cos_names) == length(cos_details$cos_npc)) {
+      names(cos_details$cos_npc) <- remaining_cos_names
+      names(cos_details$cos_min_npc_outcome) <- remaining_cos_names
+    }
     vcp <- as.vector(1 - apply(1 - do.call(cbind, cos_details$cos_vcp), 1, prod))
     names(vcp) <- cb_output$data_info$variables
     cb_output$vcp <- vcp
@@ -244,10 +267,95 @@ get_robust_colocalization <- function(cb_output,
     max_idx <- which.max(npc_outcome)
     npc_outcome[max_idx] * prod(1 - npc_outcome[-max_idx])
   }
+  
+  check_ucos_candidates <- function(cb_output, cos_details, ucos_candidates) {
+    # Check all UCoS candidates (filtered-out outcomes and single-trait CoS) to see if they qualify as UCoS
+    # using the original UCoS criterion: cs_change >= check_null_max_ucos
+    # Returns list with: ucos_entries (list of qualified UCoS), n_checked, n_passed
+    if (length(ucos_candidates) == 0) {
+      return(list(ucos_entries = list(), n_checked = 0, n_passed = 0))
+    }
+    
+    if (is.null(cos_details$cos_cs_change) || is.null(cos_details$check_null_max_ucos)) {
+      warning(sprintf("WARNING: cos_cs_change or check_null_max_ucos not available - cannot check UCoS candidates. Only CoS filtering will work; UCoS results may be inaccurate."), call. = FALSE)
+      return(list(ucos_entries = list(), n_checked = length(ucos_candidates), n_passed = 0))
+    }
+    
+    cs_change_df <- cos_details$cos_cs_change
+    check_null_max_ucos <- cos_details$check_null_max_ucos
+    ucos_entries <- list()
+    n_passed <- 0
+    for (cand in ucos_candidates) {
+      original_cos_name <- cand$original_cos_name
+      outcome_idx <- cand$outcome_idx
+      outcome_name <- cand$outcome_name
+      
+      # Try to get delta (cs_change) for this outcome from the original CoS
+      delta <- NULL
+      if (original_cos_name %in% rownames(cs_change_df)) {
+        if (outcome_name %in% colnames(cs_change_df)) {
+          delta <- cs_change_df[original_cos_name, outcome_name]
+        } else if (as.character(outcome_idx) %in% colnames(cs_change_df)) {
+          delta <- cs_change_df[original_cos_name, as.character(outcome_idx)]
+        } else if (outcome_idx <= ncol(cs_change_df)) {
+          delta <- cs_change_df[original_cos_name, outcome_idx]
+        }
+      }
+      
+      # Get threshold
+      threshold <- NULL
+      if (outcome_name %in% names(check_null_max_ucos)) {
+        threshold <- check_null_max_ucos[outcome_name]
+      } else if (as.character(outcome_idx) %in% names(check_null_max_ucos)) {
+        threshold <- check_null_max_ucos[as.character(outcome_idx)]
+      } else if (outcome_idx <= length(check_null_max_ucos)) {
+        threshold <- check_null_max_ucos[outcome_idx]
+      }
+      
+      # Check if it passes UCoS criterion (cs_change >= check_null_max_ucos)
+      if (!is.null(delta) && !is.null(threshold) && !is.na(delta) && !is.na(threshold) && delta >= threshold) {
+        n_passed <- n_passed + 1
+        
+        ucos_entries[[length(ucos_entries) + 1]] <- list(
+          ucos_index = cand$cos_index,
+          ucos_variables = cand$cos_variables,
+          outcome_idx = outcome_idx,
+          outcome_name = outcome_name,
+          cos_weight = cand$cos_weight,
+          purity_min = cand$purity_min,
+          purity_median = cand$purity_median,
+          purity_max = cand$purity_max,
+          top_variable_idx = cand$top_variable_idx,
+          top_variable_name = cand$top_variable_name,
+          original_cos_name = original_cos_name
+        )
+      }
+    }
+    
+    
+    return(list(ucos_entries = ucos_entries, n_checked = length(ucos_candidates), n_passed = n_passed))
+  }
 
   cos_details <- cb_output$cos_details
+  # Preserve original cos_cs_change and check_null_max_ucos before filtering
+  # (these contain information about all original CoS, including ones that will be removed)
+  original_cos_cs_change <- cos_details$cos_cs_change
+  original_check_null_max_ucos <- cos_details$check_null_max_ucos
+  
+  # Capture initial counts for summary
+  initial_cos_count <- length(cos_details$cos$cos_index)
+  initial_ucos_count <- if (!is.null(cb_output$ucos_details) && length(cb_output$ucos_details$ucos$ucos_index) > 0) {
+    length(cb_output$ucos_details$ucos$ucos_index)
+  } else {
+    0
+  }
+  
   coloc_outcome_index <- coloc_outcome <- list()
   colocset_names <- cos_min_npc_outcome <- cos_npc <- c()
+  
+  # Track filtered-out outcomes from multi-trait CoS for potential UCoS conversion
+  filtered_outcome_candidates <- list()
+  
   for (i in 1:length(cos_details$cos$cos_index)) {
     cos_npc_config <- cos_details$cos_outcomes_npc[[i]]
     npc_outcome <- cos_npc_config$npc_outcome
@@ -269,17 +377,139 @@ get_robust_colocalization <- function(cb_output,
       }
     }
     if (length(pos_pass) == 0) {
+      # CoS completely removed - add ALL outcomes from this CoS as UCOS candidates
+      original_cos_name <- names(cos_details$cos$cos_index)[i]
+      original_outcomes <- cos_npc_config$outcomes_index
+      outcome_names_all <- rownames(cos_npc_config)
+      
+      # Get original weight for each outcome
+      original_weight <- cos_details$cos_weights[[i]]
+      
+      # Get purity (same for all outcomes in the CoS)
+      cos_purity_min <- if (!is.null(cos_details$cos_purity$min_abs_cor)) {
+        as.matrix(cos_details$cos_purity$min_abs_cor)[i, i]
+      } else { NA }
+      cos_purity_median <- if (!is.null(cos_details$cos_purity$median_abs_cor)) {
+        as.matrix(cos_details$cos_purity$median_abs_cor)[i, i]
+      } else { NA }
+      cos_purity_max <- if (!is.null(cos_details$cos_purity$max_abs_cor)) {
+        as.matrix(cos_details$cos_purity$max_abs_cor)[i, i]
+      } else { NA }
+      
+      # Get top variable
+      top_var_idx <- if (!is.null(cos_details$cos_top_variables)) {
+        cos_details$cos_top_variables$top_index[i]
+      } else { 0 }
+      top_var_name <- if (!is.null(cos_details$cos_top_variables) && top_var_idx > 0) {
+        cos_details$cos_top_variables$top_variables[i]
+      } else { NA }
+      
+      # Add each outcome from the removed CoS as a UCoS candidate
+      for (j in seq_along(original_outcomes)) {
+        outcome_idx <- original_outcomes[j]
+        outcome_name <- outcome_names_all[j]
+        
+        # Get outcome-specific weight
+        outcome_colname <- paste0("outcome", outcome_idx)
+        if (outcome_colname %in% colnames(original_weight)) {
+          outcome_weight <- original_weight[, outcome_colname, drop = FALSE]
+        } else {
+          # Fallback: use first column if specific outcome column not found
+          outcome_weight <- original_weight[, 1, drop = FALSE]
+        }
+        
+        filtered_outcome_candidates[[length(filtered_outcome_candidates) + 1]] <- list(
+          original_cos_idx = i,
+          original_cos_name = original_cos_name,
+          outcome_idx = outcome_idx,
+          outcome_name = outcome_name,
+          cos_index = cos_details$cos$cos_index[[i]],
+          cos_variables = cos_details$cos$cos_variables[[i]],
+          cos_weight = outcome_weight,
+          purity_min = cos_purity_min,
+          purity_median = cos_purity_median,
+          purity_max = cos_purity_max,
+          top_variable_idx = top_var_idx,
+          top_variable_name = top_var_name,
+          is_removed_cos = TRUE  # Mark as from a completely removed CoS
+        )
+      }
+      
       coloc_outcome_index[[i]] <- 0
       coloc_outcome[[i]] <- 0
       cos_min_npc_outcome[i] <- 0
       cos_npc[i] <- 0
       colocset_names[i] <- paste0("remove", i)
     } else {
+      # Track outcomes that were filtered out (if original CoS had multiple outcomes)
+      original_outcomes <- cos_npc_config$outcomes_index
+      outcomes_that_passed <- cos_npc_config$outcomes_index[pos_pass]
+      if (length(original_outcomes) > length(pos_pass) && length(pos_pass) > 0) {
+        # Some outcomes were filtered out from a multi-trait CoS
+        filtered_outcomes <- setdiff(original_outcomes, outcomes_that_passed)
+        original_cos_name <- names(cos_details$cos$cos_index)[i]
+        for (outcome_filt in filtered_outcomes) {
+          # Get outcome name by matching outcome index in the original CoS outcomes
+          # This ensures we get the correct outcome name for this specific filtered outcome
+          pos_in_original <- which(cos_details$cos_outcomes$outcome_index[[i]] == outcome_filt)
+          if (length(pos_in_original) > 0) {
+            outcome_name_filt <- cos_details$cos_outcomes$outcome_name[[i]][pos_in_original[1]]
+          } else {
+            # Fallback: use cos_npc_config (should match, but this is backup)
+            outcome_name_filt <- rownames(cos_npc_config)[which(cos_npc_config$outcomes_index == outcome_filt)[1]]
+          }
+          # Store original weight and purity info for this filtered outcome
+          # Get outcome-specific weight from original CoS weights
+          original_weight <- cos_details$cos_weights[[i]]
+          outcome_colname <- paste0("outcome", outcome_filt)
+          if (outcome_colname %in% colnames(original_weight)) {
+            outcome_weight <- original_weight[, outcome_colname, drop = FALSE]
+          } else {
+            # Fallback: use first column if specific outcome column not found
+            outcome_weight <- original_weight[, 1, drop = FALSE]
+          }
+          
+          # Get purity (will be same for all outcomes in the CoS)
+          cos_purity_min <- if (!is.null(cos_details$cos_purity$min_abs_cor)) {
+            as.matrix(cos_details$cos_purity$min_abs_cor)[i, i]
+          } else { NA }
+          cos_purity_median <- if (!is.null(cos_details$cos_purity$median_abs_cor)) {
+            as.matrix(cos_details$cos_purity$median_abs_cor)[i, i]
+          } else { NA }
+          cos_purity_max <- if (!is.null(cos_details$cos_purity$max_abs_cor)) {
+            as.matrix(cos_details$cos_purity$max_abs_cor)[i, i]
+          } else { NA }
+          
+          # Get top variable
+          top_var_idx <- if (!is.null(cos_details$cos_top_variables)) {
+            cos_details$cos_top_variables$top_index[i]
+          } else { 0 }
+          top_var_name <- if (!is.null(cos_details$cos_top_variables) && top_var_idx > 0) {
+            cos_details$cos_top_variables$top_variables[i]
+          } else { NA }
+          
+          filtered_outcome_candidates[[length(filtered_outcome_candidates) + 1]] <- list(
+            original_cos_idx = i,
+            original_cos_name = original_cos_name,
+            outcome_idx = outcome_filt,
+            outcome_name = outcome_name_filt,
+            cos_index = cos_details$cos$cos_index[[i]],
+            cos_variables = cos_details$cos$cos_variables[[i]],
+            cos_weight = outcome_weight,
+            purity_min = cos_purity_min,
+            purity_median = cos_purity_median,
+            purity_max = cos_purity_max,
+            top_variable_idx = top_var_idx,
+            top_variable_name = top_var_name
+          )
+        }
+      }
+      
       cos_min_npc_outcome[i] <- min(npc_outcome[pos_pass])
       if (length(pos_pass) > 1){
         cos_npc[i] <- 1 - get_npuc(npc_outcome[pos_pass])
       } else {
-        cos_npc[i] <- 0 # since single-trait remain
+        cos_npc[i] <- 0 # Single-trait CoS get cos_npc=0 (they're not colocalized)
       }
       coloc_outcome_index[[i]] <- sort(cos_npc_config$outcomes_index[pos_pass])
       coloc_outcome[[i]] <- rownames(cos_npc_config)[pos_pass]
@@ -310,6 +540,7 @@ get_robust_colocalization <- function(cb_output,
   })
   cos_details$cos_weights <- cos_weights
   int_weight <- lapply(cos_weights, get_integrated_weight, weight_fudge_factor = weight_fudge_factor)
+  # Assign names from colocset_names (entries marked "remove" will be filtered out later)
   names(int_weight) <- names(cos_weights) <- colocset_names
   vcp <- as.vector(1 - apply(1 - do.call(cbind, int_weight), 1, prod))
   names(vcp) <- cb_output$data_info$variables
@@ -323,6 +554,8 @@ get_robust_colocalization <- function(cb_output,
   cos_re_var <- lapply(cos_re_idx, function(idx) {
     cb_output$data_info$variables[idx]
   })
+  # Preserve names from int_weight
+  names(cos_re_idx) <- names(cos_re_var) <- names(int_weight)
   coloc_csets <- list("cos_index" = cos_re_idx, "cos_variables" = cos_re_var)
   cos_details$cos <- coloc_csets
 
@@ -350,49 +583,289 @@ get_robust_colocalization <- function(cb_output,
   cos_details$cos_top_variables <- coloc_hits
   cb_output$cos_details <- cos_details
 
-  # remove CoS does not include outcomes pass npc_outcome_cutoff
+  # Remove CoS that have no outcomes passing npc_outcome_cutoff
   remove <- grep("remove", colocset_names)
   cb_output <- remove_cos(cb_output, remove_idx = remove)
   cos_details <- cb_output$cos_details
 
-  # remove CoS does not pass cos_npc_cutoff
-  remove <- which(cos_details$cos_npc < cos_npc_cutoff)
+  # Remove multi-trait CoS that do not pass cos_npc_cutoff
+  # Note: Single-trait CoS get cos_npc=0 by design (they're not colocalized).
+  # We skip cos_npc_cutoff for single-trait CoS since they already passed npc_outcome_cutoff
+  # which is the appropriate filter for single-trait evidence strength.
+  if (length(cos_details$cos_npc) > 0) {
+    cos_npc_vals <- cos_details$cos_npc
+    # Ensure names align with current cos_details structure
+    cos_names_actual <- names(cos_details$cos$cos_index)
+    if (length(cos_npc_vals) == length(cos_names_actual)) {
+      names(cos_npc_vals) <- cos_names_actual
+    }
+    n_outcome_before <- sapply(cos_details$cos_outcomes$outcome_index, length)
+    
+    # Only apply cos_npc_cutoff to multi-trait CoS (single-trait have cos_npc=0 and shouldn't be filtered this way)
+    is_multi <- n_outcome_before > 1
+    if (any(is_multi)) {
+      remove_multi <- which(is_multi & cos_details$cos_npc < cos_npc_cutoff)
+      remove <- remove_multi
+      if (length(remove) > 0) {
+        # Collect all outcomes from removed multi-trait CoS as UCoS candidates
+        # (before we remove them from cos_details)
+        for (rm_idx in remove) {
+          cos_name_rm <- names(cos_npc_vals)[rm_idx]
+          outcome_indices_rm <- cos_details$cos_outcomes$outcome_index[[rm_idx]]
+          outcome_names_rm <- cos_details$cos_outcomes$outcome_name[[rm_idx]]
+          
+          # Each outcome from this removed CoS becomes a candidate
+          for (j in seq_along(outcome_indices_rm)) {
+            outcome_idx_rm <- outcome_indices_rm[j]
+            outcome_name_rm <- if (length(outcome_names_rm) >= j) outcome_names_rm[j] else NA
+            
+            # Get outcome-specific weight
+            original_weight_rm <- cos_details$cos_weights[[rm_idx]]
+            outcome_colname_rm <- paste0("outcome", outcome_idx_rm)
+            if (outcome_colname_rm %in% colnames(original_weight_rm)) {
+              outcome_weight_rm <- original_weight_rm[, outcome_colname_rm, drop = FALSE]
+            } else {
+              outcome_weight_rm <- original_weight_rm[, 1, drop = FALSE]
+            }
+            
+            # Get purity
+            cos_purity_min_rm <- if (!is.null(cos_details$cos_purity$min_abs_cor)) {
+              as.matrix(cos_details$cos_purity$min_abs_cor)[rm_idx, rm_idx]
+            } else { NA }
+            cos_purity_median_rm <- if (!is.null(cos_details$cos_purity$median_abs_cor)) {
+              as.matrix(cos_details$cos_purity$median_abs_cor)[rm_idx, rm_idx]
+            } else { NA }
+            cos_purity_max_rm <- if (!is.null(cos_details$cos_purity$max_abs_cor)) {
+              as.matrix(cos_details$cos_purity$max_abs_cor)[rm_idx, rm_idx]
+            } else { NA }
+            
+            # Get top variable
+            top_var_idx_rm <- if (!is.null(cos_details$cos_top_variables)) {
+              cos_details$cos_top_variables$top_index[rm_idx]
+            } else { 0 }
+            top_var_name_rm <- if (!is.null(cos_details$cos_top_variables) && top_var_idx_rm > 0) {
+              cos_details$cos_top_variables$top_variables[rm_idx]
+            } else { NA }
+            
+            filtered_outcome_candidates[[length(filtered_outcome_candidates) + 1]] <- list(
+              original_cos_idx = rm_idx,
+              original_cos_name = cos_name_rm,
+              outcome_idx = outcome_idx_rm,
+              outcome_name = outcome_name_rm,
+              cos_index = cos_details$cos$cos_index[[rm_idx]],
+              cos_variables = cos_details$cos$cos_variables[[rm_idx]],
+              cos_weight = outcome_weight_rm,
+              purity_min = cos_purity_min_rm,
+              purity_median = cos_purity_median_rm,
+              purity_max = cos_purity_max_rm,
+              top_variable_idx = top_var_idx_rm,
+              top_variable_name = top_var_name_rm,
+              is_removed_cos = TRUE  # Mark as coming from a completely removed CoS
+            )
+          }
+        }
+      }
+      
+    } else {
+      # All remaining are single-trait
+      remove <- integer(0)
+    }
+  } else {
+    remove <- integer(0)
+  }
   cb_output <- remove_cos(cb_output, remove_idx = remove)
   cos_details <- cb_output$cos_details
 
-  # remove CoS only with one trait
-  n_outcome <- sapply(cos_details$cos_outcomes$outcome_index, length)
-  single <- which(n_outcome == 1)
-  if (length(single) == length(n_outcome)) {
-    # - all remaining the single outcome
-    cb_output$cos_details <- cb_output$vcp <- NULL
-    cb_output <- c(cb_output, list(vcp = NULL, cos_details = NULL))
-  } else if (length(single) != 0 & length(single) != length(n_outcome)) {
-    # - partial remaining the single outcome
-    ucos_from_cos <- list(
-      "ucos" = list(
-        "ucos_index" = cos_details$cos$cos_index[single],
-        "ucos_variables" = cos_details$cos$cos_variables[single]
-      ),
-      "ucos_outcomes" = list(
-        "outcome_idx" = cos_details$cos_outcomes$outcome_index[single],
-        "outcome_name" = cos_details$cos_outcomes$outcome_name[single]
-      ),
-      "ucos_weight" = cos_details$cos_weights[single],
-      "ucos_purity" = list(
-        "min_abs_cor" = as.matrix(cos_details$cos_purity$min_abs_cor)[single, single, drop = FALSE],
-        "median_abs_cor" = as.matrix(cos_details$cos_purity$median_abs_cor)[single, single, drop = FALSE],
-        "max_abs_cor" = as.matrix(cos_details$cos_purity$max_abs_cor)[single, single, drop = FALSE]
-      ),
-      "ucos_top_variables" = cos_details$cos_top_variables[single, , drop = FALSE]
+  # Collect ALL single-trait CoS as UCoS candidates and remove them from cos_details
+  # Single-trait signals cannot be colocalization sets by definition
+  if (!is.null(cos_details)) {
+    n_outcome_check <- sapply(cos_details$cos_outcomes$outcome_index, length)
+    single_check <- which(n_outcome_check == 1)
+    if (length(single_check) > 0) {
+      # Extract single-trait CoS info and add to candidates list BEFORE removal
+      cos_names <- names(cos_details$cos$cos_index)
+      for (i in seq_along(single_check)) {
+        idx <- single_check[i]
+        cos_name <- cos_names[idx]
+        outcome_idx <- cos_details$cos_outcomes$outcome_index[[idx]][[1]]
+        outcome_name <- cos_details$cos_outcomes$outcome_name[[idx]][[1]]
+        
+        # Get weight (should already be filtered to single outcome)
+        outcome_weight <- cos_details$cos_weights[[idx]]
+        
+        # Get purity
+        cos_purity_min <- as.matrix(cos_details$cos_purity$min_abs_cor)[idx, idx]
+        cos_purity_median <- as.matrix(cos_details$cos_purity$median_abs_cor)[idx, idx]
+        cos_purity_max <- as.matrix(cos_details$cos_purity$max_abs_cor)[idx, idx]
+        
+        # Get top variable
+        top_var_idx <- cos_details$cos_top_variables$top_index[idx]
+        top_var_name <- cos_details$cos_top_variables$top_variables[idx]
+        
+        filtered_outcome_candidates[[length(filtered_outcome_candidates) + 1]] <- list(
+          original_cos_idx = idx,
+          original_cos_name = cos_name,
+          outcome_idx = outcome_idx,
+          outcome_name = outcome_name,
+          cos_index = cos_details$cos$cos_index[[idx]],
+          cos_variables = cos_details$cos$cos_variables[[idx]],
+          cos_weight = outcome_weight,
+          purity_min = cos_purity_min,
+          purity_median = cos_purity_median,
+          purity_max = cos_purity_max,
+          top_variable_idx = top_var_idx,
+          top_variable_name = top_var_name,
+          is_single_trait = TRUE  # Mark as single-trait CoS
+        )
+      }
+      
+      # Remove ALL single-trait CoS from cos_details (they cannot be colocalization sets)
+      cb_output <- remove_cos(cb_output, remove_idx = single_check)
+      cos_details <- cb_output$cos_details
+    }
+  }
+
+  # Check all UCoS candidates (filtered-out outcomes, single-trait CoS, and outcomes from removed CoS)
+  # for UCoS eligibility using the original criterion (cs_change >= check_null_max_ucos)
+  ucos_result <- if (length(filtered_outcome_candidates) > 0) {
+    # Create a temporary cos_details object with original cs_change info for UCoS checking
+    # (cos_details might be NULL or filtered, but we need the original cs_change data)
+    temp_cos_details <- if (!is.null(cos_details)) cos_details else list()
+    if (!is.null(original_cos_cs_change)) {
+      temp_cos_details$cos_cs_change <- original_cos_cs_change
+    }
+    if (!is.null(original_check_null_max_ucos)) {
+      temp_cos_details$check_null_max_ucos <- original_check_null_max_ucos
+    }
+    check_ucos_candidates(cb_output, temp_cos_details, filtered_outcome_candidates)
+  } else {
+    list(ucos_entries = list(), n_checked = 0, n_passed = 0)
+  }
+  all_qualified_ucos <- ucos_result$ucos_entries
+
+  # Merge all qualified UCoS candidates into ucos_details
+  if (length(all_qualified_ucos) > 0) {
+    total_ucos <- length(all_qualified_ucos)
+    
+    # Get existing ucos_details or create new structure
+    if (is.null(cb_output$ucos_details)) {
+      # Create new ucos_details structure
+      existing_count <- 0
+      cb_output$ucos_details <- list(
+        "ucos" = list("ucos_index" = list(), "ucos_variables" = list()),
+        "ucos_outcomes" = list("outcome_index" = list(), "outcome_name" = list()),
+        "ucos_weight" = list(),
+        "ucos_purity" = list("min_abs_cor" = matrix(0,0,0), "median_abs_cor" = matrix(0,0,0), "max_abs_cor" = matrix(0,0,0)),
+        "ucos_top_variables" = data.frame("top_index" = integer(0), "top_variables" = character(0))
+      )
+    } else {
+      existing_count <- length(cb_output$ucos_details$ucos$ucos_index)
+    }
+    
+    # Append new UCOS entries
+    new_ucos_indices <- lapply(all_qualified_ucos, function(e) e$ucos_index)
+    new_ucos_variables <- lapply(all_qualified_ucos, function(e) e$ucos_variables)
+    new_outcome_indices <- lapply(all_qualified_ucos, function(e) list(e$outcome_idx))
+    new_outcome_names <- lapply(all_qualified_ucos, function(e) list(e$outcome_name))
+    new_weights <- lapply(all_qualified_ucos, function(e) e$cos_weight)
+    new_purity_min <- sapply(all_qualified_ucos, function(e) ifelse(is.na(e$purity_min), 0, e$purity_min))
+    new_purity_median <- sapply(all_qualified_ucos, function(e) ifelse(is.na(e$purity_median), 0, e$purity_median))
+    new_purity_max <- sapply(all_qualified_ucos, function(e) ifelse(is.na(e$purity_max), 0, e$purity_max))
+    new_top_indices <- sapply(all_qualified_ucos, function(e) e$top_variable_idx)
+    new_top_variables <- sapply(all_qualified_ucos, function(e) e$top_variable_name)
+    
+    # Generate names for new UCOS
+    new_ucos_names <- paste0("ucos", (existing_count + 1):(existing_count + total_ucos))
+    
+    # Merge into existing structure
+    cb_output$ucos_details$ucos$ucos_index <- c(cb_output$ucos_details$ucos$ucos_index, new_ucos_indices)
+    cb_output$ucos_details$ucos$ucos_variables <- c(cb_output$ucos_details$ucos$ucos_variables, new_ucos_variables)
+    cb_output$ucos_details$ucos_outcomes$outcome_index <- c(cb_output$ucos_details$ucos_outcomes$outcome_index, new_outcome_indices)
+    cb_output$ucos_details$ucos_outcomes$outcome_name <- c(cb_output$ucos_details$ucos_outcomes$outcome_name, new_outcome_names)
+    cb_output$ucos_details$ucos_weight <- c(cb_output$ucos_details$ucos_weight, new_weights)
+    
+    # Update purity matrices (append as diagonal blocks)
+    old_n <- nrow(cb_output$ucos_details$ucos_purity$min_abs_cor)
+    if (old_n == 0) {
+      # Create new matrices
+      cb_output$ucos_details$ucos_purity$min_abs_cor <- diag(new_purity_min, nrow = total_ucos, ncol = total_ucos)
+      cb_output$ucos_details$ucos_purity$median_abs_cor <- diag(new_purity_median, nrow = total_ucos, ncol = total_ucos)
+      cb_output$ucos_details$ucos_purity$max_abs_cor <- diag(new_purity_max, nrow = total_ucos, ncol = total_ucos)
+    } else {
+      # Append to existing matrices
+      total_n <- old_n + total_ucos
+      new_min_mat <- diag(new_purity_min, nrow = total_ucos, ncol = total_ucos)
+      new_median_mat <- diag(new_purity_median, nrow = total_ucos, ncol = total_ucos)
+      new_max_mat <- diag(new_purity_max, nrow = total_ucos, ncol = total_ucos)
+      
+      # Combine old and new matrices
+      min_combined <- matrix(0, nrow = total_n, ncol = total_n)
+      min_combined[1:old_n, 1:old_n] <- cb_output$ucos_details$ucos_purity$min_abs_cor
+      min_combined[(old_n+1):total_n, (old_n+1):total_n] <- new_min_mat
+      
+      median_combined <- matrix(0, nrow = total_n, ncol = total_n)
+      median_combined[1:old_n, 1:old_n] <- cb_output$ucos_details$ucos_purity$median_abs_cor
+      median_combined[(old_n+1):total_n, (old_n+1):total_n] <- new_median_mat
+      
+      max_combined <- matrix(0, nrow = total_n, ncol = total_n)
+      max_combined[1:old_n, 1:old_n] <- cb_output$ucos_details$ucos_purity$max_abs_cor
+      max_combined[(old_n+1):total_n, (old_n+1):total_n] <- new_max_mat
+      
+      cb_output$ucos_details$ucos_purity$min_abs_cor <- min_combined
+      cb_output$ucos_details$ucos_purity$median_abs_cor <- median_combined
+      cb_output$ucos_details$ucos_purity$max_abs_cor <- max_combined
+    }
+    
+    # Append to top_variables data.frame
+    new_top_vars_df <- data.frame(
+      "top_index" = new_top_indices,
+      "top_variables" = new_top_variables,
+      row.names = new_ucos_names
     )
-    cb_output$ucos_from_cos <- ucos_from_cos
-    cb_output <- remove_cos(cb_output, remove_idx = single)
+    cb_output$ucos_details$ucos_top_variables <- rbind(cb_output$ucos_details$ucos_top_variables, new_top_vars_df)
+    
+    # Update names for all lists
+    if (existing_count > 0) {
+      existing_names <- names(cb_output$ucos_details$ucos_weight)[1:existing_count]
+      all_ucos_names <- c(existing_names, new_ucos_names)
+    } else {
+      all_ucos_names <- new_ucos_names
+    }
+    names(cb_output$ucos_details$ucos$ucos_index) <- names(cb_output$ucos_details$ucos$ucos_variables) <-
+      names(cb_output$ucos_details$ucos_outcomes$outcome_index) <- names(cb_output$ucos_details$ucos_outcomes$outcome_name) <-
+      names(cb_output$ucos_details$ucos_weight) <- all_ucos_names
+  }
+  
+  # Validate that only multi-trait CoS remain in cos_details
+  if (!is.null(cos_details) && length(cos_details$cos$cos_index) > 0) {
+    n_outcome_final <- sapply(cos_details$cos_outcomes$outcome_index, length)
+    n_single_remaining <- sum(n_outcome_final == 1)
+    if (n_single_remaining > 0) {
+      stop("Internal error: Single-trait CoS should have been removed from cos_details")
+    }
   }
 
   # - refine and output
   class(cb_output) <- "colocboost"
   cb_output$cos_summary <- get_cos_summary(cb_output)
+
+  # Calculate final counts
+  final_cos_count <- if (!is.null(cb_output$cos_details) && length(cb_output$cos_details$cos$cos_index) > 0) {
+    length(cb_output$cos_details$cos$cos_index)
+  } else {
+    0
+  }
+  final_ucos_count <- if (!is.null(cb_output$ucos_details) && length(cb_output$ucos_details$ucos$ucos_index) > 0) {
+    length(cb_output$ucos_details$ucos$ucos_index)
+  } else {
+    0
+  }
+  
+  # Summary message
+  message(sprintf(
+    "Robust filtering: Started with %d CoS, %d UCoS. Finished with %d CoS, %d UCoS.",
+    initial_cos_count, initial_ucos_count, final_cos_count, final_ucos_count
+  ))
 
   return(cb_output)
 }
@@ -1062,4 +1535,5 @@ get_cos_purity <- function(cos, X = NULL, Xcorr = NULL, n_purity = 100) {
   
   return(cos_purity)
 }
+
 
