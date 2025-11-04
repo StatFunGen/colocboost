@@ -63,7 +63,7 @@ outputs:
 
 The following example demonstrates how to set up input data with 3 phenotypes and 2 cohorts. The first cohort has 2 phenotypes and the second cohort has 1 phenotype. The first phenotype has 2 genes and the second phenotype has 1 gene.
 
-```{r, data-loader-individual}
+```{r, data-loader-individual, eval = FALSE}
 # Example of loading individual-level data
 region = "chr1:1000000-2000000"
 genotype_list = c("plink_cohort1.1", "plink_cohort1.2")
@@ -85,26 +85,23 @@ imiss_cutoff = 0.9
 
 # More advanced parameters see pecotmr::load_multitask_regional_data()
 
-#### Comment out to avoid running this code here, as we do not have real data files in this example ####
-# region_data_individual <- load_multitask_regional_data(
-#     region = region,
-#     genotype_list = genotype_list,
-#     phenotype_list = phenotype_list,
-#     covariate_list = covariate_list,
-#     conditions_list_individual = conditions_list_individual,
-#     match_geno_pheno = match_geno_pheno,
-#     association_window = association_window,
-#     region_name_col = region_name_col,
-#     extract_region_name = extract_region_name,
-#     keep_indel = keep_indel,
-#     keep_samples = keep_samples,
-#     maf_cutoff = maf_cutoff,
-#     mac_cutoff = mac_cutoff,
-#     xvar_cutoff = xvar_cutoff,
-#     imiss_cutoff = imiss_cutoff
-# )
-#### End of comment out
-
+region_data_individual <- load_multitask_regional_data(
+    region = region,
+    genotype_list = genotype_list,
+    phenotype_list = phenotype_list,
+    covariate_list = covariate_list,
+    conditions_list_individual = conditions_list_individual,
+    match_geno_pheno = match_geno_pheno,
+    association_window = association_window,
+    region_name_col = region_name_col,
+    extract_region_name = extract_region_name,
+    keep_indel = keep_indel,
+    keep_samples = keep_samples,
+    maf_cutoff = maf_cutoff,
+    mac_cutoff = mac_cutoff,
+    xvar_cutoff = xvar_cutoff,
+    imiss_cutoff = imiss_cutoff
+)
 ```
 
 
@@ -129,7 +126,7 @@ outputs:
 
 The following example demonstrates how to set up input data with 2 summary statistics and one LD reference.
 
-```{r, data-loader-sumstat}
+```{r, data-loader-sumstat, eval = FALSE}
 # Example of loading summary statistics
 sumstat_path_list = c("sumstat1.tsv.gz", "sumstat2.tsv.gz")
 column_file_path_list = c("column_mapping_sumstat1.yml", "column_mapping_sumstat2.yml")
@@ -146,19 +143,17 @@ n_controls = c(0, 40000)
 
 # More advanced parameters see pecotmr::load_multitask_regional_data()
 
-#### Comment out to avoid running this code here, as we do not have real data files in this example ####
-# region_data_sumstat <- load_multitask_regional_data(
-#     sumstat_path_list = sumstat_path_list,
-#     column_file_path_list = column_file_path_list,
-#     LD_meta_file_path_list = LD_meta_file_path_list,
-#     conditions_list_sumstat = conditions_list_sumstat,
-#     match_LD_sumstat = match_LD_sumstat,
-#     association_window = association_window,
-#     n_samples = n_samples,
-#     n_cases = n_cases,
-#     n_controls = n_controls
-# )
-#### End of comment out
+region_data_sumstat <- load_multitask_regional_data(
+    sumstat_path_list = sumstat_path_list,
+    column_file_path_list = column_file_path_list,
+    LD_meta_file_path_list = LD_meta_file_path_list,
+    conditions_list_sumstat = conditions_list_sumstat,
+    match_LD_sumstat = match_LD_sumstat,
+    association_window = association_window,
+    n_samples = n_samples,
+    n_cases = n_cases,
+    n_controls = n_controls
+)
 ```
 
 
@@ -226,66 +221,60 @@ Example: for sQTL, `list(type_pattern = ".*clu_(\\d+_[+-?]).*", valid_pattern = 
 outputs:
 - **`colocboost_results`**: List of colocboost objects (with `xqtl_coloc`, `joint_gwas`, `separate_gwas`); Output of the `colocboost_analysis_pipeline` function. If the mode is not run, the corresponding element will be `NULL`.
 
-```{r, colocboost-analysis}
+```{r, colocboost-analysis, eval = FALSE}
 
-#### Comment out to avoid running this code here, as we do not have real data files in this example ####
-#### Please check the example code below ####
+# load in individual-level and sumstat data
+region_data_combined <- load_multitask_regional_data(
+    region = region,
+    genotype_list = genotype_list,
+    phenotype_list = phenotype_list,
+    covariate_list = covariate_list,
+    conditions_list_individual = conditions_list_individual,
+    match_geno_pheno = match_geno_pheno,
+    association_window = association_window,
+    region_name_col = region_name_col,
+    extract_region_name = extract_region_name,
+    keep_indel = keep_indel,
+    keep_samples = keep_samples,
+    maf_cutoff = maf_cutoff,
+    mac_cutoff = mac_cutoff,
+    xvar_cutoff = xvar_cutoff,
+    imiss_cutoff = imiss_cutoff,
+    sumstat_path_list = sumstat_path_list,
+    column_file_path_list = column_file_path_list,
+    LD_meta_file_path_list = LD_meta_file_path_list,
+    conditions_list_sumstat = conditions_list_sumstat,
+    match_LD_sumstat = match_LD_sumstat,
+    n_samples = n_samples,
+    n_cases = n_cases,
+    n_controls = n_controls
+)
 
-# # load in individual-level and sumstat data
-# region_data_combined <- load_multitask_regional_data(
-#     region = region,
-#     genotype_list = genotype_list,
-#     phenotype_list = phenotype_list,
-#     covariate_list = covariate_list,
-#     conditions_list_individual = conditions_list_individual,
-#     match_geno_pheno = match_geno_pheno,
-#     association_window = association_window,
-#     region_name_col = region_name_col,
-#     extract_region_name = extract_region_name,
-#     keep_indel = keep_indel,
-#     keep_samples = keep_samples,
-#     maf_cutoff = maf_cutoff,
-#     mac_cutoff = mac_cutoff,
-#     xvar_cutoff = xvar_cutoff,
-#     imiss_cutoff = imiss_cutoff,
-#     sumstat_path_list = sumstat_path_list,
-#     column_file_path_list = column_file_path_list,
-#     LD_meta_file_path_list = LD_meta_file_path_list,
-#     conditions_list_sumstat = conditions_list_sumstat,
-#     match_LD_sumstat = match_LD_sumstat,
-#     n_samples = n_samples,
-#     n_cases = n_cases,
-#     n_controls = n_controls
-# )
+maf_cutoff = 0.01
+pip_cutoff_to_skip_ind = rep(0, length(phenotype_list))
+pip_cutoff_to_skip_sumstat = rep(0, length(sumstat_path_list))
+qc_method = "rss_qc" 
 
-# maf_cutoff = 0.01
-# pip_cutoff_to_skip_ind = rep(0, length(phenotype_list))
-# pip_cutoff_to_skip_sumstat = rep(0, length(sumstat_path_list))
-# qc_method = "rss_qc" 
+# run colocboost analysis
+colocboost_results <- colocboost_analysis_pipeline(
+    region_data_combined,
+    maf_cutoff = maf_cutoff, 
+    pip_cutoff_to_skip_ind = pip_cutoff_to_skip_ind,
+    pip_cutoff_to_skip_sumstat = pip_cutoff_to_skip_sumstat,
+    qc_method = qc_method,
+    xqtl_coloc = TRUE,
+    joint_gwas = TRUE,
+    separate_gwas = TRUE
+)
 
-# # run colocboost analysis
-# colocboost_results <- colocboost_analysis_pipeline(
-#     region_data_combined,
-#     maf_cutoff = maf_cutoff, 
-#     pip_cutoff_to_skip_ind = pip_cutoff_to_skip_ind,
-#     pip_cutoff_to_skip_sumstat = pip_cutoff_to_skip_sumstat,
-#     qc_method = qc_method,
-#     xqtl_coloc = TRUE,
-#     joint_gwas = TRUE,
-#     separate_gwas = TRUE
-# )
+# visualize results for xQTL-only mode
+colocboost_plot(colocboost_results$xqtl_coloc)
 
-# # visualize results for xQTL-only mode
-# colocboost_plot(colocboost_results$xqtl_coloc)
+# visualize results for joint GWAS mode
+colocboost_plot(colocboost_results$joint_gwas)
 
-# # visualize results for joint GWAS mode
-# colocboost_plot(colocboost_results$joint_gwas)
-
-# # visualize results for separate GWAS mode
-# for (i in 1:length(colocboost_results$separate_gwas)) {
-#     colocboost_plot(colocboost_results$separate_gwas[[i]])
-# }
-
-
-#### End of comment out
+# visualize results for separate GWAS mode
+for (i in 1:length(colocboost_results$separate_gwas)) {
+    colocboost_plot(colocboost_results$separate_gwas[[i]])
+}
 ```
