@@ -84,7 +84,7 @@ xvar_cutoff = 0
 imiss_cutoff = 0.9
 
 # More advanced parameters see pecotmr::load_multitask_regional_data()
-
+\dontrun{
 region_data_individual <- load_multitask_regional_data(
     region = region,
     genotype_list = genotype_list,
@@ -102,6 +102,7 @@ region_data_individual <- load_multitask_regional_data(
     xvar_cutoff = xvar_cutoff,
     imiss_cutoff = imiss_cutoff
 )
+}
 ```
 
 
@@ -142,7 +143,7 @@ n_controls = c(0, 40000)
 
 
 # More advanced parameters see pecotmr::load_multitask_regional_data()
-
+\dontrun{
 region_data_sumstat <- load_multitask_regional_data(
     sumstat_path_list = sumstat_path_list,
     column_file_path_list = column_file_path_list,
@@ -154,6 +155,7 @@ region_data_sumstat <- load_multitask_regional_data(
     n_cases = n_cases,
     n_controls = n_controls
 )
+}
 ```
 
 
@@ -224,6 +226,7 @@ outputs:
 ```{r, colocboost-analysis, eval = FALSE}
 
 # load in individual-level and sumstat data
+\dontrun{
 region_data_combined <- load_multitask_regional_data(
     region = region,
     genotype_list = genotype_list,
@@ -249,6 +252,7 @@ region_data_combined <- load_multitask_regional_data(
     n_cases = n_cases,
     n_controls = n_controls
 )
+}
 
 maf_cutoff = 0.01
 pip_cutoff_to_skip_ind = rep(0, length(phenotype_list))
