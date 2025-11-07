@@ -51,7 +51,7 @@
       <h1>Visualization of ColocBoost Results</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/simple_fix2/vignettes/Visualization_ColocBoost_Output.Rmd" class="external-link"><code>vignettes/Visualization_ColocBoost_Output.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/vignettes/Visualization_ColocBoost_Output.Rmd" class="external-link"><code>vignettes/Visualization_ColocBoost_Output.Rmd</code></a></small>
       <div class="d-none name"><code>Visualization_ColocBoost_Output.Rmd</code></div>
     </div>
 
@@ -185,19 +185,24 @@ traits.</li>
 <p><img src="Visualization_ColocBoost_Output_files/figure-html/ucos-plot-1.png" class="r-plt" width="583.333333333333"></p>
 </div>
 <div class="section level3">
-<h3 id="plot-with-an-added-vertical-line">2.4. Plot with an added vertical line<a class="anchor" aria-label="anchor" href="#plot-with-an-added-vertical-line"></a>
+<h3 id="plot-with-added-highlight-points">2.4. Plot with added highlight points<a class="anchor" aria-label="anchor" href="#plot-with-added-highlight-points"></a>
 </h3>
-<p>You can add a vertical line to the plot by setting
-<code>add_vertical = TRUE</code> and <code>add_vertical_idx = **</code>.
-This will add a vertical line at the specified index. For example, to
-add a vertical line at true causal variants, you can set
+<p>You can highlight specific variants in the plot by setting
+<code>add_highlight = TRUE</code> and
+<code>add_highlight_idx = **</code>. This will add red dashed vertical
+lines (defult <code>add_highlight_style = "vertical_lines"</code>) at
+the specified index you want to highlight. Alternatively, you can use
+<code>add_highlight_style = "star"</code> to change the highlight style
+to the red star for the specified variants. For example, to add a
+vertical line at true causal variants, you can set
 <code>add_vertical_idx = unique(unlist(Ind_5traits$true_effect_variants))</code>.
 Following plot also shows the top variants.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span></span>
 <span>  <span class="va">res</span>, show_top_variables <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>  add_vertical <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>  add_vertical_idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">$</span><span class="va">true_effect_variants</span><span class="op">)</span><span class="op">)</span></span>
+<span>  add_highlight <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>  add_highlight_idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">$</span><span class="va">true_effect_variants</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  add_highlight_style <span class="op">=</span> <span class="st">"star"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="Visualization_ColocBoost_Output_files/figure-html/vertical-plot-1.png" class="r-plt" width="583.333333333333"></p>
 </div>

@@ -260,21 +260,12 @@ dict_sumstatLD
 # Run colocboost
 res <- colocboost(sumstat = Sumstat_5traits$sumstat, LD = LD_arbitrary, dict_sumstatLD = dict_sumstatLD)
 #> Validating input data.
-#> Starting gradient boosting algorithm.
-#> Gradient boosting for outcome 4 converged after 40 iterations!
-#> Gradient boosting for outcome 5 converged after 59 iterations!
-#> Gradient boosting for outcome 1 converged after 61 iterations!
-#> Gradient boosting for outcome 3 converged after 91 iterations!
-#> Gradient boosting for outcome 2 converged after 94 iterations!
-#> Performing inference on colocalization events.
+#> Warning in colocboost_validate_input_data(X = X, Y = Y, sumstat = sumstat, :
+#> Error: dict_sumstatLD must have length 5
 
 # Identified CoS
 res$cos_details$cos$cos_index
-#> $`cos1:y1_y2_y3_y4`
-#> [1] 186 194 168 205
-#> 
-#> $`cos2:y2_y3_y5`
-#> [1] 589 593
+#> NULL
 ```
 
 ### 3.4. HyPrColoc compatible format: effect size and standard error matrices

@@ -17,7 +17,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/StatFunGen/colocboost/blob/simple_fix2/inst/CITATION)
+[`inst/CITATION`](https://github.com/StatFunGen/colocboost/blob/main/inst/CITATION)
 
 Cao X, Sun H, Feng R, Mazumder R, Najar C, Li Y, de Jager P, Bennett D,
 The Alzheimer's Disease Functional Genomics Consortium, Dey K, Wang G

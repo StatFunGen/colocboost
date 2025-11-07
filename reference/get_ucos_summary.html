@@ -33,7 +33,7 @@ or for summarizing results from single-trait FineBoost analyses."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Get trait-specific summary table from a ColocBoost output.</h1>
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/simple_fix2/R/colocboost_output.R" class="external-link"><code>R/colocboost_output.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/R/colocboost_output.R" class="external-link"><code>R/colocboost_output.R</code></a></small>
       <div class="d-none name"><code>get_ucos_summary.Rd</code></div>
     </div>
 
@@ -148,9 +148,14 @@ or for summarizing results from single-trait FineBoost analyses.</p>
 <span class="r-in"><span><span class="co"># Get the trait-specifc effect summary</span></span></span>
 <span class="r-in"><span><span class="fu">get_ucos_summary</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   outcomes  ucos_id    purity top_variable top_variable_vpa n_variables</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       Y1 ucos1:y1 0.9047605        SNP10        0.9250798           2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ucos_index ucos_variables                    ucos_variables_vpa</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      10; 9    SNP10; SNP9 0.925079798036013; 0.0745019602528287</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       Y1 ucos1:y1 0.9047605        SNP10        0.9253236           2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       Y1 ucos2:y1 0.6732012        SNP81        0.5305890           5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           ucos_index                    ucos_variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1              10; 9                       SNP10; SNP9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 81; 80; 79; 77; 78 SNP81; SNP80; SNP79; SNP77; SNP78</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                 ucos_variables_vpa</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                                             0.925323596963733; 0.077250372554879</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.530589018526919; 0.263763420281923; 0.0933084484948705; 0.0610769709640795; 0.0200643722172111</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

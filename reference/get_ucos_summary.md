@@ -160,7 +160,12 @@ res <- colocboost(X = X, Y = Y, output_level = 2)
 # Get the trait-specifc effect summary
 get_ucos_summary(res)
 #>   outcomes  ucos_id    purity top_variable top_variable_vpa n_variables
-#> 1       Y1 ucos1:y1 0.9047605        SNP10        0.9250798           2
-#>   ucos_index ucos_variables                    ucos_variables_vpa
-#> 1      10; 9    SNP10; SNP9 0.925079798036013; 0.0745019602528287
+#> 1       Y1 ucos1:y1 0.9047605        SNP10        0.9253236           2
+#> 2       Y1 ucos2:y1 0.6732012        SNP81        0.5305890           5
+#>           ucos_index                    ucos_variables
+#> 1              10; 9                       SNP10; SNP9
+#> 2 81; 80; 79; 77; 78 SNP81; SNP80; SNP79; SNP77; SNP78
+#>                                                                                 ucos_variables_vpa
+#> 1                                                             0.925323596963733; 0.077250372554879
+#> 2 0.530589018526919; 0.263763420281923; 0.0933084484948705; 0.0610769709640795; 0.0200643722172111
 ```

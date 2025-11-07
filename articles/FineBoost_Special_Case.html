@@ -51,7 +51,7 @@
       <h1>Single-trait Fine-mapping with FineBoost</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/simple_fix2/vignettes/FineBoost_Special_Case.Rmd" class="external-link"><code>vignettes/FineBoost_Special_Case.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/vignettes/FineBoost_Special_Case.Rmd" class="external-link"><code>vignettes/FineBoost_Special_Case.Rmd</code></a></small>
       <div class="d-none name"><code>FineBoost_Special_Case.Rmd</code></div>
     </div>
 
@@ -116,10 +116,10 @@ that only one variant within a region is causal.</p>
 <code class="sourceCode R"><span><span class="co"># Load example data</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>sumstat <span class="op">=</span> <span class="va">sumstat</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
-<span><span class="co">#&gt; Warning in colocboost(sumstat = sumstat): Providing the LD for summary</span></span>
-<span><span class="co">#&gt; statistics data is highly recommended. Without LD, only a single iteration will</span></span>
-<span><span class="co">#&gt; be performed under the assumption of one causal variable per outcome.</span></span>
-<span><span class="co">#&gt; Additionally, the purity of CoS cannot be evaluated!</span></span>
+<span><span class="co">#&gt; Warning in colocboost_validate_input_data(X = X, Y = Y, sumstat = sumstat, :</span></span>
+<span><span class="co">#&gt; Providing the LD for summary statistics data is highly recommended. Without LD,</span></span>
+<span><span class="co">#&gt; only a single iteration will be performed under the assumption of one causal</span></span>
+<span><span class="co">#&gt; variable per outcome. Additionally, the purity of CoS cannot be evaluated!</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
 <span><span class="co">#&gt; Running ColocBoost with assumption of one causal per outcome per region!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>

@@ -618,5 +618,5 @@ names(res$diagnostic_details$cb_model_para)
 #> [25] "coveraged_outcome"     "num_updates_outcome"   "func_multi_test"      
 #> [28] "multi_test_thresh"     "multi_test_max"        "model_used"           
 #> [31] "M"                     "no_coverage_stop"      "weight_fudge_factor"  
-#> [34] "coverage"
+#> [34] "coverage"              "min_abs_corr"          "n_purity"
 ```

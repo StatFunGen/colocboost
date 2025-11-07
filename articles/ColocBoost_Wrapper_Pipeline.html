@@ -51,7 +51,7 @@
       <h1>Bioinformatics Pipeline for ColocBoost</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/simple_fix2/vignettes/ColocBoost_Wrapper_Pipeline.Rmd" class="external-link"><code>vignettes/ColocBoost_Wrapper_Pipeline.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/vignettes/ColocBoost_Wrapper_Pipeline.Rmd" class="external-link"><code>vignettes/ColocBoost_Wrapper_Pipeline.Rmd</code></a></small>
       <div class="d-none name"><code>ColocBoost_Wrapper_Pipeline.Rmd</code></div>
     </div>
 
@@ -68,12 +68,11 @@ and <code>colocboost_pipeline</code> with <a href="https://github.com/StatFunGen
 <li>See more details about input data preparation in
 <code>xqtl_protocol</code> with <a href="https://statfungen.github.io/xqtl-protocol/code/mnm_analysis/mnm_methods/colocboost.html" class="external-link">link</a>.</li>
 </ul>
-<div class="section level2">
-<h2 id="loading-data-using-colocboost_analysis_pipeline-function">1. Loading Data using <code>colocboost_analysis_pipeline</code>
-function<a class="anchor" aria-label="anchor" href="#loading-data-using-colocboost_analysis_pipeline-function"></a>
-</h2>
-<p>This function harmonizes the input data and prepares it for
-colocalization analysis.</p>
+<p>Step 1: Loading individual-level and summary statistics using
+<code>load_multitask_regional_data</code> function from multiple cohorts
+or datasets</p>
+<p>Step 2: Perform ColocBoost using
+<code>colocboost_analysis_pipeline</code> function</p>
 <p>In this section, we introduce how to load the regional data required
 for the ColocBoost analysis using the
 <code>load_multitask_regional_data</code> function. This function loads
@@ -291,7 +290,6 @@ is a tab-separated file with the following columns: -
 <code>end</code>: end position - <code>ld_path, bim_path</code>: path to
 the LD block file and bim file</p>
 <pre><code>1   1000000 2000000 ld_block_1.ld.gz,ld_block_1.bim</code></pre>
-</div>
 </div>
 <div class="section level2">
 <h2 id="perform-colocboost-using-colocboost_analysis_pipeline-function">2. Perform ColocBoost using

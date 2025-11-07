@@ -51,7 +51,7 @@
       <h1>LD mismatch and LD-free Colocalization</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/simple_fix2/vignettes/LD_Free_Colocalization.Rmd" class="external-link"><code>vignettes/LD_Free_Colocalization.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/vignettes/LD_Free_Colocalization.Rmd" class="external-link"><code>vignettes/LD_Free_Colocalization.Rmd</code></a></small>
       <div class="d-none name"><code>LD_Free_Colocalization.Rmd</code></div>
     </div>
 
@@ -235,10 +235,10 @@ is completely unavailable, ColocBoost provides an LD-free approach.</li>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_free</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>sumstat <span class="op">=</span> <span class="va">sumstat</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
-<span><span class="co">#&gt; Warning in colocboost(sumstat = sumstat): Providing the LD for summary</span></span>
-<span><span class="co">#&gt; statistics data is highly recommended. Without LD, only a single iteration will</span></span>
-<span><span class="co">#&gt; be performed under the assumption of one causal variable per outcome.</span></span>
-<span><span class="co">#&gt; Additionally, the purity of CoS cannot be evaluated!</span></span>
+<span><span class="co">#&gt; Warning in colocboost_validate_input_data(X = X, Y = Y, sumstat = sumstat, :</span></span>
+<span><span class="co">#&gt; Providing the LD for summary statistics data is highly recommended. Without LD,</span></span>
+<span><span class="co">#&gt; only a single iteration will be performed under the assumption of one causal</span></span>
+<span><span class="co">#&gt; variable per outcome. Additionally, the purity of CoS cannot be evaluated!</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
 <span><span class="co">#&gt; Running ColocBoost with assumption of one causal per outcome per region!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span></code></pre></div>
@@ -271,11 +271,10 @@ format for summary statistics without LD matrix.</p>
 <span><span class="co"># Run colocboost</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>effect_est <span class="op">=</span> <span class="va">effect_est</span>, effect_se <span class="op">=</span> <span class="va">effect_se</span>, effect_n <span class="op">=</span> <span class="va">effect_n</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
-<span><span class="co">#&gt; Warning in colocboost(effect_est = effect_est, effect_se = effect_se, effect_n</span></span>
-<span><span class="co">#&gt; = effect_n): Providing the LD for summary statistics data is highly</span></span>
-<span><span class="co">#&gt; recommended. Without LD, only a single iteration will be performed under the</span></span>
-<span><span class="co">#&gt; assumption of one causal variable per outcome. Additionally, the purity of CoS</span></span>
-<span><span class="co">#&gt; cannot be evaluated!</span></span>
+<span><span class="co">#&gt; Warning in colocboost_validate_input_data(X = X, Y = Y, sumstat = sumstat, :</span></span>
+<span><span class="co">#&gt; Providing the LD for summary statistics data is highly recommended. Without LD,</span></span>
+<span><span class="co">#&gt; only a single iteration will be performed under the assumption of one causal</span></span>
+<span><span class="co">#&gt; variable per outcome. Additionally, the purity of CoS cannot be evaluated!</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
 <span><span class="co">#&gt; Running ColocBoost with assumption of one causal per outcome per region!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>

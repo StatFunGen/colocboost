@@ -11,10 +11,11 @@ multiple individual-level datasets and/or summary statistics datasets.
 - See more details about input data preparation in `xqtl_protocol` with
   [link](https://statfungen.github.io/xqtl-protocol/code/mnm_analysis/mnm_methods/colocboost.html).
 
-## 1. Loading Data using `colocboost_analysis_pipeline` function
+Step 1: Loading individual-level and summary statistics using
+`load_multitask_regional_data` function from multiple cohorts or
+datasets
 
-This function harmonizes the input data and prepares it for
-colocalization analysis.
+Step 2: Perform ColocBoost using `colocboost_analysis_pipeline` function
 
 In this section, we introduce how to load the regional data required for
 the ColocBoost analysis using the `load_multitask_regional_data`

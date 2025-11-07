@@ -122,12 +122,15 @@ colocboost_plot(res, show_cos_to_uncoloc = TRUE)
 
 ![](Visualization_ColocBoost_Output_files/figure-html/ucos-plot-1.png)
 
-### 2.4. Plot with an added vertical line
+### 2.4. Plot with added highlight points
 
-You can add a vertical line to the plot by setting `add_vertical = TRUE`
-and `add_vertical_idx = **`. This will add a vertical line at the
-specified index. For example, to add a vertical line at true causal
-variants, you can set
+You can highlight specific variants in the plot by setting
+`add_highlight = TRUE` and `add_highlight_idx = **`. This will add red
+dashed vertical lines (defult `add_highlight_style = "vertical_lines"`)
+at the specified index you want to highlight. Alternatively, you can use
+`add_highlight_style = "star"` to change the highlight style to the red
+star for the specified variants. For example, to add a vertical line at
+true causal variants, you can set
 `add_vertical_idx = unique(unlist(Ind_5traits$true_effect_variants))`.
 Following plot also shows the top variants.
 
@@ -135,8 +138,9 @@ Following plot also shows the top variants.
 
 colocboost_plot(
   res, show_top_variables = TRUE, 
-  add_vertical = TRUE, 
-  add_vertical_idx = unique(unlist(Ind_5traits$true_effect_variants))
+  add_highlight = TRUE, 
+  add_highlight_idx = unique(unlist(Ind_5traits$true_effect_variants)),
+  add_highlight_style = "star"
 )
 ```
 

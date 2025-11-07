@@ -29,7 +29,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Plot visualization plot from a ColocBoost output.</h1>
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/simple_fix2/R/colocboost_plot.R" class="external-link"><code>R/colocboost_plot.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/R/colocboost_plot.R" class="external-link"><code>R/colocboost_plot.R</code></a></small>
       <div class="d-none name"><code>colocboost_plot.Rd</code></div>
     </div>
 
@@ -50,8 +50,9 @@
 <span>  plot_focal_cos_outcome_only <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  points_color <span class="op">=</span> <span class="st">"grey80"</span>,</span>
 <span>  cos_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  add_vertical <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  add_vertical_idx <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  add_highlight <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  add_highlight_idx <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  add_highlight_style <span class="op">=</span> <span class="st">"vertical_lines"</span>,</span>
 <span>  outcome_names <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  plot_cols <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  variant_coord <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -122,12 +123,16 @@
 <dd><p>Optional custom colors for CoS.</p></dd>
 
 
-<dt id="arg-add-vertical">add_vertical<a class="anchor" aria-label="anchor" href="#arg-add-vertical"></a></dt>
+<dt id="arg-add-highlight">add_highlight<a class="anchor" aria-label="anchor" href="#arg-add-highlight"></a></dt>
 <dd><p>Logical, if TRUE adds vertical lines at specified positions, default is FALSE</p></dd>
 
 
-<dt id="arg-add-vertical-idx">add_vertical_idx<a class="anchor" aria-label="anchor" href="#arg-add-vertical-idx"></a></dt>
-<dd><p>Optional indices for vertical lines.</p></dd>
+<dt id="arg-add-highlight-idx">add_highlight_idx<a class="anchor" aria-label="anchor" href="#arg-add-highlight-idx"></a></dt>
+<dd><p>Optional indices for add_highlight variables.</p></dd>
+
+
+<dt id="arg-add-highlight-style">add_highlight_style<a class="anchor" aria-label="anchor" href="#arg-add-highlight-style"></a></dt>
+<dd><p>Optional style of add_highlight variables, default is "vertical_lines", other choice is "star" - red star.</p></dd>
 
 
 <dt id="arg-outcome-names">outcome_names<a class="anchor" aria-label="anchor" href="#arg-outcome-names"></a></dt>

@@ -17,8 +17,9 @@ colocboost_plot(
   plot_focal_cos_outcome_only = FALSE,
   points_color = "grey80",
   cos_color = NULL,
-  add_vertical = FALSE,
-  add_vertical_idx = NULL,
+  add_highlight = FALSE,
+  add_highlight_idx = NULL,
+  add_highlight_style = "vertical_lines",
   outcome_names = NULL,
   plot_cols = 2,
   variant_coord = FALSE,
@@ -92,14 +93,19 @@ See detailed instructions in our tutorial portal:
 
   Optional custom colors for CoS.
 
-- add_vertical:
+- add_highlight:
 
   Logical, if TRUE adds vertical lines at specified positions, default
   is FALSE
 
-- add_vertical_idx:
+- add_highlight_idx:
 
-  Optional indices for vertical lines.
+  Optional indices for add_highlight variables.
+
+- add_highlight_style:
+
+  Optional style of add_highlight variables, default is
+  "vertical_lines", other choice is "star" - red star.
 
 - outcome_names:
 
