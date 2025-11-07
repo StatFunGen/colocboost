@@ -10,6 +10,13 @@
 
 ## Software updates
 
+- `v1.0.7` Improvements to ColocBoost (check out the full details in
+  [PR](https://github.com/StatFunGen/colocboost/pull/116)).
+  - Enhanced `colocboost_plot` function with flexible highlighting
+    options and new visualization styles.
+  - Optimized performance and computational efficiency
+  - Improved documentation and examples for the wrapper pipeline
+  - Minor bug fixes for increased stability
 - `v1.0.6` Memory optimization and visualization improvements with bug
   fixes [CRAN](https://CRAN.R-project.org/package=colocboost).
   - Optimized LD-free version to reduce memory usage by eliminating

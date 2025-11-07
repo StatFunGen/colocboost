@@ -68,11 +68,14 @@ and <code>colocboost_pipeline</code> with <a href="https://github.com/StatFunGen
 <li>See more details about input data preparation in
 <code>xqtl_protocol</code> with <a href="https://statfungen.github.io/xqtl-protocol/code/mnm_analysis/mnm_methods/colocboost.html" class="external-link">link</a>.</li>
 </ul>
-<p>Step 1: Loading individual-level and summary statistics using
-<code>load_multitask_regional_data</code> function from multiple cohorts
-or datasets</p>
-<p>Step 2: Perform ColocBoost using
-<code>colocboost_analysis_pipeline</code> function</p>
+<p>Acknowledgements: Thanks to Kate (Kathryn) Lawrence (GitHub:<span class="citation">@kal26</span>) for her contributions to this
+vignette.</p>
+<div class="section level2">
+<h2 id="loading-data-using-colocboost_analysis_pipeline-function">1. Loading Data using <code>colocboost_analysis_pipeline</code>
+function<a class="anchor" aria-label="anchor" href="#loading-data-using-colocboost_analysis_pipeline-function"></a>
+</h2>
+<p>This function harmonizes the input data and prepares it for
+colocalization analysis.</p>
 <p>In this section, we introduce how to load the regional data required
 for the ColocBoost analysis using the
 <code>load_multitask_regional_data</code> function. This function loads
@@ -92,55 +95,81 @@ individual-level data:</p>
 <div class="section level3">
 <h3 id="loading-individual-level-data-from-multiple-cohorts">1.1. Loading individual-level data from multiple cohorts<a class="anchor" aria-label="anchor" href="#loading-individual-level-data-from-multiple-cohorts"></a>
 </h3>
-<p>inputs: - <strong><code>region</code></strong>: String ; Genomic
-region of interest in the format of <code>chr:start-end</code> for the
-phenotype region you want to analyze. -
-<strong><code>genotype_list</code></strong>: Character vector; Paths for
-PLINK bed files containing genotype data (do NOT include .bed suffix). -
-<strong><code>phenotype_list</code></strong>: Character vector; Paths
-for phenotype file names. -
-<strong><code>covariate_list</code></strong>: Character vector; Paths
-for covariate file names for each phenotype. Must have the same length
-as the phenotype file vector. -
+<p>Inputs:</p>
+<ul>
+<li>
+<strong><code>region</code></strong>: String ; Genomic region of
+interest in the format of <code>chr:start-end</code> for the phenotype
+region you want to analyze.</li>
+<li>
+<strong><code>genotype_list</code></strong>: Character vector; Paths
+for PLINK bed files containing genotype data (do NOT include .bed
+suffix).</li>
+<li>
+<strong><code>phenotype_list</code></strong>: Character vector;
+Paths for phenotype file names.</li>
+<li>
+<strong><code>covariate_list</code></strong>: Character vector;
+Paths for covariate file names for each phenotype. Must have the same
+length as the phenotype file vector.</li>
+<li>
 <strong><code>conditions_list_individual</code></strong>: Character
 vector; Strings representing different conditions or groups used for
-naming. Must have the same length as the phenotype file vector. -
-<strong><code>match_geno_pheno</code></strong>: Integer vector; Indices
-of phenotypes matched to genotype if multiple genotype PLINK files are
-used. For each phenotype file in <code>phenotype_list</code>, the index
-of the genotype file in <code>genotype_list</code> it matches with. -
-<strong><code>association_window</code></strong>: String; Genomic region
-of interest in the format of <code>chr:start-end</code> for the
+naming. Must have the same length as the phenotype file vector.</li>
+<li>
+<strong><code>match_geno_pheno</code></strong>: Integer vector;
+Indices of phenotypes matched to genotype if multiple genotype PLINK
+files are used. For each phenotype file in <code>phenotype_list</code>,
+the index of the genotype file in <code>genotype_list</code> it matches
+with.</li>
+<li>
+<strong><code>association_window</code></strong>: String; Genomic
+region of interest in the format of <code>chr:start-end</code> for the
 association analysis window of variants to test (cis or trans). If not
-provided, all genotype data will be loaded. -
+provided, all genotype data will be loaded.</li>
+<li>
 <strong><code>extract_region_name</code></strong>: List of character
 vectors; Phenotype names (e.g., gene ID <code>ENSG00000269699</code>) to
 subset the phenotype data when there are multiple phenotypes availible
 in the region. Must have the same length as the phenotype file vector.
 Default is <code>NULL</code>, which will use all phenotypes in the
-region. - <strong><code>region_name_col</code></strong>: Integer;
-1-based index of the column containing the region name (i.e. 4 for gene
-ID in a bed file). Required if <code>extract_region_name</code> is not
+region.</li>
+<li>
+<strong><code>region_name_col</code></strong>: Integer; 1-based
+index of the column containing the region name (i.e. 4 for gene ID in a
+bed file). Required if <code>extract_region_name</code> is not
 <code>NULL</code>, or if multiple phenotypes fall into the same region
-in one phenotype file - <strong><code>keep_indel</code></strong>:
-Logical; indicating whether to keep insertions/deletions (INDELs).
-Default is <code>TRUE</code>. -
+in one phenotype file</li>
+<li>
+<strong><code>keep_indel</code></strong>: Logical; indicating
+whether to keep insertions/deletions (INDELs). Default is
+<code>TRUE</code>.</li>
+<li>
 <strong><code>keep_samples</code></strong>: Character vector; Sample
 names to keep. Default is <code>NULL</code>. Currently only supports
-keeping the same samples from all genotype and phenotype files. -
-<strong><code>maf_cutoff</code></strong>: Numeric; Minimum minor allele
-frequency (MAF) cutoff. Default is 0. -
-<strong><code>mac_cutoff</code></strong>: Numeric; Minimum minor allele
-count (MAC) cutoff. Default is 0. -
+keeping the same samples from all genotype and phenotype files.</li>
+<li>
+<strong><code>maf_cutoff</code></strong>: Numeric; Minimum minor
+allele frequency (MAF) cutoff. Default is 0.</li>
+<li>
+<strong><code>mac_cutoff</code></strong>: Numeric; Minimum minor
+allele count (MAC) cutoff. Default is 0.</li>
+<li>
 <strong><code>xvar_cutoff</code></strong>: Numeric; Minimum genotype
-variance cutoff. Default is 0. -
-<strong><code>imiss_cutoff</code></strong>: Numeric; Maximum individual
-missingness cutoff. Default is 0.</p>
-<p>outputs: - <strong><code>region_data</code></strong>: List (with
+variance cutoff. Default is 0.</li>
+<li>
+<strong><code>imiss_cutoff</code></strong>: Numeric; Maximum
+individual missingness cutoff. Default is 0.</li>
+</ul>
+<p>Outputs:</p>
+<ul>
+<li>
+<strong><code>region_data</code></strong>: List (with
 <code>individual_data</code>, <code>sumstat_data</code>); Output of the
 <code>load_multitask_regional_data</code> function. If only
 individual-level data is loaded, <code>sumstat_data</code> will be
-<code>NULL</code>.</p>
+<code>NULL</code>.</li>
+</ul>
 <p><strong>Indivudual-level data loading example</strong></p>
 <p>The following example demonstrates how to set up input data with 3
 phenotypes and 2 cohorts. The first cohort has 2 phenotypes and the
@@ -167,7 +196,6 @@ second phenotype has 1 gene.</p>
 <span><span class="va">imiss_cutoff</span> <span class="op">=</span> <span class="fl">0.9</span></span>
 <span></span>
 <span><span class="co"># More advanced parameters see pecotmr::load_multitask_regional_data()</span></span>
-<span></span>
 <span><span class="va">region_data_individual</span> <span class="op">&lt;-</span> <span class="fu">load_multitask_regional_data</span><span class="op">(</span></span>
 <span>    region <span class="op">=</span> <span class="va">region</span>,</span>
 <span>    genotype_list <span class="op">=</span> <span class="va">genotype_list</span>,</span>
@@ -190,42 +218,60 @@ second phenotype has 1 gene.</p>
 <h3 id="loading-summary-statistics-from-multiple-cohorts-or-datasets">1.2. Loading summary statistics from multiple cohorts or
 datasets<a class="anchor" aria-label="anchor" href="#loading-summary-statistics-from-multiple-cohorts-or-datasets"></a>
 </h3>
-<p>inputs: - <strong><code>sumstat_path_list</code></strong>: Character
-vector; Paths to the summary statistics. -
-<strong><code>column_file_path_list</code></strong>: Character vector;
-Paths to the column mapping files. See below for expected format. -
-<strong><code>LD_meta_file_path_list</code></strong>: Character vector;
-Paths to LD metadata files. See below for expected format. -
-<strong><code>conditions_list_sumstat</code></strong>: Character vector;
-Strings representing different sumstats used for naming. Must have the
-same length as the sumstat file vector. -
+<p>Inputs:</p>
+<ul>
+<li>
+<strong><code>sumstat_path_list</code></strong>: Character vector;
+Paths to the summary statistics.</li>
+<li>
+<strong><code>column_file_path_list</code></strong>: Character
+vector; Paths to the column mapping files. See below for expected
+format.</li>
+<li>
+<strong><code>LD_meta_file_path_list</code></strong>: Character
+vector; Paths to LD metadata files. See below for expected format.</li>
+<li>
+<strong><code>conditions_list_sumstat</code></strong>: Character
+vector; Strings representing different sumstats used for naming. Must
+have the same length as the sumstat file vector.</li>
+<li>
 <strong><code>match_LD_sumstat</code></strong>: List of character
 vectors; Mapping each LD metadata file to the summary-statistics
 conditions to pair with it. Length must equal
 <code>LD_meta_file_path_list</code>. Each element is a character vector
 of names present in <code>conditions_list_sumstat</code>. If omitted or
-an element is empty, defaults to all conditions for the first LD. -
-<strong><code>association_window</code></strong>: String; Genomic region
-of interest in the format of <code>chr:start-end</code> for the
+an element is empty, defaults to all conditions for the first LD.</li>
+<li>
+<strong><code>association_window</code></strong>: String; Genomic
+region of interest in the format of <code>chr:start-end</code> for the
 association analysis window of variants to test (cis or trans). If not
-provided, all genotype data will be loaded. -
-<strong><code>n_samples</code></strong>: Integer vector; Sample size.
-Set a 0 if <code>n_cases</code>/<code>n_controls</code> are passed
+provided, all genotype data will be loaded.</li>
+<li>
+<strong><code>n_samples</code></strong>: Integer vector; Sample
+size. Set a 0 if <code>n_cases</code>/<code>n_controls</code> are passed
 explicitly. If unknown, set as 0 and include <code>n_samples</code>
-column in the column mapping file to retrieve from the sumstat file. -
-<strong><code>n_cases</code></strong>: Integer vector; Number of cases.
-Set a 0 if <code>n_samples</code> is passed explicitly. If unknown, set
-as 0 and include <code>n_cases</code> column in the column mapping file
-to retrieve from the sumstat file. -
+column in the column mapping file to retrieve from the sumstat
+file.</li>
+<li>
+<strong><code>n_cases</code></strong>: Integer vector; Number of
+cases. Set a 0 if <code>n_samples</code> is passed explicitly. If
+unknown, set as 0 and include <code>n_cases</code> column in the column
+mapping file to retrieve from the sumstat file.</li>
+<li>
 <strong><code>n_controls</code></strong>: Integer vector; Number of
 controls. Set a 0 if <code>n_samples</code> is passed explicitly. If
 unknown, set as 0 and include <code>n_controls</code> column in the
-column mapping file to retrieve from the sumstat file.</p>
-<p>outputs: - <strong><code>region_data</code></strong>: List (with
+column mapping file to retrieve from the sumstat file.</li>
+</ul>
+<p>Outputs:</p>
+<ul>
+<li>
+<strong><code>region_data</code></strong>: List (with
 <code>individual_data</code>, <code>sumstat_data</code>); Output of the
 <code>load_multitask_regional_data</code> function. If only summary
 statistics data is loaded, <code>individual_data</code> will be
-<code>NULL</code>.</p>
+<code>NULL</code>.</li>
+</ul>
 <p><strong>Summary statistics loading example</strong></p>
 <p>The following example demonstrates how to set up input data with 2
 summary statistics and one LD reference.</p>
@@ -245,7 +291,6 @@ summary statistics and one LD reference.</p>
 <span></span>
 <span></span>
 <span><span class="co"># More advanced parameters see pecotmr::load_multitask_regional_data()</span></span>
-<span></span>
 <span><span class="va">region_data_sumstat</span> <span class="op">&lt;-</span> <span class="fu">load_multitask_regional_data</span><span class="op">(</span></span>
 <span>    sumstat_path_list <span class="op">=</span> <span class="va">sumstat_path_list</span>,</span>
 <span>    column_file_path_list <span class="op">=</span> <span class="va">column_file_path_list</span>,</span>
@@ -257,15 +302,15 @@ summary statistics and one LD reference.</p>
 <span>    n_cases <span class="op">=</span> <span class="va">n_cases</span>,</span>
 <span>    n_controls <span class="op">=</span> <span class="va">n_controls</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><strong>Expected format for column mapping file</strong> The column
-mapping file is YAML (<code>.yml</code>) with key: value pairs mapping
-your input column names to the standardized names expected by the
-loader. Required columns are <code>chrom</code>, <code>pos</code>,
-<code>A1</code>, and <code>A2</code>, and either <code>z</code> or
-<code>beta</code> and <code>sebeta</code>. Either ‘n_case’ and
-‘n_control’ or ‘n_samples’ can be passed as part of the column mapping,
-but will be overwritten by the n_cases and n_controls or n_samples
-parameterspassed explicitly.</p>
+<p><strong>Expected format for column mapping file</strong></p>
+<p>The column mapping file is YAML (<code>.yml</code>) with key: value
+pairs mapping your input column names to the standardized names expected
+by the loader. Required columns are <code>chrom</code>,
+<code>pos</code>, <code>A1</code>, and <code>A2</code>, and either
+<code>z</code> or <code>beta</code> and <code>sebeta</code>. Either
+‘n_case’ and ‘n_control’ or ‘n_samples’ can be passed as part of the
+column mapping, but will be overwritten by the n_cases and n_controls or
+n_samples parameterspassed explicitly.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># required</span></span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">chrom</span><span class="kw">:</span><span class="at"> chromosome</span></span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">pos</span><span class="kw">:</span><span class="at"> position</span></span>
@@ -290,6 +335,7 @@ is a tab-separated file with the following columns: -
 <code>end</code>: end position - <code>ld_path, bim_path</code>: path to
 the LD block file and bim file</p>
 <pre><code>1   1000000 2000000 ld_block_1.ld.gz,ld_block_1.bim</code></pre>
+</div>
 </div>
 <div class="section level2">
 <h2 id="perform-colocboost-using-colocboost_analysis_pipeline-function">2. Perform ColocBoost using
@@ -317,54 +363,76 @@ colocalization analysis in disease-prioritized mode on the the
 individual-level data and each summary statistics dataset separately,
 treating each summary statistics dataset as the focal trait.</li>
 </ul>
-<p>inputs: - <strong><code>region_data</code></strong>: List (with
+<p>Inputs:</p>
+<ul>
+<li>
+<strong><code>region_data</code></strong>: List (with
 <code>individual_data</code>, <code>sumstat_data</code>); Output of the
-<code>load_multitask_regional_data</code> function. -
-<strong><code>focal_trait</code></strong>: String; For xQTL-only mode,
-the name of the trait to perform disease-prioritized ColocBoost, from
-<code>conditions_list_individual</code>. If not provided, xQTL-only mode
-will be run without disease-prioritized mode. -
-<strong><code>event_filters</code></strong>: List of character vectors;
-Patterns for filtering events based on context names. Example: for sQTL,
-<code>list(type_pattern = ".*clu_(\\d+_[+-?]).*", valid_pattern = "clu_(\\d+_[+-?]):PR:", exclude_pattern = "clu_(\\d+_[+-?]):IN:")</code>.
-- <strong><code>maf_cutoff</code></strong>: Numeric; Minor allele
-frequency cutoff. Default is 0.005. -
-<strong><code>pip_cutoff_to_skip_ind</code></strong>: Integer vector;
-Cutoff values for skipping analysis based on pre-screening with
+<code>load_multitask_regional_data</code> function.</li>
+<li>
+<strong><code>focal_trait</code></strong>: String; For xQTL-only
+mode, the name of the trait to perform disease-prioritized ColocBoost,
+from <code>conditions_list_individual</code>. If not provided, xQTL-only
+mode will be run without disease-prioritized mode.</li>
+<li>
+<strong><code>event_filters</code></strong>: List of character
+vectors; Patterns for filtering events based on context names. Example:
+for sQTL,
+<code>list(type_pattern = ".*clu_(\\d+_[+-?]).*", valid_pattern = "clu_(\\d+_[+-?]):PR:", exclude_pattern = "clu_(\\d+_[+-?]):IN:")</code>.</li>
+<li>
+<strong><code>maf_cutoff</code></strong>: Numeric; Minor allele
+frequency cutoff. Default is 0.005.</li>
+<li>
+<strong><code>pip_cutoff_to_skip_ind</code></strong>: Integer
+vector; Cutoff values for skipping analysis based on pre-screening with
 single-effect SuSiE (L=1). Context is skipped if none of the variants in
 the context have PIP values greater than the cutoff. Default is 0 (does
 not run single-effect SuSiE). Passing a negative value sets the cutoff
-to 3/number of variants. -
+to 3/number of variants.</li>
+<li>
 <strong><code>pip_cutoff_to_skip_sumstat</code></strong>: Integer
 vector; Cutoff values for skipping analysis based on pre-screening with
 single-effect SuSiE (L=1). Sumstat is skipped if none of the variants in
 the sumstat have PIP values greater than the cutoff. Default is 0 (does
 not run single-effect SuSiE). Passing a negative value sets the cutoff
-to 3/number of variants. - <strong><code>qc_method</code></strong>:
-String; Quality control method to use. Options are “rss_qc”, “dentist”,
-or “slalom”. Default is <code>rss_qc</code>. -
+to 3/number of variants.</li>
+<li>
+<strong><code>qc_method</code></strong>: String; Quality control
+method to use. Options are “rss_qc”, “dentist”, or “slalom”. Default is
+<code>rss_qc</code>.</li>
+<li>
 <strong><code>impute</code></strong>: Logical; if TRUE, performs
 imputation for outliers identified in the analysis. Default is
-<code>TRUE</code>. - <strong><code>impute_opts</code></strong>: List of
-lists; Imputation options including rcond, R2_threshold, and minimum_ld.
-Default is
-<code>list(rcond = 0.01, R2_threshold = 0.6, minimum_ld = 5)</code>. -
+<code>TRUE</code>.</li>
+<li>
+<strong><code>impute_opts</code></strong>: List of lists; Imputation
+options including rcond, R2_threshold, and minimum_ld. Default is
+<code>list(rcond = 0.01, R2_threshold = 0.6, minimum_ld = 5)</code>.</li>
+<li>
 <strong><code>xqtl_coloc</code></strong>: Logical; if TRUE, performs
-xQTL-only mode. Default is <code>TRUE</code>. -
+xQTL-only mode. Default is <code>TRUE</code>.</li>
+<li>
 <strong><code>joint_gwas</code></strong>: Logical; if TRUE, performs
 joint GWAS mode, mapping all individual-level and sumstat data
-together.Default is <code>FALSE</code>. -
+together.Default is <code>FALSE</code>.</li>
+<li>
 <strong><code>separate_gwas</code></strong>: Logical; if TRUE, runs
 separate GWAS mode, where each sumstat dataset is analyzed separately
 with all individual-level data, treating each sumstat as the focal trait
-in disease-prioritized mode. Default is <code>FALSE</code>.</p>
-<p>outputs: - <strong><code>colocboost_results</code></strong>: List of
-colocboost objects (with <code>xqtl_coloc</code>,
-<code>joint_gwas</code>, <code>separate_gwas</code>); Output of the
+in disease-prioritized mode. Default is <code>FALSE</code>.</li>
+</ul>
+<p>Outputs:</p>
+<ul>
+<li>
+<strong><code>colocboost_results</code></strong>: List of colocboost
+objects (with <code>xqtl_coloc</code>, <code>joint_gwas</code>,
+<code>separate_gwas</code>); Output of the
 <code>colocboost_analysis_pipeline</code> function. If the mode is not
-run, the corresponding element will be <code>NULL</code>.</p>
+run, the corresponding element will be <code>NULL</code>.</li>
+</ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># load in individual-level and sumstat data</span></span>
+<code class="sourceCode R"><span><span class="co">#### Please check the example code below ####</span></span>
+<span><span class="co"># # load in individual-level and sumstat data</span></span>
 <span><span class="va">region_data_combined</span> <span class="op">&lt;-</span> <span class="fu">load_multitask_regional_data</span><span class="op">(</span></span>
 <span>    region <span class="op">=</span> <span class="va">region</span>,</span>
 <span>    genotype_list <span class="op">=</span> <span class="va">genotype_list</span>,</span>
