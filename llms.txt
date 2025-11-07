@@ -1,0 +1,164 @@
+![](reference/figures/colocboost.jpg)
+
+This R package implements ColocBoost—motivated and designed for
+colocalization analysis of multiple genetic association studies—as a
+multi-task learning approach to variable selection regression with
+highly correlated predictors and sparse effects, based on frequentist
+statistical inference. It provides statistical evidence to identify
+which subsets of predictors have non-zero effects on which subsets of
+response variables.
+
+## Quick Start
+
+### CRAN Installation (Stable Release)
+
+Install major and stable releases from CRAN (Linux, macOS and Windows)
+
+``` r
+
+install.packages("colocboost")
+```
+
+### GitHub Installation
+
+Install the development version from GitHub
+
+``` r
+
+devtools::install_github("StatFunGen/colocboost")
+```
+
+For a detailed installation guidance, please refer to
+[Installation](https://statfungen.github.io/colocboost/articles/installation.html).
+
+## Tutorial Website
+
+Learn how to perform colocalization analysis with step-by-step examples.
+For detailed tutorials and use cases in
+[Tutorials](https://statfungen.github.io/colocboost/articles/index.html).
+
+## Citation
+
+If you use ColocBoost in your research, please cite:
+
+> Cao X, Sun H, Feng R, Mazumder R, Najar CFB, Li YI, de Jager PL,
+> Bennett D, The Alzheimer’s Disease Functional Genomics Consortium, Dey
+> KK, Wang G. (2025+). Integrative multi-omics QTL colocalization maps
+> regulatory architecture in aging human brain. medRxiv.
+> <https://doi.org/10.1101/2025.04.17.25326042>
+
+## License
+
+This package is released under the MIT License.
+
+# Package index
+
+## Example Data
+
+Example datasets for demonstration and testing.
+
+- [`Ambiguous_Colocalization`](https://statfungen.github.io/colocboost/reference/Ambiguous_Colocalization.md)
+  : A real data example includes an ambiguous colocalization between
+  eQTL and GWAS
+- [`Heterogeneous_Effect`](https://statfungen.github.io/colocboost/reference/Heterogeneous_Effect.md)
+  : Individual level data for 2 traits and 2 causal variants with
+  heterogeneous effects
+- [`Ind_5traits`](https://statfungen.github.io/colocboost/reference/Ind_5traits.md)
+  : Individual level data for 5 traits
+- [`Non_Causal_Strongest_Marginal`](https://statfungen.github.io/colocboost/reference/Non_Causal_Strongest_Marginal.md)
+  : Individual level data for 2 traits and 2 causal variants, but the
+  strongest marginal association is not causal
+- [`Sumstat_5traits`](https://statfungen.github.io/colocboost/reference/Sumstat_5traits.md)
+  : Summary level data for 5 traits
+- [`Weaker_GWAS_Effect`](https://statfungen.github.io/colocboost/reference/Weaker_GWAS_Effect.md)
+  : Individual level data for 2 traits and 2 causal variants with weaker
+  effects for focal trait
+
+## Model fitting
+
+Main interface function for fitting multi-trait colocalization model.
+
+- [`colocboost()`](https://statfungen.github.io/colocboost/reference/colocboost.md)
+  : ColocBoost: A gradient boosting informed multi-omics xQTL
+  colocalization method
+
+## Inference and summary
+
+Functions for inference and summary from fitted model.
+
+- [`get_robust_colocalization()`](https://statfungen.github.io/colocboost/reference/get_robust_colocalization.md)
+  : Recalibrate and summarize robust colocalization events.
+- [`get_colocboost_summary()`](https://statfungen.github.io/colocboost/reference/get_colocboost_summary.md)
+  : Get summary tables from a ColocBoost output.
+- [`get_ambiguous_colocalization()`](https://statfungen.github.io/colocboost/reference/get_ambiguous_colocalization.md)
+  : Get ambiguous colocalization events from trait-specific
+  (uncolocalized) effects.
+
+## Visualization
+
+Functions for visualizing ColocBoost result.
+
+- [`colocboost_plot()`](https://statfungen.github.io/colocboost/reference/colocboost_plot.md)
+  : Plot visualization plot from a ColocBoost output.
+
+## Utilities
+
+Helper functions and utilities
+
+- [`get_cormat()`](https://statfungen.github.io/colocboost/reference/get_cormat.md)
+  : A fast function to calculate correlation matrix (LD matrix) from
+  individual level data
+- [`get_cos()`](https://statfungen.github.io/colocboost/reference/get_cos.md)
+  : Extract CoS at different coverage
+- [`get_cos_purity()`](https://statfungen.github.io/colocboost/reference/get_cos_purity.md)
+  : Calculate purity within and in-between CoS
+- [`get_cos_summary()`](https://statfungen.github.io/colocboost/reference/get_cos_summary.md)
+  : Get colocalization summary table from a ColocBoost output.
+- [`get_hierarchical_clusters()`](https://statfungen.github.io/colocboost/reference/get_hierarchical_clusters.md)
+  : Perform modularity-based hierarchical clustering for a correlation
+  matrix
+- [`get_ucos_summary()`](https://statfungen.github.io/colocboost/reference/get_ucos_summary.md)
+  : Get trait-specific summary table from a ColocBoost output.
+
+# Articles
+
+### Performing Colocalization using ColocBoost
+
+Tutorials on how to perform multi-trait colocalization analysis using
+ColocBoost with flexible input data formats.
+
+- [Input Data
+  Format](https://statfungen.github.io/colocboost/articles/Input_Data_Format.md):
+- [Individual Level Data
+  Colocalization](https://statfungen.github.io/colocboost/articles/Individual_Level_Colocalization.md):
+- [Summary Statistics Data
+  Colocalization](https://statfungen.github.io/colocboost/articles/Summary_Statistics_Colocalization.md):
+- [Mixed Data-type and Disease Prioritized
+  Colocalization](https://statfungen.github.io/colocboost/articles/Disease_Prioritized_Colocalization.md):
+
+### Interpretation and Visualization
+
+Tutorials on how to interpret and visualize the output from ColocBoost.
+
+- [Interpret ColocBoost
+  Output](https://statfungen.github.io/colocboost/articles/Interpret_ColocBoost_Output.md):
+- [Visualization of ColocBoost
+  Results](https://statfungen.github.io/colocboost/articles/Visualization_ColocBoost_Output.md):
+
+### Advanced Topics
+
+Advanced topics and special cases in colocalization and fine-mapping
+analysis.
+
+- [Handling partial overlapping variants across traits in
+  ColocBoost](https://statfungen.github.io/colocboost/articles/Partial_Overlap_Variants.md):
+- [Animation Example: Proximity Gradient Boosting
+  Algorithm](https://statfungen.github.io/colocboost/articles/ColocBoost_Update.md):
+- [Bioinformatics Pipeline for
+  ColocBoost](https://statfungen.github.io/colocboost/articles/ColocBoost_Wrapper_Pipeline.md):
+- [LD mismatch and LD-free
+  Colocalization](https://statfungen.github.io/colocboost/articles/LD_Free_Colocalization.md):
+- [Ambiguous Colocalization from Trait-Specific
+  Effects](https://statfungen.github.io/colocboost/articles/Ambiguous_Colocalization.md):
+- [Single-trait Fine-mapping with
+  FineBoost](https://statfungen.github.io/colocboost/articles/FineBoost_Special_Case.md):

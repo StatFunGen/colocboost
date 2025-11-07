@@ -1,5 +1,5 @@
-pandoc: '3.8'
-pkgdown: 2.1.3
+pandoc: 3.8.2.1
+pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   Ambiguous_Colocalization: Ambiguous_Colocalization.html
@@ -17,7 +17,7 @@ articles:
   Partial_Overlap_Variants: Partial_Overlap_Variants.html
   Summary_Statistics_Colocalization: Summary_Statistics_Colocalization.html
   Visualization_ColocBoost_Output: Visualization_ColocBoost_Output.html
-last_built: 2025-09-09T09:15Z
+last_built: 2025-11-07T03:18Z
 urls:
   reference: https://statfungen.github.io/colocboost/reference
   article: https://statfungen.github.io/colocboost/articles

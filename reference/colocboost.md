@@ -1,0 +1,451 @@
+# ColocBoost: A gradient boosting informed multi-omics xQTL colocalization method
+
+`colocboost` implements a proximity adaptive smoothing gradient boosting
+approach for multi-trait colocalization at gene loci, accommodating
+multiple causal variants. This method, introduced by Cao etc. (2025), is
+particularly suited for scaling to large datasets involving numerous
+molecular quantitative traits and disease traits. In brief, this
+function fits a multiple linear regression model \\Y = XB + E\\ in
+matrix form. ColocBoost can be generally used in multi-task variable
+selection regression problem.
+
+## Usage
+
+``` r
+colocboost(
+  X = NULL,
+  Y = NULL,
+  sumstat = NULL,
+  LD = NULL,
+  dict_YX = NULL,
+  dict_sumstatLD = NULL,
+  outcome_names = NULL,
+  focal_outcome_idx = NULL,
+  focal_outcome_variables = TRUE,
+  overlap_variables = FALSE,
+  intercept = TRUE,
+  standardize = TRUE,
+  effect_est = NULL,
+  effect_se = NULL,
+  effect_n = NULL,
+  M = 500,
+  stop_thresh = 1e-06,
+  tau = 0.01,
+  learning_rate_init = 0.01,
+  learning_rate_decay = 1,
+  dynamic_learning_rate = TRUE,
+  prioritize_jkstar = TRUE,
+  func_compare = "min_max",
+  jk_equiv_corr = 0.8,
+  jk_equiv_loglik = 1,
+  coloc_thresh = 0.1,
+  lambda = 0.5,
+  lambda_focal_outcome = 1,
+  func_simplex = "LD_z2z",
+  func_multi_test = "lfdr",
+  stop_null = 1,
+  multi_test_max = 1,
+  multi_test_thresh = 1,
+  ash_prior = "normal",
+  p.adjust.methods = "fdr",
+  residual_correlation = NULL,
+  coverage = 0.95,
+  min_cluster_corr = 0.8,
+  dedup = TRUE,
+  overlap = TRUE,
+  n_purity = 100,
+  min_abs_corr = 0.5,
+  median_abs_corr = NULL,
+  median_cos_abs_corr = 0.8,
+  tol = 1e-09,
+  merge_cos = TRUE,
+  sec_coverage_thresh = 0.8,
+  weight_fudge_factor = 1.5,
+  check_null = 0.1,
+  check_null_method = "profile",
+  check_null_max = 0.025,
+  check_null_max_ucos = 0.015,
+  weaker_effect = TRUE,
+  LD_free = FALSE,
+  output_level = 1
+)
+```
+
+## Source
+
+See detailed instructions in our tutorial portal:
+<https://statfungen.github.io/colocboost/index.html>
+
+## Arguments
+
+- X:
+
+  A list of genotype matrices for different outcomes, or a single matrix
+  if all outcomes share the same genotypes. Each matrix should have
+  column names, if sample sizes and variables possibly differing across
+  matrices.
+
+- Y:
+
+  A list of vectors of outcomes or an N by L matrix if it is considered
+  for the same X and multiple outcomes.
+
+- sumstat:
+
+  A list of data.frames of summary statistics. The columns of data.frame
+  should include either `z` or `beta`/`sebeta`. `n` is the sample size
+  for the summary statistics, it is highly recommendation to provide.
+  `variant` is required if sumstat for different outcomes do not have
+  the same number of variables. `var_y` is the variance of phenotype
+  (default is 1 meaning that the Y is in the “standardized” scale).
+
+- LD:
+
+  A list of correlation matrix indicating the LD matrix for each
+  genotype. It also could be a single matrix if all sumstats were
+  obtained from the same genotypes.
+
+- dict_YX:
+
+  A L by 2 matrix of dictionary for `X` and `Y` if there exist subsets
+  of outcomes corresponding to the same X matrix. The first column
+  should be 1:L for L outcomes. The second column should be the index of
+  `X` corresponding to the outcome. The innovation: do not provide the
+  same matrix in `X` to reduce the computational burden.
+
+- dict_sumstatLD:
+
+  A L by 2 matrix of dictionary for `sumstat` and `LD` if there exist
+  subsets of outcomes corresponding to the same sumstat. The first
+  column should be 1:L for L sumstat The second column should be the
+  index of `LD` corresponding to the sumstat. The innovation: do not
+  provide the same matrix in `LD` to reduce the computational burden.
+
+- outcome_names:
+
+  The names of outcomes, which has the same order for Y.
+
+- focal_outcome_idx:
+
+  The index of the focal outcome if perform GWAS-xQTL ColocBoost
+
+- focal_outcome_variables:
+
+  If `focal_outcome_variables = TRUE`, only consider the variables exist
+  in the focal outcome.
+
+- overlap_variables:
+
+  If `overlap_variables = TRUE`, only perform colocalization in the
+  overlapped region.
+
+- intercept:
+
+  If `intercept = TRUE`, the intercept is fitted. Setting
+  `intercept = FALSE` is generally not recommended.
+
+- standardize:
+
+  If `standardize = TRUE`, standardize the columns of genotype and
+  outcomes to unit variance.
+
+- effect_est:
+
+  Matrix of variable regression coefficients (i.e. regression beta
+  values) in the genomic region
+
+- effect_se:
+
+  Matrix of standard errors associated with the beta values
+
+- effect_n:
+
+  A scalar or a vector of sample sizes for estimating regression
+  coefficients. Highly recommended!
+
+- M:
+
+  The maximum number of gradient boosting rounds for each outcome
+  (default is 500).
+
+- stop_thresh:
+
+  The stop criterion for overall profile loglikelihood function.
+
+- tau:
+
+  The smooth parameter for proximity adaptive smoothing weights for the
+  best update jk-star.
+
+- learning_rate_init:
+
+  The minimum learning rate for updating in each iteration.
+
+- learning_rate_decay:
+
+  The decayrate for learning rate. If the objective function is large at
+  the early iterations, we need to have the higher learning rate to
+  improve the computational efficiency.
+
+- dynamic_learning_rate:
+
+  If `dynamic_learning_rate = TRUE`, the dynamic learning rate based on
+  `learning_rate_init` and `learning_rate_decay` will be used in SEC.
+
+- prioritize_jkstar:
+
+  When `prioritize_jkstar = TRUE`, the selected outcomes will prioritize
+  best update j_k^star in SEC.
+
+- func_compare:
+
+  The criterion when we update jk-star in SEC (default is "min_max").
+
+- jk_equiv_corr:
+
+  The LD cutoff between overall best update jk-star and marginal best
+  update jk-l for lth outcome
+
+- jk_equiv_loglik:
+
+  The change of loglikelihood cutoff between overall best update jk-star
+  and marginal best update jk-l for lth outcome
+
+- coloc_thresh:
+
+  The cutoff of checking if the best update jk-star is the potential
+  causal variable for outcome l if jk-l is not similar to jk-star (used
+  in Delayed SEC).
+
+- lambda:
+
+  The ratio \[0,1\] for z^2 and z in fun_prior simplex, default is 0.5
+
+- lambda_focal_outcome:
+
+  The ratio for z^2 and z in fun_prior simplex for the focal outcome,
+  default is 1
+
+- func_simplex:
+
+  The data-driven local association simplex \\\delta\\ for smoothing the
+  weights. Default is "LD_z2z" is the elastic net for z-score and also
+  weighted by LD.
+
+- func_multi_test:
+
+  The alternative method to check the stop criteria. When
+  `func_multi_test = "lfdr"`, boosting iterations will be stopped if the
+  local FDR for all variables are greater than `lfsr_max`.
+
+- stop_null:
+
+  The cutoff of nominal p-value when `func_multi_test = "Z"`.
+
+- multi_test_max:
+
+  The cutoff of the smallest FDR for stop criteria when
+  `func_multi_test = "lfdr"` or `func_multi_test = "lfsr"`.
+
+- multi_test_thresh:
+
+  The cutoff of the smallest FDR for pre-filtering the outcomes when
+  `func_multi_test = "lfdr"` or `func_multi_test = "lfsr"`.
+
+- ash_prior:
+
+  The prior distribution for calculating lfsr when
+  `func_multi_test = "lfsr"`.
+
+- p.adjust.methods:
+
+  The adjusted pvalue method in stats:p.adj when
+  `func_multi_test = "fdr"`
+
+- residual_correlation:
+
+  The residual correlation based on the sample overlap, it is diagonal
+  if it is NULL.
+
+- coverage:
+
+  A number between 0 and 1 specifying the “coverage” of the estimated
+  colocalization confidence sets (CoS) (default is 0.95).
+
+- min_cluster_corr:
+
+  The small correlation for the weights distributions across different
+  iterations to be decided having only one cluster.
+
+- dedup:
+
+  If `dedup = TRUE`, the duplicate confidence sets will be removed in
+  the post-processing.
+
+- overlap:
+
+  If `overlap = TRUE`, the overlapped confidence sets will be removed in
+  the post-processing.
+
+- n_purity:
+
+  The maximum number of confidence set (CS) variables used in
+  calculating the correlation (“purity”) statistics. When the number of
+  variables included in the CS is greater than this number, the CS
+  variables are randomly subsampled.
+
+- min_abs_corr:
+
+  Minimum absolute correlation allowed in a confidence set. The default
+  is 0.5 corresponding to a squared correlation of 0.25, which is a
+  commonly used threshold for genotype data in genetic studies.
+
+- median_abs_corr:
+
+  An alternative "purity" threshold for the CS. Median correlation
+  between pairs of variables in a CS less than this threshold will be
+  filtered out and not reported. When both min_abs_corr and
+  median_abs_corr are set, a CS will only be removed if it fails both
+  filters. Default set to NULL but it is recommended to set it to 0.8 in
+  practice.
+
+- median_cos_abs_corr:
+
+  Median absolute correlation between variants allowed to merge multiple
+  colocalized sets. The default is 0.8 corresponding to a stringent
+  threshold to merge colocalized sets, which may resulting in a huge
+  set.
+
+- tol:
+
+  A small, non-negative number specifying the convergence tolerance for
+  checking the overlap of the variables in different sets.
+
+- merge_cos:
+
+  When `merge_cos = TRUE`, the sets for only one outcome will be merged
+  if passed the `median_cos_abs_corr`.
+
+- sec_coverage_thresh:
+
+  A number between 0 and 1 specifying the weight in each SEC (default is
+  0.8).
+
+- weight_fudge_factor:
+
+  The strength to integrate weight from different outcomes, default is
+  1.5
+
+- check_null:
+
+  The cut off value for change conditional objective function. Default
+  is 0.1.
+
+- check_null_method:
+
+  The metric to check the null sets. Default is "profile"
+
+- check_null_max:
+
+  The smallest value of change of profile loglikelihood for each outcome
+  in CoS.
+
+- check_null_max_ucos:
+
+  The smallest value of change of profile loglikelihood for each outcome
+  in uCoS.
+
+- weaker_effect:
+
+  If `weaker_effect = TRUE`, consider the weaker single effect due to
+  coupling effects
+
+- LD_free:
+
+  When `LD_free = FALSE`, objective function doesn't include LD
+  information.
+
+- output_level:
+
+  When `output_level = 1`, return basic cos details for colocalization
+  results When `output_level = 2`, return the ucos details for the
+  single specific effects. When `output_level = 3`, return the entire
+  Colocboost model to diagnostic results (more space).
+
+## Value
+
+A `"colocboost"` object with some or all of the following elements:
+
+- cos_summary:
+
+  A summary table for colocalization events.
+
+- vcp:
+
+  The variable colocalized probability for each variable.
+
+- cos_details:
+
+  A object with all information for colocalization results.
+
+- data_info:
+
+  A object with detailed information from input data
+
+- model_info:
+
+  A object with detailed information for colocboost model
+
+- ucos_details:
+
+  A object with all information for trait-specific effects when
+  `output_level = 2`.
+
+- diagnositci_details:
+
+  A object with diagnostic details for ColocBoost model when
+  `output_level = 3`.
+
+## Details
+
+The function `colocboost` implements the proximity smoothed gradient
+boosting method from Cao etc (2025). There is an additional step to help
+merge the confidence sets with small `between_putiry` (default is 0.8)
+but within the same locus. This step addresses potential instabilities
+in linkage disequilibrium (LD) estimation that may arise from small
+sample sizes or discrepancies in minor allele frequencies (MAF) across
+different confidence sets.
+
+## Examples
+
+``` r
+# colocboost example
+set.seed(1)
+N <- 1000
+P <- 100
+# Generate X with LD structure
+sigma <- 0.9^abs(outer(1:P, 1:P, "-"))
+X <- MASS::mvrnorm(N, rep(0, P), sigma)
+colnames(X) <- paste0("SNP", 1:P)
+L <- 3
+true_beta <- matrix(0, P, L)
+true_beta[10, 1] <- 0.5 # SNP10 affects trait 1
+true_beta[10, 2] <- 0.4 # SNP10 also affects trait 2 (colocalized)
+true_beta[50, 2] <- 0.3 # SNP50 only affects trait 2
+true_beta[80, 3] <- 0.6 # SNP80 only affects trait 3
+Y <- matrix(0, N, L)
+for (l in 1:L) {
+  Y[, l] <- X %*% true_beta[, l] + rnorm(N, 0, 1)
+}
+res <- colocboost(X = X, Y = Y)
+#> Validating input data.
+#> Starting gradient boosting algorithm.
+#> Gradient boosting for outcome 1 converged after 98 iterations!
+#> Gradient boosting for outcome 3 converged after 106 iterations!
+#> Gradient boosting for outcome 2 converged after 107 iterations!
+#> Performing inference on colocalization events.
+res$cos_details$cos$cos_index
+#> $`cos1:y1_y2`
+#> [1] 10  9
+#> 
+```
