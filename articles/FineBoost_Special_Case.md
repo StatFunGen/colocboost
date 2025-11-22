@@ -30,6 +30,8 @@ res <- colocboost(X = X, Y = Y)
 #> Starting gradient boosting algorithm.
 #> Gradient boosting for outcome 1 converged after 44 iterations!
 #> Performing inference on colocalization events.
+#> Warning in get_robust_colocalization(cb_output = cb_output, cos_npc_cutoff =
+#> cos_npc_cutoff, : No colocalization results in this region!
 colocboost_plot(res)
 ```
 
@@ -52,6 +54,8 @@ res <- colocboost(sumstat = sumstat, LD = LD)
 #> Starting gradient boosting algorithm.
 #> Gradient boosting for outcome 1 converged after 44 iterations!
 #> Performing inference on colocalization events.
+#> Warning in get_robust_colocalization(cb_output = cb_output, cos_npc_cutoff =
+#> cos_npc_cutoff, : No colocalization results in this region!
 colocboost_plot(res)
 ```
 
@@ -76,6 +80,8 @@ res <- colocboost(sumstat = sumstat)
 #> Starting gradient boosting algorithm.
 #> Running ColocBoost with assumption of one causal per outcome per region!
 #> Performing inference on colocalization events.
+#> Warning in get_robust_colocalization(cb_output = cb_output, cos_npc_cutoff =
+#> cos_npc_cutoff, : No colocalization results in this region!
 colocboost_plot(res)
 ```
 

@@ -157,6 +157,7 @@ res <- colocboost(X = X, Y = Y, output_level = 2)
 #> Starting gradient boosting algorithm.
 #> Gradient boosting for outcome 1 converged after 60 iterations!
 #> Performing inference on colocalization events.
+#> Warning: No colocalization results in this region!
 # Get the trait-specifc effect summary
 get_ucos_summary(res)
 #>   outcomes  ucos_id    purity top_variable top_variable_vpa n_variables

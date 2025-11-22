@@ -29,6 +29,8 @@ res <- colocboost(X = Ind_5traits$X, Y = Ind_5traits$Y)
 #> Gradient boosting for outcome 3 converged after 91 iterations!
 #> Gradient boosting for outcome 2 converged after 94 iterations!
 #> Performing inference on colocalization events.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 ```
 
 ## 1. Default plot function
@@ -179,6 +181,8 @@ res <- colocboost(X = c(X, list(X1)), Y = c(Y, list(Y1)), output_level = 2)
 #> Gradient boosting for outcome 4 converged after 103 iterations!
 #> Gradient boosting for outcome 2 converged after 113 iterations!
 #> Performing inference on colocalization events.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 colocboost_plot(res, plot_ucos = TRUE)
 ```
 
@@ -223,6 +227,8 @@ res <- colocboost(X = X, Y = Y,
 #> Gradient boosting for outcome 3 converged after 66 iterations!
 #> Gradient boosting for outcome 2 converged after 77 iterations!
 #> Performing inference on colocalization events.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 
 # Only plot CoS with focal trait
 colocboost_plot(res, plot_focal_only = TRUE)

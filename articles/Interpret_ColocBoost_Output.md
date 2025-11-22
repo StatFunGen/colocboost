@@ -32,6 +32,8 @@ res <- colocboost(X = Ind_5traits$X, Y = Ind_5traits$Y)
 #> Gradient boosting for outcome 3 converged after 91 iterations!
 #> Gradient boosting for outcome 2 converged after 94 iterations!
 #> Performing inference on colocalization events.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 cos_summary <- res$cos_summary
 names(cos_summary)
 #>  [1] "focal_outcome"             "colocalized_outcomes"     
@@ -150,6 +152,8 @@ res <- colocboost(X = X, Y = Y, sumstat = sumstat, LD = LD)
 #> Gradient boosting for outcome 3 converged after 91 iterations!
 #> Gradient boosting for outcome 2 converged after 94 iterations!
 #> Performing inference on colocalization events.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 ```
 
 ### 3.1. Variant colocalization probability (**`vcp`**)
@@ -439,6 +443,8 @@ res <- colocboost(X = c(X, list(X1)), Y = c(Y, list(Y1)), output_level = 2)
 #> Gradient boosting for outcome 4 converged after 103 iterations!
 #> Gradient boosting for outcome 2 converged after 113 iterations!
 #> Performing inference on colocalization events.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 names(res$ucos_details)
 #> [1] "ucos"                "ucos_outcomes"       "ucos_weight"        
 #> [4] "ucos_top_variables"  "ucos_purity"         "cos_ucos_purity"    
@@ -575,6 +581,8 @@ res <- colocboost(X = X, Y = Y, output_level = 3)
 #> Gradient boosting for outcome 3 converged after 91 iterations!
 #> Gradient boosting for outcome 2 converged after 94 iterations!
 #> Performing inference on colocalization events.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 ```
 
 - **`cb_model`**: trait-specific proximity gradient boosting model,

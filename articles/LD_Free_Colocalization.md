@@ -94,9 +94,11 @@ res <- colocboost(sumstat = sumstat, LD = LD)
 #> : Warning message: potential sumstat & LD mismatch may happens for outcome 2 .
 #> Using logLR = CoS(profile) - max(profile). Please check our website
 #> https://statfungen.github.io/colocboost/articles/.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 res$cos_details$cos$cos_index
-#> $`cos1:y1_y2_y3_y4`
-#> [1] 229 186 194 205 168
+#> $`cos1:y1_y3_y4`
+#> [1] 186 205 194 168 218 228 229
 ```
 
 These warnings serve as diagnostic tools to alert users about potential
@@ -168,6 +170,8 @@ res_mismatch <- colocboost(sumstat = sumstat, LD = LD, M = 1)
 #> Starting gradient boosting algorithm.
 #> Running ColocBoost with assumption of one causal per outcome per region!
 #> Performing inference on colocalization events.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 ```
 
 - **LD-free**: when the mismatch between the LD matrix and summary
@@ -185,6 +189,8 @@ res_free <- colocboost(sumstat = sumstat)
 #> Starting gradient boosting algorithm.
 #> Running ColocBoost with assumption of one causal per outcome per region!
 #> Performing inference on colocalization events.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 ```
 
 While this method is computationally efficient, it has limitations due
@@ -226,6 +232,8 @@ res <- colocboost(effect_est = effect_est, effect_se = effect_se, effect_n = eff
 #> Starting gradient boosting algorithm.
 #> Running ColocBoost with assumption of one causal per outcome per region!
 #> Performing inference on colocalization events.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 
 # Identified CoS
 res$cos_details$cos$cos_index

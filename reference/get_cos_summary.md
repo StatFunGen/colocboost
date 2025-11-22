@@ -131,6 +131,8 @@ res <- colocboost(X = X, Y = Y)
 #> Gradient boosting for outcome 3 converged after 106 iterations!
 #> Gradient boosting for outcome 2 converged after 107 iterations!
 #> Performing inference on colocalization events.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 get_cos_summary(res)
 #>   focal_outcome colocalized_outcomes     cos_id    purity top_variable
 #> 1         FALSE               Y1; Y2 cos1:y1_y2 0.9047605        SNP10

@@ -149,9 +149,11 @@ algorithm takes longer to converge.</p>
 <span><span class="co">#&gt; : Warning message: potential sumstat &amp; LD mismatch may happens for outcome 2 .</span></span>
 <span><span class="co">#&gt; Using logLR = CoS(profile) - max(profile). Please check our website</span></span>
 <span><span class="co">#&gt; https://statfungen.github.io/colocboost/articles/.</span></span>
+<span><span class="co">#&gt; Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.</span></span>
+<span><span class="co">#&gt; Keep only CoS with cos_npc &gt;= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001 and npc_outcome &gt;0.2.</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
-<span><span class="co">#&gt; $`cos1:y1_y2_y3_y4`</span></span>
-<span><span class="co">#&gt; [1] 229 186 194 205 168</span></span></code></pre></div>
+<span><span class="co">#&gt; $`cos1:y1_y3_y4`</span></span>
+<span><span class="co">#&gt; [1] 186 205 194 168 218 228 229</span></span></code></pre></div>
 <p>These warnings serve as diagnostic tools to alert users about
 potential inconsistencies in the input data.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -225,7 +227,9 @@ but still provides valuable insights into variant correlations.</p>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
 <span><span class="co">#&gt; Running ColocBoost with assumption of one causal per outcome per region!</span></span>
-<span><span class="co">#&gt; Performing inference on colocalization events.</span></span></code></pre></div>
+<span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
+<span><span class="co">#&gt; Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.</span></span>
+<span><span class="co">#&gt; Keep only CoS with cos_npc &gt;= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001 and npc_outcome &gt;0.2.</span></span></code></pre></div>
 <ul>
 <li>
 <strong>LD-free</strong>: when the mismatch between the LD matrix
@@ -241,7 +245,9 @@ is completely unavailable, ColocBoost provides an LD-free approach.</li>
 <span><span class="co">#&gt; variable per outcome. Additionally, the purity of CoS cannot be evaluated!</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
 <span><span class="co">#&gt; Running ColocBoost with assumption of one causal per outcome per region!</span></span>
-<span><span class="co">#&gt; Performing inference on colocalization events.</span></span></code></pre></div>
+<span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
+<span><span class="co">#&gt; Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.</span></span>
+<span><span class="co">#&gt; Keep only CoS with cos_npc &gt;= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001 and npc_outcome &gt;0.2.</span></span></code></pre></div>
 <p>While this method is computationally efficient, it has limitations
 due to the strong assumption of a single causal variant per trait per
 region. Users should interpret the results with caution, especially in
@@ -278,6 +284,8 @@ format for summary statistics without LD matrix.</p>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
 <span><span class="co">#&gt; Running ColocBoost with assumption of one causal per outcome per region!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
+<span><span class="co">#&gt; Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.</span></span>
+<span><span class="co">#&gt; Keep only CoS with cos_npc &gt;= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001 and npc_outcome &gt;0.2.</span></span>
 <span></span>
 <span><span class="co"># Identified CoS</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>

@@ -105,6 +105,8 @@ purity statistics for all pairs of CoS. Diagonal elements represent within-CoS p
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Gradient boosting for outcome 3 converged after 106 iterations!</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Gradient boosting for outcome 2 converged after 107 iterations!</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Performing inference on colocalization events.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Keep only CoS with cos_npc &gt;= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001 and npc_outcome &gt;0.2.</span>
 <span class="r-in"><span><span class="va">cos_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_cos.html">get_cos</a></span><span class="op">(</span><span class="va">res</span>, coverage <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">get_cos_purity</span><span class="op">(</span><span class="va">cos_res</span><span class="op">$</span><span class="va">cos</span>, X <span class="op">=</span> <span class="va">X</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $min_abs_cor</span>

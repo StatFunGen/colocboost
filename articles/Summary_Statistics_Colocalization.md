@@ -118,6 +118,8 @@ res <- colocboost(sumstat = Sumstat_5traits$sumstat, LD = LD)
 #> Gradient boosting for outcome 3 converged after 91 iterations!
 #> Gradient boosting for outcome 2 converged after 94 iterations!
 #> Performing inference on colocalization events.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 
 # Identified CoS
 res$cos_details$cos$cos_index
@@ -177,6 +179,8 @@ res <- colocboost(sumstat = Sumstat_5traits$sumstat, LD = LD_multiple)
 #> Gradient boosting for outcome 3 converged after 91 iterations!
 #> Gradient boosting for outcome 2 converged after 94 iterations!
 #> Performing inference on colocalization events.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 
 # Identified CoS
 res$cos_details$cos$cos_index
@@ -217,6 +221,8 @@ res <- colocboost(sumstat = sumstat, LD = LD_superset)
 #> Gradient boosting for outcome 3 converged after 91 iterations!
 #> Gradient boosting for outcome 2 converged after 95 iterations!
 #> Performing inference on colocalization events.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 
 # Identified CoS
 res$cos_details$cos$cos_index
@@ -260,12 +266,23 @@ dict_sumstatLD
 # Run colocboost
 res <- colocboost(sumstat = Sumstat_5traits$sumstat, LD = LD_arbitrary, dict_sumstatLD = dict_sumstatLD)
 #> Validating input data.
-#> Warning in colocboost_validate_input_data(X = X, Y = Y, sumstat = sumstat, :
-#> Error: dict_sumstatLD must have length 5
+#> Starting gradient boosting algorithm.
+#> Gradient boosting for outcome 4 converged after 40 iterations!
+#> Gradient boosting for outcome 5 converged after 59 iterations!
+#> Gradient boosting for outcome 1 converged after 61 iterations!
+#> Gradient boosting for outcome 3 converged after 91 iterations!
+#> Gradient boosting for outcome 2 converged after 94 iterations!
+#> Performing inference on colocalization events.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 
 # Identified CoS
 res$cos_details$cos$cos_index
-#> NULL
+#> $`cos1:y1_y2_y3_y4`
+#> [1] 186 194 168 205
+#> 
+#> $`cos2:y2_y3_y5`
+#> [1] 589 593
 ```
 
 ### 3.4. HyPrColoc compatible format: effect size and standard error matrices
@@ -304,6 +321,8 @@ res <- colocboost(effect_est = effect_est, effect_se = effect_se, effect_n = eff
 #> Gradient boosting for outcome 3 converged after 91 iterations!
 #> Gradient boosting for outcome 2 converged after 94 iterations!
 #> Performing inference on colocalization events.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 
 # Identified CoS
 res$cos_details$cos$cos_index

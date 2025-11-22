@@ -72,6 +72,8 @@ res <- colocboost(X = X, Y = Y)
 #> Gradient boosting for outcome 1 converged after 53 iterations!
 #> Gradient boosting for outcome 5 converged after 60 iterations!
 #> Performing inference on colocalization events.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 
 # The number of variants in the analysis
 res$data_info$n_variables
@@ -106,6 +108,8 @@ res <- colocboost(X = X, Y = Y, overlap_variables = TRUE)
 #> Gradient boosting for outcome 2 converged after 12 iterations!
 #> Gradient boosting for outcome 5 converged after 21 iterations!
 #> Performing inference on colocalization events.
+#> Warning in get_robust_colocalization(cb_output = cb_output, cos_npc_cutoff =
+#> cos_npc_cutoff, : No colocalization results in this region!
 
 # The number of variants in the analysis
 res$data_info$n_variables
@@ -143,6 +147,8 @@ res <- colocboost(X = X, Y = Y, focal_outcome_idx = 3)
 #> Gradient boosting for outcome 2 converged after 49 iterations!
 #> Gradient boosting for outcome 5 converged after 53 iterations!
 #> Performing inference on colocalization events.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 
 # The number of variants in the analysis
 res$data_info$n_variables

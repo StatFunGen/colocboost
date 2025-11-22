@@ -10,8 +10,12 @@
 
 ## Software updates
 
-- `v1.0.7` Improvements to ColocBoost (check out the full details in
-  [PR](https://github.com/StatFunGen/colocboost/pull/116)).
+- `v1.0.7` (**Important update**) Improvements to ColocBoost (check out
+  the full details in
+  [PR](https://github.com/StatFunGen/colocboost/pull/116) and
+  [PR](https://github.com/StatFunGen/colocboost/pull/121)).
+  - Enhanced `colocboost` main function with post-filtering and only
+    keep the robust colocalization events.
   - Enhanced `colocboost_plot` function with flexible highlighting
     options and new visualization styles.
   - Optimized performance and computational efficiency

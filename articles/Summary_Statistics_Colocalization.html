@@ -182,6 +182,8 @@ information for all variants across all traits.</li>
 <span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 91 iterations!</span></span>
 <span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 94 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
+<span><span class="co">#&gt; Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.</span></span>
+<span><span class="co">#&gt; Keep only CoS with cos_npc &gt;= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001 and npc_outcome &gt;0.2.</span></span>
 <span></span>
 <span><span class="co"># Identified CoS</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
@@ -252,6 +254,8 @@ LD.</li>
 <span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 91 iterations!</span></span>
 <span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 94 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
+<span><span class="co">#&gt; Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.</span></span>
+<span><span class="co">#&gt; Keep only CoS with cos_npc &gt;= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001 and npc_outcome &gt;0.2.</span></span>
 <span></span>
 <span><span class="co"># Identified CoS</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
@@ -294,6 +298,8 @@ datasets. It allows for efficient analysis without redundancy.</li>
 <span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 91 iterations!</span></span>
 <span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 95 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
+<span><span class="co">#&gt; Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.</span></span>
+<span><span class="co">#&gt; Keep only CoS with cos_npc &gt;= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001 and npc_outcome &gt;0.2.</span></span>
 <span></span>
 <span><span class="co"># Identified CoS</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
@@ -343,12 +349,23 @@ sumstat to index of LD.</li>
 <span><span class="co"># Run colocboost</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>sumstat <span class="op">=</span> <span class="va">Sumstat_5traits</span><span class="op">$</span><span class="va">sumstat</span>, LD <span class="op">=</span> <span class="va">LD_arbitrary</span>, dict_sumstatLD <span class="op">=</span> <span class="va">dict_sumstatLD</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
-<span><span class="co">#&gt; Warning in colocboost_validate_input_data(X = X, Y = Y, sumstat = sumstat, :</span></span>
-<span><span class="co">#&gt; Error: dict_sumstatLD must have length 5</span></span>
+<span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 40 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 59 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 61 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 91 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 94 iterations!</span></span>
+<span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
+<span><span class="co">#&gt; Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.</span></span>
+<span><span class="co">#&gt; Keep only CoS with cos_npc &gt;= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001 and npc_outcome &gt;0.2.</span></span>
 <span></span>
 <span><span class="co"># Identified CoS</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
-<span><span class="co">#&gt; NULL</span></span></code></pre></div>
+<span><span class="co">#&gt; $`cos1:y1_y2_y3_y4`</span></span>
+<span><span class="co">#&gt; [1] 186 194 168 205</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`cos2:y2_y3_y5`</span></span>
+<span><span class="co">#&gt; [1] 589 593</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="hyprcoloc-compatible-format-effect-size-and-standard-error-matrices">3.4. HyPrColoc compatible format: effect size and standard error
@@ -386,6 +403,8 @@ format for summary statistics with and without LD matrix.</p>
 <span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 91 iterations!</span></span>
 <span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 94 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
+<span><span class="co">#&gt; Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.</span></span>
+<span><span class="co">#&gt; Keep only CoS with cos_npc &gt;= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001 and npc_outcome &gt;0.2.</span></span>
 <span></span>
 <span><span class="co"># Identified CoS</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
