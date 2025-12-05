@@ -786,6 +786,10 @@ get_robust_colocalization <- function(cb_output,
     
     # Update purity matrices (append as diagonal blocks)
     old_n <- nrow(cb_output$ucos_details$ucos_purity$min_abs_cor)
+    # Handle case where nrow() returns NULL (e.g., if min_abs_cor is NULL or not a matrix)
+    if (is.null(old_n)) {
+      old_n <- 0
+    }
     if (old_n == 0) {
       # Create new matrices
       cb_output$ucos_details$ucos_purity$min_abs_cor <- diag(new_purity_min, nrow = total_ucos, ncol = total_ucos)
