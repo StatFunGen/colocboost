@@ -1,19 +1,12 @@
-# Recalibrate and summarize robust colocalization events.
+# Recalibrate and summarize robust uncolocalized events.
 
-`get_robust_colocalization` get the colocalization by discarding the
-weaker colocalization events or colocalized outcomes
+`get_robust_ucos` get the uncolocalized events by discarding the weaker
+signals if "ucos_details" with "output_level = 2" exist.
 
 ## Usage
 
 ``` r
-get_robust_colocalization(
-  cb_output,
-  cos_npc_cutoff = 0.5,
-  npc_outcome_cutoff = 0.2,
-  pvalue_cutoff = NULL,
-  weight_fudge_factor = 1.5,
-  coverage = 0.95
-)
+get_robust_ucos(cb_output, npc_outcome_cutoff = 0.2, pvalue_cutoff = NULL)
 ```
 
 ## Source
@@ -27,11 +20,6 @@ See detailed instructions in our tutorial portal:
 
   Output object from `colocboost` analysis
 
-- cos_npc_cutoff:
-
-  Minimum threshold of normalized probability of colocalization (NPC)
-  for CoS.
-
 - npc_outcome_cutoff:
 
   Minimum threshold of normalized probability of colocalized traits in
@@ -41,16 +29,6 @@ See detailed instructions in our tutorial portal:
 
   Maximum threshold of marginal p-values of colocalized variants on
   colocalized traits in each CoS.
-
-- weight_fudge_factor:
-
-  The strength to integrate weight from different outcomes, default is
-  1.5
-
-- coverage:
-
-  A number between 0 and 1 specifying the “coverage” of the estimated
-  colocalization confidence sets (CoS) (default is 0.95).
 
 ## Value
 
@@ -86,7 +64,7 @@ A `"colocboost"` object with some or all of the following elements:
 Other colocboost_inference:
 [`get_ambiguous_colocalization()`](https://statfungen.github.io/colocboost/reference/get_ambiguous_colocalization.md),
 [`get_colocboost_summary()`](https://statfungen.github.io/colocboost/reference/get_colocboost_summary.md),
-[`get_robust_ucos()`](https://statfungen.github.io/colocboost/reference/get_robust_ucos.md)
+[`get_robust_colocalization()`](https://statfungen.github.io/colocboost/reference/get_robust_colocalization.md)
 
 ## Examples
 
@@ -109,7 +87,7 @@ Y <- matrix(0, N, L)
 for (l in 1:L) {
   Y[, l] <- X %*% true_beta[, l] + rnorm(N, 0, 1)
 }
-res <- colocboost(X = X, Y = Y)
+res <- colocboost(X = X, Y = Y, output_level = 2)
 #> Validating input data.
 #> Starting gradient boosting algorithm.
 #> Gradient boosting for outcome 1 converged after 98 iterations!
@@ -118,15 +96,23 @@ res <- colocboost(X = X, Y = Y)
 #> Performing inference on colocalization events.
 #> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
 #> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
-res$cos_details$cos$cos_index
-#> $`cos1:y1_y2`
-#> [1] 10  9
+#> Extracting outcome-specific (uncolocalized) results with pvalue_cutoff = 1e-05, and npc_outcome_cutoff = 0.2.
+#> For each uCoS, keep the outcome-specific (uncolocalized) events that pvalue of variants for the outcome < 1e-05 and npc_outcome >0.2.
+res$ucos_details$ucos$ucos_index
+#> $`ucos1:y2`
+#> [1] 50
 #> 
-filter_res <- get_robust_colocalization(res, cos_npc_cutoff = 0.5, npc_outcome_cutoff = 0.2)
-#> Extracting colocalization results with cos_npc_cutoff = 0.5 and npc_outcome_cutoff = 0.2.
-#> Keep only CoS with cos_npc >= 0.5. For each CoS, keep the outcomes configurations that the npc_outcome >= 0.2.
-filter_res$cos_details$cos$cos_index
-#> $`cos1:y1_y2`
-#> [1] 10  9
+#> $`ucos2:y3`
+#> [1] 80
+#> 
+filter_res <- get_robust_ucos(res, npc_outcome_cutoff = 0.2, pvalue_cutoff = 1e-6)
+#> Extracting outcome-specific (uncolocalized) results with pvalue_cutoff = 1e-06, and npc_outcome_cutoff = 0.2.
+#> For each uCoS, keep the outcome-specific (uncolocalized) events that pvalue of variants for the outcome < 1e-06 and npc_outcome >0.2.
+filter_res$ucos_details$ucos$ucos_index
+#> $`ucos1:y2`
+#> [1] 50
+#> 
+#> $`ucos2:y3`
+#> [1] 80
 #> 
 ```

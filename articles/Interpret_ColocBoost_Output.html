@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -242,7 +242,7 @@ argument set to <code>"vcp"</code>.</li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, y <span class="op">=</span> <span class="st">"vcp"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Interpret_ColocBoost_Output_files/figure-html/vcp-plot-1.png" class="r-plt" width="583.333333333333"></p>
+<p><img src="Interpret_ColocBoost_Output_files/figure-html/vcp-plot-1.png" class="r-plt" width="510.416666666667"></p>
 <p>Please visit our documentation portal at <a href="https://statfungen.github.io/colocboost/articles/Visualization_ColocBoost_Output.html">Visualization
 of ColocBoost Results</a> for more details on the
 <code>colocboost_plot</code> function</p>
@@ -506,7 +506,7 @@ profile log-likelihood changes over boosting rounds.</li>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">{</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">model_info</span><span class="op">$</span><span class="va">outcome_profile_loglik</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"p"</span>, col<span class="op">=</span><span class="st">"#CC3333"</span>, lwd<span class="op">=</span><span class="fl">2</span>, xlab<span class="op">=</span><span class="st">""</span>, ylab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Profile (Trait "</span>, <span class="va">i</span>, <span class="st">")"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p><img src="Interpret_ColocBoost_Output_files/figure-html/profile_loglik-1.png" class="r-plt" width="583.333333333333"></p>
+<p><img src="Interpret_ColocBoost_Output_files/figure-html/profile_loglik-1.png" class="r-plt" width="510.416666666667"></p>
 <ul>
 <li>
 <strong><code>outcome_proximity_obj</code></strong>: trait-specific
@@ -524,7 +524,7 @@ objective at the (coupled) best update variant for each outcome.</li>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">model_info</span><span class="op">$</span><span class="va">outcome_proximity_obj</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"p"</span>, col<span class="op">=</span><span class="st">"#3366CC"</span>, lwd<span class="op">=</span><span class="fl">2</span>, xlab<span class="op">=</span><span class="st">""</span>, ylab<span class="op">=</span><span class="st">"Trait-specific Objective"</span>, main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Trait "</span>, <span class="va">i</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">oldpar</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Interpret_ColocBoost_Output_files/figure-html/objective-proximity-1.png" class="r-plt" width="583.333333333333"></p>
+<p><img src="Interpret_ColocBoost_Output_files/figure-html/objective-proximity-1.png" class="r-plt" width="510.416666666667"></p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Save to restore default options</span></span>
 <span><span class="va">oldpar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>no.readonly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -534,7 +534,7 @@ objective at the (coupled) best update variant for each outcome.</li>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">model_info</span><span class="op">$</span><span class="va">outcome_coupled_best_update_obj</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, type<span class="op">=</span><span class="st">"p"</span>, col<span class="op">=</span><span class="st">"#CC3333"</span>, lwd<span class="op">=</span><span class="fl">2</span>, xlab<span class="op">=</span><span class="st">""</span>, ylab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Objective at best update variant"</span><span class="op">)</span>, main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Trait "</span>, <span class="va">i</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="op">}</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">oldpar</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Interpret_ColocBoost_Output_files/figure-html/objective-best-1.png" class="r-plt" width="583.333333333333"></p>
+<p><img src="Interpret_ColocBoost_Output_files/figure-html/objective-best-1.png" class="r-plt" width="510.416666666667"></p>
 </div>
 <div class="section level3">
 <h3 id="trait-specific-effects-information-ucos_details">3.5. Trait-specific effects information
@@ -561,10 +561,12 @@ objective at the (coupled) best update variant for each outcome.</li>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span><span class="co">#&gt; Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.</span></span>
 <span><span class="co">#&gt; Keep only CoS with cos_npc &gt;= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001 and npc_outcome &gt;0.2.</span></span>
+<span><span class="co">#&gt; Extracting outcome-specific (uncolocalized) results with pvalue_cutoff = 1e-05, and npc_outcome_cutoff = 0.2.</span></span>
+<span><span class="co">#&gt; For each uCoS, keep the outcome-specific (uncolocalized) events that pvalue of variants for the outcome &lt; 1e-05 and npc_outcome &gt;0.2.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">ucos_details</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "ucos"                "ucos_outcomes"       "ucos_weight"        </span></span>
-<span><span class="co">#&gt; [4] "ucos_top_variables"  "ucos_purity"         "cos_ucos_purity"    </span></span>
-<span><span class="co">#&gt; [7] "ucos_outcomes_delta"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "ucos"               "ucos_outcomes"      "ucos_weight"       </span></span>
+<span><span class="co">#&gt; [4] "ucos_top_variables" "ucos_purity"        "cos_ucos_purity"   </span></span>
+<span><span class="co">#&gt; [7] "ucos_outcomes_npc"</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="trait-specific-uncolocalized-confidence-sets-ucos">3.5.1. Trait-specific (uncolocalized) confidence sets
 (<strong><code>ucos</code></strong>)<a class="anchor" aria-label="anchor" href="#trait-specific-uncolocalized-confidence-sets-ucos"></a>
@@ -740,7 +742,8 @@ setting <code>output_level = 3</code>:</p>
 <span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 94 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span><span class="co">#&gt; Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.</span></span>
-<span><span class="co">#&gt; Keep only CoS with cos_npc &gt;= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001 and npc_outcome &gt;0.2.</span></span></code></pre></div>
+<span><span class="co">#&gt; Keep only CoS with cos_npc &gt;= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001 and npc_outcome &gt;0.2.</span></span>
+<span><span class="co">#&gt; No uncolocalized results in this region!</span></span></code></pre></div>
 <ul>
 <li>
 <strong><code>cb_model</code></strong>: trait-specific proximity

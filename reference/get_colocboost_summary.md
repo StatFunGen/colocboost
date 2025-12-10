@@ -136,7 +136,8 @@ for details on these tables.
 
 Other colocboost_inference:
 [`get_ambiguous_colocalization()`](https://statfungen.github.io/colocboost/reference/get_ambiguous_colocalization.md),
-[`get_robust_colocalization()`](https://statfungen.github.io/colocboost/reference/get_robust_colocalization.md)
+[`get_robust_colocalization()`](https://statfungen.github.io/colocboost/reference/get_robust_colocalization.md),
+[`get_robust_ucos()`](https://statfungen.github.io/colocboost/reference/get_robust_ucos.md)
 
 ## Examples
 

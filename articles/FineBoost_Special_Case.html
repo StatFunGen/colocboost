@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,8 +83,9 @@ causal variants.</p>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
 <span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 44 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
-<span><span class="co">#&gt; Warning in get_robust_colocalization(cb_output = cb_output, cos_npc_cutoff =</span></span>
-<span><span class="co">#&gt; cos_npc_cutoff, : No colocalization results in this region!</span></span>
+<span><span class="co">#&gt; No colocalization results in this region!</span></span>
+<span><span class="co">#&gt; Extracting outcome-specific (uncolocalized) results with pvalue_cutoff = 1e-05, and npc_outcome_cutoff = 0.2.</span></span>
+<span><span class="co">#&gt; For each uCoS, keep the outcome-specific (uncolocalized) events that pvalue of variants for the outcome &lt; 1e-05 and npc_outcome &gt;0.2.</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
 <p><img src="FineBoost_Special_Case_files/figure-html/load-example-individual-1.png" class="r-plt" width="364.583333333333"></p>
 </div>
@@ -104,8 +105,9 @@ statistics along with a proper LD matrix.</p>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
 <span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 44 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
-<span><span class="co">#&gt; Warning in get_robust_colocalization(cb_output = cb_output, cos_npc_cutoff =</span></span>
-<span><span class="co">#&gt; cos_npc_cutoff, : No colocalization results in this region!</span></span>
+<span><span class="co">#&gt; No colocalization results in this region!</span></span>
+<span><span class="co">#&gt; Extracting outcome-specific (uncolocalized) results with pvalue_cutoff = 1e-05, and npc_outcome_cutoff = 0.2.</span></span>
+<span><span class="co">#&gt; For each uCoS, keep the outcome-specific (uncolocalized) events that pvalue of variants for the outcome &lt; 1e-05 and npc_outcome &gt;0.2.</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
 <p><img src="FineBoost_Special_Case_files/figure-html/load-example-sumstat-1.png" class="r-plt" width="364.583333333333"></p>
 </div>
@@ -127,8 +129,9 @@ that only one variant within a region is causal.</p>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
 <span><span class="co">#&gt; Running ColocBoost with assumption of one causal per outcome per region!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
-<span><span class="co">#&gt; Warning in get_robust_colocalization(cb_output = cb_output, cos_npc_cutoff =</span></span>
-<span><span class="co">#&gt; cos_npc_cutoff, : No colocalization results in this region!</span></span>
+<span><span class="co">#&gt; No colocalization results in this region!</span></span>
+<span><span class="co">#&gt; Extracting outcome-specific (uncolocalized) results with pvalue_cutoff = 1e-05.</span></span>
+<span><span class="co">#&gt; Keep only uCoS with pvalue of variants for the outcome &lt; 1e-05.</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
 <p><img src="FineBoost_Special_Case_files/figure-html/ld-free-1.png" class="r-plt" width="364.583333333333"></p>
 <p><strong>Note</strong>: Weak learners SEL in FineBoost may capture

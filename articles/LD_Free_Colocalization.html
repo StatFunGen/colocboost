@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -228,8 +228,8 @@ but still provides valuable insights into variant correlations.</p>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
 <span><span class="co">#&gt; Running ColocBoost with assumption of one causal per outcome per region!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
-<span><span class="co">#&gt; Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.</span></span>
-<span><span class="co">#&gt; Keep only CoS with cos_npc &gt;= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001 and npc_outcome &gt;0.2.</span></span></code></pre></div>
+<span><span class="co">#&gt; Extracting colocalization results with pvalue_cutoff = 0.001.</span></span>
+<span><span class="co">#&gt; For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001.</span></span></code></pre></div>
 <ul>
 <li>
 <strong>LD-free</strong>: when the mismatch between the LD matrix
@@ -246,8 +246,8 @@ is completely unavailable, ColocBoost provides an LD-free approach.</li>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
 <span><span class="co">#&gt; Running ColocBoost with assumption of one causal per outcome per region!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
-<span><span class="co">#&gt; Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.</span></span>
-<span><span class="co">#&gt; Keep only CoS with cos_npc &gt;= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001 and npc_outcome &gt;0.2.</span></span></code></pre></div>
+<span><span class="co">#&gt; Extracting colocalization results with pvalue_cutoff = 0.001.</span></span>
+<span><span class="co">#&gt; For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001.</span></span></code></pre></div>
 <p>While this method is computationally efficient, it has limitations
 due to the strong assumption of a single causal variant per trait per
 region. Users should interpret the results with caution, especially in
@@ -284,8 +284,8 @@ format for summary statistics without LD matrix.</p>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
 <span><span class="co">#&gt; Running ColocBoost with assumption of one causal per outcome per region!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
-<span><span class="co">#&gt; Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.</span></span>
-<span><span class="co">#&gt; Keep only CoS with cos_npc &gt;= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001 and npc_outcome &gt;0.2.</span></span>
+<span><span class="co">#&gt; Extracting colocalization results with pvalue_cutoff = 0.001.</span></span>
+<span><span class="co">#&gt; For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001.</span></span>
 <span></span>
 <span><span class="co"># Identified CoS</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>

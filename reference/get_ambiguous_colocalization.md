@@ -54,7 +54,8 @@ A `"colocboost"` object of colocboost output with additional elements:
 
 Other colocboost_inference:
 [`get_colocboost_summary()`](https://statfungen.github.io/colocboost/reference/get_colocboost_summary.md),
-[`get_robust_colocalization()`](https://statfungen.github.io/colocboost/reference/get_robust_colocalization.md)
+[`get_robust_colocalization()`](https://statfungen.github.io/colocboost/reference/get_robust_colocalization.md),
+[`get_robust_ucos()`](https://statfungen.github.io/colocboost/reference/get_robust_ucos.md)
 
 ## Examples
 

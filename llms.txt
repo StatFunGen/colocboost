@@ -93,6 +93,8 @@ Functions for inference and summary from fitted model.
 - [`get_ambiguous_colocalization()`](https://statfungen.github.io/colocboost/reference/get_ambiguous_colocalization.md)
   : Get ambiguous colocalization events from trait-specific
   (uncolocalized) effects.
+- [`get_robust_ucos()`](https://statfungen.github.io/colocboost/reference/get_robust_ucos.md)
+  : Recalibrate and summarize robust uncolocalized events.
 
 ## Visualization
 

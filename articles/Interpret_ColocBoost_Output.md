@@ -445,10 +445,12 @@ res <- colocboost(X = c(X, list(X1)), Y = c(Y, list(Y1)), output_level = 2)
 #> Performing inference on colocalization events.
 #> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
 #> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
+#> Extracting outcome-specific (uncolocalized) results with pvalue_cutoff = 1e-05, and npc_outcome_cutoff = 0.2.
+#> For each uCoS, keep the outcome-specific (uncolocalized) events that pvalue of variants for the outcome < 1e-05 and npc_outcome >0.2.
 names(res$ucos_details)
-#> [1] "ucos"                "ucos_outcomes"       "ucos_weight"        
-#> [4] "ucos_top_variables"  "ucos_purity"         "cos_ucos_purity"    
-#> [7] "ucos_outcomes_delta"
+#> [1] "ucos"               "ucos_outcomes"      "ucos_weight"       
+#> [4] "ucos_top_variables" "ucos_purity"        "cos_ucos_purity"   
+#> [7] "ucos_outcomes_npc"
 ```
 
 #### 3.5.1. Trait-specific (uncolocalized) confidence sets (**`ucos`**)
@@ -583,6 +585,7 @@ res <- colocboost(X = X, Y = Y, output_level = 3)
 #> Performing inference on colocalization events.
 #> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
 #> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
+#> No uncolocalized results in this region!
 ```
 
 - **`cb_model`**: trait-specific proximity gradient boosting model,

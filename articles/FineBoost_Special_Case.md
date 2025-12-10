@@ -30,8 +30,9 @@ res <- colocboost(X = X, Y = Y)
 #> Starting gradient boosting algorithm.
 #> Gradient boosting for outcome 1 converged after 44 iterations!
 #> Performing inference on colocalization events.
-#> Warning in get_robust_colocalization(cb_output = cb_output, cos_npc_cutoff =
-#> cos_npc_cutoff, : No colocalization results in this region!
+#> No colocalization results in this region!
+#> Extracting outcome-specific (uncolocalized) results with pvalue_cutoff = 1e-05, and npc_outcome_cutoff = 0.2.
+#> For each uCoS, keep the outcome-specific (uncolocalized) events that pvalue of variants for the outcome < 1e-05 and npc_outcome >0.2.
 colocboost_plot(res)
 ```
 
@@ -54,8 +55,9 @@ res <- colocboost(sumstat = sumstat, LD = LD)
 #> Starting gradient boosting algorithm.
 #> Gradient boosting for outcome 1 converged after 44 iterations!
 #> Performing inference on colocalization events.
-#> Warning in get_robust_colocalization(cb_output = cb_output, cos_npc_cutoff =
-#> cos_npc_cutoff, : No colocalization results in this region!
+#> No colocalization results in this region!
+#> Extracting outcome-specific (uncolocalized) results with pvalue_cutoff = 1e-05, and npc_outcome_cutoff = 0.2.
+#> For each uCoS, keep the outcome-specific (uncolocalized) events that pvalue of variants for the outcome < 1e-05 and npc_outcome >0.2.
 colocboost_plot(res)
 ```
 
@@ -80,8 +82,9 @@ res <- colocboost(sumstat = sumstat)
 #> Starting gradient boosting algorithm.
 #> Running ColocBoost with assumption of one causal per outcome per region!
 #> Performing inference on colocalization events.
-#> Warning in get_robust_colocalization(cb_output = cb_output, cos_npc_cutoff =
-#> cos_npc_cutoff, : No colocalization results in this region!
+#> No colocalization results in this region!
+#> Extracting outcome-specific (uncolocalized) results with pvalue_cutoff = 1e-05.
+#> Keep only uCoS with pvalue of variants for the outcome < 1e-05.
 colocboost_plot(res)
 ```
 

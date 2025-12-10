@@ -18,7 +18,12 @@ colocboost_validate_input_data(
   effect_n = NULL,
   overlap_variables = FALSE,
   M = 500,
-  min_abs_corr = 0.5
+  min_abs_corr = 0.5,
+  jk_equiv_corr = 0.8,
+  jk_equiv_loglik = 1,
+  func_simplex = "LD_z2z",
+  cos_npc_cutoff = 0.2,
+  npc_outcome_cutoff = 0.2
 )
 ```
 

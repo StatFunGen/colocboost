@@ -108,8 +108,7 @@ res <- colocboost(X = X, Y = Y, overlap_variables = TRUE)
 #> Gradient boosting for outcome 2 converged after 12 iterations!
 #> Gradient boosting for outcome 5 converged after 21 iterations!
 #> Performing inference on colocalization events.
-#> Warning in get_robust_colocalization(cb_output = cb_output, cos_npc_cutoff =
-#> cos_npc_cutoff, : No colocalization results in this region!
+#> No colocalization results in this region!
 
 # The number of variants in the analysis
 res$data_info$n_variables

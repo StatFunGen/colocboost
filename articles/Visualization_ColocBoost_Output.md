@@ -86,7 +86,7 @@ is a vector indicating the indices of the region to be zoomed in.
 
 ``` r
 
-colocboost_plot(res, grange = c(1:400))
+colocboost_plot(res, grange = c(1:400), outcome_idx = c(1:4))
 ```
 
 ![](Visualization_ColocBoost_Output_files/figure-html/zoomin-plot-1.png)
@@ -128,7 +128,7 @@ colocboost_plot(res, show_cos_to_uncoloc = TRUE)
 
 You can highlight specific variants in the plot by setting
 `add_highlight = TRUE` and `add_highlight_idx = **`. This will add red
-dashed vertical lines (defult `add_highlight_style = "vertical_lines"`)
+dashed vertical lines (default `add_highlight_style = "vertical_lines"`)
 at the specified index you want to highlight. Alternatively, you can use
 `add_highlight_style = "star"` to change the highlight style to the red
 star for the specified variants. For example, to add a vertical line at
@@ -183,6 +183,8 @@ res <- colocboost(X = c(X, list(X1)), Y = c(Y, list(Y1)), output_level = 2)
 #> Performing inference on colocalization events.
 #> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
 #> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
+#> Extracting outcome-specific (uncolocalized) results with pvalue_cutoff = 1e-05, and npc_outcome_cutoff = 0.2.
+#> For each uCoS, keep the outcome-specific (uncolocalized) events that pvalue of variants for the outcome < 1e-05 and npc_outcome >0.2.
 colocboost_plot(res, plot_ucos = TRUE)
 ```
 

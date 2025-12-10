@@ -170,8 +170,8 @@ res_mismatch <- colocboost(sumstat = sumstat, LD = LD, M = 1)
 #> Starting gradient boosting algorithm.
 #> Running ColocBoost with assumption of one causal per outcome per region!
 #> Performing inference on colocalization events.
-#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
-#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
+#> Extracting colocalization results with pvalue_cutoff = 0.001.
+#> For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001.
 ```
 
 - **LD-free**: when the mismatch between the LD matrix and summary
@@ -189,8 +189,8 @@ res_free <- colocboost(sumstat = sumstat)
 #> Starting gradient boosting algorithm.
 #> Running ColocBoost with assumption of one causal per outcome per region!
 #> Performing inference on colocalization events.
-#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
-#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
+#> Extracting colocalization results with pvalue_cutoff = 0.001.
+#> For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001.
 ```
 
 While this method is computationally efficient, it has limitations due
@@ -232,8 +232,8 @@ res <- colocboost(effect_est = effect_est, effect_se = effect_se, effect_n = eff
 #> Starting gradient boosting algorithm.
 #> Running ColocBoost with assumption of one causal per outcome per region!
 #> Performing inference on colocalization events.
-#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
-#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
+#> Extracting colocalization results with pvalue_cutoff = 0.001.
+#> For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001.
 
 # Identified CoS
 res$cos_details$cos$cos_index
