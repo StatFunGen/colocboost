@@ -51,7 +51,7 @@
       <h1>Visualization of ColocBoost Results</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/vignettes/Visualization_ColocBoost_Output.Rmd" class="external-link"><code>vignettes/Visualization_ColocBoost_Output.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/r45/vignettes/Visualization_ColocBoost_Output.Rmd" class="external-link"><code>vignettes/Visualization_ColocBoost_Output.Rmd</code></a></small>
       <div class="d-none name"><code>Visualization_ColocBoost_Output.Rmd</code></div>
     </div>
 
@@ -96,7 +96,7 @@ different colors indicating different colocalization events.</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization_ColocBoost_Output_files/figure-html/basic-plot-1.png" class="r-plt" width="510.416666666667"></p>
+<p><img src="Visualization_ColocBoost_Output_files/figure-html/basic-plot-1.png" class="r-plt" alt="" width="510.416666666667"></p>
 <p><strong>Parameters to adjust plot</strong></p>
 <ul>
 <li>
@@ -150,7 +150,7 @@ argument, which is a vector indicating the indices of the region to be
 zoomed in.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, grange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">400</span><span class="op">)</span>, outcome_idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization_ColocBoost_Output_files/figure-html/zoomin-plot-1.png" class="r-plt" width="510.416666666667"></p>
+<p><img src="Visualization_ColocBoost_Output_files/figure-html/zoomin-plot-1.png" class="r-plt" alt="" width="510.416666666667"></p>
 </div>
 <div class="section level3">
 <h3 id="plot-with-marked-top-variants">2.2. Plot with marked top variants<a class="anchor" aria-label="anchor" href="#plot-with-marked-top-variants"></a>
@@ -160,7 +160,7 @@ zoomed in.</p>
 top variants with highest VCP for each CoS.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, show_top_variables <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization_ColocBoost_Output_files/figure-html/top-plot-1.png" class="r-plt" width="510.416666666667"></p>
+<p><img src="Visualization_ColocBoost_Output_files/figure-html/top-plot-1.png" class="r-plt" alt="" width="510.416666666667"></p>
 </div>
 <div class="section level3">
 <h3 id="plot-cos-variants-to-uncolocalized-traits-to-diagnostic-the-colocalization-">2.3. Plot CoS variants to uncolocalized traits to diagnostic the
@@ -184,7 +184,7 @@ traits.</li>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, show_cos_to_uncoloc <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Show all CoSs to uncolocalized outcomes.</span></span></code></pre></div>
-<p><img src="Visualization_ColocBoost_Output_files/figure-html/ucos-plot-1.png" class="r-plt" width="510.416666666667"></p>
+<p><img src="Visualization_ColocBoost_Output_files/figure-html/ucos-plot-1.png" class="r-plt" alt="" width="510.416666666667"></p>
 </div>
 <div class="section level3">
 <h3 id="plot-with-added-highlight-points">2.4. Plot with added highlight points<a class="anchor" aria-label="anchor" href="#plot-with-added-highlight-points"></a>
@@ -206,7 +206,7 @@ Following plot also shows the top variants.</p>
 <span>  add_highlight_idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">$</span><span class="va">true_effect_variants</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  add_highlight_style <span class="op">=</span> <span class="st">"star"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization_ColocBoost_Output_files/figure-html/vertical-plot-1.png" class="r-plt" width="510.416666666667"></p>
+<p><img src="Visualization_ColocBoost_Output_files/figure-html/vertical-plot-1.png" class="r-plt" alt="" width="510.416666666667"></p>
 </div>
 <div class="section level3">
 <h3 id="plot-with-trait-specific-sets-if-exists">2.5. Plot with trait-specific sets if exists<a class="anchor" aria-label="anchor" href="#plot-with-trait-specific-sets-if-exists"></a>
@@ -248,7 +248,7 @@ trait-specific (uncolocalized) information.</p>
 <span><span class="co">#&gt; Extracting outcome-specific (uncolocalized) results with pvalue_cutoff = 1e-05, and npc_outcome_cutoff = 0.2.</span></span>
 <span><span class="co">#&gt; For each uCoS, keep the outcome-specific (uncolocalized) events that pvalue of variants for the outcome &lt; 1e-05 and npc_outcome &gt;0.2.</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, plot_ucos <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization_ColocBoost_Output_files/figure-html/trait-specific-1.png" class="r-plt" width="510.416666666667"></p>
+<p><img src="Visualization_ColocBoost_Output_files/figure-html/trait-specific-1.png" class="r-plt" alt="" width="510.416666666667"></p>
 <p>In this example, there are two colocalized sets (<span style="color:blue">blue</span> and <span style="color:orange">orange</span>) and two trait-specific sets for
 trait 4 only (<span style="color:green">green</span> and <span style="color:purple">purple</span>). For comprehensive tutorials on
 result interpretation, please visit our tutorials portal at <a href="https://statfungen.github.io/colocboost/articles/Interpret_ColocBoost_Output.html">Interpret
@@ -295,11 +295,11 @@ at least on traits within CoS of focal traits.</li>
 <span></span>
 <span><span class="co"># Only plot CoS with focal trait</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, plot_focal_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization_ColocBoost_Output_files/figure-html/focal-colocalization-1.png" class="r-plt" width="510.416666666667"></p>
+<p><img src="Visualization_ColocBoost_Output_files/figure-html/focal-colocalization-1.png" class="r-plt" alt="" width="510.416666666667"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Plot all CoS including at least one traits colocalized with focal trait</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span>, plot_focal_cos_outcome_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Visualization_ColocBoost_Output_files/figure-html/focal-colocalization-2.png" class="r-plt" width="510.416666666667"></p>
+<p><img src="Visualization_ColocBoost_Output_files/figure-html/focal-colocalization-2.png" class="r-plt" alt="" width="510.416666666667"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

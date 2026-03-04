@@ -51,7 +51,7 @@
       <h1>Single-trait Fine-mapping with FineBoost</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/vignettes/FineBoost_Special_Case.Rmd" class="external-link"><code>vignettes/FineBoost_Special_Case.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/r45/vignettes/FineBoost_Special_Case.Rmd" class="external-link"><code>vignettes/FineBoost_Special_Case.Rmd</code></a></small>
       <div class="d-none name"><code>FineBoost_Special_Case.Rmd</code></div>
     </div>
 
@@ -87,7 +87,7 @@ causal variants.</p>
 <span><span class="co">#&gt; Extracting outcome-specific (uncolocalized) results with pvalue_cutoff = 1e-05, and npc_outcome_cutoff = 0.2.</span></span>
 <span><span class="co">#&gt; For each uCoS, keep the outcome-specific (uncolocalized) events that pvalue of variants for the outcome &lt; 1e-05 and npc_outcome &gt;0.2.</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<p><img src="FineBoost_Special_Case_files/figure-html/load-example-individual-1.png" class="r-plt" width="364.583333333333"></p>
+<p><img src="FineBoost_Special_Case_files/figure-html/load-example-individual-1.png" class="r-plt" alt="" width="364.583333333333"></p>
 </div>
 <div class="section level2">
 <h2 id="fine-mapping-with-summary-statistics">2. Fine-mapping with summary statistics<a class="anchor" aria-label="anchor" href="#fine-mapping-with-summary-statistics"></a>
@@ -109,7 +109,7 @@ statistics along with a proper LD matrix.</p>
 <span><span class="co">#&gt; Extracting outcome-specific (uncolocalized) results with pvalue_cutoff = 1e-05, and npc_outcome_cutoff = 0.2.</span></span>
 <span><span class="co">#&gt; For each uCoS, keep the outcome-specific (uncolocalized) events that pvalue of variants for the outcome &lt; 1e-05 and npc_outcome &gt;0.2.</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<p><img src="FineBoost_Special_Case_files/figure-html/load-example-sumstat-1.png" class="r-plt" width="364.583333333333"></p>
+<p><img src="FineBoost_Special_Case_files/figure-html/load-example-sumstat-1.png" class="r-plt" alt="" width="364.583333333333"></p>
 </div>
 <div class="section level2">
 <h2 id="ld-free-fine-mapping-with-one-causal-variant-assumption">3. LD-free fine-mapping with one causal variant assumption<a class="anchor" aria-label="anchor" href="#ld-free-fine-mapping-with-one-causal-variant-assumption"></a>
@@ -133,7 +133,7 @@ that only one variant within a region is causal.</p>
 <span><span class="co">#&gt; Extracting outcome-specific (uncolocalized) results with pvalue_cutoff = 1e-05.</span></span>
 <span><span class="co">#&gt; Keep only uCoS with pvalue of variants for the outcome &lt; 1e-05.</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<p><img src="FineBoost_Special_Case_files/figure-html/ld-free-1.png" class="r-plt" width="364.583333333333"></p>
+<p><img src="FineBoost_Special_Case_files/figure-html/ld-free-1.png" class="r-plt" alt="" width="364.583333333333"></p>
 <p><strong>Note</strong>: Weak learners SEL in FineBoost may capture
 noise as putative signals, potentially introducing false positives to
 our findings. To identify and filter spurious signals, we discard
