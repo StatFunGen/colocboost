@@ -33,7 +33,7 @@ jobs:
 
       - id: latest-version
         name: Get latest version
-        if: ${{ github.event.inputs.version }} == "latest"
+        if: ${{ github.event.inputs.version == "latest" }}
         uses: pozetroninc/github-action-get-latest-release@v0.8.0
         with:
           repository: ${{ github.repository }}
