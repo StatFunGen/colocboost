@@ -28,7 +28,7 @@ colocboost_update <- function(cb_model, cb_model_para, cb_data) {
     } else {
       cb_model[[i]]$jk <- c(cb_model[[i]]$jk, update_jk)
       ld_jk <- get_LD_jk(update_jk,
-        X = cb_data$data[[X_dict]]$X,
+        X = get_genotype_matrix(cb_data$data[[X_dict]]),
         XtX = cb_data$data[[X_dict]]$XtX,
         N = cb_data$data[[i]]$N,
         remain_idx = setdiff(1:cb_model_para$P, cb_data$data[[i]]$variable_miss),
@@ -103,39 +103,29 @@ colocboost_update <- function(cb_model, cb_model_para, cb_data) {
       y <- cb_data$data[[i]]$Y
       beta <- cb_model[[i]]$beta
       profile_log <- mean((y - x %*% beta)^2) * adj_dep
-    } else if (!is.null(cb_data$data[[X_dict]]$XtX)) {
+    } else if (!is.null(cb_data$data[[X_dict]]$XtX) || !is.null(cb_data$data[[X_dict]]$X_ref)) {
       beta_scaling <- cb_model[[i]]$beta_scaling
       # - summary statistics
       xtx <- cb_data$data[[X_dict]]$XtX
+      xref <- cb_data$data[[X_dict]]$X_ref
       cb_model[[i]]$res <- rep(0, cb_model_para$P)
       if (length(cb_data$data[[i]]$variable_miss) != 0) {
         beta <- cb_model[[i]]$beta[-cb_data$data[[i]]$variable_miss]  / beta_scaling
         xty <- cb_data$data[[i]]$XtY[-cb_data$data[[i]]$variable_miss]
-        if (length(xtx) == 1){
-          XtX_beta <- beta
-          cb_model[[i]]$res[-cb_data$data[[i]]$variable_miss] <- xty - scaling_factor * beta
-        } else {
-          XtX_beta <- xtx %*% beta
-          cb_model[[i]]$res[-cb_data$data[[i]]$variable_miss] <- xty - scaling_factor * XtX_beta
-        }
-
+        XtX_beta <- compute_xtx_product(beta, XtX = xtx, X_ref = xref)
+        cb_model[[i]]$res[-cb_data$data[[i]]$variable_miss] <- xty - scaling_factor * XtX_beta
       } else {
         beta <- cb_model[[i]]$beta / beta_scaling
         xty <- cb_data$data[[i]]$XtY
-        if (length(xtx) == 1){
-          XtX_beta <- beta
-          cb_model[[i]]$res <- xty - scaling_factor * beta
-        } else {
-          XtX_beta <- xtx %*% beta
-          cb_model[[i]]$res <- xty - scaling_factor * XtX_beta
-        }
+        XtX_beta <- compute_xtx_product(beta, XtX = xtx, X_ref = xref)
+        cb_model[[i]]$res <- xty - scaling_factor * XtX_beta
       }
       # - cache XtX %*% beta for reuse in get_correlation (avoids redundant O(P^2) computation)
       cb_model[[i]]$XtX_beta_cache <- XtX_beta
       # - profile-loglikelihood (reuses cached XtX_beta)
       yty <- cb_data$data[[i]]$YtY / scaling_factor
       xty <- xty / scaling_factor
-      if (length(xtx) == 1){
+      if (!is.null(xtx) && length(xtx) == 1){
         profile_log <- (yty - 2 * sum(beta * xty) + sum(beta^2)) * adj_dep
       } else {
         profile_log <- (yty - 2 * sum(beta * xty) + sum(XtX_beta * beta)) * adj_dep
@@ -152,7 +142,7 @@ colocboost_update <- function(cb_model, cb_model_para, cb_data) {
 get_LD_jk <- function(jk1, X = NULL, XtX = NULL, N = NULL, remain_idx = NULL, P = NULL) {
   if (!is.null(X)) {
     corr <- suppressWarnings({
-      Rfast::correls(X[, jk1], X)[, "correlation"]
+      correls(X[, jk1], X)[, "correlation"]
     })
     corr[which(is.na(corr))] <- 0
   } else if (!is.null(XtX)) {
@@ -258,7 +248,7 @@ boost_obj_last <- function(cb_data, cb_model, cb_model_para) {
       ########## MAIN CALCULATION ###################
       X_dict <- cb_data$dict[i]
       ld_jk <- get_LD_jk(jk,
-        X = cb_data$data[[X_dict]]$X,
+        X = get_genotype_matrix(cb_data$data[[X_dict]]),
         XtX = cb_data$data[[X_dict]]$XtX,
         N = cb_data$data[[i]]$N,
         remain_idx = setdiff(1:cb_model_para$P, cb_data$data[[i]]$variable_miss),

@@ -119,6 +119,7 @@ boost_check_update_jk_nofocal <- function(cb_model, cb_model_para, cb_data) {
             res = model_update[[ii]]$res,
             N = data_update[[ii]]$N,
             XtX = cb_data$data[[X_dict[ii]]]$XtX,
+            X_ref = cb_data$data[[X_dict[ii]]]$X_ref,
             YtY = data_update[[ii]]$YtY,
             XtY = data_update[[ii]]$XtY,
             beta_k = model_update[[ii]]$beta,
@@ -194,6 +195,7 @@ boost_check_update_jk_nofocal <- function(cb_model, cb_model_para, cb_data) {
             res = model_update[[ii]]$res,
             N = data_update[[ii]]$N,
             XtX = cb_data$data[[X_dict[ii]]]$XtX,
+            X_ref = cb_data$data[[X_dict[ii]]]$X_ref,
             YtY = data_update[[ii]]$YtY,
             XtY = data_update[[ii]]$XtY,
             beta_k = model_update[[ii]]$beta,
@@ -238,6 +240,7 @@ boost_check_update_jk_nofocal <- function(cb_model, cb_model_para, cb_data) {
             res = model_update[[ii]]$res,
             N = data_update[[ii]]$N,
             XtX = cb_data$data[[X_dict[ii]]]$XtX,
+            X_ref = cb_data$data[[X_dict[ii]]]$X_ref,
             YtY = data_update[[ii]]$YtY,
             XtY = data_update[[ii]]$XtY,
             beta_k = model_update[[ii]]$beta,
@@ -365,7 +368,7 @@ boost_check_update_jk_focal <- function(cb_model, cb_model_para, cb_data,
       # ---- first, check LD between jk_focal and jk_each based on focal LD
       ld <- sapply(jk_each[-pp_focal], function(jki) {
         get_LD_jk1_jk2(jk_focal, jki,
-          X = cb_data$data[[X_dict[pp_focal]]]$X,
+          X = get_genotype_matrix(cb_data$data[[X_dict[pp_focal]]]),
           XtX = cb_data$data[[X_dict[pp_focal]]]$XtX,
           N = cb_data$data[[X_dict[pp_focal]]]$N,
           remain_jk = 1:cb_model_para$P
@@ -378,6 +381,7 @@ boost_check_update_jk_focal <- function(cb_model, cb_model_para, cb_data,
         jk_focal_tmp <- setdiff(order_cor, variable_missing)[1]
         # ----- third, if picked variant within the same LD buddies
         ld_tmp <- get_LD_jk1_jk2(jk_focal, jk_focal_tmp,
+          X = get_genotype_matrix(cb_data$data[[X_dict[pp_focal]]]),
           XtX = cb_data$data[[X_dict[pp_focal]]]$XtX,
           remain_jk = 1:cb_model_para$P
         )
@@ -525,7 +529,7 @@ check_jk_jkeach <- function(jk, jk_each,
       change_log_jkeach <- model_update[[i]]$change_loglike[jk_each[i]]
       change_each <- abs(change_log_jk - change_log_jkeach)
       LD_temp <- get_LD_jk1_jk2(jk, jk_each[i],
-        X = cb_data$data[[X_dict[i]]]$X,
+        X = get_genotype_matrix(cb_data$data[[X_dict[i]]]),
         XtX = cb_data$data[[X_dict[i]]]$XtX,
         N = data_update[[i]]$N,
         remain_jk = setdiff(1:length(model_update[[i]]$res), data_update[[i]]$variable_miss)
@@ -579,7 +583,7 @@ check_pair_jkeach <- function(jk_each,
   data_update <- cb_data$data[pos.update]
   LD_all <- lapply(1:length(jk_each), function(idx){
     get_LD_jk_each(jk_each,
-                   X = cb_data$data[[X_dict[idx]]]$X,
+                   X = get_genotype_matrix(cb_data$data[[X_dict[idx]]]),
                    XtX = cb_data$data[[X_dict[idx]]]$XtX,
                    N = data_update[[idx]]$N,
                    remain_jk = setdiff(1:length(model_update[[idx]]$res), data_update[[idx]]$variable_miss)
@@ -610,7 +614,8 @@ check_pair_jkeach <- function(jk_each,
 
 estimate_change_profile_res <- function(jk,
                                         X = NULL, res = NULL, N = NULL,
-                                        XtX = NULL, YtY = NULL, XtY = NULL,
+                                        XtX = NULL, X_ref = NULL,
+                                        YtY = NULL, XtY = NULL,
                                         beta_k = NULL,
                                         miss_idx = NULL) {
   if (!is.null(X)) {
@@ -629,11 +634,8 @@ estimate_change_profile_res <- function(jk,
     } else {
       xty <- XtY / scaling_factor
     }
-    if (length(xtx) == 1){
-      rtr <- yty - 2 * sum(beta_k * xty) + sum(beta_k^2)
-    } else {
-      rtr <- yty - 2 * sum(beta_k * xty) + sum((xtx %*% as.matrix(beta_k)) * beta_k)
-    }
+    XtX_beta_k <- compute_xtx_product(beta_k, XtX = xtx, X_ref = X_ref)
+    rtr <- yty - 2 * sum(beta_k * xty) + sum(XtX_beta_k * beta_k)
   }
   numerator <- xtr^2 / (2 * rtr)
   denominator <- 0.5 * log(2 * pi * rtr) + 0.5

@@ -63,7 +63,7 @@ colocboost_assemble_ucos <- function(cb_obj_single,
         pos <- match(pos, setdiff(1:cb_model_para$P, cb_data$data[[1]]$variable_miss))
       }
       purity <- matrix(get_purity(pos,
-        X = cb_data$data[[1]]$X, Xcorr = cb_data$data[[1]]$XtX,
+        X = get_genotype_matrix(cb_data$data[[1]]), Xcorr = cb_data$data[[1]]$XtX,
         N = cb_data$data[[1]]$N, n = n_purity
       ), 1, 3)
       purity <- as.data.frame(purity)
@@ -128,7 +128,7 @@ colocboost_assemble_ucos <- function(cb_obj_single,
       w <- LogLik_change[idx]
       weight_cluster <- t(weights[idx, , drop = FALSE])
       check_purity <- w_purity(weight_cluster,
-        X = cb_data$data[[1]]$X, Xcorr = cb_data$data[[1]]$XtX,
+        X = get_genotype_matrix(cb_data$data[[1]]), Xcorr = cb_data$data[[1]]$XtX,
         N = cb_data$data[[1]]$N, n = n_purity, coverage = coverage,
         min_abs_corr = min_abs_corr, median_abs_corr = median_abs_corr,
         miss_idx = cb_data$data[[1]]$variable_miss
@@ -234,7 +234,7 @@ colocboost_assemble_ucos <- function(cb_obj_single,
             cset1 <- confidence_sets[[i.between]]
             cset2 <- confidence_sets[[j.between]]
             res <- get_between_purity(cset1, cset2,
-              X = cb_data$data[[1]]$X,
+              X = get_genotype_matrix(cb_data$data[[1]]),
               Xcorr = cb_data$data[[1]]$XtX,
               miss_idx = cb_data$data[[1]]$variable_miss,
               P = cb_model_para$P
@@ -300,7 +300,7 @@ colocboost_assemble_ucos <- function(cb_obj_single,
           rbind(
             purity,
             matrix(get_purity(pos,
-              X = cb_data$data[[1]]$X, Xcorr = cb_data$data[[1]]$XtX,
+              X = get_genotype_matrix(cb_data$data[[1]]), Xcorr = cb_data$data[[1]]$XtX,
               N = cb_data$data[[1]]$N, n = n_purity
             ), 1, 3)
           )

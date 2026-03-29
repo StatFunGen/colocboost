@@ -177,7 +177,31 @@ res$cos_details$cos$cos_index
 ```
 
 
-## 3.4. HyPrColoc compatible format: effect size and standard error matrices
+## 3.4. Using a reference panel genotype matrix (X_ref) instead of LD
+
+When the number of variants P is very large, storing the full P x P LD matrix may be infeasible.
+If you have the reference panel genotype matrix from which LD would be computed, you can pass it directly via `X_ref`.
+ColocBoost will compute LD products on the fly, avoiding the P x P memory cost.
+
+This is beneficial when the reference panel sample size (N_ref) is less than the number of variants (P).
+When N_ref >= P, ColocBoost automatically precomputes the LD matrix internally for efficiency.
+
+Provide either `LD` or `X_ref`, not both. The `dict_sumstatLD` dictionary works with `X_ref` the same way as with `LD`.
+
+```{r x-ref-example}
+# Use genotype matrix directly as reference panel
+data("Ind_5traits")
+X_ref <- Ind_5traits$X[[1]]
+
+# Run colocboost with X_ref instead of LD
+res <- colocboost(sumstat = Sumstat_5traits$sumstat, X_ref = X_ref)
+
+# Identified CoS
+res$cos_details$cos$cos_index
+```
+
+
+## 3.5. HyPrColoc compatible format: effect size and standard error matrices
 
 ColocBoost also provides a flexibility to use HyPrColoc compatible format for summary statistics with and without LD matrix.
 

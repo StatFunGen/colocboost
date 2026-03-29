@@ -28,7 +28,7 @@ colocboost_inits <- function() {
 #' @noRd
 #' @keywords cb_objects
 colocboost_init_data <- function(X, Y, dict_YX,
-                                 Z, LD, N_sumstat, dict_sumstatLD,
+                                 Z, LD, X_ref = NULL, N_sumstat, dict_sumstatLD,
                                  Var_y, SeBhat,
                                  keep_variables,
                                  focal_outcome_idx = NULL,
@@ -105,14 +105,15 @@ colocboost_init_data <- function(X, Y, dict_YX,
   } 
   n_ind <- flag - 1
   # if summary: XtX XtY, YtY
-  if (!is.null(Z) & !is.null(LD)) {
+  if (!is.null(Z) & (!is.null(LD) | !is.null(X_ref))) {
     ####################### need to consider more #########################
     # ------ only code up one sumstat
     variant_lists <- keep_variables[c((n_ind_variable+1):length(keep_variables))]
     sumstat_formated <- process_sumstat(
       Z, N_sumstat, Var_y, SeBhat, LD,
       variant_lists, dict_sumstatLD,
-      keep_variable_names
+      keep_variable_names,
+      X_ref = X_ref
     )
     for (i in 1:length(Z)) {
       cb_data$data[[flag]] <- sumstat_formated$results[[i]]
@@ -366,6 +367,51 @@ estimate_change_profile <- function(X = NULL, Y = NULL, N = NULL,
   return(change_loglike)
 }
 
+#' Get genotype matrix from a data entry for LD/correlation computation.
+#'
+#' Each data entry is either individual-level (has \code{$X}) or summary statistics
+#' (has \code{$XtX} and/or \code{$X_ref}). These are mutually exclusive:
+#' \code{$X} and \code{$X_ref} never coexist on the same entry.
+#'
+#' This helper is used where a genotype matrix is needed to compute correlations
+#' (e.g., purity checks via \code{get_cormat}). For summary stats entries that have
+#' \code{$XtX} (precomputed LD), callers typically use \code{Xcorr = $XtX} directly
+#' and this function returns NULL — the Xcorr path takes priority in \code{get_purity}.
+#' For summary stats entries with \code{$X_ref} (reference panel, no precomputed LD),
+#' this returns the reference panel so correlations can be computed on the fly.
+#'
+#' @param data_entry A single element of \code{cb_data$data}
+#' @return A genotype matrix (individual-level X or reference panel X_ref), or NULL
+#' @noRd
+get_genotype_matrix <- function(data_entry) {
+  if (!is.null(data_entry$X)) return(data_entry$X)
+  if (!is.null(data_entry$X_ref)) return(data_entry$X_ref)
+  return(NULL)
+}
+
+#' Compute the product XtX \%*\% v from whichever LD source is available.
+#'
+#' Dispatches to the appropriate computation:
+#' \itemize{
+#'   \item \code{XtX} matrix (P x P): direct matrix-vector multiply, O(P^2)
+#'   \item \code{X_ref} reference panel (N_ref x P): two matrix-vector multiplies, O(N_ref * P)
+#'   \item Neither (LD-free / scalar case): returns \code{v} unchanged (identity)
+#' }
+#' @param v Numeric vector to multiply
+#' @param XtX LD matrix (P x P), or scalar 1 for LD-free, or NULL
+#' @param X_ref Standardized reference panel matrix (N_ref x P), or NULL
+#' @return Numeric vector of same length as v
+#' @noRd
+compute_xtx_product <- function(v, XtX = NULL, X_ref = NULL) {
+  if (!is.null(XtX) && length(XtX) > 1) {
+    as.vector(XtX %*% v)
+  } else if (!is.null(X_ref)) {
+    as.vector(crossprod(X_ref, X_ref %*% v) / (nrow(X_ref) - 1))
+  } else {
+    v
+  }
+}
+
 inital_residual <- function(Y = NULL, XtY = NULL) {
   if (!is.null(Y)) {
     return(Y)
@@ -377,11 +423,11 @@ inital_residual <- function(Y = NULL, XtY = NULL) {
 
 # - Calculate correlation between X and res
 get_correlation <- function(X = NULL, res = NULL, XtY = NULL, N = NULL,
-                            YtY = NULL, XtX = NULL, beta_k = NULL, miss_idx = NULL,
+                            YtY = NULL, XtX = NULL, X_ref = NULL, beta_k = NULL, miss_idx = NULL,
                             XtX_beta_cache = NULL) {
   if (!is.null(X)) {
     corr <- suppressWarnings({
-      Rfast::correls(res, X)[, "correlation"]
+      correls(res, X)[, "correlation"]
     })
     corr[which(is.na(corr))] <- 0
     return(corr)
@@ -400,13 +446,12 @@ get_correlation <- function(X = NULL, res = NULL, XtY = NULL, N = NULL,
       Xtr <- res / scaling_factor
       XtY <- XtY / scaling_factor
     }
-    if (length(XtX) == 1){
-      var_r <- YtY - 2 * sum(beta_k * XtY) + sum(beta_k^2)
-    } else if (!is.null(XtX_beta_cache)) {
-      var_r <- YtY - 2 * sum(beta_k * XtY) + sum(XtX_beta_cache * beta_k)
+    if (!is.null(XtX_beta_cache)) {
+      XtX_beta_k <- XtX_beta_cache
     } else {
-      var_r <- YtY - 2 * sum(beta_k * XtY) + sum((XtX %*% as.matrix(beta_k)) * beta_k)
+      XtX_beta_k <- compute_xtx_product(beta_k, XtX = XtX, X_ref = X_ref)
     }
+    var_r <- YtY - 2 * sum(beta_k * XtY) + sum(XtX_beta_k * beta_k)
     if (var_r > 1e-6) {
       corr_nomiss <- Xtr / sqrt(var_r)
       if (length(miss_idx) != 0) {
@@ -561,7 +606,7 @@ get_multiple_testing_correction <- function(z, miss_idx = NULL, func_multi_test 
 #'
 #' @return List containing processed data with optimized LD submatrix storage
 #' @noRd
-process_sumstat <- function(Z, N, Var_y, SeBhat, ld_matrices, variant_lists, dict, target_variants) {
+process_sumstat <- function(Z, N, Var_y, SeBhat, ld_matrices, variant_lists, dict, target_variants, X_ref = NULL) {
   
   
   # Step 1: Identify unique combinations of (variant list, LD matrix)
@@ -607,9 +652,16 @@ process_sumstat <- function(Z, N, Var_y, SeBhat, ld_matrices, variant_lists, dic
     current_z <- Z[[i]]
     current_n <- N[[i]]
 
-    # Get corresponding LD matrix from original dictionary mapping
+    # Get corresponding LD/X_ref from original dictionary mapping
     ld_index <- dict[i]
-    current_ld_matrix <- ld_matrices[[ld_index]]
+    use_xref <- !is.null(X_ref) && is.null(ld_matrices)
+    if (use_xref) {
+      current_xref <- X_ref[[ld_index]]
+      current_ld_matrix <- NULL
+    } else {
+      current_ld_matrix <- ld_matrices[[ld_index]]
+      current_xref <- NULL
+    }
 
     # Find common variants between current list and target variants
     common_variants <- intersect(current_variants, target_variants)
@@ -625,10 +677,18 @@ process_sumstat <- function(Z, N, Var_y, SeBhat, ld_matrices, variant_lists, dic
     Z_extend[pos_target] <- current_z[pos_z]
 
     # Calculate submatrix for each unique entry (not duplicates)
-    if (length(current_ld_matrix) == 1){
+    ld_submatrix <- NULL
+    xref_submatrix <- NULL
+    if (use_xref) {
+      # X_ref path: extract column submatrix
+      if (length(common_variants) > 0 && i == unified_dict[i]) {
+        matched_indices <- match(common_variants, colnames(current_xref))
+        xref_submatrix <- current_xref[, matched_indices, drop = FALSE]
+        colnames(xref_submatrix) <- common_variants
+      }
+    } else if (length(current_ld_matrix) == 1) {
       ld_submatrix <- current_ld_matrix
     } else {
-      ld_submatrix <- NULL
       if (length(common_variants) > 0) {
         # Only include the submatrix if this entry is unique or is the first occurrence
         if (i == unified_dict[i]) {
@@ -649,7 +709,11 @@ process_sumstat <- function(Z, N, Var_y, SeBhat, ld_matrices, variant_lists, dic
 
     # Organize data
     if (is.null(current_n)) {
-      tmp$XtX <- ld_submatrix
+      if (!is.null(xref_submatrix)) {
+        tmp$X_ref <- xref_submatrix
+      } else {
+        tmp$XtX <- ld_submatrix
+      }
       tmp$XtY <- Z_extend
       tmp$YtY <- 1
     } else {
@@ -657,7 +721,14 @@ process_sumstat <- function(Z, N, Var_y, SeBhat, ld_matrices, variant_lists, dic
         # var_y, shat (and bhat) are provided, so the effects are on the
         # *original scale*.
         adj <- 1 / (Z_extend^2 + current_n - 2)
-        if (!is.null(ld_submatrix)) {
+        if (!is.null(xref_submatrix)) {
+          # X_ref path with scaling: compute LD from X_ref, then scale
+          ld_from_xref <- get_cormat(xref_submatrix)
+          rownames(ld_from_xref) <- colnames(ld_from_xref) <- common_variants
+          XtXdiag <- Var_y[[i]] * adj / (SeBhat[[i]]^2)
+          xtx <- t(ld_from_xref * sqrt(XtXdiag)) * sqrt(XtXdiag)
+          tmp$XtX <- (xtx + t(xtx)) / 2
+        } else if (!is.null(ld_submatrix)) {
           XtXdiag <- Var_y[[i]] * adj / (SeBhat[[i]]^2)
           xtx <- t(ld_submatrix * sqrt(XtXdiag)) * sqrt(XtXdiag)
           tmp$XtX <- (xtx + t(xtx)) / 2
@@ -665,7 +736,9 @@ process_sumstat <- function(Z, N, Var_y, SeBhat, ld_matrices, variant_lists, dic
         tmp$YtY <- (current_n - 1) * Var_y[[i]]
         tmp$XtY <- Z_extend * sqrt(adj) * Var_y[[i]] / SeBhat[[i]]
       } else {
-        if (!is.null(ld_submatrix)) {
+        if (!is.null(xref_submatrix)) {
+          tmp$X_ref <- xref_submatrix
+        } else if (!is.null(ld_submatrix)) {
           tmp$XtX <- ld_submatrix
         }
         tmp$YtY <- (current_n - 1)
@@ -774,7 +847,7 @@ process_individual_data <- function(X, Y, dict_YX, target_variants,
       if (!intercept & !standardize) {
         x_stand <- matched_X
       } else {
-        x_stand <- Rfast::standardise(matched_X, center = intercept, scale = standardize)
+        x_stand <- standardise(matched_X, center = intercept, scale = standardize)
       }
       x_stand[which(is.na(x_stand))] <- 0
       tmp$X <- x_stand

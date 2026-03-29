@@ -227,7 +227,7 @@ check_null_post <- function(cb_obj,
   }
 
   get_profile <- function(cs_beta, X = NULL, Y = NULL, N = NULL,
-                          XtX = NULL, YtY = NULL, XtY = NULL, miss_idx, adj_dep = 1) {
+                          XtX = NULL, YtY = NULL, XtY = NULL, miss_idx, adj_dep = 1, X_ref = NULL) {
     if (!is.null(X)) {
       mean((Y - X %*% as.matrix(cs_beta))^2) * N / (N - 1)
     } else if (!is.null(XtY)) {
@@ -242,11 +242,8 @@ check_null_post <- function(cb_obj,
       } else {
         xty <- XtY / scaling_factor
       }
-      if (length(xtx) == 1){
-        (yty - 2 * sum(cs_beta * xty) + sum(cs_beta^2)) * adj_dep
-      } else {
-        (yty - 2 * sum(cs_beta * xty) + sum((xtx %*% as.matrix(cs_beta)) * cs_beta)) * adj_dep
-      }
+      XtX_beta <- compute_xtx_product(cs_beta, XtX = xtx, X_ref = X_ref)
+      (yty - 2 * sum(cs_beta * xty) + sum(XtX_beta * cs_beta)) * adj_dep
     }
   }
 
@@ -284,7 +281,7 @@ check_null_post <- function(cb_obj,
     return(tau * matrixStats::logSumExp(exp_term / tau + log(delta)))
   }
 
-  update_res <- function(X = NULL, Y = NULL, XtX = NULL, XtY = NULL, N = NULL, cs_beta, miss_idx) {
+  update_res <- function(X = NULL, Y = NULL, XtX = NULL, XtY = NULL, N = NULL, cs_beta, miss_idx, X_ref = NULL) {
     if (!is.null(X)) {
       return(Y - X %*% cs_beta)
     } else if (!is.null(XtX)) {
@@ -294,18 +291,10 @@ check_null_post <- function(cb_obj,
       if (length(miss_idx) != 0) {
         xty <- XtY[-miss_idx] / scaling.factor
         res.tmp <- rep(0, length(XtY))
-        if (length(xtx) == 1){
-          res.tmp[-miss_idx] <- xty - cs_beta[-miss_idx] / beta_scaling
-        } else {
-          res.tmp[-miss_idx] <- xty - xtx %*% (cs_beta[-miss_idx] / beta_scaling)
-        }
+        res.tmp[-miss_idx] <- xty - compute_xtx_product(cs_beta[-miss_idx] / beta_scaling, XtX = xtx, X_ref = X_ref)
       } else {
         xty <- XtY / scaling.factor
-        if (length(xtx) == 1){
-          res.tmp <- xty - (cs_beta / beta_scaling)
-        } else {
-          res.tmp <- xty - xtx %*% (cs_beta / beta_scaling)
-        }
+        res.tmp <- xty - compute_xtx_product(cs_beta / beta_scaling, XtX = xtx, X_ref = X_ref)
       }
       return(res.tmp)
     }
@@ -330,7 +319,8 @@ check_null_post <- function(cb_obj,
           X = cb_data$data[[X_dict]]$X, Y = cb_data$data[[j]]$Y,
           XtX = cb_data$data[[X_dict]]$XtX, XtY = cb_data$data[[j]]$XtY,
           YtY = cb_data$data[[j]]$YtY, N = cb_data$data[[j]]$N,
-          miss_idx = cb_data$data[[j]]$variable_miss, adj_dep = adj_dep
+          miss_idx = cb_data$data[[j]]$variable_miss, adj_dep = adj_dep,
+          X_ref = cb_data$data[[X_dict]]$X_ref
         )
         last_profile <- extract_last(cb_obj$cb_model[[j]]$profile_loglike_each)
         change <- abs(cs_profile - last_profile)
@@ -348,7 +338,8 @@ check_null_post <- function(cb_obj,
           X = cb_data$data[[X_dict]]$X, Y = cb_data$data[[j]]$Y,
           XtX = cb_data$data[[X_dict]]$XtX, XtY = cb_data$data[[j]]$XtY,
           N = cb_data$data[[j]]$N, cs_beta,
-          miss_idx = cb_data$data[[j]]$variable_miss
+          miss_idx = cb_data$data[[j]]$variable_miss,
+          X_ref = cb_data$data[[X_dict]]$X_ref
         )
         cs_obj <- get_cs_obj(cs_beta, res, cb_obj$cb_model_para$tau, cb_obj$cb_model_para$func_simplex,
           cb_obj$cb_model_para$lambda,
@@ -402,8 +393,6 @@ check_null_post <- function(cb_obj,
 #' @noRd
 #' @importFrom stats na.omit
 get_purity <- function(pos, X = NULL, Xcorr = NULL, N = NULL, n = 100) {
-  get_upper_tri <- Rfast::upper_tri
-  get_median <- Rfast::med
 
   if (sum(is.na(pos)) != 0) {
     pos <- as.numeric(na.omit(pos))
@@ -424,19 +413,19 @@ get_purity <- function(pos, X = NULL, Xcorr = NULL, N = NULL, n = 100) {
         get_cormat(X_sub)
       })
       corr[which(is.na(corr))] <- 0
-      value <- abs(get_upper_tri(corr))
+      value <- abs(upper_tri(corr))
     } else {
       if (length(Xcorr) == 1){
         value <- 0
       } else {
         Xcorr <- Xcorr # if (!is.null(N)) Xcorr/(N-1) else Xcorr
-        value <- abs(get_upper_tri(Xcorr[pos, pos]))
+        value <- abs(upper_tri(Xcorr[pos, pos]))
       }
     }
     return(c(
       min(value),
       sum(value) / length(value),
-      get_median(value)
+      med(value)
     ))
   }
 }
@@ -458,7 +447,6 @@ get_between_purity <- function(pos1, pos2, X = NULL, Xcorr = NULL, miss_idx = NU
     cr <- tcrossprod(X_sub1, X_sub2)
     return(cr)
   }
-  get_median <- Rfast::med
 
   if (is.null(Xcorr)) {
     X_sub1 <- scale(X[, pos1, drop = FALSE], center = T, scale = F)
@@ -479,7 +467,7 @@ get_between_purity <- function(pos1, pos2, X = NULL, Xcorr = NULL, miss_idx = NU
       }
     }
   }
-  return(c(min(value), max(value), get_median(value)))
+  return(c(min(value), max(value), med(value)))
 }
 
 #' Function to get the evidence of colocalization
@@ -498,7 +486,7 @@ get_cos_evidence <- function(cb_obj, coloc_out, data_info) {
   }
 
   get_cos_profile <- function(cs_beta, outcome_idx, X = NULL, Y = NULL, N = NULL,
-                              XtX = NULL, YtY = NULL, XtY = NULL, miss_idx = NULL, adj_dep = 1) {
+                              XtX = NULL, YtY = NULL, XtY = NULL, miss_idx = NULL, adj_dep = 1, X_ref = NULL) {
     if (!is.null(X)) {
       cos_profile <- mean((Y - X %*% as.matrix(cs_beta))^2) * N / (N - 1)
       yty <- var(Y)
@@ -514,11 +502,8 @@ get_cos_evidence <- function(cb_obj, coloc_out, data_info) {
       } else {
         xty <- XtY / scaling_factor
       }
-      if (length(xtx) == 1){
-        cos_profile <- (yty - 2 * sum(cs_beta * xty) + sum(cs_beta^2)) * adj_dep
-      } else {
-        cos_profile <- (yty - 2 * sum(cs_beta * xty) + sum((xtx %*% as.matrix(cs_beta)) * cs_beta)) * adj_dep
-      }
+      XtX_beta <- compute_xtx_product(cs_beta, XtX = xtx, X_ref = X_ref)
+      cos_profile <- (yty - 2 * sum(cs_beta * xty) + sum(XtX_beta * cs_beta)) * adj_dep
     }
     delta <- yty - cos_profile
     if (delta <= 0) {
@@ -543,7 +528,8 @@ get_cos_evidence <- function(cb_obj, coloc_out, data_info) {
       XtX = cb_data$data[[X_dict]]$XtX, XtY = cb_data$data[[outcome_idx]]$XtY,
       YtY = cb_data$data[[outcome_idx]]$YtY, N = cb_data$data[[outcome_idx]]$N,
       miss_idx = cb_data$data[[outcome_idx]]$variable_miss,
-      adj_dep = cb_data$data[[outcome_idx]]$dependency
+      adj_dep = cb_data$data[[outcome_idx]]$dependency,
+      X_ref = cb_data$data[[X_dict]]$X_ref
     )
     max_profile <- max(cb_obj$cb_model[[outcome_idx]]$profile_loglike_each)
     ifelse(max_profile < cos_profile, 0, max_profile - cos_profile)
@@ -612,7 +598,7 @@ get_cos_evidence <- function(cb_obj, coloc_out, data_info) {
 get_ucos_evidence <- function(cb_obj, ucoloc_info) {
     
   get_ucos_profile <- function(cs_beta, outcome_idx, X = NULL, Y = NULL, N = NULL,
-                              XtX = NULL, YtY = NULL, XtY = NULL, miss_idx = NULL, adj_dep = 1) {
+                              XtX = NULL, YtY = NULL, XtY = NULL, miss_idx = NULL, adj_dep = 1, X_ref = NULL) {
     if (!is.null(X)) {
       cos_profile <- mean((Y - X %*% as.matrix(cs_beta))^2) * N / (N - 1)
       yty <- var(Y)
@@ -628,11 +614,8 @@ get_ucos_evidence <- function(cb_obj, ucoloc_info) {
       } else {
         xty <- XtY / scaling_factor
       }
-      if (length(xtx) == 1){
-        cos_profile <- (yty - 2 * sum(cs_beta * xty) + sum(cs_beta^2)) * adj_dep
-      } else {
-        cos_profile <- (yty - 2 * sum(cs_beta * xty) + sum((xtx %*% as.matrix(cs_beta)) * cs_beta)) * adj_dep
-      }
+      XtX_beta <- compute_xtx_product(cs_beta, XtX = xtx, X_ref = X_ref)
+      cos_profile <- (yty - 2 * sum(cs_beta * xty) + sum(XtX_beta * cs_beta)) * adj_dep
     }
     delta <- yty - cos_profile
     if (delta <= 0) {
@@ -657,7 +640,8 @@ get_ucos_evidence <- function(cb_obj, ucoloc_info) {
       XtX = cb_data$data[[X_dict]]$XtX, XtY = cb_data$data[[outcome_idx]]$XtY,
       YtY = cb_data$data[[outcome_idx]]$YtY, N = cb_data$data[[outcome_idx]]$N,
       miss_idx = cb_data$data[[outcome_idx]]$variable_miss,
-      adj_dep = cb_data$data[[outcome_idx]]$dependency
+      adj_dep = cb_data$data[[outcome_idx]]$dependency,
+      X_ref = cb_data$data[[X_dict]]$X_ref
     )
     max_profile <- max(cb_obj$cb_model[[outcome_idx]]$profile_loglike_each)
     ifelse(max_profile < cos_profile, 0, max_profile - cos_profile)

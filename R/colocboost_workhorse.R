@@ -282,6 +282,7 @@ cb_model_update <- function(cb_data, cb_model, cb_model_para) {
       X = cb_data$data[[X_dict]]$X, res = model_each$res, XtY = data_each$XtY,
       N = data_each$N, YtY = data_each$YtY,
       XtX = cb_data$data[[X_dict]]$XtX,
+      X_ref = cb_data$data[[X_dict]]$X_ref,
       beta_k = model_each$beta,
       miss_idx = data_each$variable_miss,
       XtX_beta_cache = model_each$XtX_beta_cache

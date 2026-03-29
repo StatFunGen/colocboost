@@ -40,7 +40,7 @@ colocboost_assemble_cos <- function(cb_obj,
     for (iiii in 1:length(coloc_outcomes)) {
       X_dict <- cb_data$dict[coloc_outcomes[iiii]]
       tmp <- w_purity(avWeight[, iiii, drop = FALSE],
-        X = cb_data$data[[X_dict]]$X, Xcorr = cb_data$data[[X_dict]]$XtX,
+        X = get_genotype_matrix(cb_data$data[[X_dict]]), Xcorr = cb_data$data[[X_dict]]$XtX,
         N = cb_data$data[[coloc_outcomes[iiii]]]$N, n = n_purity, coverage = sec_coverage_thresh,
         min_abs_corr = min_abs_corr, median_abs_corr = median_abs_corr,
         miss_idx = cb_data$data[[coloc_outcomes[iiii]]]$variable_miss
@@ -81,7 +81,7 @@ colocboost_assemble_cos <- function(cb_obj,
           pos <- match(pos, setdiff(1:cb_model_para$P, cb_data$data[[i]]$variable_miss))
         }
         p_tmp <- matrix(get_purity(pos,
-          X = cb_data$data[[X_dict]]$X,
+          X = get_genotype_matrix(cb_data$data[[X_dict]]),
           Xcorr = cb_data$data[[X_dict]]$XtX,
           N = cb_data$data[[i]]$N, n = n_purity
         ), 1, 3)
@@ -145,7 +145,7 @@ colocboost_assemble_cos <- function(cb_obj,
         for (iiii in 1:length(coloc_outcomes)) {
           X_dict <- cb_data$dict[coloc_outcomes[iiii]]
           tmp <- w_purity(avWeight[, iiii, drop = FALSE],
-            X = cb_data$data[[X_dict]]$X, Xcorr = cb_data$data[[X_dict]]$XtX,
+            X = get_genotype_matrix(cb_data$data[[X_dict]]), Xcorr = cb_data$data[[X_dict]]$XtX,
             N = cb_data$data[[coloc_outcomes[iiii]]]$N, n = n_purity, coverage = sec_coverage_thresh,
             min_abs_corr = min_abs_corr, median_abs_corr = median_abs_corr,
             miss_idx = cb_data$data[[coloc_outcomes[iiii]]]$variable_miss
@@ -205,7 +205,7 @@ colocboost_assemble_cos <- function(cb_obj,
             weight_cluster <- t(av[[iiii]][idx, , drop = FALSE])
             X_dict <- cb_data$dict[coloc_outcomes[iiii]]
             tmp <- w_purity(weight_cluster,
-              X = cb_data$data[[X_dict]]$X, Xcorr = cb_data$data[[X_dict]]$XtX,
+              X = get_genotype_matrix(cb_data$data[[X_dict]]), Xcorr = cb_data$data[[X_dict]]$XtX,
               N = cb_data$data[[coloc_outcomes[iiii]]]$N, n = n_purity, coverage = sec_coverage_thresh,
               min_abs_corr = min_abs_corr, median_abs_corr = median_abs_corr,
               miss_idx = cb_data$data[[coloc_outcomes[iiii]]]$variable_miss
@@ -348,7 +348,7 @@ colocboost_assemble_cos <- function(cb_obj,
             for (i in 1:cb_model_para$L) {
               X_dict <- cb_data$dict[i]
               res[[i]] <- get_between_purity(cset1, cset2,
-                X = cb_data$data[[X_dict]]$X,
+                X = get_genotype_matrix(cb_data$data[[X_dict]]),
                 Xcorr = cb_data$data[[X_dict]]$XtX,
                 miss_idx = cb_data$data[[i]]$variable_miss,
                 P = cb_model_para$P
@@ -436,7 +436,7 @@ colocboost_assemble_cos <- function(cb_obj,
             pos <- match(pos, setdiff(1:cb_model_para$P, cb_data$data[[i3]]$variable_miss))
           }
           tmp <- matrix(get_purity(pos,
-            X = cb_data$data[[X_dict]]$X,
+            X = get_genotype_matrix(cb_data$data[[X_dict]]),
             Xcorr = cb_data$data[[X_dict]]$XtX,
             N = cb_data$data[[i3]]$N, n = n_purity
           ), 1, 3)

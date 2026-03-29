@@ -132,9 +132,12 @@ colocboost_assemble <- function(cb_obj,
           }
         }
         if (!is.null(cb_obj_single$cb_data$data[[1]][["XtY"]])) {
+          X_dict <- cb_obj$cb_data$dict[i]
           if (is.null(cb_obj_single$cb_data$data[[1]]$XtX)) {
-            X_dict <- cb_obj$cb_data$dict[i]
             cb_obj_single$cb_data$data[[1]]$XtX <- cb_obj$cb_data$data[[X_dict]]$XtX
+          }
+          if (is.null(cb_obj_single$cb_data$data[[1]]$X_ref)) {
+            cb_obj_single$cb_data$data[[1]]$X_ref <- cb_obj$cb_data$data[[X_dict]]$X_ref
           }
         }
         class(cb_obj_single) <- "colocboost"

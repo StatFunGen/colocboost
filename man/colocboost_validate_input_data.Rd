@@ -9,6 +9,7 @@ colocboost_validate_input_data(
   Y = NULL,
   sumstat = NULL,
   LD = NULL,
+  X_ref = NULL,
   dict_YX = NULL,
   dict_sumstatLD = NULL,
   effect_est = NULL,

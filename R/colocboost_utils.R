@@ -40,7 +40,7 @@ merge_cos_ucos <- function(cb_obj, out_cos, out_ucos, coverage = 0.95,
         # - addhoc: if median_cos_abs_corr > 0.8, remove single sets
         X_dict <- cb_obj$cb_data$dict[fine_outcome]
         res <- get_between_purity(cset1, cset2,
-          X = cb_obj$cb_data$data[[X_dict]]$X,
+          X = get_genotype_matrix(cb_obj$cb_data$data[[X_dict]]),
           Xcorr = cb_obj$cb_data$data[[X_dict]]$XtX,
           miss_idx = cb_obj$cb_data$data[[fine_outcome]]$variable_miss,
           P = cb_obj$cb_model_para$P
@@ -63,7 +63,7 @@ merge_cos_ucos <- function(cb_obj, out_cos, out_ucos, coverage = 0.95,
         for (ii in 1:cb_obj$cb_model_para$L) {
           X_dict <- cb_obj$cb_data$dict[ii]
           res[[ii]] <- get_between_purity(cset1, cset2,
-            X = cb_obj$cb_data$data[[X_dict]]$X,
+            X = get_genotype_matrix(cb_obj$cb_data$data[[X_dict]]),
             Xcorr = cb_obj$cb_data$data[[X_dict]]$XtX,
             miss_idx = cb_obj$cb_data$data[[ii]]$variable_miss,
             P = cb_obj$cb_model_para$P
@@ -148,7 +148,7 @@ merge_ucos <- function(cb_obj, past_out,
       for (ii in yy) {
         X_dict <- cb_obj$cb_data$dict[ii]
         res[[flag]] <- get_between_purity(cset1, cset2,
-          X = cb_obj$cb_data$data[[X_dict]]$X,
+          X = get_genotype_matrix(cb_obj$cb_data$data[[X_dict]]),
           Xcorr = cb_obj$cb_data$data[[X_dict]]$XtX,
           miss_idx = cb_obj$cb_data$data[[ii]]$variable_miss,
           P = cb_obj$cb_model_para$P
@@ -219,7 +219,7 @@ merge_ucos <- function(cb_obj, past_out,
             }
           }
           tmp <- matrix(get_purity(pos,
-            X = cb_obj$cb_data$data[[X_dict]]$X,
+            X = get_genotype_matrix(cb_obj$cb_data$data[[X_dict]]),
             Xcorr = cb_obj$cb_data$data[[X_dict]]$XtX,
             N = cb_obj$cb_data$data[[i3]]$N, n = n_purity
           ), 1, 3)
@@ -687,7 +687,7 @@ get_cos_details <- function(cb_obj, coloc_out, data_info = NULL) {
           pos <- match(pos, setdiff(1:cb_obj$cb_model_para$P, cb_obj$cb_data$data[[i3]]$variable_miss))
         }
         tmp <- matrix(get_purity(pos,
-                                 X = cb_obj$cb_data$data[[X_dict]]$X,
+                                 X = get_genotype_matrix(cb_obj$cb_data$data[[X_dict]]),
                                  Xcorr = cb_obj$cb_data$data[[X_dict]]$XtX,
                                  N = cb_obj$cb_data$data[[i3]]$N, n = cb_obj$cb_model_para$n_purity
         ), 1, 3)
@@ -760,7 +760,7 @@ get_cos_details <- function(cb_obj, coloc_out, data_info = NULL) {
           for (ii in yy) {
             X_dict <- cb_obj$cb_data$dict[ii]
             res[[flag]] <- get_between_purity(cset1, cset2,
-              X = cb_obj$cb_data$data[[X_dict]]$X,
+              X = get_genotype_matrix(cb_obj$cb_data$data[[X_dict]]),
               Xcorr = cb_obj$cb_data$data[[X_dict]]$XtX,
               miss_idx = cb_obj$cb_data$data[[ii]]$variable_miss,
               P = cb_obj$cb_model_para$P
@@ -1022,7 +1022,7 @@ get_full_output <- function(cb_obj, past_out = NULL, variables = NULL, cb_output
               for (ii in yy) {
                 X_dict <- cb_obj$cb_data$dict[ii]
                 res[[flag]] <- get_between_purity(cset1, cset2,
-                  X = cb_obj$cb_data$data[[X_dict]]$X,
+                  X = get_genotype_matrix(cb_obj$cb_data$data[[X_dict]]),
                   Xcorr = cb_obj$cb_data$data[[X_dict]]$XtX,
                   miss_idx = cb_obj$cb_data$data[[ii]]$variable_miss,
                   P = cb_obj$cb_model_para$P
@@ -1066,7 +1066,7 @@ get_full_output <- function(cb_obj, past_out = NULL, variables = NULL, cb_output
               for (ii in yy) {
                 X_dict <- cb_obj$cb_data$dict[ii]
                 res[[flag]] <- get_between_purity(cset1, cset2,
-                  X = cb_obj$cb_data$data[[X_dict]]$X,
+                  X = get_genotype_matrix(cb_obj$cb_data$data[[X_dict]]),
                   Xcorr = cb_obj$cb_data$data[[X_dict]]$XtX,
                   miss_idx = cb_obj$cb_data$data[[ii]]$variable_miss,
                   P = cb_obj$cb_model_para$P
