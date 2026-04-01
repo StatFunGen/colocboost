@@ -606,11 +606,12 @@ names(res$diagnostic_details$cb_model$ind_outcome_1)
 #>  [7] "change_loglike"              "correlation"                
 #>  [9] "z"                           "learning_rate_init"         
 #> [11] "stop_thresh"                 "ld_jk"                      
-#> [13] "jk"                          "z_univariate"               
-#> [15] "beta_hat_univariate"         "multi_correction"           
-#> [17] "multi_correction_univariate" "stop_null"                  
-#> [19] "check_null_max"              "check_null_max_ucos"        
-#> [21] "beta_hat"
+#> [13] "jk"                          "scaling_factor"             
+#> [15] "beta_scaling"                "z_univariate"               
+#> [17] "beta_hat_univariate"         "multi_correction"           
+#> [19] "multi_correction_univariate" "stop_null"                  
+#> [21] "check_null_max"              "check_null_max_ucos"        
+#> [23] "beta_hat"
 ```
 
 - **`cb_model_para`**: parameters used in fitting ColocBoost model.
