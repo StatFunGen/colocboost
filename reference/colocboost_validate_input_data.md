@@ -11,6 +11,7 @@ colocboost_validate_input_data(
   Y = NULL,
   sumstat = NULL,
   LD = NULL,
+  X_ref = NULL,
   dict_YX = NULL,
   dict_sumstatLD = NULL,
   effect_est = NULL,
@@ -45,8 +46,21 @@ colocboost_validate_input_data(
 
 - LD:
 
-  A list of correlation matrices indicating the LD matrix for each
-  genotype.
+  A list of correlation matrix indicating the LD matrix for each
+  genotype. It also could be a single matrix if all sumstats were
+  obtained from the same genotypes. Provide either `LD` or `X_ref`, not
+  both. If neither is provided, LD-free mode is used.
+
+- X_ref:
+
+  A reference panel genotype matrix (N_ref x P) or a list of matrices,
+  as an alternative to providing a precomputed `LD` matrix. Column names
+  must include variant names matching those in `sumstat`. When the
+  number of reference panel samples is less than the number of variants
+  (N_ref \< P), this avoids storing the full P x P LD matrix and reduces
+  memory usage. When N_ref \>= P, LD is precomputed from `X_ref`
+  internally. Provide either `LD` or `X_ref`, not both. If neither is
+  provided, LD-free mode is used.
 
 - dict_YX:
 
@@ -113,6 +127,14 @@ A list containing:
 - LD:
 
   Processed list of LD matrices
+
+- X_ref:
+
+  Processed list of reference genotype matrices
+
+- ref_label:
+
+  Style of reference matrics
 
 - sumstatLD_dict:
 

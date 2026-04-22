@@ -8,7 +8,10 @@ variants across traits in ColocBoost.
 library(colocboost)
 ```
 
-![](../reference/figures/missing_representation.png)
+![Illustration of partial overlapping variants across
+traits](../reference/figures/missing_representation.png)
+
+Illustration of partial overlapping variants across traits
 
 ### Causal variant structure
 

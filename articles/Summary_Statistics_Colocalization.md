@@ -285,7 +285,51 @@ res$cos_details$cos$cos_index
 #> [1] 589 593
 ```
 
-### 3.4. HyPrColoc compatible format: effect size and standard error matrices
+### 3.4. Using a reference panel genotype matrix (X_ref) instead of LD
+
+When the number of variants P is very large, storing the full P x P LD
+matrix may be infeasible. If you have the reference panel genotype
+matrix from which LD would be computed, you can pass it directly via
+`X_ref`. ColocBoost will compute LD products on the fly, avoiding the P
+x P memory cost.
+
+This is beneficial when the reference panel sample size (N_ref) is less
+than the number of variants (P). When N_ref \>= P, ColocBoost
+automatically precomputes the LD matrix internally for efficiency.
+
+Provide either `LD` or `X_ref`, not both. The `dict_sumstatLD`
+dictionary works with `X_ref` the same way as with `LD`.
+
+``` r
+
+# Use genotype matrix directly as reference panel
+data("Ind_5traits")
+X_ref <- Ind_5traits$X[[1]]
+
+# Run colocboost with X_ref instead of LD
+res <- colocboost(sumstat = Sumstat_5traits$sumstat, X_ref = X_ref)
+#> Validating input data.
+#> N_ref >= P: precomputing LD from X_ref.
+#> Starting gradient boosting algorithm.
+#> Gradient boosting for outcome 4 converged after 40 iterations!
+#> Gradient boosting for outcome 5 converged after 59 iterations!
+#> Gradient boosting for outcome 1 converged after 61 iterations!
+#> Gradient boosting for outcome 3 converged after 91 iterations!
+#> Gradient boosting for outcome 2 converged after 94 iterations!
+#> Performing inference on colocalization events.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
+
+# Identified CoS
+res$cos_details$cos$cos_index
+#> $`cos1:y1_y2_y3_y4`
+#> [1] 186 194 168 205
+#> 
+#> $`cos2:y2_y3_y5`
+#> [1] 589 593
+```
+
+### 3.5. HyPrColoc compatible format: effect size and standard error matrices
 
 ColocBoost also provides a flexibility to use HyPrColoc compatible
 format for summary statistics with and without LD matrix.

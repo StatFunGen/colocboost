@@ -51,7 +51,7 @@
       <h1>Input Data Format</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/optimize/cache-xtx-beta-phase1/vignettes/Input_Data_Format.Rmd" class="external-link"><code>vignettes/Input_Data_Format.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/vignettes/Input_Data_Format.Rmd" class="external-link"><code>vignettes/Input_Data_Format.Rmd</code></a></small>
       <div class="d-none name"><code>Input_Data_Format.Rmd</code></div>
     </div>
 
@@ -157,11 +157,16 @@ columns but highly recommended <code>n</code> and
 - `n` - highly recommended: sample size for the summary statistics, it is highly recommendation to provide.
 - `variant` - highly recommended: required if sumstat for different outcomes do not have the same number of variables (multiple sumstat and multiple LD).</code></pre>
 <ul>
-<li>
-<code>LD</code> is a matrix of LD. This matrix does not need to
+<li><p><code>LD</code> is a matrix of LD. This matrix does not need to
 contain the exact same variants as in <code>sumstat</code>, but the
 <code>colnames</code> and <code>rownames</code> of <code>LD</code>
-should include the <code>variant</code> names for proper alignment.</li>
+should include the <code>variant</code> names for proper
+alignment.</p></li>
+<li><p><code>X_ref</code> (alternative to <code>LD</code>) is a
+reference panel genotype matrix (N_ref x P). When the number of variants
+is large, passing <code>X_ref</code> directly avoids storing the full P
+x P LD matrix. See <a href="https://statfungen.github.io/colocboost/articles/Summary_Level_Colocalization.html">Summary
+Statistics Colocalization</a> for details.</p></li>
 </ul>
 <p>The input format for multiple traits is similar, but
 <code>sumstat</code> should be a list of data frames

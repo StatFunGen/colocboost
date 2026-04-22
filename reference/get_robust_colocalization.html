@@ -29,7 +29,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Recalibrate and summarize robust colocalization events.</h1>
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/optimize/cache-xtx-beta-phase1/R/colocboost_output.R" class="external-link"><code>R/colocboost_output.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/R/colocboost_output.R" class="external-link"><code>R/colocboost_output.R</code></a></small>
       <div class="d-none name"><code>get_robust_colocalization.Rd</code></div>
     </div>
 
@@ -45,6 +45,8 @@
 <span>  npc_outcome_cutoff <span class="op">=</span> <span class="fl">0.2</span>,</span>
 <span>  pvalue_cutoff <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  weight_fudge_factor <span class="op">=</span> <span class="fl">1.5</span>,</span>
+<span>  use_entropy <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  residual_correlation <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  coverage <span class="op">=</span> <span class="fl">0.95</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -76,6 +78,14 @@
 
 <dt id="arg-weight-fudge-factor">weight_fudge_factor<a class="anchor" aria-label="anchor" href="#arg-weight-fudge-factor"></a></dt>
 <dd><p>The strength to integrate weight from different outcomes, default is 1.5</p></dd>
+
+
+<dt id="arg-use-entropy">use_entropy<a class="anchor" aria-label="anchor" href="#arg-use-entropy"></a></dt>
+<dd><p>A logic variable to consider the heterogeneity of traits for a single-effect.</p></dd>
+
+
+<dt id="arg-residual-correlation">residual_correlation<a class="anchor" aria-label="anchor" href="#arg-residual-correlation"></a></dt>
+<dd><p>The residual correlation based on the sample overlap, it is diagonal if it is NULL.</p></dd>
 
 
 <dt id="arg-coverage">coverage<a class="anchor" aria-label="anchor" href="#arg-coverage"></a></dt>
@@ -150,7 +160,12 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Keep only CoS with cos_npc &gt;= 0.5. For each CoS, keep the outcomes configurations that the npc_outcome &gt;= 0.2.</span>
 <span class="r-in"><span><span class="va">filter_res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`cos1:y1_y2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10  9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [19]  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [37]  37  38  39  40  41  42  43  44  45  46  47  48  49  50  51  52  53  54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [55]  55  56  57  58  59  60  61  62  63  64  65  66  67  68  69  70  71  72</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [73]  73  74  75  76  77  78  79  80  81  82  83  84  85  86  87  88  89  90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [91]  91  92  93  94  95  96  97  98  99 100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

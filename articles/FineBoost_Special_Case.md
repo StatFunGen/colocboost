@@ -76,9 +76,10 @@ that only one variant within a region is causal.
 res <- colocboost(sumstat = sumstat)
 #> Validating input data.
 #> Warning in colocboost_validate_input_data(X = X, Y = Y, sumstat = sumstat, :
-#> Providing the LD for summary statistics data is highly recommended. Without LD,
-#> only a single iteration will be performed under the assumption of one causal
-#> variable per outcome. Additionally, the purity of CoS cannot be evaluated!
+#> Providing the LD or X_ref for summary statistics data is highly recommended.
+#> Without LD, only a single iteration will be performed under the assumption of
+#> one causal variable per outcome. Additionally, the purity of CoS cannot be
+#> evaluated!
 #> Starting gradient boosting algorithm.
 #> Running ColocBoost with assumption of one causal per outcome per region!
 #> Performing inference on colocalization events.

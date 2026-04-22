@@ -68,6 +68,13 @@ head(Sumstat_5traits$sumstat[[1]])
   same variants as in `sumstat`, but the `colnames` and `rownames` of
   `LD` should include the `variant` names for proper alignment.
 
+- `X_ref` (alternative to `LD`) is a reference panel genotype matrix
+  (N_ref x P). When the number of variants is large, passing `X_ref`
+  directly avoids storing the full P x P LD matrix. See [Summary
+  Statistics
+  Colocalization](https://statfungen.github.io/colocboost/articles/Summary_Level_Colocalization.html)
+  for details.
+
 The input format for multiple traits is similar, but `sumstat` should be
 a list of data frames `sumstat = list(sumstat1, sumstat2, sumstat3)`.
 The flexibility of input format for multiple traits is as follows (see

@@ -17,6 +17,7 @@ colocboost(
   Y = NULL,
   sumstat = NULL,
   LD = NULL,
+  X_ref = NULL,
   dict_YX = NULL,
   dict_sumstatLD = NULL,
   outcome_names = NULL,
@@ -67,6 +68,7 @@ colocboost(
   check_null_max_ucos = 0.015,
   weaker_effect = TRUE,
   LD_free = FALSE,
+  use_entropy = FALSE,
   output_level = 1,
   cos_npc_cutoff = 0.2,
   npc_outcome_cutoff = 0.2,
@@ -106,7 +108,19 @@ See detailed instructions in our tutorial portal:
 
   A list of correlation matrix indicating the LD matrix for each
   genotype. It also could be a single matrix if all sumstats were
-  obtained from the same genotypes.
+  obtained from the same genotypes. Provide either `LD` or `X_ref`, not
+  both. If neither is provided, LD-free mode is used.
+
+- X_ref:
+
+  A reference panel genotype matrix (N_ref x P) or a list of matrices,
+  as an alternative to providing a precomputed `LD` matrix. Column names
+  must include variant names matching those in `sumstat`. When the
+  number of reference panel samples is less than the number of variants
+  (N_ref \< P), this avoids storing the full P x P LD matrix and reduces
+  memory usage. When N_ref \>= P, LD is precomputed from `X_ref`
+  internally. Provide either `LD` or `X_ref`, not both. If neither is
+  provided, LD-free mode is used.
 
 - dict_YX:
 
@@ -118,11 +132,12 @@ See detailed instructions in our tutorial portal:
 
 - dict_sumstatLD:
 
-  A L by 2 matrix of dictionary for `sumstat` and `LD` if there exist
-  subsets of outcomes corresponding to the same sumstat. The first
-  column should be 1:L for L sumstat The second column should be the
-  index of `LD` corresponding to the sumstat. The innovation: do not
-  provide the same matrix in `LD` to reduce the computational burden.
+  A L by 2 matrix of dictionary for `sumstat` and `LD` (or `X_ref`) if
+  there exist subsets of outcomes corresponding to the same sumstat. The
+  first column should be 1:L for L sumstat The second column should be
+  the index of `LD` (or `X_ref`) corresponding to the sumstat. The
+  innovation: do not provide the same matrix in `LD` to reduce the
+  computational burden.
 
 - outcome_names:
 
@@ -367,6 +382,11 @@ See detailed instructions in our tutorial portal:
 
   When `LD_free = FALSE`, objective function doesn't include LD
   information.
+
+- use_entropy:
+
+  A logic variable to consider the heterogeneity of traits for a
+  single-effect.
 
 - output_level:
 

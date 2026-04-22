@@ -29,7 +29,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Validate and Process All Input Data for ColocBoost</h1>
-      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/optimize/cache-xtx-beta-phase1/R/colocboost.R" class="external-link"><code>R/colocboost.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StatFunGen/colocboost/blob/main/R/colocboost.R" class="external-link"><code>R/colocboost.R</code></a></small>
       <div class="d-none name"><code>colocboost_validate_input_data.Rd</code></div>
     </div>
 
@@ -44,6 +44,7 @@
 <span>  Y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sumstat <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  LD <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  X_ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  dict_YX <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  dict_sumstatLD <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  effect_est <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -77,7 +78,18 @@
 
 
 <dt id="arg-ld">LD<a class="anchor" aria-label="anchor" href="#arg-ld"></a></dt>
-<dd><p>A list of correlation matrices indicating the LD matrix for each genotype.</p></dd>
+<dd><p>A list of correlation matrix indicating the LD matrix for each genotype. It also could be a single matrix if all sumstats were
+obtained from the same genotypes. Provide either <code>LD</code> or <code>X_ref</code>, not both.
+If neither is provided, LD-free mode is used.</p></dd>
+
+
+<dt id="arg-x-ref">X_ref<a class="anchor" aria-label="anchor" href="#arg-x-ref"></a></dt>
+<dd><p>A reference panel genotype matrix (N_ref x P) or a list of matrices, as an alternative to providing a precomputed
+<code>LD</code> matrix. Column names must include variant names matching those in <code>sumstat</code>.
+When the number of reference panel samples is less than the number of variants (N_ref &lt; P),
+this avoids storing the full P x P LD matrix and reduces memory usage.
+When N_ref &gt;= P, LD is precomputed from <code>X_ref</code> internally.
+Provide either <code>LD</code> or <code>X_ref</code>, not both. If neither is provided, LD-free mode is used.</p></dd>
 
 
 <dt id="arg-dict-yx">dict_YX<a class="anchor" aria-label="anchor" href="#arg-dict-yx"></a></dt>
@@ -132,6 +144,12 @@
 
 <dt>LD</dt>
 <dd><p>Processed list of LD matrices</p></dd>
+
+<dt>X_ref</dt>
+<dd><p>Processed list of reference genotype matrices</p></dd>
+
+<dt>ref_label</dt>
+<dd><p>Style of reference matrics</p></dd>
 
 <dt>sumstatLD_dict</dt>
 <dd><p>Dictionary mapping sumstat to LD</p></dd>
