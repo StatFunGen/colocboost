@@ -607,11 +607,11 @@ names(res$diagnostic_details$cb_model$ind_outcome_1)
 #>  [9] "z"                           "learning_rate_init"         
 #> [11] "stop_thresh"                 "ld_jk"                      
 #> [13] "jk"                          "scaling_factor"             
-#> [15] "beta_scaling"                "z_univariate"               
-#> [17] "beta_hat_univariate"         "multi_correction"           
-#> [19] "multi_correction_univariate" "stop_null"                  
-#> [21] "check_null_max"              "check_null_max_ucos"        
-#> [23] "beta_hat"
+#> [15] "beta_scaling"                "XtX_beta_cache"             
+#> [17] "z_univariate"                "beta_hat_univariate"        
+#> [19] "multi_correction"            "multi_correction_univariate"
+#> [21] "stop_null"                   "check_null_max"             
+#> [23] "check_null_max_ucos"         "beta_hat"
 ```
 
 - **`cb_model_para`**: parameters used in fitting ColocBoost model.
@@ -629,7 +629,7 @@ names(res$diagnostic_details$cb_model_para)
 #> [22] "focal_outcome_idx"     "coveraged"             "num_updates"          
 #> [25] "coveraged_outcome"     "num_updates_outcome"   "func_multi_test"      
 #> [28] "multi_test_thresh"     "multi_test_max"        "model_used"           
-#> [31] "M"                     "no_coverage_stop"      "use_entropy"          
-#> [34] "weight_fudge_factor"   "coverage"              "min_abs_corr"         
-#> [37] "n_purity"
+#> [31] "ld_mismatch"           "M"                     "no_coverage_stop"     
+#> [34] "use_entropy"           "weight_fudge_factor"   "coverage"             
+#> [37] "min_abs_corr"          "n_purity"
 ```

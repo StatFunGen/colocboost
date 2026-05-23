@@ -6,8 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Interpret ColocBoost Output • colocboost</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Interpret ColocBoost Output">
 </head>
@@ -765,11 +765,11 @@ trait-specific weights for each iteration.</li>
 <span><span class="co">#&gt;  [9] "z"                           "learning_rate_init"         </span></span>
 <span><span class="co">#&gt; [11] "stop_thresh"                 "ld_jk"                      </span></span>
 <span><span class="co">#&gt; [13] "jk"                          "scaling_factor"             </span></span>
-<span><span class="co">#&gt; [15] "beta_scaling"                "z_univariate"               </span></span>
-<span><span class="co">#&gt; [17] "beta_hat_univariate"         "multi_correction"           </span></span>
-<span><span class="co">#&gt; [19] "multi_correction_univariate" "stop_null"                  </span></span>
-<span><span class="co">#&gt; [21] "check_null_max"              "check_null_max_ucos"        </span></span>
-<span><span class="co">#&gt; [23] "beta_hat"</span></span></code></pre></div>
+<span><span class="co">#&gt; [15] "beta_scaling"                "XtX_beta_cache"             </span></span>
+<span><span class="co">#&gt; [17] "z_univariate"                "beta_hat_univariate"        </span></span>
+<span><span class="co">#&gt; [19] "multi_correction"            "multi_correction_univariate"</span></span>
+<span><span class="co">#&gt; [21] "stop_null"                   "check_null_max"             </span></span>
+<span><span class="co">#&gt; [23] "check_null_max_ucos"         "beta_hat"</span></span></code></pre></div>
 <ul>
 <li>
 <strong><code>cb_model_para</code></strong>: parameters used in
@@ -787,9 +787,9 @@ fitting ColocBoost model.</li>
 <span><span class="co">#&gt; [22] "focal_outcome_idx"     "coveraged"             "num_updates"          </span></span>
 <span><span class="co">#&gt; [25] "coveraged_outcome"     "num_updates_outcome"   "func_multi_test"      </span></span>
 <span><span class="co">#&gt; [28] "multi_test_thresh"     "multi_test_max"        "model_used"           </span></span>
-<span><span class="co">#&gt; [31] "M"                     "no_coverage_stop"      "use_entropy"          </span></span>
-<span><span class="co">#&gt; [34] "weight_fudge_factor"   "coverage"              "min_abs_corr"         </span></span>
-<span><span class="co">#&gt; [37] "n_purity"</span></span></code></pre></div>
+<span><span class="co">#&gt; [31] "ld_mismatch"           "M"                     "no_coverage_stop"     </span></span>
+<span><span class="co">#&gt; [34] "use_entropy"           "weight_fudge_factor"   "coverage"             </span></span>
+<span><span class="co">#&gt; [37] "min_abs_corr"          "n_purity"</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

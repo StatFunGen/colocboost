@@ -163,19 +163,19 @@ for (l in 1:L) {
 res <- colocboost(X = X, Y = Y)
 #> Validating input data.
 #> Starting gradient boosting algorithm.
-#> Gradient boosting for outcome 1 converged after 98 iterations!
-#> Gradient boosting for outcome 3 converged after 106 iterations!
-#> Gradient boosting for outcome 2 converged after 107 iterations!
+#> Gradient boosting for outcome 1 converged after 106 iterations!
+#> Gradient boosting for outcome 3 converged after 113 iterations!
+#> Gradient boosting for outcome 2 converged after 117 iterations!
 #> Performing inference on colocalization events.
 #> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
 #> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 get_colocboost_summary(res)
 #> $cos_summary
 #>   focal_outcome colocalized_outcomes     cos_id    purity top_variable
-#> 1         FALSE               Y1; Y2 cos1:y1_y2 0.9047605        SNP10
+#> 1         FALSE               Y1; Y2 cos1:y1_y2 0.9067592        SNP10
 #>   top_variable_vcp cos_npc min_npc_outcome n_variables colocalized_index
-#> 1        0.8519757  0.9999          0.9999           2             10; 9
+#> 1        0.8884754       1               1           2             10; 9
 #>   colocalized_variables            colocalized_variables_vcp
-#> 1           SNP10; SNP9 0.851975728205876; 0.118928231146593
+#> 1           SNP10; SNP9 0.888475419309202; 0.101770958665919
 #> 
 ```
