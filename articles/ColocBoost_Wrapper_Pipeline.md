@@ -14,7 +14,7 @@ multiple individual-level datasets and/or summary statistics datasets.
 Acknowledgment: Thanks to Kate (Kathryn) Lawrence (GitHub:@kal26) for
 her contributions to this vignette.
 
-## 1. Loading Data using `colocboost_analysis_pipeline` function
+## 1. Loading Data using `colocboost_pipeline` function
 
 This function harmonizes the input data and prepares it for
 colocalization analysis.
@@ -29,7 +29,7 @@ summary statistics (sumstats, LD), or a combination of both. It runs
 list with `individual_data` and `sumstat_data` components, where
 `individual_data` is a list of individual-level data and `sumstat_data`
 is a list of summary statistics data. This list is then passed to the
-`colocboost_analysis_pipeline` function for the colocalization analysis.
+`colocboost_pipeline` function for the colocalization analysis.
 
 Below are the input parameters for this function for loading
 individual-level data:
@@ -249,15 +249,14 @@ bim file
 
     1   1000000 2000000 ld_block_1.ld.gz,ld_block_1.bim
 
-## 2. Perform ColocBoost using `colocboost_analysis_pipeline` function
+## 2. Perform ColocBoost using `colocboost_pipeline` function
 
 In this section, we load region data for a combination of
 individual-level and summary statistics data, then perform the
-colocalization analysis using the `colocboost_analysis_pipeline`
-function. The colocalization analysis can be run in any one of three
-modes, or in a combination of these modes (names assume that
-individual-level data is xQTL data and summary statistics data is GWAS
-data):
+colocalization analysis using the `colocboost_pipeline` function. The
+colocalization analysis can be run in any one of three modes, or in a
+combination of these modes (names assume that individual-level data is
+xQTL data and summary statistics data is GWAS data):
 
 - **`xQTL-only mode`**: Only perform colocalization analysis on the
   individual-level data. Summary statistics data is not used.
@@ -314,7 +313,7 @@ Outputs:
 
 - **`colocboost_results`**: List of colocboost objects (with
   `xqtl_coloc`, `joint_gwas`, `separate_gwas`); Output of the
-  `colocboost_analysis_pipeline` function. If the mode is not run, the
+  `colocboost_pipeline` function. If the mode is not run, the
   corresponding element will be `NULL`.
 
 ``` r
@@ -353,7 +352,7 @@ pip_cutoff_to_skip_sumstat = rep(0, length(sumstat_path_list))
 qc_method = "rss_qc" 
 
 # run colocboost analysis
-colocboost_results <- colocboost_analysis_pipeline(
+colocboost_results <- colocboost_pipeline(
     region_data_combined,
     maf_cutoff = maf_cutoff, 
     pip_cutoff_to_skip_ind = pip_cutoff_to_skip_ind,
