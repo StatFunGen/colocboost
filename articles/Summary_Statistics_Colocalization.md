@@ -135,6 +135,37 @@ colocboost_plot(res)
 
 ![](Summary_Statistics_Colocalization_files/figure-html/one-LD-1.png)
 
+Alternatively, you can provide the reference panel genotype matrix
+directly through `X_ref`, which avoids storing the full LD matrix:
+
+``` r
+
+# Use reference genotype directly instead of precomputing LD
+X_ref <- Ind_5traits$X[[1]]
+
+# Run colocboost
+res <- colocboost(sumstat = Sumstat_5traits$sumstat, X_ref = X_ref)
+#> Validating input data.
+#> N_ref >= P: precomputing LD from X_ref.
+#> Starting gradient boosting algorithm.
+#> Gradient boosting for outcome 4 converged after 40 iterations!
+#> Gradient boosting for outcome 5 converged after 59 iterations!
+#> Gradient boosting for outcome 1 converged after 61 iterations!
+#> Gradient boosting for outcome 3 converged after 91 iterations!
+#> Gradient boosting for outcome 2 converged after 94 iterations!
+#> Performing inference on colocalization events.
+#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
+#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
+
+# Identified CoS
+res$cos_details$cos$cos_index
+#> $`cos1:y1_y2_y3_y4`
+#> [1] 186 194 168 205
+#> 
+#> $`cos2:y2_y3_y5`
+#> [1] 589 593
+```
+
 #### Results Interpretation
 
 For comprehensive tutorials on result interpretation and advanced
@@ -215,22 +246,22 @@ sumstat <- lapply(Sumstat_5traits$sumstat, function(x) x[-sample(1:nrow(x), 20),
 res <- colocboost(sumstat = sumstat, LD = LD_superset)
 #> Validating input data.
 #> Starting gradient boosting algorithm.
-#> Gradient boosting for outcome 4 converged after 41 iterations!
-#> Gradient boosting for outcome 5 converged after 60 iterations!
-#> Gradient boosting for outcome 1 converged after 62 iterations!
-#> Gradient boosting for outcome 3 converged after 91 iterations!
-#> Gradient boosting for outcome 2 converged after 95 iterations!
+#> Gradient boosting for outcome 4 converged after 40 iterations!
+#> Gradient boosting for outcome 5 converged after 59 iterations!
+#> Gradient boosting for outcome 1 converged after 61 iterations!
+#> Gradient boosting for outcome 3 converged after 92 iterations!
+#> Gradient boosting for outcome 2 converged after 93 iterations!
 #> Performing inference on colocalization events.
 #> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
 #> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
 
 # Identified CoS
 res$cos_details$cos$cos_index
-#> $`cos1:y1_y2_y3_y4`
-#> [1] 186 194 168 205
-#> 
-#> $`cos2:y2_y3_y5`
+#> $`cos1:y2_y3_y5`
 #> [1] 589 593
+#> 
+#> $`cos2:y1_y2_y3_y4`
+#> [1] 186 159 152 210 211 213 214 209
 ```
 
 ### 3.3. Arbitrary LD and sumstat with dictionary provided

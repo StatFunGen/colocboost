@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -137,11 +137,11 @@ that only one variant within a region is causal.</p>
 <p><img src="FineBoost_Special_Case_files/figure-html/ld-free-1.png" class="r-plt" alt="" width="364.583333333333"></p>
 <p><strong>Note</strong>: Weak learners SEL in FineBoost may capture
 noise as putative signals, potentially introducing false positives to
-our findings. To identify and filter spurious signals, we discard
-fine-tunned the threshold of
+our findings. To identify and filter spurious signals, we use a
+fine-tuned threshold of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><msub><mi>L</mi><mi>l</mi></msub></mrow><annotation encoding="application/x-tex">\Delta L_l</annotation></semantics></math>
-using extensive simulations to balance sensitivity and specificity. This
-threshold is set to 0.025 by default for ColocBoost when detect the
+based on extensive simulations to balance sensitivity and specificity.
+This threshold is set to 0.025 by default for ColocBoost when detect the
 colocalization, but we suggested a less conservative threshold of 0.015
 for FineBoost when performing single-trait fine-mapping analysis
 (<code>check_null_max = 0.015</code> as we suggested).</p>

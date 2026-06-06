@@ -93,10 +93,9 @@ colocboost_plot(res)
 
 **Note**: Weak learners SEL in FineBoost may capture noise as putative
 signals, potentially introducing false positives to our findings. To
-identify and filter spurious signals, we discard fine-tunned the
-threshold of $`\Delta L_l`$ using extensive simulations to balance
-sensitivity and specificity. This threshold is set to 0.025 by default
-for ColocBoost when detect the colocalization, but we suggested a less
-conservative threshold of 0.015 for FineBoost when performing
-single-trait fine-mapping analysis (`check_null_max = 0.015` as we
-suggested).
+identify and filter spurious signals, we use a fine-tuned threshold of
+$`\Delta L_l`$ based on extensive simulations to balance sensitivity and
+specificity. This threshold is set to 0.025 by default for ColocBoost
+when detect the colocalization, but we suggested a less conservative
+threshold of 0.015 for FineBoost when performing single-trait
+fine-mapping analysis (`check_null_max = 0.015` as we suggested).

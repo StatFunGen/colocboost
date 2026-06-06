@@ -134,7 +134,7 @@ A list containing:
 
 - ref_label:
 
-  Style of reference matrics
+  Style of reference matrices
 
 - sumstatLD_dict:
 

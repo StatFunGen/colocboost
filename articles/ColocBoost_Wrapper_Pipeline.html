@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,7 +71,83 @@ and <code>colocboost_pipeline</code> with <a href="https://github.com/StatFunGen
 <p>Acknowledgment: Thanks to Kate (Kathryn) Lawrence (GitHub:<span class="citation">@kal26</span>) for her contributions to this
 vignette.</p>
 <div class="section level2">
-<h2 id="loading-data-using-colocboost_pipeline-function">1. Loading Data using <code>colocboost_pipeline</code> function<a class="anchor" aria-label="anchor" href="#loading-data-using-colocboost_pipeline-function"></a>
+<h2 id="colocboost-analysis-with-basic-qc-steps">1. ColocBoost analysis with basic QC steps<a class="anchor" aria-label="anchor" href="#colocboost-analysis-with-basic-qc-steps"></a>
+</h2>
+<p>The <code>colocboost_analysis()</code> function from
+<code>pecotmr</code> runs ColocBoost with optional basic QC before model
+fitting. It uses conventional ColocBoost inputs, such as <code>X</code>,
+<code>Y</code>, <code>sumstat</code>, and <code>LD</code>, while adding
+QC parameters for common data-cleaning steps.</p>
+<p>The QC parameters are optional and can be set according to the input
+data:</p>
+<ul>
+<li>
+<strong><code>missing_rate_thresh</code></strong> removes variants
+with high genotype missingness.</li>
+<li>
+<strong><code>maf_cutoff</code></strong> removes variants with low
+minor allele frequency.</li>
+<li>
+<strong><code>xvar_cutoff</code></strong> removes variants with low
+genotype variance.</li>
+<li>
+<strong><code>ld_reference_meta_file</code></strong> filters
+individual-level variants against a reference variant list.</li>
+<li>
+<strong><code>pip_cutoff_to_skip_ind</code></strong> skips weak
+individual-level contexts based on single-effect PIP screening; use
+<code>0</code> to skip this screening.</li>
+<li>
+<strong><code>qc_method</code></strong> controls summary-statistics
+QC. Use <code>"none"</code> for basic allele/variant harmonization only,
+or <code>"slalom"</code> / <code>"dentist"</code> for LD-mismatch
+outlier detection.</li>
+<li>
+<strong><code>keep_indel</code></strong> controls whether
+insertion/deletion variants are retained during harmonization.</li>
+<li>
+<strong><code>pip_cutoff_to_skip_sumstat</code></strong> skips weak
+summary-statistics studies based on single-effect PIP screening; use
+<code>0</code> to skip this screening.</li>
+<li>
+<strong><code>impute</code></strong> runs RAISS imputation after QC
+when set to <code>TRUE</code>.</li>
+<li>
+<strong><code>impute_opts</code></strong> sets RAISS imputation
+options, including <code>rcond</code>, <code>R2_threshold</code>,
+<code>minimum_ld</code>, and <code>lamb</code>.</li>
+<li>
+<strong><code>LD_reference_info</code></strong> provides extra
+reference metadata for QC when <code>LD</code> or <code>X_ref</code>
+variant names are not sufficient.</li>
+<li>
+<strong><code>variant_convention</code></strong> specifies allele
+order in ColocBoost-style variant IDs, either <code>"A2_A1"</code> or
+<code>"A1_A2"</code>.</li>
+</ul>
+<p>Example:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">colocboost_analysis</span><span class="op">(</span></span>
+<span>    X <span class="op">=</span> <span class="va">X</span>,</span>
+<span>    Y <span class="op">=</span> <span class="va">Y</span>,</span>
+<span>    dict_YX <span class="op">=</span> <span class="va">dict_YX</span>,</span>
+<span>    sumstat <span class="op">=</span> <span class="va">sumstat</span>,</span>
+<span>    X_ref <span class="op">=</span> <span class="va">X_ref</span>,</span>
+<span>    dict_sumstatLD <span class="op">=</span> <span class="va">dict_sumstatLD</span>,</span>
+<span>    outcome_names <span class="op">=</span> <span class="va">outcome_names</span>,</span>
+<span>    missing_rate_thresh <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>    maf_cutoff <span class="op">=</span> <span class="fl">0.0005</span>,</span>
+<span>    xvar_cutoff <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    pip_cutoff_to_skip_ind <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    qc_method <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>    keep_indel <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    pip_cutoff_to_skip_sumstat <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    impute <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    variant_convention <span class="op">=</span> <span class="st">"A2_A1"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="loading-data-using-colocboost_pipeline-function">2. Loading Data using <code>colocboost_pipeline</code> function<a class="anchor" aria-label="anchor" href="#loading-data-using-colocboost_pipeline-function"></a>
 </h2>
 <p>This function harmonizes the input data and prepares it for
 colocalization analysis.</p>
@@ -92,7 +168,7 @@ analysis.</p>
 <p>Below are the input parameters for this function for loading
 individual-level data:</p>
 <div class="section level3">
-<h3 id="loading-individual-level-data-from-multiple-cohorts">1.1. Loading individual-level data from multiple cohorts<a class="anchor" aria-label="anchor" href="#loading-individual-level-data-from-multiple-cohorts"></a>
+<h3 id="loading-individual-level-data-from-multiple-cohorts">2.1. Loading individual-level data from multiple cohorts<a class="anchor" aria-label="anchor" href="#loading-individual-level-data-from-multiple-cohorts"></a>
 </h3>
 <p>Inputs:</p>
 <ul>
@@ -174,7 +250,7 @@ individual-level data is loaded, <code>sumstat_data</code> will be
 phenotypes and 2 cohorts. The first cohort has 2 phenotypes and the
 second cohort has 1 phenotype. The first phenotype has 2 genes and the
 second phenotype has 1 gene.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Example of loading individual-level data</span></span>
 <span><span class="va">region</span> <span class="op">=</span> <span class="st">"chr1:1000000-2000000"</span></span>
 <span><span class="va">genotype_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plink_cohort1.1"</span>, <span class="st">"plink_cohort1.2"</span><span class="op">)</span></span>
@@ -214,7 +290,7 @@ second phenotype has 1 gene.</p>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="loading-summary-statistics-from-multiple-cohorts-or-datasets">1.2. Loading summary statistics from multiple cohorts or
+<h3 id="loading-summary-statistics-from-multiple-cohorts-or-datasets">2.2. Loading summary statistics from multiple cohorts or
 datasets<a class="anchor" aria-label="anchor" href="#loading-summary-statistics-from-multiple-cohorts-or-datasets"></a>
 </h3>
 <p>Inputs:</p>
@@ -274,7 +350,7 @@ statistics data is loaded, <code>individual_data</code> will be
 <p><strong>Summary statistics loading example</strong></p>
 <p>The following example demonstrates how to set up input data with 2
 summary statistics and one LD reference.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Example of loading summary statistics</span></span>
 <span><span class="va">sumstat_path_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sumstat1.tsv.gz"</span>, <span class="st">"sumstat2.tsv.gz"</span><span class="op">)</span></span>
 <span><span class="va">column_file_path_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"column_mapping_sumstat1.yml"</span>, <span class="st">"column_mapping_sumstat2.yml"</span><span class="op">)</span></span>
@@ -310,22 +386,22 @@ by the loader. Required columns are <code>chrom</code>,
 ‘n_case’ and ‘n_control’ or ‘n_samples’ can be passed as part of the
 column mapping, but will be overwritten by the n_cases and n_controls or
 n_samples parameters passed explicitly.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># required</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">chrom</span><span class="kw">:</span><span class="at"> chromosome</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">pos</span><span class="kw">:</span><span class="at"> position</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="fu">A1</span><span class="kw">:</span><span class="at"> effect_allele</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="fu">A2</span><span class="kw">:</span><span class="at"> non_effect_allele</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="fu">z</span><span class="kw">:</span><span class="at"> zscore </span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co"># or</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="fu">beta</span><span class="kw">:</span><span class="at"> beta</span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="fu">sebeta</span><span class="kw">:</span><span class="at"> sebeta</span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co"># optional, will be overridden by n_samples or n_cases and n_controls if passed explicitly</span></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="fu">n_case</span><span class="kw">:</span><span class="at"> NCASE</span></span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="fu">n_control</span><span class="kw">:</span><span class="at"> NCONTROL</span></span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co"># or</span></span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="fu">n_sample</span><span class="kw">:</span><span class="at"> </span><span class="ch">N</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># required</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">chrom</span><span class="kw">:</span><span class="at"> chromosome</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="fu">pos</span><span class="kw">:</span><span class="at"> position</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="fu">A1</span><span class="kw">:</span><span class="at"> effect_allele</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="fu">A2</span><span class="kw">:</span><span class="at"> non_effect_allele</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="fu">z</span><span class="kw">:</span><span class="at"> zscore </span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="fu">beta</span><span class="kw">:</span><span class="at"> beta</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="fu">sebeta</span><span class="kw">:</span><span class="at"> sebeta</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co"># optional, will be overridden by n_samples or n_cases and n_controls if passed explicitly</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="fu">n_case</span><span class="kw">:</span><span class="at"> NCASE</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="fu">n_control</span><span class="kw">:</span><span class="at"> NCONTROL</span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="fu">n_sample</span><span class="kw">:</span><span class="at"> </span><span class="ch">N</span></span></code></pre></div>
 <p><strong>Expected format for LD metadata file</strong> LD files should
 be in the format generated by for instance
 <code>plink --r squared</code>, then xz compressed. The LD metadata file
@@ -337,7 +413,7 @@ the LD block file and bim file</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="perform-colocboost-using-colocboost_pipeline-function">2. Perform ColocBoost using <code>colocboost_pipeline</code>
+<h2 id="perform-colocboost-using-colocboost_pipeline-function">3. Perform ColocBoost using <code>colocboost_pipeline</code>
 function<a class="anchor" aria-label="anchor" href="#perform-colocboost-using-colocboost_pipeline-function"></a>
 </h2>
 <p>In this section, we load region data for a combination of
@@ -429,7 +505,7 @@ objects (with <code>xqtl_coloc</code>, <code>joint_gwas</code>,
 <code>colocboost_pipeline</code> function. If the mode is not run, the
 corresponding element will be <code>NULL</code>.</li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#### Please check the example code below ####</span></span>
 <span><span class="co"># # load in individual-level and sumstat data</span></span>
 <span><span class="va">region_data_combined</span> <span class="op">&lt;-</span> <span class="fu">load_multitask_regional_data</span><span class="op">(</span></span>

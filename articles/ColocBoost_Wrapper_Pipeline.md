@@ -14,7 +14,64 @@ multiple individual-level datasets and/or summary statistics datasets.
 Acknowledgment: Thanks to Kate (Kathryn) Lawrence (GitHub:@kal26) for
 her contributions to this vignette.
 
-## 1. Loading Data using `colocboost_pipeline` function
+## 1. ColocBoost analysis with basic QC steps
+
+The `colocboost_analysis()` function from `pecotmr` runs ColocBoost with
+optional basic QC before model fitting. It uses conventional ColocBoost
+inputs, such as `X`, `Y`, `sumstat`, and `LD`, while adding QC
+parameters for common data-cleaning steps.
+
+The QC parameters are optional and can be set according to the input
+data:
+
+- **`missing_rate_thresh`** removes variants with high genotype
+  missingness.
+- **`maf_cutoff`** removes variants with low minor allele frequency.
+- **`xvar_cutoff`** removes variants with low genotype variance.
+- **`ld_reference_meta_file`** filters individual-level variants against
+  a reference variant list.
+- **`pip_cutoff_to_skip_ind`** skips weak individual-level contexts
+  based on single-effect PIP screening; use `0` to skip this screening.
+- **`qc_method`** controls summary-statistics QC. Use `"none"` for basic
+  allele/variant harmonization only, or `"slalom"` / `"dentist"` for
+  LD-mismatch outlier detection.
+- **`keep_indel`** controls whether insertion/deletion variants are
+  retained during harmonization.
+- **`pip_cutoff_to_skip_sumstat`** skips weak summary-statistics studies
+  based on single-effect PIP screening; use `0` to skip this screening.
+- **`impute`** runs RAISS imputation after QC when set to `TRUE`.
+- **`impute_opts`** sets RAISS imputation options, including `rcond`,
+  `R2_threshold`, `minimum_ld`, and `lamb`.
+- **`LD_reference_info`** provides extra reference metadata for QC when
+  `LD` or `X_ref` variant names are not sufficient.
+- **`variant_convention`** specifies allele order in ColocBoost-style
+  variant IDs, either `"A2_A1"` or `"A1_A2"`.
+
+Example:
+
+``` r
+
+fit <- colocboost_analysis(
+    X = X,
+    Y = Y,
+    dict_YX = dict_YX,
+    sumstat = sumstat,
+    X_ref = X_ref,
+    dict_sumstatLD = dict_sumstatLD,
+    outcome_names = outcome_names,
+    missing_rate_thresh = 0.1,
+    maf_cutoff = 0.0005,
+    xvar_cutoff = 0,
+    pip_cutoff_to_skip_ind = 0,
+    qc_method = "none",
+    keep_indel = TRUE,
+    pip_cutoff_to_skip_sumstat = 0,
+    impute = FALSE,
+    variant_convention = "A2_A1"
+)
+```
+
+## 2. Loading Data using `colocboost_pipeline` function
 
 This function harmonizes the input data and prepares it for
 colocalization analysis.
@@ -34,7 +91,7 @@ is a list of summary statistics data. This list is then passed to the
 Below are the input parameters for this function for loading
 individual-level data:
 
-### 1.1. Loading individual-level data from multiple cohorts
+### 2.1. Loading individual-level data from multiple cohorts
 
 Inputs:
 
@@ -135,7 +192,7 @@ region_data_individual <- load_multitask_regional_data(
 )
 ```
 
-### 1.2. Loading summary statistics from multiple cohorts or datasets
+### 2.2. Loading summary statistics from multiple cohorts or datasets
 
 Inputs:
 
@@ -249,7 +306,7 @@ bim file
 
     1   1000000 2000000 ld_block_1.ld.gz,ld_block_1.bim
 
-## 2. Perform ColocBoost using `colocboost_pipeline` function
+## 3. Perform ColocBoost using `colocboost_pipeline` function
 
 In this section, we load region data for a combination of
 individual-level and summary statistics data, then perform the

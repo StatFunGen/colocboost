@@ -10,8 +10,19 @@
 
 ## Software updates
 
-- `v1.0.7` (**Important update**) Improvements to ColocBoost (check out
-  the full details in
+- `v1.0.8` Improvements to summary-statistics workflows, trait-specific
+  result filtering, and computational efficiency.
+  - Added `X_ref` support as a memory-efficient alternative to
+    precomputed LD matrices for large summary-statistics analyses.
+  - Added `get_robust_ucos` to recalibrate and summarize robust
+    trait-specific, uncolocalized events.
+  - Improved computational efficiency for repeated matrix products in
+    large reference-panel workflows.
+  - Improved plotting robustness for extreme association signals and
+    coefficient or z-score displays.
+  - Minor robustness fixes for summary-statistics analyses with
+    reference-panel or LD-free inputs.
+- `v1.0.7` Improvements to ColocBoost (check out the full details in
   [PR](https://github.com/StatFunGen/colocboost/pull/116) and
   [PR](https://github.com/StatFunGen/colocboost/pull/121)).
   - Enhanced `colocboost` main function with post-filtering and only

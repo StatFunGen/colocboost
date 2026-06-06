@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -196,6 +196,34 @@ information for all variants across all traits.</li>
 <span><span class="co"># Plotting the results</span></span>
 <span><span class="fu"><a href="../reference/colocboost_plot.html">colocboost_plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Summary_Statistics_Colocalization_files/figure-html/one-LD-1.png" class="r-plt" alt="" width="510.416666666667"></p>
+<p>Alternatively, you can provide the reference panel genotype matrix
+directly through <code>X_ref</code>, which avoids storing the full LD
+matrix:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Use reference genotype directly instead of precomputing LD</span></span>
+<span><span class="va">X_ref</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Run colocboost</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>sumstat <span class="op">=</span> <span class="va">Sumstat_5traits</span><span class="op">$</span><span class="va">sumstat</span>, X_ref <span class="op">=</span> <span class="va">X_ref</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Validating input data.</span></span>
+<span><span class="co">#&gt; N_ref &gt;= P: precomputing LD from X_ref.</span></span>
+<span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 40 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 59 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 61 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 91 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 94 iterations!</span></span>
+<span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
+<span><span class="co">#&gt; Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.</span></span>
+<span><span class="co">#&gt; Keep only CoS with cos_npc &gt;= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001 and npc_outcome &gt;0.2.</span></span>
+<span></span>
+<span><span class="co"># Identified CoS</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
+<span><span class="co">#&gt; $`cos1:y1_y2_y3_y4`</span></span>
+<span><span class="co">#&gt; [1] 186 194 168 205</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`cos2:y2_y3_y5`</span></span>
+<span><span class="co">#&gt; [1] 589 593</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="results-interpretation">Results Interpretation<a class="anchor" aria-label="anchor" href="#results-interpretation"></a>
 </h4>
@@ -240,7 +268,7 @@ LD.</li>
 </ul>
 </li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Duplicate LD with matched summary statistics</span></span>
 <span><span class="va">LD_multiple</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">Sumstat_5traits</span><span class="op">$</span><span class="va">sumstat</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="va">LD</span> <span class="op">)</span></span>
 <span></span>
@@ -283,7 +311,7 @@ summary statistics data frames.</li>
 reference panel and want to use it for multiple summary statistics
 datasets. It allows for efficient analysis without redundancy.</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create sumstat with different number of variants - remove 100 variants in each sumstat</span></span>
 <span><span class="va">LD_superset</span> <span class="op">&lt;-</span> <span class="va">LD</span></span>
 <span><span class="va">sumstat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">Sumstat_5traits</span><span class="op">$</span><span class="va">sumstat</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fl">20</span><span class="op">)</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span></span>
@@ -292,22 +320,22 @@ datasets. It allows for efficient analysis without redundancy.</li>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colocboost.html">colocboost</a></span><span class="op">(</span>sumstat <span class="op">=</span> <span class="va">sumstat</span>, LD <span class="op">=</span> <span class="va">LD_superset</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validating input data.</span></span>
 <span><span class="co">#&gt; Starting gradient boosting algorithm.</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 41 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 60 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 62 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 91 iterations!</span></span>
-<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 95 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 4 converged after 40 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 5 converged after 59 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 1 converged after 61 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 3 converged after 92 iterations!</span></span>
+<span><span class="co">#&gt; Gradient boosting for outcome 2 converged after 93 iterations!</span></span>
 <span><span class="co">#&gt; Performing inference on colocalization events.</span></span>
 <span><span class="co">#&gt; Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.</span></span>
 <span><span class="co">#&gt; Keep only CoS with cos_npc &gt;= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome &lt; 0.001 and npc_outcome &gt;0.2.</span></span>
 <span></span>
 <span><span class="co"># Identified CoS</span></span>
 <span><span class="va">res</span><span class="op">$</span><span class="va">cos_details</span><span class="op">$</span><span class="va">cos</span><span class="op">$</span><span class="va">cos_index</span></span>
-<span><span class="co">#&gt; $`cos1:y1_y2_y3_y4`</span></span>
-<span><span class="co">#&gt; [1] 186 194 168 205</span></span>
+<span><span class="co">#&gt; $`cos1:y2_y3_y5`</span></span>
+<span><span class="co">#&gt; [1] 589 593</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`cos2:y2_y3_y5`</span></span>
-<span><span class="co">#&gt; [1] 589 593</span></span></code></pre></div>
+<span><span class="co">#&gt; $`cos2:y1_y2_y3_y4`</span></span>
+<span><span class="co">#&gt; [1] 186 159 152 210 211 213 214 209</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="arbitrary-ld-and-sumstat-with-dictionary-provided">3.3. Arbitrary LD and sumstat with dictionary provided<a class="anchor" aria-label="anchor" href="#arbitrary-ld-and-sumstat-with-dictionary-provided"></a>
@@ -332,7 +360,7 @@ sumstat to index of LD.</li>
 </ul>
 </li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create a simple dictionary for demonstration purposes</span></span>
 <span><span class="va">LD_arbitrary</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">LD</span>, <span class="va">LD</span><span class="op">)</span> <span class="co"># traits 1 and 2 matched to the first genotype matrix; traits 3,4,5 matched to the third genotype matrix.</span></span>
 <span><span class="va">dict_sumstatLD</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
@@ -382,7 +410,7 @@ automatically precomputes the LD matrix internally for efficiency.</p>
 <p>Provide either <code>LD</code> or <code>X_ref</code>, not both. The
 <code>dict_sumstatLD</code> dictionary works with <code>X_ref</code> the
 same way as with <code>LD</code>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Use genotype matrix directly as reference panel</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Ind_5traits"</span><span class="op">)</span></span>
 <span><span class="va">X_ref</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
@@ -415,7 +443,7 @@ matrices<a class="anchor" aria-label="anchor" href="#hyprcoloc-compatible-format
 </h3>
 <p>ColocBoost also provides a flexibility to use HyPrColoc compatible
 format for summary statistics with and without LD matrix.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Loading the Dataset</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Ind_5traits</span><span class="op">)</span></span>
 <span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">Ind_5traits</span><span class="op">$</span><span class="va">X</span></span>
