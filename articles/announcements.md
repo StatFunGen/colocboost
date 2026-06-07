@@ -10,7 +10,7 @@
 
 ## Software updates
 
-- `v1.0.8` Improvements to summary-statistics workflows, trait-specific
+- `v1.0.9` Improvements to summary-statistics workflows, trait-specific
   result filtering, and computational efficiency.
   - Added `X_ref` support as a memory-efficient alternative to
     precomputed LD matrices for large summary-statistics analyses.
