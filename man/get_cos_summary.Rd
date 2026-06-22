@@ -66,12 +66,12 @@ get_cos_summary(res)
 
 }
 \seealso{
-Other colocboost_utilities: 
-\code{\link{get_cormat}()},
-\code{\link{get_cos}()},
-\code{\link{get_cos_purity}()},
-\code{\link{get_hierarchical_clusters}()},
-\code{\link{get_ucos_summary}()}
+Other colocboost_utilities:
+\code{\link[=get_cormat]{get_cormat()}},
+\code{\link[=get_cos]{get_cos()}},
+\code{\link[=get_cos_purity]{get_cos_purity()}},
+\code{\link[=get_hierarchical_clusters]{get_hierarchical_clusters()}},
+\code{\link[=get_ucos_summary]{get_ucos_summary()}}
 }
 \concept{colocboost_utilities}
 \keyword{colocboost_inference}
