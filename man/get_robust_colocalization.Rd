@@ -75,9 +75,9 @@ filter_res$cos_details$cos$cos_index
 
 }
 \seealso{
-Other colocboost_inference: 
-\code{\link{get_ambiguous_colocalization}()},
-\code{\link{get_colocboost_summary}()},
-\code{\link{get_robust_ucos}()}
+Other colocboost_inference:
+\code{\link[=get_ambiguous_colocalization]{get_ambiguous_colocalization()}},
+\code{\link[=get_colocboost_summary]{get_colocboost_summary()}},
+\code{\link[=get_robust_ucos]{get_robust_ucos()}}
 }
 \concept{colocboost_inference}

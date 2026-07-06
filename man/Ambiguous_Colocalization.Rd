@@ -28,7 +28,7 @@ Ambiguous_Colocalization
 An example result from one of our real data applications, which shows an ambiguous colocalization between eQTL and GWAS.
 }
 \seealso{
-Other colocboost_data: 
+Other colocboost_data:
 \code{\link{Heterogeneous_Effect}},
 \code{\link{Ind_5traits}},
 \code{\link{Non_Causal_Strongest_Marginal}},
