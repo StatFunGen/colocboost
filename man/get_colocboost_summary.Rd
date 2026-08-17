@@ -100,9 +100,9 @@ get_colocboost_summary(res)
 
 }
 \seealso{
-Other colocboost_inference: 
-\code{\link{get_ambiguous_colocalization}()},
-\code{\link{get_robust_colocalization}()},
-\code{\link{get_robust_ucos}()}
+Other colocboost_inference:
+\code{\link[=get_ambiguous_colocalization]{get_ambiguous_colocalization()}},
+\code{\link[=get_robust_colocalization]{get_robust_colocalization()}},
+\code{\link[=get_robust_ucos]{get_robust_ucos()}}
 }
 \concept{colocboost_inference}
