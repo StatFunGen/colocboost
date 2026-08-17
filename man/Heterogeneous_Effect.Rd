@@ -28,7 +28,7 @@ Heterogeneous_Effect
 An example dataset with simulated genotypes and traits for 2 traits and 2 common causal variants with heterogeneous effects
 }
 \seealso{
-Other colocboost_data: 
+Other colocboost_data:
 \code{\link{Ambiguous_Colocalization}},
 \code{\link{Ind_5traits}},
 \code{\link{Non_Causal_Strongest_Marginal}},
