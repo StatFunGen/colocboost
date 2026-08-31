@@ -56,9 +56,9 @@ filter_res$ucos_details$ucos$ucos_index
 
 }
 \seealso{
-Other colocboost_inference: 
-\code{\link{get_ambiguous_colocalization}()},
-\code{\link{get_colocboost_summary}()},
-\code{\link{get_robust_colocalization}()}
+Other colocboost_inference:
+\code{\link[=get_ambiguous_colocalization]{get_ambiguous_colocalization()}},
+\code{\link[=get_colocboost_summary]{get_colocboost_summary()}},
+\code{\link[=get_robust_colocalization]{get_robust_colocalization()}}
 }
 \concept{colocboost_inference}

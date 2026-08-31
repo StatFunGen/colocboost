@@ -28,7 +28,7 @@ Non_Causal_Strongest_Marginal
 An example dataset with simulated genotypes and traits for 2 traits and 2 common causal variants, but the strongest marginal association is not causal variant.
 }
 \seealso{
-Other colocboost_data: 
+Other colocboost_data:
 \code{\link{Ambiguous_Colocalization}},
 \code{\link{Heterogeneous_Effect}},
 \code{\link{Ind_5traits}},
