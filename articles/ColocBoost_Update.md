@@ -14,12 +14,10 @@ across multiple rounds. Observe how the blue points (proxies) distribute
 around the selected best update, showing the algorithm’s ability to
 capture LD structure during optimization.
 
-``` r
+\
+`knitr``::`[`include_graphics`](https://rdrr.io/pkg/knitr/man/include_graphics.html)`(``"figures/ColocBoost_update.gif"``)`
 
-knitr::include_graphics("../man/figures/ColocBoost_update.gif")
-```
-
-![](../reference/figures/ColocBoost_update.gif)
+![](figures/ColocBoost_update.gif)
 
 See more details in the [ColocBoost
 Manuscript](https://www.medrxiv.org/content/10.1101/2025.04.17.25326042v1)

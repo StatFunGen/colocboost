@@ -14,19 +14,15 @@ response variables.
 
 Install major and stable releases from CRAN (Linux, macOS and Windows)
 
-``` r
-
-install.packages("colocboost")
-```
+\
+[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"colocboost"``)`
 
 ### GitHub Installation
 
 Install the development version from GitHub
 
-``` r
-
-devtools::install_github("StatFunGen/colocboost")
-```
+\
+`devtools``::`[`install_github`](https://devtools.r-lib.org/reference/install-deprecated.html)`(``"StatFunGen/colocboost"``)`
 
 For a detailed installation guidance, please refer to
 [Installation](https://statfungen.github.io/colocboost/articles/installation.html).

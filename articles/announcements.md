@@ -4,12 +4,21 @@
 
 - *April 20, 2025*: Manuscript describing ColocBoost methods with
   applications is posted on
-  [medRxiv](https://www.medrxiv.org/content/10.1101/2025.04.17.25326042v1).
+  [medRxiv](https://doi.org/10.1101/2025.04.17.25326042).
 - *May 2, 2025*: `colocboost` R package is available on
   [CRAN](https://CRAN.R-project.org/package=colocboost).
 
 ## Software updates
 
+- `v1.0.10` \[**Important**\] Major enhancements to conceptual
+  interpretation and computational scalability.
+  - Expanded the event-based framework for multi-trait colocalization,
+    supported by new tutorials and practical guidance for interpreting
+    CoS, VCP, and NPC.
+  - Improved computational efficiency relative to v1.0.9 by reducing
+    redundant LD calculations, purity evaluations, matrix operations,
+    and memory reallocation, particularly for analyses involving large
+    numbers of phenotypes.
 - `v1.0.9` Improvements to summary-statistics workflows, trait-specific
   result filtering, and computational efficiency.
   - Added `X_ref` support as a memory-efficient alternative to

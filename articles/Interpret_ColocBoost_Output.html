@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.10</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,6 +57,21 @@
 
     
     
+<style>
+.note-box {
+  background-color: #f2f2f2;
+  border-left: 4px solid #a8a8a8;
+  border-radius: 4px;
+  padding: 12px 16px;
+  margin: 16px 0;
+  color: #333333;
+  font-style: italic;
+}
+
+.note-box p {
+  margin: 0;
+}
+</style>
 <p>This vignette demonstrates how to interpret the output of ColocBoost,
 specifically to get the summary of colocalization and focusing only on
 strong colocalization events.</p>
@@ -157,28 +172,46 @@ colocalization events involving the traits <code>Y1</code> and
 <h2 id="filter-colocalization-events-by-relative-strength-of-evidence">2. Filter colocalization events by relative strength of
 evidence<a class="anchor" aria-label="anchor" href="#filter-colocalization-events-by-relative-strength-of-evidence"></a>
 </h2>
-<p>In <code>cos_summary</code>, for each 95% CoS, the
-<code>cos_npc</code> column provides a normalized probability of
-colocalization and <code>min_npc_outcome</code> column provides the
-minimum normalized probability among colocalized traits. Those two
-metrics are measured as an empirical evidence of colocalization both in
-CoS-level and in trait-level. To obtain the best minimal colocalization
-configuration can be defined by using both <code>cos_npc</code> and
-<code>npc_outcome</code>. See the detailed usage of this function in <a href="https://statfungen.github.io/colocboost/reference/get_robust_colocalization.html">link</a>.</p>
+<p>For each 95% colocalization confidence set (CoS) reported in
+<code>cos_summary</code>, two complementary quantities summarize the
+strength of colocalization evidence:</p>
+<ul>
+<li>
+<code>cos_npc</code> reports the event-level normalized probability
+of colocalization (NPC), which quantifies support for sharing beyond a
+single-trait explanation.</li>
+<li>
+<code>min_npc_outcome</code> reports the minimum trait-level
+normalized evidence among the traits assigned to the event.</li>
+</ul>
+<p>These quantities assess whether an event is supported by multiple
+traits and whether each trait contributes sufficient evidence. The
+<code><a href="../reference/get_robust_colocalization.html">get_robust_colocalization()</a></code> function applies thresholds at
+both levels to obtain a parsimonious, well-supported trait
+configuration.</p>
+<p>See <a href="https://statfungen.github.io/colocboost/articles/Conceptual_Multi_Trait_Colocalization.html">Conceptual
+Framework for Multi-trait Colocalization and ColocBoost</a> for detailed
+definitions and interpretation of these quantities.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">filter_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_robust_colocalization.html">get_robust_colocalization</a></span><span class="op">(</span><span class="va">res</span>, cos_npc_cutoff <span class="op">=</span> <span class="fl">0.5</span>, npc_outcome_cutoff <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">filter_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_robust_colocalization.html">get_robust_colocalization</a></span><span class="op">(</span></span>
+<span>  <span class="va">res</span>, </span>
+<span>  cos_npc_cutoff <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  npc_outcome_cutoff <span class="op">=</span> <span class="fl">0.2</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; Extracting colocalization results with cos_npc_cutoff = 0.5 and npc_outcome_cutoff = 0.2.</span></span>
 <span><span class="co">#&gt; Keep only CoS with cos_npc &gt;= 0.5. For each CoS, keep the outcomes configurations that the npc_outcome &gt;= 0.2.</span></span></code></pre></div>
+<div class="note-box">
+<p><strong>Highlight:</strong></p>
 <ul>
-<li>The output from <code>get_robust_colocalization</code> is the same
-as output from <code>colocboost</code>, which can be directly used in
-any post inference and visualization.</li>
-<li>
-<code>npc=0.5</code> or <code>npc_outcome = 0.2</code> maintains
-robust colocalization signals for cases when many traits are evaluated.
-Higher thresholds can be specified if users want to focus only on strong
-colocalization events.</li>
+<li>The output of <code><a href="../reference/get_robust_colocalization.html">get_robust_colocalization()</a></code> retains the
+same structure as the output of <code><a href="../reference/colocboost.html">colocboost()</a></code> and can be
+used directly in downstream inference and visualization workflows.</li>
+<li>In our numerical studies, <code>cos_npc_cutoff = 0.5</code> and
+<code>npc_outcome_cutoff = 0.2</code> retained robust colocalization
+signals when many traits were evaluated. Higher thresholds may be used
+to prioritize events with stronger colocalization evidence.</li>
 </ul>
+</div>
 </div>
 <div class="section level2">
 <h2 id="more-details-on-colocboost-output">3. More details on ColocBoost output<a class="anchor" aria-label="anchor" href="#more-details-on-colocboost-output"></a>
@@ -803,7 +836,7 @@ fitting ColocBoost model.</li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

@@ -3,10 +3,8 @@
 This vignette demonstrates how to visualize and interpret the output of
 ColocBoost results.
 
-``` r
-
-library(colocboost)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`colocboost`](https://github.com/StatFunGen/colocboost)`)`
 
 **Causal variants (simulated)**
 
@@ -15,23 +13,21 @@ The dataset features two causal variants with indices 194 and 589.
 - Causal variant 194 is associated with traits 1, 2, 3, and 4.
 - Causal variant 589 is associated with traits 2, 3, and 5.
 
-``` r
-
-# Loading the Dataset
-data(Ind_5traits)
-# Run colocboost 
-res <- colocboost(X = Ind_5traits$X, Y = Ind_5traits$Y)
-#> Validating input data.
-#> Starting gradient boosting algorithm.
-#> Gradient boosting for outcome 4 converged after 40 iterations!
-#> Gradient boosting for outcome 5 converged after 59 iterations!
-#> Gradient boosting for outcome 1 converged after 61 iterations!
-#> Gradient boosting for outcome 3 converged after 91 iterations!
-#> Gradient boosting for outcome 2 converged after 94 iterations!
-#> Performing inference on colocalization events.
-#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
-#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
-```
+\
+`# Loading the Dataset`\
+[`data`](https://rdrr.io/r/utils/data.html)`(``Ind_5traits``)`\
+`# Run colocboost `\
+`res`` ``<-`` `[`colocboost`](https://statfungen.github.io/colocboost/reference/colocboost.md)`(``X ``=`` ``Ind_5traits``$``X``, Y ``=`` ``Ind_5traits``$``Y``)`\
+`#> Validating input data.`\
+`#> Starting gradient boosting algorithm.`\
+`#> Gradient boosting for outcome 4 converged after 40 iterations!`\
+`#> Gradient boosting for outcome 5 converged after 59 iterations!`\
+`#> Gradient boosting for outcome 1 converged after 61 iterations!`\
+`#> Gradient boosting for outcome 3 converged after 91 iterations!`\
+`#> Gradient boosting for outcome 2 converged after 94 iterations!`\
+`#> Performing inference on colocalization events.`\
+`#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.`\
+`#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.`
 
 ## 1. Default plot function
 
@@ -43,10 +39,8 @@ representation of the colocalization events.
 - The colors of the points represent the colocalization events, with
   different colors indicating different colocalization events.
 
-``` r
-
-colocboost_plot(res)
-```
+\
+[`colocboost_plot`](https://statfungen.github.io/colocboost/reference/colocboost_plot.md)`(``res``)`
 
 ![](Visualization_ColocBoost_Output_files/figure-html/basic-plot-1.png)
 
@@ -84,10 +78,8 @@ deepening the visualization of the colocboost results.
 You can specify a zoom-in region by providing a `grange` argument, which
 is a vector indicating the indices of the region to be zoomed in.
 
-``` r
-
-colocboost_plot(res, grange = c(1:400), outcome_idx = c(1:4))
-```
+\
+[`colocboost_plot`](https://statfungen.github.io/colocboost/reference/colocboost_plot.md)`(``res``, grange ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``:``400``)``, outcome_idx ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``:``4``)``)`
 
 ![](Visualization_ColocBoost_Output_files/figure-html/zoomin-plot-1.png)
 
@@ -97,10 +89,8 @@ You can highlight the top variants in the plot by setting
 `show_top_variables = TRUE`. This will add a red circle to top variants
 with highest VCP for each CoS.
 
-``` r
-
-colocboost_plot(res, show_top_variables = TRUE)
-```
+\
+[`colocboost_plot`](https://statfungen.github.io/colocboost/reference/colocboost_plot.md)`(``res``, show_top_variables ``=`` ``TRUE``)`
 
 ![](Visualization_ColocBoost_Output_files/figure-html/top-plot-1.png)
 
@@ -116,11 +106,9 @@ uncolocalized traits:
 - `show_cos_to_uncoloc_outcome = NULL` (default), if specified, will
   plot the all CoS variants to the specified uncolocalized traits.
 
-``` r
-
-colocboost_plot(res, show_cos_to_uncoloc = TRUE)
-#> Show all CoSs to uncolocalized outcomes.
-```
+\
+[`colocboost_plot`](https://statfungen.github.io/colocboost/reference/colocboost_plot.md)`(``res``, show_cos_to_uncoloc ``=`` ``TRUE``)`\
+`#> Show all CoSs to uncolocalized outcomes.`
 
 ![](Visualization_ColocBoost_Output_files/figure-html/ucos-plot-1.png)
 
@@ -136,15 +124,13 @@ true causal variants, you can set
 `add_vertical_idx = unique(unlist(Ind_5traits$true_effect_variants))`.
 Following plot also shows the top variants.
 
-``` r
-
-colocboost_plot(
-  res, show_top_variables = TRUE, 
-  add_highlight = TRUE, 
-  add_highlight_idx = unique(unlist(Ind_5traits$true_effect_variants)),
-  add_highlight_style = "star"
-)
-```
+\
+[`colocboost_plot`](https://statfungen.github.io/colocboost/reference/colocboost_plot.md)`(`\
+`  ``res``, show_top_variables ``=`` ``TRUE``, `\
+`  add_highlight ``=`` ``TRUE``, `\
+`  add_highlight_idx ``=`` `[`unique`](https://rdrr.io/r/base/unique.html)`(`[`unlist`](https://rdrr.io/r/base/unlist.html)`(``Ind_5traits``$``true_effect_variants``)``)``,`\
+`  add_highlight_style ``=`` ``"star"`\
+`)`
 
 ![](Visualization_ColocBoost_Output_files/figure-html/vertical-plot-1.png)
 
@@ -162,31 +148,29 @@ There are two options available for plotting the trait-specific
 *Important Note*: You should use `colocboost(..., output_level = 2)` to
 obtain the trait-specific (uncolocalized) information.
 
-``` r
-
-# Create a mixed dataset
-data(Ind_5traits)
-data(Heterogeneous_Effect)
-X <- Ind_5traits$X[1:3]
-Y <- Ind_5traits$Y[1:3]
-X1 <- Heterogeneous_Effect$X
-Y1 <- Heterogeneous_Effect$Y[,1,drop=F]
-
-# Run colocboost
-res <- colocboost(X = c(X, list(X1)), Y = c(Y, list(Y1)), output_level = 2)
-#> Validating input data.
-#> Starting gradient boosting algorithm.
-#> Gradient boosting for outcome 1 converged after 86 iterations!
-#> Gradient boosting for outcome 3 converged after 99 iterations!
-#> Gradient boosting for outcome 4 converged after 103 iterations!
-#> Gradient boosting for outcome 2 converged after 113 iterations!
-#> Performing inference on colocalization events.
-#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
-#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
-#> Extracting outcome-specific (uncolocalized) results with pvalue_cutoff = 1e-05, and npc_outcome_cutoff = 0.2.
-#> For each uCoS, keep the outcome-specific (uncolocalized) events that pvalue of variants for the outcome < 1e-05 and npc_outcome >0.2.
-colocboost_plot(res, plot_ucos = TRUE)
-```
+\
+`# Create a mixed dataset`\
+[`data`](https://rdrr.io/r/utils/data.html)`(``Ind_5traits``)`\
+[`data`](https://rdrr.io/r/utils/data.html)`(``Heterogeneous_Effect``)`\
+`X`` ``<-`` ``Ind_5traits``$``X``[``1``:``3``]`\
+`Y`` ``<-`` ``Ind_5traits``$``Y``[``1``:``3``]`\
+`X1`` ``<-`` ``Heterogeneous_Effect``$``X`\
+`Y1`` ``<-`` ``Heterogeneous_Effect``$``Y``[``,``1``,drop``=``F``]`\
+\
+`# Run colocboost`\
+`res`` ``<-`` `[`colocboost`](https://statfungen.github.io/colocboost/reference/colocboost.md)`(``X ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``X``, `[`list`](https://rdrr.io/r/base/list.html)`(``X1``)``)``, Y ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``Y``, `[`list`](https://rdrr.io/r/base/list.html)`(``Y1``)``)``, output_level ``=`` ``2``)`\
+`#> Validating input data.`\
+`#> Starting gradient boosting algorithm.`\
+`#> Gradient boosting for outcome 1 converged after 86 iterations!`\
+`#> Gradient boosting for outcome 3 converged after 99 iterations!`\
+`#> Gradient boosting for outcome 4 converged after 103 iterations!`\
+`#> Gradient boosting for outcome 2 converged after 113 iterations!`\
+`#> Performing inference on colocalization events.`\
+`#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.`\
+`#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.`\
+`#> Extracting outcome-specific (uncolocalized) results with pvalue_cutoff = 1e-05, and npc_outcome_cutoff = 0.2.`\
+`#> For each uCoS, keep the outcome-specific (uncolocalized) events that pvalue of variants for the outcome < 1e-05 and npc_outcome >0.2.`\
+[`colocboost_plot`](https://statfungen.github.io/colocboost/reference/colocboost_plot.md)`(``res``, plot_ucos ``=`` ``TRUE``)`
 
 ![](Visualization_ColocBoost_Output_files/figure-html/trait-specific-1.png)
 
@@ -208,40 +192,36 @@ prioritized colocalization, considering a focal trait:
   plot all CoS colocalized with at least on traits within CoS of focal
   traits.
 
-``` r
-
-# Create a mixed dataset
-data(Ind_5traits)
-data(Sumstat_5traits) 
-X <- Ind_5traits$X[1:3]
-Y <- Ind_5traits$Y[1:3]
-sumstat <- Sumstat_5traits$sumstat[4]
-LD <- get_cormat(Ind_5traits$X[[1]])
-
-# Run colocboost
-res <- colocboost(X = X, Y = Y, 
-                  sumstat = sumstat, LD = LD, 
-                  focal_outcome_idx = 4)
-#> Validating input data.
-#> Starting gradient boosting algorithm.
-#> Gradient boosting for focal outcome 4 converged after 25 iterations!
-#> Gradient boosting for outcome 1 converged after 45 iterations!
-#> Gradient boosting for outcome 3 converged after 66 iterations!
-#> Gradient boosting for outcome 2 converged after 77 iterations!
-#> Performing inference on colocalization events.
-#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
-#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
-
-# Only plot CoS with focal trait
-colocboost_plot(res, plot_focal_only = TRUE)
-```
+\
+`# Create a mixed dataset`\
+[`data`](https://rdrr.io/r/utils/data.html)`(``Ind_5traits``)`\
+[`data`](https://rdrr.io/r/utils/data.html)`(``Sumstat_5traits``)`` `\
+`X`` ``<-`` ``Ind_5traits``$``X``[``1``:``3``]`\
+`Y`` ``<-`` ``Ind_5traits``$``Y``[``1``:``3``]`\
+`sumstat`` ``<-`` ``Sumstat_5traits``$``sumstat``[``4``]`\
+`LD`` ``<-`` `[`get_cormat`](https://statfungen.github.io/colocboost/reference/get_cormat.md)`(``Ind_5traits``$``X``[[``1``]``]``)`\
+\
+`# Run colocboost`\
+`res`` ``<-`` `[`colocboost`](https://statfungen.github.io/colocboost/reference/colocboost.md)`(``X ``=`` ``X``, Y ``=`` ``Y``, `\
+`                  sumstat ``=`` ``sumstat``, LD ``=`` ``LD``, `\
+`                  focal_outcome_idx ``=`` ``4``)`\
+`#> Validating input data.`\
+`#> Starting gradient boosting algorithm.`\
+`#> Gradient boosting for focal outcome 4 converged after 25 iterations!`\
+`#> Gradient boosting for outcome 1 converged after 45 iterations!`\
+`#> Gradient boosting for outcome 3 converged after 66 iterations!`\
+`#> Gradient boosting for outcome 2 converged after 77 iterations!`\
+`#> Performing inference on colocalization events.`\
+`#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.`\
+`#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.`\
+\
+`# Only plot CoS with focal trait`\
+[`colocboost_plot`](https://statfungen.github.io/colocboost/reference/colocboost_plot.md)`(``res``, plot_focal_only ``=`` ``TRUE``)`
 
 ![](Visualization_ColocBoost_Output_files/figure-html/focal-colocalization-1.png)
 
-``` r
-
-# Plot all CoS including at least one traits colocalized with focal trait
-colocboost_plot(res, plot_focal_cos_outcome_only = TRUE)
-```
+\
+`# Plot all CoS including at least one traits colocalized with focal trait`\
+[`colocboost_plot`](https://statfungen.github.io/colocboost/reference/colocboost_plot.md)`(``res``, plot_focal_cos_outcome_only ``=`` ``TRUE``)`
 
 ![](Visualization_ColocBoost_Output_files/figure-html/focal-colocalization-2.png)

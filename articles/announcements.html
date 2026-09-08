@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.10</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,7 +63,7 @@
 <ul>
 <li>
 <em>April 20, 2025</em>: Manuscript describing ColocBoost methods
-with applications is posted on <a href="https://www.medrxiv.org/content/10.1101/2025.04.17.25326042v1" class="external-link">medRxiv</a>.</li>
+with applications is posted on <a href="https://doi.org/10.1101/2025.04.17.25326042" class="external-link">medRxiv</a>.</li>
 <li>
 <em>May 2, 2025</em>: <code>colocboost</code> R package is available
 on <a href="https://CRAN.R-project.org/package=colocboost" class="external-link">CRAN</a>.</li>
@@ -73,6 +73,19 @@ on <a href="https://CRAN.R-project.org/package=colocboost" class="external-link"
 <h2 id="software-updates">Software updates<a class="anchor" aria-label="anchor" href="#software-updates"></a>
 </h2>
 <ul>
+<li>
+<code>v1.0.10</code> [<strong>Important</strong>] Major enhancements
+to conceptual interpretation and computational scalability.
+<ul>
+<li>Expanded the event-based framework for multi-trait colocalization,
+supported by new tutorials and practical guidance for interpreting CoS,
+VCP, and NPC.</li>
+<li>Improved computational efficiency relative to v1.0.9 by reducing
+redundant LD calculations, purity evaluations, matrix operations, and
+memory reallocation, particularly for analyses involving large numbers
+of phenotypes.</li>
+</ul>
+</li>
 <li>
 <code>v1.0.9</code> Improvements to summary-statistics workflows,
 trait-specific result filtering, and computational efficiency.
@@ -136,7 +149,7 @@ version of manuscript on medRxiv, are still available on <a href="https://github
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

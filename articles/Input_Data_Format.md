@@ -1,9 +1,7 @@
 # Input Data Format
 
-``` r
-
-library(colocboost)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`colocboost`](https://github.com/StatFunGen/colocboost)`)`
 
 This vignette documents the standard input data formats of `colocboost`.
 
@@ -47,18 +45,16 @@ is as follows:
   `sebeta`), and optional columns but highly recommended `n` and
   `variant`.
 
-``` r
-
-data(Sumstat_5traits)
-head(Sumstat_5traits$sumstat[[1]])
-#>              z    n variant
-#> 451 -1.0945531 1153    rs_1
-#> 452 -0.4113347 1153    rs_2
-#> 453 -0.4113347 1153    rs_3
-#> 454 -0.7467923 1153    rs_4
-#> 455 -0.3018575 1153    rs_5
-#> 456 -0.5256479 1153    rs_6
-```
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``Sumstat_5traits``)`\
+[`head`](https://rdrr.io/r/utils/head.html)`(``Sumstat_5traits``$``sumstat``[[``1``]``]``)`\
+`#>              z    n variant`\
+`#> 451 -1.0945531 1153    rs_1`\
+`#> 452 -0.4113347 1153    rs_2`\
+`#> 453 -0.4113347 1153    rs_3`\
+`#> 454 -0.7467923 1153    rs_4`\
+`#> 455 -0.3018575 1153    rs_5`\
+`#> 456 -0.5256479 1153    rs_6`
 
     - `z` or (`beta`, `sebeta`) - required: either z-score or (effect size and standard error)
     - `n` - highly recommended: sample size for the summary statistics, it is highly recommendation to provide.
@@ -116,18 +112,16 @@ follows:
 Here, each row indicates the trait index and the corresponding genotype
 matrix index.
 
-``` r
-
-dict_YX <- cbind(c(1,2,3,4,5,6), c(1,1,1,2,2,3))
-dict_YX
-#>      [,1] [,2]
-#> [1,]    1    1
-#> [2,]    2    1
-#> [3,]    3    1
-#> [4,]    4    2
-#> [5,]    5    2
-#> [6,]    6    3
-```
+\
+`dict_YX`` ``<-`` `[`cbind`](https://rdrr.io/r/base/cbind.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``1``,``2``,``3``,``4``,``5``,``6``)``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``,``1``,``1``,``2``,``2``,``3``)``)`\
+`dict_YX`\
+`#>      [,1] [,2]`\
+`#> [1,]    1    1`\
+`#> [2,]    2    1`\
+`#> [3,]    3    1`\
+`#> [4,]    4    2`\
+`#> [5,]    5    2`\
+`#> [6,]    6    3`
 
 ## 4. HyPrColoc compatible format: effect size and standard error matrices
 

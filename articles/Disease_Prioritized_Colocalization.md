@@ -8,10 +8,8 @@ level, allowing the handling of scenarios where the individual data is
 available for some traits (like xQTLs) and the summary data is available
 for other traits (disease/trait GWAS).
 
-``` r
-
-library(colocboost)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`colocboost`](https://github.com/StatFunGen/colocboost)`)`
 
 ## 1. Loading individual and summary statistics data
 
@@ -33,18 +31,16 @@ The dataset features two causal variants with indices 194 and 589.
 - Causal variant 589 is associated with traits 2, 3, and 5 (summary
   level data).
 
-``` r
-
-# Load example data
-data(Ind_5traits)
-data(Sumstat_5traits) 
-
-# Create a mixed dataset
-X <- Ind_5traits$X[1:4]
-Y <- Ind_5traits$Y[1:4]
-sumstat <- Sumstat_5traits$sumstat[5]
-LD <- get_cormat(Ind_5traits$X[[1]])
-```
+\
+`# Load example data`\
+[`data`](https://rdrr.io/r/utils/data.html)`(``Ind_5traits``)`\
+[`data`](https://rdrr.io/r/utils/data.html)`(``Sumstat_5traits``)`` `\
+\
+`# Create a mixed dataset`\
+`X`` ``<-`` ``Ind_5traits``$``X``[``1``:``4``]`\
+`Y`` ``<-`` ``Ind_5traits``$``Y``[``1``:``4``]`\
+`sumstat`` ``<-`` ``Sumstat_5traits``$``sumstat``[``5``]`\
+`LD`` ``<-`` `[`get_cormat`](https://statfungen.github.io/colocboost/reference/get_cormat.md)`(``Ind_5traits``$``X``[[``1``]``]``)`
 
 For analyze a specific one type of data, you can refer to the following
 tutorials [Individual Level Data
@@ -75,29 +71,27 @@ This function requires specifying genotypes `X` and phenotypes `Y` from
 the individual-level dataset and summary statistics `sumstat` and LD
 matrix `LD` from summary dataset:
 
-``` r
-
-# Run colocboost
-res <- colocboost(X = X, Y = Y, sumstat = sumstat, LD = LD)
-#> Validating input data.
-#> Starting gradient boosting algorithm.
-#> Gradient boosting for outcome 4 converged after 40 iterations!
-#> Gradient boosting for outcome 5 converged after 59 iterations!
-#> Gradient boosting for outcome 1 converged after 61 iterations!
-#> Gradient boosting for outcome 3 converged after 91 iterations!
-#> Gradient boosting for outcome 2 converged after 94 iterations!
-#> Performing inference on colocalization events.
-#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
-#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
-
-# Identified CoS
-res$cos_details$cos$cos_index
-#> $`cos1:y1_y2_y3_y4`
-#> [1] 186 194 168 205
-#> 
-#> $`cos2:y2_y3_y5`
-#> [1] 589 593
-```
+\
+`# Run colocboost`\
+`res`` ``<-`` `[`colocboost`](https://statfungen.github.io/colocboost/reference/colocboost.md)`(``X ``=`` ``X``, Y ``=`` ``Y``, sumstat ``=`` ``sumstat``, LD ``=`` ``LD``)`\
+`#> Validating input data.`\
+`#> Starting gradient boosting algorithm.`\
+`#> Gradient boosting for outcome 4 converged after 40 iterations!`\
+`#> Gradient boosting for outcome 5 converged after 59 iterations!`\
+`#> Gradient boosting for outcome 1 converged after 61 iterations!`\
+`#> Gradient boosting for outcome 3 converged after 91 iterations!`\
+`#> Gradient boosting for outcome 2 converged after 94 iterations!`\
+`#> Performing inference on colocalization events.`\
+`#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.`\
+`#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.`\
+\
+`# Identified CoS`\
+`res``$``cos_details``$``cos``$``cos_index`\
+`` #> $`cos1:y1_y2_y3_y4` ``\
+`#> [1] 186 194 168 205`\
+`#> `\
+`` #> $`cos2:y2_y3_y5` ``\
+`#> [1] 589 593`
 
 #### Results Interpretation
 
@@ -129,26 +123,24 @@ function.
   `focal_outcome_idx = 5` is used to indicate the index of the focal
   trait from (4 individual level traits) and (1 summary statistics).
 
-``` r
-
-# Run colocboost
-res <- colocboost(X = X, Y = Y, 
-                  sumstat = sumstat, LD = LD, 
-                  focal_outcome_idx = 5)
-#> Validating input data.
-#> Starting gradient boosting algorithm.
-#> Gradient boosting for focal outcome 5 converged after 29 iterations!
-#> Gradient boosting for outcome 4 converged after 60 iterations!
-#> Gradient boosting for outcome 1 converged after 82 iterations!
-#> Gradient boosting for outcome 3 converged after 97 iterations!
-#> Gradient boosting for outcome 2 converged after 99 iterations!
-#> Performing inference on colocalization events.
-#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
-#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
-
-# Plotting the focal only results colocalization results
-colocboost_plot(res, plot_focal_only = TRUE)
-```
+\
+`# Run colocboost`\
+`res`` ``<-`` `[`colocboost`](https://statfungen.github.io/colocboost/reference/colocboost.md)`(``X ``=`` ``X``, Y ``=`` ``Y``, `\
+`                  sumstat ``=`` ``sumstat``, LD ``=`` ``LD``, `\
+`                  focal_outcome_idx ``=`` ``5``)`\
+`#> Validating input data.`\
+`#> Starting gradient boosting algorithm.`\
+`#> Gradient boosting for focal outcome 5 converged after 29 iterations!`\
+`#> Gradient boosting for outcome 4 converged after 60 iterations!`\
+`#> Gradient boosting for outcome 1 converged after 82 iterations!`\
+`#> Gradient boosting for outcome 3 converged after 97 iterations!`\
+`#> Gradient boosting for outcome 2 converged after 99 iterations!`\
+`#> Performing inference on colocalization events.`\
+`#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.`\
+`#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.`\
+\
+`# Plotting the focal only results colocalization results`\
+[`colocboost_plot`](https://statfungen.github.io/colocboost/reference/colocboost_plot.md)`(``res``, plot_focal_only ``=`` ``TRUE``)`
 
 ![](Disease_Prioritized_Colocalization_files/figure-html/disease-basic-1.png)
 
@@ -159,19 +151,17 @@ colocalization across the other traits without the focal trait. To
 extract all CoS and visualization of all colocalization results, you can
 use the following code:
 
-``` r
-
-# Identified CoS
-res$cos_details$cos$cos_index
-#> $`cos1:y1_y2_y3_y4`
-#> [1] 186 194 168 205
-#> 
-#> $`cos2:y2_y3_y5:merged`
-#> [1] 589 593
-
-# Plotting all results
-colocboost_plot(res)
-```
+\
+`# Identified CoS`\
+`res``$``cos_details``$``cos``$``cos_index`\
+`` #> $`cos1:y1_y2_y3_y4` ``\
+`#> [1] 186 194 168 205`\
+`#> `\
+`` #> $`cos2:y2_y3_y5:merged` ``\
+`#> [1] 589 593`\
+\
+`# Plotting all results`\
+[`colocboost_plot`](https://statfungen.github.io/colocboost/reference/colocboost_plot.md)`(``res``)`
 
 ![](Disease_Prioritized_Colocalization_files/figure-html/all-basic-1.png)
 

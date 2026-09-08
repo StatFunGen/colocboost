@@ -5,10 +5,8 @@ package and how to perform LD-mismatch and LD-free colocalization
 analysis, when some traits completely lack LD information or share only
 partial variant coverage with other traits.
 
-``` r
-
-library(colocboost)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`colocboost`](https://github.com/StatFunGen/colocboost)`)`
 
 ## 1. LD mismatch diagnosis
 
@@ -44,23 +42,21 @@ the summary statistics with the reference LD matrix.
 In this example, we create a simulated dataset with LD mismatch by
 changing the sign of Z-scores for 1% of variants for each trait.
 
-``` r
-
-# Create a simulated dataset with LD mismatch
-data("Sumstat_5traits")
-data("Ind_5traits")
-LD <- get_cormat(Ind_5traits$X[[1]])
-
-# Change sign of Z-score for 1% of variants for each trait by including mismatched LD
-set.seed(123)
-miss_prop <- 0.005 
-sumstat <- lapply(Sumstat_5traits$sumstat, function(ss){
-  p <- nrow(ss)
-  pos_miss <- sample(1:p, ceiling(miss_prop * p))
-  ss$z[pos_miss] <- -ss$z[pos_miss]
-  return(ss)
-})
-```
+\
+`# Create a simulated dataset with LD mismatch`\
+[`data`](https://rdrr.io/r/utils/data.html)`(``"Sumstat_5traits"``)`\
+[`data`](https://rdrr.io/r/utils/data.html)`(``"Ind_5traits"``)`\
+`LD`` ``<-`` `[`get_cormat`](https://statfungen.github.io/colocboost/reference/get_cormat.md)`(``Ind_5traits``$``X``[[``1``]``]``)`\
+\
+`# Change sign of Z-score for 1% of variants for each trait by including mismatched LD`\
+[`set.seed`](https://rdrr.io/r/base/Random.html)`(``123``)`\
+`miss_prop`` ``<-`` ``0.005`` `\
+`sumstat`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``Sumstat_5traits``$``sumstat``, ``function``(``ss``)``{`\
+`  ``p`` ``<-`` `[`nrow`](https://rdrr.io/r/base/nrow.html)`(``ss``)`\
+`  ``pos_miss`` ``<-`` `[`sample`](https://rdrr.io/r/base/sample.html)`(``1``:``p``, `[`ceiling`](https://rdrr.io/r/base/Round.html)`(``miss_prop`` ``*`` ``p``)``)`\
+`  ``ss``$``z``[``pos_miss``]`` ``<-`` ``-``ss``$``z``[``pos_miss``]`\
+`  `[`return`](https://rdrr.io/r/base/function.html)`(``ss``)`\
+`}``)`
 
 #### Running ColocBoost with LD Mismatch
 
@@ -70,50 +66,46 @@ will still proceed. However, the results may be less reliable due to the
 mismatch, and the computational time may increase as the algorithm takes
 longer to converge.
 
-``` r
-
-res <- colocboost(sumstat = sumstat, LD = LD)
-#> Validating input data.
-#> Starting gradient boosting algorithm.
-#> Warning in colocboost_workhorse(cb_data, M = M, prioritize_jkstar =
-#> prioritize_jkstar, : ColocBoost gradient boosting for outcome 5 did not
-#> coverage in 500 iterations! Please check consistency between summary statistics
-#> and LD matrix. See details in tutorial website
-#> https://statfungen.github.io/colocboost/articles/.
-#> Gradient boosting for outcome 4 converged after 523 iterations!
-#> Gradient boosting at 1000 iterations, still updating.
-#> Warning in colocboost_workhorse(cb_data, M = M, prioritize_jkstar =
-#> prioritize_jkstar, : ColocBoost gradient boosting for outcome 1 did not
-#> coverage in 500 iterations! Please check consistency between summary statistics
-#> and LD matrix. See details in tutorial website
-#> https://statfungen.github.io/colocboost/articles/.
-#> Gradient boosting for outcome 2  stop since rtr < 0 or max(correlation) > 1 after 1213 iterations! Results for this locus are not stable, please check if mismatch between sumstat and LD! See details in tutorial website https://statfungen.github.io/colocboost/articles/.
-#> Gradient boosting for outcome 3  stop since rtr < 0 or max(correlation) > 1 after 1475 iterations! Results for this locus are not stable, please check if mismatch between sumstat and LD! See details in tutorial website https://statfungen.github.io/colocboost/articles/.
-#> Performing inference on colocalization events.
-#> Warning in get_cos_profile(cs_beta, outcome_idx, X = cb_data$data[[X_dict]]$X,
-#> : Warning message: potential sumstat & LD mismatch may happens for outcome 2 .
-#> Using logLR = CoS(profile) - max(profile). Please check our website
-#> https://statfungen.github.io/colocboost/articles/.
-#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
-#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
-res$cos_details$cos$cos_index
-#> $`cos1:y1_y3_y4`
-#> [1] 186 205 194 168 218 228 229
-```
+\
+`res`` ``<-`` `[`colocboost`](https://statfungen.github.io/colocboost/reference/colocboost.md)`(``sumstat ``=`` ``sumstat``, LD ``=`` ``LD``)`\
+`#> Validating input data.`\
+`#> Starting gradient boosting algorithm.`\
+`#> Warning in colocboost_workhorse(cb_data, M = M, prioritize_jkstar =`\
+`#> prioritize_jkstar, : ColocBoost gradient boosting for outcome 5 did not`\
+`#> coverage in 500 iterations! Please check consistency between summary statistics`\
+`#> and LD matrix. See details in tutorial website`\
+`#> https://statfungen.github.io/colocboost/articles/.`\
+`#> Gradient boosting for outcome 4 converged after 523 iterations!`\
+`#> Gradient boosting at 1000 iterations, still updating.`\
+`#> Warning in colocboost_workhorse(cb_data, M = M, prioritize_jkstar =`\
+`#> prioritize_jkstar, : ColocBoost gradient boosting for outcome 1 did not`\
+`#> coverage in 500 iterations! Please check consistency between summary statistics`\
+`#> and LD matrix. See details in tutorial website`\
+`#> https://statfungen.github.io/colocboost/articles/.`\
+`#> Gradient boosting for outcome 2  stop since rtr < 0 or max(correlation) > 1 after 1213 iterations! Results for this locus are not stable, please check if mismatch between sumstat and LD! See details in tutorial website https://statfungen.github.io/colocboost/articles/.`\
+`#> Gradient boosting for outcome 3  stop since rtr < 0 or max(correlation) > 1 after 1475 iterations! Results for this locus are not stable, please check if mismatch between sumstat and LD! See details in tutorial website https://statfungen.github.io/colocboost/articles/.`\
+`#> Performing inference on colocalization events.`\
+`#> Warning in get_cos_profile(cs_beta, outcome_idx, X = cb_data$data[[X_dict]]$X,`\
+`#> : Warning message: potential sumstat & LD mismatch may happens for outcome 2 .`\
+`#> Using logLR = CoS(profile) - max(profile). Please check our website`\
+`#> https://statfungen.github.io/colocboost/articles/.`\
+`#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.`\
+`#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.`\
+`res``$``cos_details``$``cos``$``cos_index`\
+`` #> $`cos1:y1_y3_y4` ``\
+`#> [1] 186 205 194 168 218 228 229`
 
 These warnings serve as diagnostic tools to alert users about potential
 inconsistencies in the input data.
 
-``` r
-
-res$cos_details$cos_outcomes_npc
-#> $`cos1:y1_y2_y3_y4`
-#>    outcomes_index relative_logLR npc_outcome
-#> Y3              3      2.3111393   0.9901696
-#> Y1              1      1.9710178   0.9805913
-#> Y4              4      0.9895934   0.8618184
-#> Y2              2      0.0000000   0.0000000
-```
+\
+`res``$``cos_details``$``cos_outcomes_npc`\
+`` #> $`cos1:y1_y2_y3_y4` ``\
+`#>    outcomes_index relative_logLR npc_outcome`\
+`#> Y3              3      2.3111393   0.9901696`\
+`#> Y1              1      1.9710178   0.9805913`\
+`#> Y4              4      0.9895934   0.8618184`\
+`#> Y2              2      0.0000000   0.0000000`
 
 **Note**: In the above example, the normalized probability of trait 2 is
 0, indicating that colocalization with trait 2 may be less reliable due
@@ -162,37 +154,33 @@ variant per trait per region:
 This method is particularly useful when the LD matrix is mismatched but
 still provides valuable insights into variant correlations.
 
-``` r
-
-# Perform only 1 iteration of gradient boosting with LD matrix
-res_mismatch <- colocboost(sumstat = sumstat, LD = LD, M = 1)
-#> Validating input data.
-#> Starting gradient boosting algorithm.
-#> Running ColocBoost with assumption of one causal per outcome per region!
-#> Performing inference on colocalization events.
-#> Extracting colocalization results with pvalue_cutoff = 0.001.
-#> For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001.
-```
+\
+`# Perform only 1 iteration of gradient boosting with LD matrix`\
+`res_mismatch`` ``<-`` `[`colocboost`](https://statfungen.github.io/colocboost/reference/colocboost.md)`(``sumstat ``=`` ``sumstat``, LD ``=`` ``LD``, M ``=`` ``1``)`\
+`#> Validating input data.`\
+`#> Starting gradient boosting algorithm.`\
+`#> Running ColocBoost with assumption of one causal per outcome per region!`\
+`#> Performing inference on colocalization events.`\
+`#> Extracting colocalization results with pvalue_cutoff = 0.001.`\
+`#> For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001.`
 
 - **LD-free**: when the mismatch between the LD matrix and summary
   statistics is too large to be useful or when LD information is
   completely unavailable, ColocBoost provides an LD-free approach.
 
-``` r
-
-res_free <- colocboost(sumstat = sumstat)
-#> Validating input data.
-#> Warning in colocboost_validate_input_data(X = X, Y = Y, sumstat = sumstat, :
-#> Providing the LD or X_ref for summary statistics data is highly recommended.
-#> Without LD, only a single iteration will be performed under the assumption of
-#> one causal variable per outcome. Additionally, the purity of CoS cannot be
-#> evaluated!
-#> Starting gradient boosting algorithm.
-#> Running ColocBoost with assumption of one causal per outcome per region!
-#> Performing inference on colocalization events.
-#> Extracting colocalization results with pvalue_cutoff = 0.001.
-#> For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001.
-```
+\
+`res_free`` ``<-`` `[`colocboost`](https://statfungen.github.io/colocboost/reference/colocboost.md)`(``sumstat ``=`` ``sumstat``)`\
+`#> Validating input data.`\
+`#> Warning in colocboost_validate_input_data(X = X, Y = Y, sumstat = sumstat, :`\
+`#> Providing the LD or X_ref for summary statistics data is highly recommended.`\
+`#> Without LD, only a single iteration will be performed under the assumption of`\
+`#> one causal variable per outcome. Additionally, the purity of CoS cannot be`\
+`#> evaluated!`\
+`#> Starting gradient boosting algorithm.`\
+`#> Running ColocBoost with assumption of one causal per outcome per region!`\
+`#> Performing inference on colocalization events.`\
+`#> Extracting colocalization results with pvalue_cutoff = 0.001.`\
+`#> For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001.`
 
 While this method is computationally efficient, it has limitations due
 to the strong assumption of a single causal variant per trait per
@@ -202,43 +190,41 @@ regions with complex LD structures or multiple causal variants.
 ColocBoost also provides a flexibility to use HyPrColoc compatible
 format for summary statistics without LD matrix.
 
-``` r
-
-# Loading the Dataset
-data(Ind_5traits)
-X <- Ind_5traits$X
-Y <- Ind_5traits$Y
-
-# Coverting to HyPrColoc compatible format
-effect_est <- effect_se <- effect_n <- c()
-for (i in 1:length(X)){
-  x <- X[[i]]
-  y <- Y[[i]]
-  effect_n[i] <- length(y)
-  output <- susieR::univariate_regression(X = x, y = y)
-  effect_est <- cbind(effect_est, output$beta)
-  effect_se <- cbind(effect_se, output$sebeta)
-}
-colnames(effect_est) <- colnames(effect_se) <- c("Y1", "Y2", "Y3", "Y4", "Y5")
-rownames(effect_est) <- rownames(effect_se) <- colnames(X[[1]])
-
-
-# Run colocboost
-res <- colocboost(effect_est = effect_est, effect_se = effect_se, effect_n = effect_n)
-#> Validating input data.
-#> Warning in colocboost_validate_input_data(X = X, Y = Y, sumstat = sumstat, :
-#> Providing the LD or X_ref for summary statistics data is highly recommended.
-#> Without LD, only a single iteration will be performed under the assumption of
-#> one causal variable per outcome. Additionally, the purity of CoS cannot be
-#> evaluated!
-#> Starting gradient boosting algorithm.
-#> Running ColocBoost with assumption of one causal per outcome per region!
-#> Performing inference on colocalization events.
-#> Extracting colocalization results with pvalue_cutoff = 0.001.
-#> For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001.
-
-# Identified CoS
-res$cos_details$cos$cos_index
-#> $`cos1:y3_y4`
-#> [1] 186
-```
+\
+`# Loading the Dataset`\
+[`data`](https://rdrr.io/r/utils/data.html)`(``Ind_5traits``)`\
+`X`` ``<-`` ``Ind_5traits``$``X`\
+`Y`` ``<-`` ``Ind_5traits``$``Y`\
+\
+`# Coverting to HyPrColoc compatible format`\
+`effect_est`` ``<-`` ``effect_se`` ``<-`` ``effect_n`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``)`\
+`for`` ``(``i`` ``in`` ``1``:`[`length`](https://rdrr.io/r/base/length.html)`(``X``)``)``{`\
+`  ``x`` ``<-`` ``X``[[``i``]``]`\
+`  ``y`` ``<-`` ``Y``[[``i``]``]`\
+`  ``effect_n``[``i``]`` ``<-`` `[`length`](https://rdrr.io/r/base/length.html)`(``y``)`\
+`  ``output`` ``<-`` ``susieR``::`[`univariate_regression`](https://rdrr.io/pkg/susieR/man/univariate_regression.html)`(``X ``=`` ``x``, y ``=`` ``y``)`\
+`  ``effect_est`` ``<-`` `[`cbind`](https://rdrr.io/r/base/cbind.html)`(``effect_est``, ``output``$``beta``)`\
+`  ``effect_se`` ``<-`` `[`cbind`](https://rdrr.io/r/base/cbind.html)`(``effect_se``, ``output``$``sebeta``)`\
+`}`\
+[`colnames`](https://rdrr.io/r/base/colnames.html)`(``effect_est``)`` ``<-`` `[`colnames`](https://rdrr.io/r/base/colnames.html)`(``effect_se``)`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Y1"``, ``"Y2"``, ``"Y3"``, ``"Y4"``, ``"Y5"``)`\
+[`rownames`](https://rdrr.io/r/base/colnames.html)`(``effect_est``)`` ``<-`` `[`rownames`](https://rdrr.io/r/base/colnames.html)`(``effect_se``)`` ``<-`` `[`colnames`](https://rdrr.io/r/base/colnames.html)`(``X``[[``1``]``]``)`\
+\
+\
+`# Run colocboost`\
+`res`` ``<-`` `[`colocboost`](https://statfungen.github.io/colocboost/reference/colocboost.md)`(``effect_est ``=`` ``effect_est``, effect_se ``=`` ``effect_se``, effect_n ``=`` ``effect_n``)`\
+`#> Validating input data.`\
+`#> Warning in colocboost_validate_input_data(X = X, Y = Y, sumstat = sumstat, :`\
+`#> Providing the LD or X_ref for summary statistics data is highly recommended.`\
+`#> Without LD, only a single iteration will be performed under the assumption of`\
+`#> one causal variable per outcome. Additionally, the purity of CoS cannot be`\
+`#> evaluated!`\
+`#> Starting gradient boosting algorithm.`\
+`#> Running ColocBoost with assumption of one causal per outcome per region!`\
+`#> Performing inference on colocalization events.`\
+`#> Extracting colocalization results with pvalue_cutoff = 0.001.`\
+`#> For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001.`\
+\
+`# Identified CoS`\
+`res``$``cos_details``$``cos``$``cos_index`\
+`` #> $`cos1:y3_y4` ``\
+`#> [1] 186`

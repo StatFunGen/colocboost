@@ -10,10 +10,8 @@ This vignette demonstrates how to perform multi-trait colocalization
 analysis using individual level data in ColocBoost, specifically
 focusing on the `Ind_5traits` dataset included in the package.
 
-``` r
-
-library(colocboost)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`colocboost`](https://github.com/StatFunGen/colocboost)`)`
 
 ## 1. The `Ind_5traits` Dataset
 
@@ -36,28 +34,26 @@ The dataset features two causal variants with indices 194 and 589.
 This structure creates a realistic scenario where multiple traits are
 influenced by different but overlapping sets of genetic variants.
 
-``` r
-
-# Loading the Dataset
-data(Ind_5traits)
-names(Ind_5traits)
-#> [1] "X"                    "Y"                    "true_effect_variants"
-Ind_5traits$true_effect_variants
-#> $Outcome_1
-#> [1] 194
-#> 
-#> $Outcome_2
-#> [1] 194 589
-#> 
-#> $Outcome_3
-#> [1] 194 589
-#> 
-#> $Outcome_4
-#> [1] 194
-#> 
-#> $Outcome_5
-#> [1] 589
-```
+\
+`# Loading the Dataset`\
+[`data`](https://rdrr.io/r/utils/data.html)`(``Ind_5traits``)`\
+[`names`](https://rdrr.io/r/base/names.html)`(``Ind_5traits``)`\
+`#> [1] "X"                    "Y"                    "true_effect_variants"`\
+`Ind_5traits``$``true_effect_variants`\
+`#> $Outcome_1`\
+`#> [1] 194`\
+`#> `\
+`#> $Outcome_2`\
+`#> [1] 194 589`\
+`#> `\
+`#> $Outcome_3`\
+`#> [1] 194 589`\
+`#> `\
+`#> $Outcome_4`\
+`#> [1] 194`\
+`#> `\
+`#> $Outcome_5`\
+`#> [1] 589`
 
 Due to the file size limitation of CRAN release, this is a subset of
 simulated data. See full dataset in [colocboost paper
@@ -84,36 +80,34 @@ data are properly matched.
 This function requires specifying genotypes `X` and phenotypes `Y` from
 the dataset:
 
-``` r
-
-# Extract genotype (X) and phenotype (Y) data
-X <- Ind_5traits$X
-Y <- Ind_5traits$Y
-
-# Run colocboost with matched data
-res <- colocboost(X = X, Y = Y)
-#> Validating input data.
-#> Starting gradient boosting algorithm.
-#> Gradient boosting for outcome 4 converged after 40 iterations!
-#> Gradient boosting for outcome 5 converged after 59 iterations!
-#> Gradient boosting for outcome 1 converged after 61 iterations!
-#> Gradient boosting for outcome 3 converged after 91 iterations!
-#> Gradient boosting for outcome 2 converged after 94 iterations!
-#> Performing inference on colocalization events.
-#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
-#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
-
-# Identified CoS
-res$cos_details$cos$cos_index
-#> $`cos1:y1_y2_y3_y4`
-#> [1] 186 194 168 205
-#> 
-#> $`cos2:y2_y3_y5`
-#> [1] 589 593
-
-# Plotting the results
-colocboost_plot(res)
-```
+\
+`# Extract genotype (X) and phenotype (Y) data`\
+`X`` ``<-`` ``Ind_5traits``$``X`\
+`Y`` ``<-`` ``Ind_5traits``$``Y`\
+\
+`# Run colocboost with matched data`\
+`res`` ``<-`` `[`colocboost`](https://statfungen.github.io/colocboost/reference/colocboost.md)`(``X ``=`` ``X``, Y ``=`` ``Y``)`\
+`#> Validating input data.`\
+`#> Starting gradient boosting algorithm.`\
+`#> Gradient boosting for outcome 4 converged after 40 iterations!`\
+`#> Gradient boosting for outcome 5 converged after 59 iterations!`\
+`#> Gradient boosting for outcome 1 converged after 61 iterations!`\
+`#> Gradient boosting for outcome 3 converged after 91 iterations!`\
+`#> Gradient boosting for outcome 2 converged after 94 iterations!`\
+`#> Performing inference on colocalization events.`\
+`#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.`\
+`#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.`\
+\
+`# Identified CoS`\
+`res``$``cos_details``$``cos``$``cos_index`\
+`` #> $`cos1:y1_y2_y3_y4` ``\
+`#> [1] 186 194 168 205`\
+`#> `\
+`` #> $`cos2:y2_y3_y5` ``\
+`#> [1] 589 593`\
+\
+`# Plotting the results`\
+[`colocboost_plot`](https://statfungen.github.io/colocboost/reference/colocboost_plot.md)`(``res``)`
 
 ![](Individual_Level_Colocalization_files/figure-html/multiple-matched-1.png)
 
@@ -141,32 +135,30 @@ traits, allowing for efficient analysis without redundancy.
   - `Y` can be i) a matrix with $`N \times L`$ dimension; ii) a list of
     phenotype vectors for $`L`$ traits.
 
-``` r
-
-# Extract a single SNP (as a vector)
-X_single <- X[[1]]  # First SNP for all individuals
-
-# Run colocboost
-res <- colocboost(X = X_single, Y = Y)
-#> Validating input data.
-#> Starting gradient boosting algorithm.
-#> Gradient boosting for outcome 4 converged after 40 iterations!
-#> Gradient boosting for outcome 5 converged after 59 iterations!
-#> Gradient boosting for outcome 1 converged after 61 iterations!
-#> Gradient boosting for outcome 3 converged after 91 iterations!
-#> Gradient boosting for outcome 2 converged after 94 iterations!
-#> Performing inference on colocalization events.
-#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
-#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
-
-# Identified CoS
-res$cos_details$cos$cos_index
-#> $`cos1:y1_y2_y3_y4`
-#> [1] 186 194 168 205
-#> 
-#> $`cos2:y2_y3_y5`
-#> [1] 589 593
-```
+\
+`# Extract a single SNP (as a vector)`\
+`X_single`` ``<-`` ``X``[[``1``]``]``  ``# First SNP for all individuals`\
+\
+`# Run colocboost`\
+`res`` ``<-`` `[`colocboost`](https://statfungen.github.io/colocboost/reference/colocboost.md)`(``X ``=`` ``X_single``, Y ``=`` ``Y``)`\
+`#> Validating input data.`\
+`#> Starting gradient boosting algorithm.`\
+`#> Gradient boosting for outcome 4 converged after 40 iterations!`\
+`#> Gradient boosting for outcome 5 converged after 59 iterations!`\
+`#> Gradient boosting for outcome 1 converged after 61 iterations!`\
+`#> Gradient boosting for outcome 3 converged after 91 iterations!`\
+`#> Gradient boosting for outcome 2 converged after 94 iterations!`\
+`#> Performing inference on colocalization events.`\
+`#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.`\
+`#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.`\
+\
+`# Identified CoS`\
+`res``$``cos_details``$``cos``$``cos_index`\
+`` #> $`cos1:y1_y2_y3_y4` ``\
+`#> [1] 186 194 168 205`\
+`#> `\
+`` #> $`cos2:y2_y3_y5` ``\
+`#> [1] 589 593`
 
 ### 3.2. Genotype matrix is a superset of individuals across different phenotypes
 
@@ -183,35 +175,33 @@ different phenotypes, with **Input Format**:
   want to use it for multiple phenotypes with different individuals. It
   allows for efficient analysis without redundancy.
 
-``` r
-
-# Create phenotype with different samples - remove 50 samples trait 1 and trait 3.
-X_superset <- X[[1]] 
-Y_remove <- Y
-Y_remove[[1]] <- Y[[1]][-sample(1:length(Y[[1]]),50), , drop=F]
-Y_remove[[3]] <- Y[[3]][-sample(1:length(Y[[3]]),50), , drop=F]
-
-# Run colocboost
-res <- colocboost(X = X_superset, Y = Y_remove)
-#> Validating input data.
-#> Starting gradient boosting algorithm.
-#> Gradient boosting for outcome 4 converged after 38 iterations!
-#> Gradient boosting for outcome 1 converged after 51 iterations!
-#> Gradient boosting for outcome 5 converged after 62 iterations!
-#> Gradient boosting for outcome 2 converged after 98 iterations!
-#> Gradient boosting for outcome 3 converged after 99 iterations!
-#> Performing inference on colocalization events.
-#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
-#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
-
-# Identified CoS
-res$cos_details$cos$cos_index
-#> $`cos1:y1_y2_y3_y4`
-#> [1] 205 186 194 168
-#> 
-#> $`cos2:y2_y3_y5`
-#> [1] 589 593
-```
+\
+`# Create phenotype with different samples - remove 50 samples trait 1 and trait 3.`\
+`X_superset`` ``<-`` ``X``[[``1``]``]`` `\
+`Y_remove`` ``<-`` ``Y`\
+`Y_remove``[[``1``]``]`` ``<-`` ``Y``[[``1``]``]``[``-`[`sample`](https://rdrr.io/r/base/sample.html)`(``1``:`[`length`](https://rdrr.io/r/base/length.html)`(``Y``[[``1``]``]``)``,``50``)``, , drop``=``F``]`\
+`Y_remove``[[``3``]``]`` ``<-`` ``Y``[[``3``]``]``[``-`[`sample`](https://rdrr.io/r/base/sample.html)`(``1``:`[`length`](https://rdrr.io/r/base/length.html)`(``Y``[[``3``]``]``)``,``50``)``, , drop``=``F``]`\
+\
+`# Run colocboost`\
+`res`` ``<-`` `[`colocboost`](https://statfungen.github.io/colocboost/reference/colocboost.md)`(``X ``=`` ``X_superset``, Y ``=`` ``Y_remove``)`\
+`#> Validating input data.`\
+`#> Starting gradient boosting algorithm.`\
+`#> Gradient boosting for outcome 4 converged after 38 iterations!`\
+`#> Gradient boosting for outcome 1 converged after 51 iterations!`\
+`#> Gradient boosting for outcome 5 converged after 62 iterations!`\
+`#> Gradient boosting for outcome 2 converged after 98 iterations!`\
+`#> Gradient boosting for outcome 3 converged after 99 iterations!`\
+`#> Performing inference on colocalization events.`\
+`#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.`\
+`#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.`\
+\
+`# Identified CoS`\
+`res``$``cos_details``$``cos``$``cos_index`\
+`` #> $`cos1:y1_y2_y3_y4` ``\
+`#> [1] 205 186 194 168`\
+`#> `\
+`` #> $`cos2:y2_y3_y5` ``\
+`#> [1] 589 593`
 
 ### 3.3. Arbitrary input matrices with mapping dictionary provided
 
@@ -229,39 +219,37 @@ sequencing technologies.
     matched to 2nd genotype matrix `X3`.
   - `dict_YX` is a dictionary matrix that index of Y to index of X.
 
-``` r
-
-# Create a simple dictionary for demonstration purposes
-X_arbitrary <- X[c(1,3)] 
-dict_YX = cbind(c(1:5), c(1,1,2,2,2))
-
-# Display the dictionary
-dict_YX
-#>      [,1] [,2]
-#> [1,]    1    1
-#> [2,]    2    1
-#> [3,]    3    2
-#> [4,]    4    2
-#> [5,]    5    2
-
-# Run colocboost
-res <- colocboost(X = X_arbitrary, Y = Y, dict_YX = dict_YX)
-#> Validating input data.
-#> Starting gradient boosting algorithm.
-#> Gradient boosting for outcome 4 converged after 40 iterations!
-#> Gradient boosting for outcome 5 converged after 59 iterations!
-#> Gradient boosting for outcome 1 converged after 61 iterations!
-#> Gradient boosting for outcome 3 converged after 91 iterations!
-#> Gradient boosting for outcome 2 converged after 94 iterations!
-#> Performing inference on colocalization events.
-#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.
-#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.
-
-# Identified CoS
-res$cos_details$cos$cos_index
-#> $`cos1:y1_y2_y3_y4`
-#> [1] 186 194 168 205
-#> 
-#> $`cos2:y2_y3_y5`
-#> [1] 589 593
-```
+\
+`# Create a simple dictionary for demonstration purposes`\
+`X_arbitrary`` ``<-`` ``X``[`[`c`](https://rdrr.io/r/base/c.html)`(``1``,``3``)``]`` `\
+`dict_YX`` ``=`` `[`cbind`](https://rdrr.io/r/base/cbind.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``1``:``5``)``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``,``1``,``2``,``2``,``2``)``)`\
+\
+`# Display the dictionary`\
+`dict_YX`\
+`#>      [,1] [,2]`\
+`#> [1,]    1    1`\
+`#> [2,]    2    1`\
+`#> [3,]    3    2`\
+`#> [4,]    4    2`\
+`#> [5,]    5    2`\
+\
+`# Run colocboost`\
+`res`` ``<-`` `[`colocboost`](https://statfungen.github.io/colocboost/reference/colocboost.md)`(``X ``=`` ``X_arbitrary``, Y ``=`` ``Y``, dict_YX ``=`` ``dict_YX``)`\
+`#> Validating input data.`\
+`#> Starting gradient boosting algorithm.`\
+`#> Gradient boosting for outcome 4 converged after 40 iterations!`\
+`#> Gradient boosting for outcome 5 converged after 59 iterations!`\
+`#> Gradient boosting for outcome 1 converged after 61 iterations!`\
+`#> Gradient boosting for outcome 3 converged after 91 iterations!`\
+`#> Gradient boosting for outcome 2 converged after 94 iterations!`\
+`#> Performing inference on colocalization events.`\
+`#> Extracting colocalization results with pvalue_cutoff = 0.001, cos_npc_cutoff = 0.2, and npc_outcome_cutoff = 0.2.`\
+`#> Keep only CoS with cos_npc >= 0.2. For each CoS, keep the outcomes configurations that pvalue of variants for the outcome < 0.001 and npc_outcome >0.2.`\
+\
+`# Identified CoS`\
+`res``$``cos_details``$``cos``$``cos_index`\
+`` #> $`cos1:y1_y2_y3_y4` ``\
+`#> [1] 186 194 168 205`\
+`#> `\
+`` #> $`cos2:y2_y3_y5` ``\
+`#> [1] 589 593`

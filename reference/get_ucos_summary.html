@@ -11,7 +11,7 @@ or for summarizing results from single-trait FineBoost analyses."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">colocboost</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.10</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -143,7 +143,7 @@ or for summarizing results from single-trait FineBoost analyses.</p>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="colocboost.html">colocboost</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span>, output_level <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Validating input data.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Starting gradient boosting algorithm.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Gradient boosting for outcome 1 converged after 60 iterations!</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Gradient boosting for outcome 1 converged after 56 iterations!</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Performing inference on colocalization events.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> No colocalization results in this region!</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Extracting outcome-specific (uncolocalized) results with pvalue_cutoff = 1e-05, and npc_outcome_cutoff = 0.2.</span>
@@ -151,9 +151,14 @@ or for summarizing results from single-trait FineBoost analyses.</p>
 <span class="r-in"><span><span class="co"># Get the trait-specifc effect summary</span></span></span>
 <span class="r-in"><span><span class="fu">get_ucos_summary</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   outcomes  ucos_id    purity top_variable top_variable_vpa n_variables</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       Y1 ucos1:y1 0.9047605        SNP10        0.9253236           2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ucos_index ucos_variables                    ucos_variables_vpa</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      10; 9    SNP10; SNP9 0.925323596963733; 0.0772503725548788</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       Y1 ucos1:y1 0.9100012        SNP10        0.8598058           2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       Y1 ucos2:y1 0.6653318        SNP80        0.5863380           4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       ucos_index             ucos_variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          10; 9                SNP10; SNP9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 80; 81; 77; 79 SNP80; SNP81; SNP77; SNP79</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                            ucos_variables_vpa</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                        0.859805771708525; 0.138573636458965</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.58633798749248; 0.267009614298653; 0.0964229672581591; 0.0233288874828693</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -166,7 +171,7 @@ or for summarizing results from single-trait FineBoost analyses.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

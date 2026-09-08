@@ -16,22 +16,32 @@ ColocBoost with flexible input data formats.
 
 ### Interpretation and Visualization
 
-Tutorials on how to interpret and visualize the output from ColocBoost.
+Tutorials on how to interpret and visualize ColocBoost results.
 
 - [Interpret ColocBoost
   Output](https://statfungen.github.io/colocboost/articles/Interpret_ColocBoost_Output.md):
 - [Visualization of ColocBoost
   Results](https://statfungen.github.io/colocboost/articles/Visualization_ColocBoost_Output.md):
 
-### Advanced Topics
+### Colocalization Concepts and Methodology
 
-Advanced topics and special cases in colocalization and fine-mapping
-analysis.
+Educational tutorials on the statistical concepts, assumptions, and
+algorithms underlying ColocBoost.
 
-- [Handling partial overlapping variants across traits in
-  ColocBoost](https://statfungen.github.io/colocboost/articles/Partial_Overlap_Variants.md):
+- [Conceptual Framework for Multi-trait Colocalization and
+  ColocBoost](https://statfungen.github.io/colocboost/articles/Conceptual_Multi_Trait_Colocalization.md):
+- [Advanced Colocalization Scenarios with
+  ColocBoost](https://statfungen.github.io/colocboost/articles/Advanced_Colocalization_Scenarios.md):
 - [Animation Example: Proximity Gradient Boosting
   Algorithm](https://statfungen.github.io/colocboost/articles/ColocBoost_Update.md):
+
+### Advanced Workflows and Special Cases
+
+Practical guidance for specialized data structures, diagnostic
+scenarios, and extended ColocBoost workflows.
+
+- [Handling Partial Overlapping Variants across Traits in
+  ColocBoost](https://statfungen.github.io/colocboost/articles/Partial_Overlap_Variants.md):
 - [Bioinformatics Pipeline for
   ColocBoost](https://statfungen.github.io/colocboost/articles/ColocBoost_Wrapper_Pipeline.md):
 - [LD mismatch and LD-free
